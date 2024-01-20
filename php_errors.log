@@ -1,0 +1,5 @@
+[20-Jan-2024 03:57:59 UTC] PHP Warning:  require(C:\Users\student\WIDACRM/vendor/autoload.php): Failed to open stream: No such file or directory in C:\Users\student\WIDACRM\artisan on line 18
+[20-Jan-2024 03:57:59 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\Users\student\WIDACRM/vendor/autoload.php' (include_path='.;C:\php\pear') in C:\Users\student\WIDACRM\artisan:18
+Stack trace:
+#0 {main}
+  thrown in C:\Users\student\WIDACRM\artisan on line 18
