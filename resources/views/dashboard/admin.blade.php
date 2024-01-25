@@ -1,4 +1,5 @@
 {{-- resources/views/dashboard/admin.blade.php --}}
+@include('partials.header')
 <!DOCTYPE html>
 <html lang="en">
 <head>

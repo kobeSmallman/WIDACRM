@@ -8,19 +8,29 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     /**
+     * Handle the dashboard display logic and redirect to the appropriate dashboard.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function index()
+    {
+        // Assuming you have a method on your User model to check if the user is an admin
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            return $this->adminDashboard();
+        } else {
+            return $this->employeeDashboard();
+        }
+    }
+
+    /**
      * Show the admin dashboard.
      *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function adminDashboard()
     {
-        // Check if the user is authenticated and is an admin.
-        if (Auth::check() && Auth::user()->isAdmin()) {
-            return view('dashboard.admin');
-        }
-
-        // If the user is not an admin or not authenticated, redirect them to the login page.
-        return redirect()->route('login.form');
+        // Logic for admin dashboard view
+        return view('dashboard.admin');
     }
 
     /**
@@ -30,13 +40,9 @@ class DashboardController extends Controller
      */
     public function employeeDashboard()
     {
-        if (Auth::check() && Auth::user()->isEmployee()) {
-            // Add a log statement or use dd() to debug
-            \Log::info('Redirecting to employee dashboard.');
-            return view('dashboard.employee');
-        }
-    
-        return redirect()->route('login.form');
+        // Logic for employee dashboard view
+        return view('dashboard.employee');
     }
     
+    // Add any other methods you need for your controller here
 }

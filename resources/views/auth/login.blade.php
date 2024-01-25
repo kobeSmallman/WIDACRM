@@ -10,8 +10,8 @@
         @csrf <!-- CSRF token is required for form submission -->
         
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="Employee_ID">Employee ID:</label>
+            <input type="Employee_ID" id="Employee_ID" name="Employee_ID" required>
         </div>
         
         <div>

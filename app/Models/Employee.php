@@ -36,9 +36,9 @@ class Employee extends Authenticatable
     // Laravel expects the password field to be named 'password'.
     // If your field is named 'PASSWORD', you need to override the getAuthPassword method
     public function getAuthPassword()
-    {
-        return $this->PASSWORD;
-    }
+{
+    return $this->attributes['Password']; // Match your database column case
+}
     
 
     // If you have a different name for the remember token, specify it here
@@ -47,15 +47,14 @@ class Employee extends Authenticatable
     // Determine if the employee has an admin role.
     public function isAdmin()
     {
-        // Replace 'admin_role_id' with the actual ID of the admin role in your roles table
-        return $this->Role_ID === 'admin_role_id';
+        return $this->Role_ID === 1; // Assuming 1 is the role ID for admins
     }
-    //do this; fix this**
+    
     public function isEmployee()
     {
-        // Replace 'employee_role_id' with the actual ID of the employee role in your roles table
-        return $this->Role_ID === 'employee_role_id';
+        return $this->Role_ID === 2; // Assuming 2 is the role ID for regular employees
     }
+    
     
 
     // Add any other model properties or methods you might need
