@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController; // Add this line to use AuthController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +20,7 @@ use App\Http\Controllers\ClientController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
+
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -37,7 +38,9 @@ Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->
 Route::get('/dashboard/employee', [DashboardController::class, 'employeeDashboard'])->name('employee.dashboard');
 
 
-
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
+Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
+Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 
+Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');

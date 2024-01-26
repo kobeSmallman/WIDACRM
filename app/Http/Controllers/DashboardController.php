@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,10 +29,13 @@ class DashboardController extends Controller
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function adminDashboard()
-    {
-        // Logic for admin dashboard view
-        return view('dashboard.admin');
-    }
+{
+    // Fetch clients with the notes and employees who interacted with them
+    $clients = Client::with(['notes', 'notes.employee'])->get();
+
+    return view('dashboard.admin', compact('clients'));
+}
+
 
     /**
      * Show the employee dashboard.

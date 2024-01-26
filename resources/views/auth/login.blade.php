@@ -3,6 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+
     <title>Login</title>
 </head>
 <body>

@@ -1,0 +1,52 @@
+/* noteIndex.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-6 {
+    width: 50%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.note {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 3px solid #4CAF50;
+    background-color: #f9f9f9;
+}
+
+.note h4 {
+    margin-top: 0;
+}
+
+.note p {
+    margin-bottom: 5px;
+}
+
+/* Add more styles as needed */

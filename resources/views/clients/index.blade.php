@@ -1,7 +1,9 @@
 @include('partials.header')
+<link rel="stylesheet" href="{{ asset('css/clientIndex.css') }}">
 
 <h2>Clients</h2>
 <button type="button" onclick="toggleClientForm()">Add New Client</button>
+
 
 <div id="newClientForm" style="display: none;">
 <form action="{{ route('clients.store') }}" method="POST">
@@ -43,7 +45,6 @@
         </div>
     </form>
 </div>
-
 <h2>Clients</h2>
 <table>
     <thead>
@@ -56,6 +57,7 @@
             <th>Phone Number</th>
             <th>Lead Status</th>
             <th>Buyer Status</th>
+            <th>Orders</th> {{-- New column for orders --}}
             <!-- Add more headers if needed -->
         </tr>
     </thead>
@@ -70,12 +72,23 @@
                 <td>{{ $client->Phone_Number }}</td>
                 <td>{{ $client->Lead_Status }}</td>
                 <td>{{ $client->Buyer_Status }}</td>
+                <td>
+                    @foreach ($client->orders as $order)
+                        <details>
+                        <summary>Order ID: {{ $order->getOrderID() }}</summary>
+                            <div>
+                                @foreach ($order->products as $product)
+                                    <p>{{ $product->Product_Name }} - Quantity: {{ $product->Quantity }}</p>
+                                @endforeach
+                            </div>
+                        </details>
+                    @endforeach
+                </td>
                 <!-- Add more data columns if needed -->
             </tr>
         @endforeach
     </tbody>
 </table>
-
 
 <script>
     function toggleClientForm() {
