@@ -2,7 +2,13 @@
 @include('partials.header')
 <link rel="stylesheet" href="{{ asset('css/clientShow.css') }}">
 
-<div style="display: flex;">
+
+
+<x-layout>
+  <x-slot name="title">
+    Home | Example Website
+  </x-slot>
+  <div style="display: flex;">
     <div style="width: 50%;">
         <h2>Client Information</h2>
         <!-- Display client information -->
@@ -17,3 +23,5 @@
         @endforeach
     </div>
 </div>
+
+</x-layout>

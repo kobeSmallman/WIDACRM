@@ -1,8 +1,25 @@
-@include('partials.header')
-<link rel="stylesheet" href="{{ asset('css/clientIndex.css') }}">
 
-<h2>Clients</h2>
-<button type="button" onclick="toggleClientForm()">Add New Client</button>
+<x-layout>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Clients</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Clients</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+<button class="btn btn-primary" type="button" onclick="toggleClientForm()">Add New Client</button>
 
 
 <div id="newClientForm" style="display: none;">
@@ -45,8 +62,9 @@
         </div>
     </form>
 </div>
-<h2>Clients</h2>
-<table>
+
+
+<table class="table table-bordered table-hover dataTable dtr-inline">
     <thead>
         <tr>
             <th>Client Name</th>
@@ -100,3 +118,5 @@
         }
     }
 </script>
+
+</x-layout>
