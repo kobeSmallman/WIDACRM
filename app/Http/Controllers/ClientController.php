@@ -52,6 +52,7 @@ class ClientController extends Controller
             'Email' => 'required|string|email|max:255',
             'Created_By' => 'required|integer|max:11', // You may want to handle this internally, not via the form
             // Add any other fields as necessary
+            //eat my balls TONY!
         ]);
 
         try {
