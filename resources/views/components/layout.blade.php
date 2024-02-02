@@ -179,16 +179,19 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
+   <!-- Link to User Profile -->
+        <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-        <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="d-block">{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</a>
+    <div class="image">
+        <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('default/path/to/default_user_image.jpg') }}" class="img-circle elevation-2" alt="User Image">
+    </div>
+    <div class="info">
+    <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="username">
+    {{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}
+</a>
+    </div>
+</div>
 
-        </div>
-      </div>
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
