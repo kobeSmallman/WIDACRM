@@ -174,10 +174,21 @@
     <div class="sidebar">
    <!-- Link to User Profile -->
         <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <div class="image">
-        <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('default/path/to/default_user_image.jpg') }}" class="img-circle elevation-2" alt="User Image">
-    </div>
+        {{-- layout.blade.php --}}
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+<div class="image">
+@if ($employee->profile_image)
+    <img class="profile-user-img img-fluid img-circle"
+         src="data:image/jpeg;base64,{{ $employee->profile_image }}"
+         alt="User profile picture">
+@else
+    <img class="profile-user-img img-fluid img-circle"
+         src="{{ asset('default/path/to/default_image.jpg') }}"
+         alt="Default profile picture">
+@endif
+
+</div>
+
     <div class="info">
     <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="username">
     {{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}

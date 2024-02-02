@@ -9,10 +9,12 @@
     use Illuminate\Support\Facades\Storage; 
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\File;
+    use Illuminate\Support\Facades\View;
+
 
     class AuthController extends Controller
     {
-        public function showRegistrationForm()
+           public function showRegistrationForm()
         {
             Log::info('Showing registration form.');
             return view('auth.register');
@@ -109,26 +111,27 @@
         ])->withInput($request->only('Employee_ID'));
     }
     public function updateProfile(Request $request)
-{
-    // Validate the form data
-    $request->validate([
-        'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
-
-    $employee = Auth::user(); // Get the authenticated employee
-
-    // Handle profile image update
-    if ($request->hasFile('profile_image')) {
-        $file = $request->file('profile_image');
-        $filename = 'profile_' . $employee->Employee_ID . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('profiles', $filename, 'public');
-        $employee->profile_image = 'profiles/' . $filename; // Save the path in the model
-        $employee->save(); // Save the employee to persist the change
+    {
+        // Validate the form data
+        $request->validate([
+            'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $employee = Auth::user(); // Get the authenticated employee
+    
+        // Handle profile image update
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $imageData = file_get_contents($file->getRealPath()); // Get the binary data of the file
+            $employee->profile_image = base64_encode($imageData); // Store the base64 encoded binary data
+            $employee->save();
+        }
+    
+        return back()->with('success', 'Profile updated successfully.');
     }
     
 
-    return back()->with('success', 'Profile updated successfully.');
-}
+    
 
     
 public function showProfile()

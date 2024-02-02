@@ -18,12 +18,20 @@
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
-                        <div class="text-center">
-                            <!-- Display Profile Image -->
-                            <img class="profile-user-img img-fluid img-circle"
-                                 src="{{ $employee->profile_image ? asset('storage/' . $employee->profile_image) : asset('default/path/to/default_image.jpg') }}"
-                                 alt="User profile picture">
-                        </div>
+                    <div class="text-center">
+    <!-- Display Profile Image -->
+    @if ($employee->profile_image)
+    <img class="profile-user-img img-fluid img-circle"
+         src="data:image/jpeg;base64,{{ $employee->profile_image }}"
+         alt="User profile picture">
+@else
+    <img class="profile-user-img img-fluid img-circle"
+         src="{{ asset('default/path/to/default_image.jpg') }}"
+         alt="Default profile picture">
+@endif
+
+</div>
+
 
                         <h3 class="profile-username text-center">{{ $employee->First_Name }} {{ $employee->Last_Name }}</h3>
                         <p class="text-muted text-center">{{ $employee->Position }}</p>
