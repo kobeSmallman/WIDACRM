@@ -1,5 +1,5 @@
 {{-- resources/views/dashboard/employee.blade.php --}}
-@include('partials.header')
+<x-layout>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="{{ asset('css/dashboardEmployee.css') }}">
@@ -18,3 +18,4 @@
     <!-- Add any necessary dashboard components here -->
 </body>
 </html>
+</x-layout>

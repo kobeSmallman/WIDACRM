@@ -1,5 +1,5 @@
 {{-- resources/views/dashboard/admin.blade.php --}}
-@include('partials.header')
+<x-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,3 +50,4 @@
     </table>
 </body>
 </html>
+</x-layout>

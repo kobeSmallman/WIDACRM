@@ -46,13 +46,14 @@ class Employee extends Authenticatable
 
     // Determine if the employee has an admin role.
     public function isAdmin()
+    //different numbers mean different Roles which means different permissions and views
     {
-        return $this->Role_ID === 1; // Assuming 1 is the role ID for admins
+        return $this->Role_ID === 1; // 1 is the admin
     }
     
     public function isEmployee()
     {
-        return $this->Role_ID === 2; // Assuming 2 is the role ID for regular employees
+        return $this->Role_ID === 2; // 2 means Employee 
     }
     
     

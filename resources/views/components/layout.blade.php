@@ -37,8 +37,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
+  <a href="{{ route('dashboard') }}" class="nav-link">Home</a>
+</li>
+
+
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
@@ -183,7 +185,8 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alex Barry</a>
+        <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="d-block">{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</a>
+
         </div>
       </div>
 
@@ -406,14 +409,16 @@
           
           <li class="nav-header">ADMINISTRATION</li>
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
-              <i class="nav-icon fas fa-calendar-alt"></i>
-              <p>
-                System Users
-                <span class="badge badge-info right">2</span>
-              </p>
-            </a>
-          </li>
+    <a href="{{ route('system-users') }}" class="nav-link">
+        <i class="nav-icon fas fa-calendar-alt"></i>
+        <p>
+            System Users
+            <span class="badge badge-info right">2</span>
+        </p>
+    </a>
+</li>
+
+              
           <li class="nav-item">
             <a href="pages/gallery.html" class="nav-link">
               <i class="nav-icon far fa-image"></i>

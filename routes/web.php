@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController; // Add this line to use AuthController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,9 @@ use App\Http\Controllers\ClientController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
 
 
 
@@ -37,10 +39,14 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 Route::get('/dashboard/employee', [DashboardController::class, 'employeeDashboard'])->name('employee.dashboard');
 
-
+//client routes
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
-
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
+//system users route
+Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
+//Employee profile page route
+Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');

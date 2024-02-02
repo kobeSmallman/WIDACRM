@@ -1,5 +1,5 @@
 {{-- resources/views/notes/index.blade.php --}}
-@include('partials.header')
+<x-layout>
 <link rel="stylesheet" href="{{ asset('css/notesIndex.css') }}">
 
 <div class="container">
@@ -35,3 +35,4 @@
 <script>
     // Your existing JavaScript here
 </script>
+</x-layout>

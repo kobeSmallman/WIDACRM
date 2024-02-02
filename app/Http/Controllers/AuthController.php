@@ -6,8 +6,10 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Storage; 
     use Illuminate\Support\Facades\Log;
-    
+    use Illuminate\Support\Facades\File;
+
     class AuthController extends Controller
     {
         public function showRegistrationForm()
@@ -68,7 +70,14 @@
         }
 
 
-
+        public function showSystemUsers()
+        {
+            $activeEmployees = Employee::where('Employee_Status', 'active')->orWhere('Employee_Status', 'Active')->get();
+            $inactiveEmployees = Employee::where('Employee_Status', 'inactive')->orWhere('Employee_Status', 'Inactive')->get();
+        
+            return view('systemUsers.systemUsers', compact('activeEmployees', 'inactiveEmployees'));
+        }
+        
     public function showLoginForm()
     {
         return view('auth.login');
@@ -100,4 +109,41 @@
         ])->withInput($request->only('Employee_ID'));
     }
     
+    public function updateProfile(Request $request)
+    {
+        // Define validation rules
+        $request->validate([
+            'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // Add validation for other fields if necessary
+        ]);
+
+        $employee = Auth::user(); // Get the authenticated employee
+
+        // Handle profile image update
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $filename = 'profile_' . $employee->Employee_ID . '.' . $file->getClientOriginalExtension();
+
+            // Store the file in the public 'storage/profiles' directory
+            $file->storeAs('profiles', $filename, 'public');
+
+            // Check if the file exists in the public 'storage/profiles' directory
+            if (!Storage::disk('public')->exists('profiles/' . $filename)) {
+                Log::error('Uploaded file does not exist.');
+                return back()->withErrors('Uploaded file does not exist.');
+            }
+        }
+
+        return back()->with('success', 'Profile updated successfully.');
+    }
+
+    
+public function showProfile()
+{
+    // Assuming you are using the default Laravel authentication system
+    $employee = Auth::user(); // Get the currently authenticated employee
+
+    // Pass the employee object to the profile view
+    return view('profiles.employeeProfile', compact('employee'));
+}
 }
