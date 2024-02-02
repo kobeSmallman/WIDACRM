@@ -50,3 +50,9 @@ Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('s
 //Employee profile page route
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
 Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
+
+// Report routes
+Route::get('/OrderSummary', [OrderSummaryController::class, 'index'])->name('OrderSummary.index');
+Route::get('/ClientSummary', [ClientSummaryController::class, 'index'])->name('ClientSummary.index');
+Route::get('/VendorSummary', [VendorSummaryController::class, 'index'])->name('VendorSummary.index');
+
