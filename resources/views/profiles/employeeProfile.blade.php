@@ -21,11 +21,9 @@
                         <div class="text-center">
                             <!-- Display Profile Image -->
                             <img class="profile-user-img img-fluid img-circle"
-     src="{{ asset('storage/profiles/profile_' . $employee->Employee_ID . '.jpg') }}?{{ now()->timestamp }}"
-     alt="User profile picture">
-
+                                 src="{{ $employee->profile_image ? asset('storage/' . $employee->profile_image) : asset('default/path/to/default_image.jpg') }}"
+                                 alt="User profile picture">
                         </div>
-                        
 
                         <h3 class="profile-username text-center">{{ $employee->First_Name }} {{ $employee->Last_Name }}</h3>
                         <p class="text-muted text-center">{{ $employee->Position }}</p>
@@ -47,8 +45,10 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Right column for Profile Details -->
             <div class="col-md-8">
-                <!-- Profile Details -->
+                <!-- Profile Details Card -->
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">About Me</h3>
@@ -60,7 +60,7 @@
                         <strong>Employee Status</strong>
                         <p class="text-muted">{{ $employee->Employee_Status }}</p>
                         <hr>
-                        <!-- Add more fields as necessary -->
+                        <!-- Additional fields can be added here -->
                     </div>
                 </div>
             </div>

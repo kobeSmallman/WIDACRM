@@ -108,34 +108,27 @@
             'Employee_ID' => 'The provided credentials do not match our records.',
         ])->withInput($request->only('Employee_ID'));
     }
-    
     public function updateProfile(Request $request)
-    {
-        // Define validation rules
-        $request->validate([
-            'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // Add validation for other fields if necessary
-        ]);
+{
+    // Validate the form data
+    $request->validate([
+        'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        $employee = Auth::user(); // Get the authenticated employee
+    $employee = Auth::user(); // Get the authenticated employee
 
-        // Handle profile image update
-        if ($request->hasFile('profile_image')) {
-            $file = $request->file('profile_image');
-            $filename = 'profile_' . $employee->Employee_ID . '.' . $file->getClientOriginalExtension();
-
-            // Store the file in the public 'storage/profiles' directory
-            $file->storeAs('profiles', $filename, 'public');
-
-            // Check if the file exists in the public 'storage/profiles' directory
-            if (!Storage::disk('public')->exists('profiles/' . $filename)) {
-                Log::error('Uploaded file does not exist.');
-                return back()->withErrors('Uploaded file does not exist.');
-            }
-        }
-
-        return back()->with('success', 'Profile updated successfully.');
+    // Handle profile image update
+    if ($request->hasFile('profile_image')) {
+        $file = $request->file('profile_image');
+        $filename = 'profile_' . $employee->Employee_ID . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('profiles', $filename, 'public');
+        $employee->profile_image = 'profiles/' . $filename; // Save the path in the model
+        $employee->save(); // Save the employee to persist the change
     }
+    
+
+    return back()->with('success', 'Profile updated successfully.');
+}
 
     
 public function showProfile()

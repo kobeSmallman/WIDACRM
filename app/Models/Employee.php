@@ -29,8 +29,10 @@ class Employee extends Authenticatable
         'Position',
         'Employee_Status',
         'Role_ID',
-        'Password', // Ensure the case matches the column name in your database
+        'Password',
+        'profile_image', // Add this line
     ];
+    
 
 
     // Laravel expects the password field to be named 'password'.
