@@ -22,11 +22,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
-
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 // Registration routes
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -52,7 +47,9 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('
 Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
 
 // Report routes
-Route::get('/OrderSummary', [OrderSummaryController::class, 'index'])->name('OrderSummary.index');
-Route::get('/ClientSummary', [ClientSummaryController::class, 'index'])->name('ClientSummary.index');
-Route::get('/VendorSummary', [VendorSummaryController::class, 'index'])->name('VendorSummary.index');
+Route::get('/ordersummary', [OrderSummaryController::class, 'index'])->name('ordersummary.index');
+Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
+Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
+
+
 
