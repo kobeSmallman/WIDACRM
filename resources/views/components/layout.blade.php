@@ -237,24 +237,22 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa-solid fa-ticket"></i>
-                <p>
-                  Requests
-                </p>
-              </a>
+      
+            <a href="{{ route('createRequest') }}" class="nav-link">
+    <i class="nav-icon fa-solid fa-ticket"></i>
+    <p>Requests</p>
+</a>
 
-            </li>
+</li>
+
+
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa-solid fa-note-sticky"></i>
-                <p>
-                  Notes
+    <a href="{{ route('takeNotes') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-note-sticky"></i>
+        <p>Notes</p>
+    </a>
+</li>
 
-                </p>
-              </a>
-
-            </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fa-solid fa-box"></i>

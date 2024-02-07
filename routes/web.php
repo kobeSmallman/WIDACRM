@@ -6,6 +6,15 @@ use App\Http\Controllers\AuthController; // Add this line to use AuthController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\RequestController; // Ensure you have this controller created
+
+
+// ...
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +60,24 @@ Route::get('/ordersummary', [OrderSummaryController::class, 'index'])->name('ord
 Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
 Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
 
+// Display the page to take notes with a list of clients
+Route::get('/takeNotes', [NoteController::class, 'create'])->name('takeNotes');
 
+// Store the notes into the database
+Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
 
+// Display the page to create a new request based on the selected client
+// This assumes you have a separate RequestController for handling requests
+//notes page
+Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+//request page
+// Define a route for the createRequest view
+Route::get('/create-request', [RequestController::class, 'createRequest'])->name('createRequest');
+Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
+Route::get('/requests/create', [RequestController::class, 'create'])->name('requests.create');
+Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
+Route::get('/requests/{request}', [RequestController::class, 'show'])->name('requests.show');
+Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name('requests.edit');
+Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
+Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
