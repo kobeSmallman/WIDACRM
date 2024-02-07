@@ -49,6 +49,7 @@ Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.sh
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
+
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 //Employee profile page route

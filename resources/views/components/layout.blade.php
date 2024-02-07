@@ -228,14 +228,14 @@
 
 
             <li class="nav-header">TRANSACTION</li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-regular fa-users"></i>
-                <p>
-                  Clients
-                </p>
-              </a>
-            </li>
+     
+<li class="nav-item">
+    <a href="{{ route('clients.index') }}" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>Clients</p>
+    </a>
+</li>
+
             <li class="nav-item">
       
             <a href="{{ route('createRequest') }}" class="nav-link">
