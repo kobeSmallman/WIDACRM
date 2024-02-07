@@ -7,17 +7,24 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    
     public function index()
     {
         $clients = Client::all();
         $clients = Client::with(['Orders.Products'])->get();
         return view('clients.index', compact('clients'));
     }
+    
     public function show($id)
     {
         // Load the client along with the notes and the employees who created them
         $client = Client::with(['notes', 'notes.employee'])->findOrFail($id);
     
+        // If it's an AJAX request, return JSON data
+        if (request()->ajax()) {
+            return response()->json($client);
+        }
+        
         // Determine which view to return based on the current route
         if (request()->routeIs('clients.show')) {
             // If the current route is 'clients.show'
@@ -30,6 +37,7 @@ class ClientController extends Controller
         // Optional: handle the case where neither route matches
         abort(404, 'Page not found.');
     }
+    
     public function notes($id)
 {
     $client = Client::with('notes.employee')->findOrFail($id);

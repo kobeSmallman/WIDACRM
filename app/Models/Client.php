@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+
+
+    protected $casts = [
+        'json_column_name' => 'array',
+    ];
+    
+
+    // If your client ID column is not auto-incrementing or not an integer, add these lines
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $table = 'Client'; // Make sure this matches your actual table name
 
     protected $primaryKey = 'Client_ID';

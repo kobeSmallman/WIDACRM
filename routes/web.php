@@ -6,6 +6,15 @@ use App\Http\Controllers\AuthController; // Add this line to use AuthController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\RequestController; // Ensure you have this controller created
+
+
+// ...
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +30,6 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('auth.login');
 });
-
-
-
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Registration routes
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');
@@ -45,6 +49,7 @@ Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.sh
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
+
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 //Employee profile page route
@@ -52,7 +57,28 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('
 Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
 
 // Report routes
-Route::get('/OrderSummary', [OrderSummaryController::class, 'index'])->name('OrderSummary.index');
-Route::get('/ClientSummary', [ClientSummaryController::class, 'index'])->name('ClientSummary.index');
-Route::get('/VendorSummary', [VendorSummaryController::class, 'index'])->name('VendorSummary.index');
+Route::get('/ordersummary', [OrderSummaryController::class, 'index'])->name('ordersummary.index');
+Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
+Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
 
+// Display the page to take notes with a list of clients
+Route::get('/takeNotes', [NoteController::class, 'create'])->name('takeNotes');
+
+// Store the notes into the database
+Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+
+// Display the page to create a new request based on the selected client
+// This assumes you have a separate RequestController for handling requests
+//notes page
+Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+//request page
+// Define a route for the createRequest view
+Route::get('/create-request', [RequestController::class, 'createRequest'])->name('createRequest');
+Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
+Route::get('/requests/create', [RequestController::class, 'create'])->name('requests.create');
+Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
+Route::get('/requests/{request}', [RequestController::class, 'show'])->name('requests.show');
+Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name('requests.edit');
+Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
+Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');

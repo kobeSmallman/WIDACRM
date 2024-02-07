@@ -8,7 +8,7 @@ When you copy repository from github, when you open it in your IDE, open termina
 
 After, in that IDE terminal in the project location, you want to do install composer 
 	To do this: 
-		Install composer
+		composer install 
 
 After, You will need to generate the application key 
 	to do this: 

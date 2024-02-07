@@ -168,10 +168,11 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="{{ route('dashboard') }}" class="brand-link">
-        <img src="dist/img/WIDALogo.png" alt="WIDA Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">CRM</span>
-      </a>
+      <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
+    <img src="dist/img/WIDALogo.png" alt="WIDA Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">CRM</span>
+</a>
+
 
       <!-- Sidebar -->
       <div class="sidebar">
@@ -215,44 +216,43 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="{{ route('dashboard') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-house"></i>
-                <p>
-                  Home
-                </p>
-              </a>
+               <li class="nav-item menu-open">
+    @php
+        $dashboardRoute = (auth()->user()->Role_ID == 1) ? 'admin.dashboard' : 'employee.dashboard';
+    @endphp
+    <a href="{{ route($dashboardRoute) }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-house"></i>
+        <p>Home</p>
+    </a>
+</li>
 
-            </li>
 
             <li class="nav-header">TRANSACTION</li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-regular fa-users"></i>
-                <p>
-                  Clients
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa-solid fa-ticket"></i>
-                <p>
-                  Requests
-                </p>
-              </a>
+     
+<li class="nav-item">
+    <a href="{{ route('clients.index') }}" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>Clients</p>
+    </a>
+</li>
 
-            </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa-solid fa-note-sticky"></i>
-                <p>
-                  Notes
+      
+            <a href="{{ route('createRequest') }}" class="nav-link">
+    <i class="nav-icon fa-solid fa-ticket"></i>
+    <p>Requests</p>
+</a>
 
-                </p>
-              </a>
+</li>
 
-            </li>
+
+            <li class="nav-item">
+    <a href="{{ route('takeNotes') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-note-sticky"></i>
+        <p>Notes</p>
+    </a>
+</li>
+
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fa-solid fa-box"></i>
@@ -285,26 +285,24 @@
             </li>
 
             <li class="nav-header">REPORTS</li>
-            <li class="nav-item">
-              <a href="ClientSummary" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Client Summary</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="OrderSummary" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Order Summary</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('VendorSummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Vendor Summary</p>
-              </a>
-            </li>
-
-
+              <li class="nav-item">
+              <a href="{{ route('clientsummary.index') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-table-list"></i>
+                  <p>Client Summary</p>
+                </a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('ordersummary.index') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-table-list"></i>
+                  <p>Order Summary</p>
+                </a>
+              </li>
+              <li class="nav-item">
+              <a href="{{ route('vendorsummary.index') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-table-list"></i>
+                  <p>Vendor Summary</p>
+                </a>
+              </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
