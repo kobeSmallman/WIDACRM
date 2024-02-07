@@ -48,6 +48,14 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
+
+                @foreach ($permissions as $permission)
+                    <p>Permission ID: {{ $permission->Permission_ID }}</p>
+                    <p>Employee ID: {{ $permission->Employee_ID }}</p>
+                    <p>Page ID: {{ $permission->Page_ID }}</p>
+                    <p>Full Access: {{ $permission->FullAccess }}</p>
+                    <p>Read: {{ $permission->Read }}</p>
+                @endforeach
             </div>
             <!-- /.card-body -->
 

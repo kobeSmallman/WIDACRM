@@ -10,6 +10,7 @@
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\File;
     use Illuminate\Support\Facades\View;
+    use Illuminate\Support\Facades\Session;
 
 
     class AuthController extends Controller
@@ -58,6 +59,7 @@
         
                 // Log the user in
                 Auth::login($employee);
+                Session::put('employee_id', $employee);
         
                 // Redirect based on role
                 if ($employee->isAdmin()) {

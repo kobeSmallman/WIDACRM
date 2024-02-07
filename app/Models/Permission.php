@@ -10,7 +10,10 @@ class Permission extends Model
     use HasFactory;
 
     // If your permissions table uses a different name, specify it here
-    protected $table = 'Permission';
-
-    // Add any other properties or methods you need here
+    protected $table = 'Permissions';
+    protected $primaryKey = 'Permission_ID';
+    protected $fillable = [
+        'Employee_ID', 'Page_ID', 'Full_Access', 'Read'
+    ];
+ 
 }
