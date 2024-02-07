@@ -38,6 +38,8 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 // Login routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // Dashboard routes
 Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');

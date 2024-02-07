@@ -72,6 +72,12 @@
                 return back()->withErrors('Failed to create employee: ' . $e->getMessage());
             }
         }
+        public function logout(Request $request)
+{
+    Auth::logout();
+    return redirect('/login');
+}
+
 
 
         public function showSystemUsers()

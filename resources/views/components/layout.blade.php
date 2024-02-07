@@ -196,6 +196,12 @@
               {{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}
             </a>
           </div>
+          <div class="logout">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+        </form>
+    </div>
         </div>
 
 

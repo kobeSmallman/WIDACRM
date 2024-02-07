@@ -21,7 +21,7 @@ class Client extends Model
     protected $primaryKey = 'Client_ID';
 
     // If you don't have created_at and updated_at columns, set this to false
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Fillable attributes for mass assignment
     protected $fillable = [
@@ -34,9 +34,9 @@ class Client extends Model
         'Phone_Number',
         'Email',
         'Main_Contact',
-        'Created_By',
-        // Add any other fillable fields as necessary
+        'Created_By', // This line is added
     ];
+    
 
     // Define relationships here if there are any
     // Example: If a Client has many Orders

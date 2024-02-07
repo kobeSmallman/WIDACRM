@@ -1,18 +1,22 @@
 <?php
 namespace App\Http\Controllers;
- 
 
-use App\Models\Permission;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Permission;
 use App\Models\Employee;
 
-class OrderSummaryController extends BaseController
+class OrderSummaryController extends Controller
 {
     public function index()
-    {  
-        $employeeId = $this->getEmployeeId();
-        $permissions = Permission::where('Employee_ID', $employeeId)->get();
-        return view('OrderSummary.index',['permissions' => $permissions]);
+    {
+        $employee = Auth::user(); // Get the authenticated employee
+        $permissions = Permission::where('Employee_ID', $employee->Employee_ID)->get();
+        
+        // Now, pass the employee details as well to the view
+        return view('OrderSummary.index', [
+            'permissions' => $permissions,
+            'employee' => $employee // Pass this to the view
+        ]);
     }
-
 }
+

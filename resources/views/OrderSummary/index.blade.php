@@ -56,6 +56,13 @@
                     <p>Full Access: {{ $permission->FullAccess }}</p>
                     <p>Read: {{ $permission->Read }}</p>
                 @endforeach
+            
+
+<!-- Display employee details -->
+<p>Employee ID: {{ $employee->Employee_ID }}</p>
+<p>Name: {{ $employee->First_Name }} {{ $employee->Last_Name }}</p>
+<p>Department: {{ $employee->Department }}</p>
+<p>Position: {{ $employee->Position }}</p>
             </div>
             <!-- /.card-body -->
 
