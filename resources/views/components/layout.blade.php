@@ -298,7 +298,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="VendorSummary" class="nav-link">
+              <a href="{{ route('VendorSummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Vendor Summary</p>
               </a>
@@ -318,10 +318,8 @@
 
       <!-- Main content -->
       <div class="content">
-        <div class="container-fluid">
-
+        <div class="container-fluid">        
           {{ $slot }}
-          <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
       </div>
@@ -382,15 +380,19 @@
 
   <script>
 
-$(document).ready(function() {
+  $(document).ready(function() {
     var currentRoute = "{{ Route::currentRouteName() }}";
     console.log("Current Route: ", currentRoute);
+
+    // Extract the part before the dot (.)
+    var currentRouteWithoutIndex = currentRoute.split('.')[0];
 
     $('.nav-link').each(function() {
         var href = $(this).attr('href');
         console.log("Href: ", href);
 
-        if (currentRoute && href && currentRoute.includes(href)) {
+        // Check if the href contains the currentRoute without the '.index'
+        if (currentRouteWithoutIndex && href && href.includes(currentRouteWithoutIndex)) {
             $(this).addClass('active');
         }
     });
@@ -398,7 +400,7 @@ $(document).ready(function() {
   </script>
 
 
- 
+
 
 
 </body>
