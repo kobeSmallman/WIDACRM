@@ -31,10 +31,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Registration routes
-Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-
 // Login routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -54,6 +50,10 @@ Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('cli
 
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
+Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
+// Place this inside the web routes in web.php
+Route::post('/employees/create', [AuthController::class, 'storeEmployee'])->name('employees.create');
+
 //Employee profile page route
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
 Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
@@ -84,3 +84,6 @@ Route::get('/requests/{request}', [RequestController::class, 'show'])->name('req
 Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name('requests.edit');
 Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
+
+
+

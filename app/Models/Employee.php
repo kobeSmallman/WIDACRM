@@ -30,7 +30,7 @@ class Employee extends Authenticatable
         'Employee_Status',
         'Role_ID',
         'Password',
-        'profile_image', // Add this line
+        'profile_image', 
     ];
     
 

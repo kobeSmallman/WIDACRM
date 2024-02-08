@@ -15,63 +15,55 @@
 
     class AuthController extends Controller
     {
-           public function showRegistrationForm()
+         
+    
+        public function storeEmployee(Request $request)
         {
-            Log::info('Showing registration form.');
-            return view('auth.register');
-        }
-    
-        public function register(Request $request)
-        {
-            Log::info('Register method called with data:', $request->all());
-    
-            // Skipping validation for debugging purposes
-            // $validatedData = $request->validate([
-            //     'Employee_ID' => 'required|integer|max:11',
-            //     'Last_Name' => 'required|string|max:50',
-            //     'First_Name' => 'required|string|max:50',
-            //     'Department' => 'required|string|max:50',
-            //     'Position' => 'required|string|max:50',
-            //     'Employee_Status' => 'nullable|string|max:20',
-            //     'Role_ID' => 'nullable|integer',
-            //     'Password' => 'required|string|min:6|max:255',
-            // ]);
-    
-            // For debugging purposes, we're going to bypass validation
-            $validatedData = $request->all();
-    
-            if (empty($validatedData['Role_ID'])) {
-                $validatedData['Role_ID'] = 2; // Default to '2' if not provided
-            }
-    
-
+            Log::info('Employee creation method called with data:', $request->all());
+           
+            // For debugging, bypassing the validation
+            $employeeData = $request->only([
+                'Employee_ID',
+                'Last_Name',
+                'First_Name',
+                'Department',
+                'Position',
+                'Employee_Status',
+                'Role_ID',
+                'Password',
+                // Any other fields you expect from the request
+            ]);
+        
+            // Manually hash the password
+            $employeeData['Password'] = Hash::make($employeeData['Password']);
+        
             try {
-                $employee = Employee::create([
-                    'Employee_ID' => $validatedData['Employee_ID'],
-                    'First_Name' => $validatedData['First_Name'],
-                    'Last_Name' => $validatedData['Last_Name'],
-                    'Department' => $validatedData['Department'],
-                    'Position' => $validatedData['Position'],
-                    'Employee_Status' => $validatedData['Employee_Status'],
-                    'Role_ID' => $validatedData['Role_ID'],
-                    'Password' => Hash::make($validatedData['Password']),
-                ]);
+                \DB::beginTransaction();
         
-                // Log the user in
-                Auth::login($employee);
-                Session::put('employee_id', $employee);
+                // Directly create the employee without validation
+                $employee = Employee::create($employeeData);
         
-                // Redirect based on role
-                if ($employee->isAdmin()) {
-                    return redirect()->route('admin.dashboard');
-                } else {
-                    return redirect()->route('employee.dashboard');
-                }
+                \DB::commit();
         
+                Log::info('Employee created successfully.', ['employee_id' => $employee->Employee_ID]);
+        
+                // Redirect to the system users page with a success message
+                return redirect()->route('system-users')->with('success', 'Employee created successfully.');
             } catch (\Throwable $e) {
-                return back()->withErrors('Failed to create employee: ' . $e->getMessage());
+                \DB::rollBack();
+                Log::error('Failed to create employee: ' . $e->getMessage());
+        
+                // Log the query that caused the exception
+                Log::error('Failed query:', \DB::getQueryLog());
+        
+                // Redirect back with an error message
+                return back()->withErrors('Failed to create employee: ' . $e->getMessage())->withInput();
             }
         }
+        
+        
+        
+        
         public function logout(Request $request)
 {
     Auth::logout();
