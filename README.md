@@ -19,6 +19,9 @@ You will see your own key on your own device, in the .env:
 		APP_KEY=base64:JNF2WNO5MP6WMP3OMQF4QMOIWMO499M=
 			(that's an exmaple APP_KEY, this will be different on everyones computer)
 	Test by doing the following in the same terminal: 
+
+	Also check this in your php.ini file to make sure it is enabled (around line 943/944) 
+			extension=pdo_mysql
 		php artisan serve
 
 

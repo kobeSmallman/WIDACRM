@@ -58,7 +58,10 @@ class Employee extends Authenticatable
         return $this->Role_ID === 2; // 2 means Employee 
     }
     
-    
+    public function permissions()
+{
+    return $this->hasMany(Permission::class, 'Employee_ID', 'Employee_ID');
+}
 
     // Add any other model properties or methods you might need
 }

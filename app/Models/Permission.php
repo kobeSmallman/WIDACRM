@@ -15,5 +15,10 @@ class Permission extends Model
     protected $fillable = [
         'Employee_ID', 'Page_ID', 'Full_Access', 'Read'
     ];
+    public function employee()
+{
+    return $this->belongsTo(Employee::class, 'Employee_ID', 'Employee_ID');
+}
+
  
 }

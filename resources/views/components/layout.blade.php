@@ -282,13 +282,12 @@
 
 
             <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fa-solid fa-user-lock"></i>
-                <p>
-                  Permissions
-                </p>
-              </a>
-            </li>
+    <a href="{{ route('permissions') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-user-lock"></i>
+        <p>Permissions</p>
+    </a>
+</li>
+
 
             <li class="nav-header">REPORTS</li>
               <li class="nav-item">

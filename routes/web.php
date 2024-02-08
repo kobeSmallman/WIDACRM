@@ -85,5 +85,7 @@ Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name
 Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
+Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+
 
 
