@@ -43,8 +43,8 @@
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
+      <!-- <ul class="navbar-nav ml-auto">
+        // Navbar Search 
         <li class="nav-item">
           <a class="nav-link" data-widget="navbar-search" href="#" role="button">
             <i class="fas fa-search"></i>
@@ -65,103 +65,53 @@
             </form>
           </div>
         </li>
+         ... other parts of your HTML above ... -->
+ 
+        <ul class="navbar-nav ml-auto">
+  <!-- User Account Dropdown Menu -->
+  <li class="nav-item dropdown user-menu">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      @if ($employee->profile_image)
+        <img src="data:image/jpeg;base64,{{ $employee->profile_image }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
+      @else
+        <img src="{{ asset('default/path/to/default_image.jpg') }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
+      @endif
+      <span>{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      <!-- Dropdown links -->
+      <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
+        <i class="fas fa-user-edit mr-2"></i> Edit Profile
+      </a>
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-inbox mr-2"></i> Inbox
+      </a>
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-tasks mr-2"></i> Tasks
+      </a>
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-comments mr-2"></i> Chats
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item dropdown-footer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        Logout
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+    </div>
+  </li>
+</ul>
 
-        <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">Call me whenever you can...</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">I got your message bro</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">The subject goes here</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-          </div>
-        </li>
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
-          </a>
-        </li>
-      </ul>
+
+<!-- ... rest of your HTML ... -->
+
+
+
+
+          
+           
+     
     </nav>
     <!-- /.navbar -->
 
@@ -179,30 +129,7 @@
         <!-- Link to User Profile -->
         <!-- Sidebar user panel (optional) -->
 
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            @if ($employee->profile_image)
-            <img class="profile-user-img img-fluid img-circle"
-              src="data:image/jpeg;base64,{{ $employee->profile_image }}" alt="User profile picture">
-            @else
-            <img class="profile-user-img img-fluid img-circle" src="{{ asset('default/path/to/default_image.jpg') }}"
-              alt="Default profile picture">
-            @endif
-
-          </div>
-
-          <div class="info">
-            <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="username">
-              {{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}
-            </a>
-          </div>
-          <div class="logout">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-default btn-flat">Sign out</button>
-        </form>
-    </div>
-        </div>
+      
 
 
         <!-- SidebarSearch Form -->
@@ -228,7 +155,7 @@
     @endphp
     <a href="{{ route($dashboardRoute) }}" class="nav-link">
         <i class="nav-icon fa-solid fa-house"></i>
-        <p>Home</p>
+        <p>Dashboard</p>
     </a>
 </li>
 
@@ -400,6 +327,7 @@
         }
     });
 });
+
   </script>
 
 
