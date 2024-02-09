@@ -8,7 +8,7 @@ use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RequestController; // Ensure you have this controller created
-
+use App\Http\Controllers\VendorController;
 
 // ...
 
@@ -48,6 +48,9 @@ Route::post('/clients/store', [ClientController::class, 'store'])->name('clients
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
 
+// Vendor routes
+Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+Route::resource('vendors', VendorController::class);
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
@@ -86,6 +89,11 @@ Route::put('/requests/{request}', [RequestController::class, 'update'])->name('r
 Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+
+// Add this to your web.php file within the routes group
+
+
+
 
 
 

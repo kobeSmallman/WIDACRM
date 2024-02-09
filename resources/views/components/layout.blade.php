@@ -186,15 +186,15 @@
     </a>
 </li>
 
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa-solid fa-box"></i>
-                <p>
-                  Vendors
-                </p>
-              </a>
+           <!-- Update this in your sidebar menu blade file where you list your navigation links -->
 
-            </li>
+<li class="nav-item">
+    <a href="{{ route('vendors.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-box"></i>
+        <p>Vendors</p>
+    </a>
+</li>
+
 
             <li class="nav-header">ADMINISTRATION</li>
             <li class="nav-item">
@@ -202,7 +202,7 @@
                 <i class="nav-icon fa-solid fa-address-card"></i>
                 <p>
                   System Users
-                  <span class="badge badge-info right">2</span>
+                  <span class="badge badge-info right"></span>
                 </p>
               </a>
             </li>

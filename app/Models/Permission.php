@@ -19,6 +19,9 @@ class Permission extends Model
 {
     return $this->belongsTo(Employee::class, 'Employee_ID', 'Employee_ID');
 }
-
+public function page()
+{
+    return $this->belongsTo(Page::class, 'Page_ID', 'Page_ID');
+}
  
 }

@@ -72,13 +72,16 @@
 
 
 
-        public function showSystemUsers()
-        {
-            $activeEmployees = Employee::where('Employee_Status', 'active')->orWhere('Employee_Status', 'Active')->get();
-            $inactiveEmployees = Employee::where('Employee_Status', 'inactive')->orWhere('Employee_Status', 'Inactive')->get();
-        
-            return view('systemUsers.systemUsers', compact('activeEmployees', 'inactiveEmployees'));
-        }
+public function showSystemUsers()
+{
+    $activeEmployees = Employee::with('permissions')->where('Employee_Status', 'Active')->get();
+    $inactiveEmployees = Employee::where('Employee_Status', 'Inactive')->get();
+
+    // The variable must match what you use in the view
+    return view('systemUsers.systemUsers', compact('activeEmployees', 'inactiveEmployees'));
+}
+
+
         
     public function showLoginForm()
     {

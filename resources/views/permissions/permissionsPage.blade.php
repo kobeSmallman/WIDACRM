@@ -26,22 +26,16 @@
                                     <td>{{ $page->Page_ID }}</td>
                                     <td>{{ $page->Page_Name }}</td>
                                     <td>
-            
-    <!-- ... -->
-    <details>
-        <summary>View Permissions</summary>
-        <ul>
-            @foreach ($page->permissions as $permission)
-                <li>
-                    Employee ID: {{ $permission->Employee_ID }}
-                    Name: {{ $permission->employee->First_Name }} {{ $permission->employee->Last_Name }}
-                    Full Access: {{ $permission->Full_Control ? 'Yes' : 'No' }}
-                    Read Access: {{ $permission->Read_Access ? 'Yes' : 'No' }}
-                </li>
-            @endforeach
-        </ul>
-    </details>
-                                          
+                                        <details>
+                                            <summary>View Permissions</summary>
+                                            <ul>
+                                                @foreach ($page->permissions as $permission)
+                                                    <li>
+                                                        {{ $permission->employee->First_Name }} {{ $permission->employee->Last_Name }} ({{ $permission->employee->Employee_ID }}) - Full Access: {{ $permission->Full_Control ? 'Yes' : 'No' }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </details>
                                     </td>
                                 </tr>
                             @endforeach
