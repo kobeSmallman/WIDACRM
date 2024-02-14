@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RequestController; // Ensure you have this controller created
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\OrderController;
+
+
+// ... other routes ...
+
+
+
+// ... other routes ...
 
 // ...
 
@@ -48,6 +56,11 @@ Route::post('/clients/store', [ClientController::class, 'store'])->name('clients
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
 
+
+// Orders route
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+// Route to store a new order
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 // Vendor routes
 Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 Route::resource('vendors', VendorController::class);
@@ -79,6 +92,7 @@ Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.crea
 Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
 //request page
 // Define a route for the createRequest view
+
 Route::get('/create-request', [RequestController::class, 'createRequest'])->name('createRequest');
 Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
 Route::get('/requests/create', [RequestController::class, 'create'])->name('requests.create');

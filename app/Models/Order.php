@@ -3,13 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    protected $table = 'Order'; // Replace with your actual table name
+    use HasFactory;
 
+    protected $table = 'Order'; // Ensure this matches your actual table name
     protected $primaryKey = 'Order_ID';
-    public $timestamps = true; // Set to false if you don't have timestamps
+    protected $keyType = 'string'; // Indicate that the primary key is a string
+    public $incrementing = false; // Indicate that the primary key is not auto-incrementing
+
+    // Specify the actual format of your dates if different
+    protected $casts = [
+        'Request_DATE' => 'datetime:Y-m-d',
+        'Order_DATE' => 'datetime:Y-m-d',
+        'Quotation_DATE' => 'datetime:Y-m-d',
+    ];
 
     protected $fillable = [
         'Order_ID',
@@ -23,28 +33,8 @@ class Order extends Model
         'Quotation_DATE',
         'CSA_Path',
         'SSA_Path',
-        // Add other fields as necessary
+        // ...other fields
     ];
 
-    public function client()
-    {
-        return $this->belongsTo(Client::class, 'Client_ID', 'Client_ID');
-    }
-
-    public function products()
-    {
-        // Assuming the foreign key in the products table is 'Order_ID'
-        return $this->hasMany(Product::class, 'Order_ID', 'Order_ID');
-    }
-
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class, 'Created_By', 'Employee_ID');
-    }
-    public function getOrderID()
-    {
-        return $this->attributes['Order_ID']; // Ensure this matches your database column name
-    }
-
-    // Add other necessary model methods and properties
+    // Relationships and other model methods...
 }

@@ -84,7 +84,14 @@ public function store(Request $request)
     return view('dashboard.admin', compact('clients'));
 }
 
+public function createRequest()
+{
+    // Fetch all clients
+    $clients = Client::all(); // Assuming you want to list all clients in the dropdown
 
+    // Pass the clients to your view
+    return view('createRequest', compact('clients'));
+}
 
     // Add any other necessary methods here
 }

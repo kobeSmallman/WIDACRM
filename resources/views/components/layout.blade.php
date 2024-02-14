@@ -167,6 +167,15 @@
         <i class="nav-icon fas fa-users"></i>
         <p>Clients</p>
     </a>
+
+
+
+            <li class="nav-item">
+    <a href="{{ route('takeNotes') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-note-sticky"></i>
+        <p>Notes</p>
+    </a>
+</li>
 </li>
 
             <li class="nav-item">
@@ -177,15 +186,16 @@
 </a>
 
 </li>
-
-
-            <li class="nav-item">
-    <a href="{{ route('takeNotes') }}" class="nav-link">
-        <i class="nav-icon fa-solid fa-note-sticky"></i>
-        <p>Notes</p>
-    </a>
 </li>
 
+            <li class="nav-item">
+      
+            <a href="{{ route('orders.index') }}" class="nav-link">
+    <i class="nav-icon fa-solid fa-ticket"></i>
+    <p>Orders</p>
+</a>
+
+</li>
            <!-- Update this in your sidebar menu blade file where you list your navigation links -->
 
 <li class="nav-item">
