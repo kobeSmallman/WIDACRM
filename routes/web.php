@@ -104,6 +104,9 @@ Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->nam
 
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
 
+
+Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
+
 // Add this to your web.php file within the routes group
 
 

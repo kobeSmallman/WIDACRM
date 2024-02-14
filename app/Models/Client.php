@@ -25,6 +25,7 @@ class Client extends Model
 
     // Fillable attributes for mass assignment
     protected $fillable = [
+        
         'Client_ID',
         'Lead_Status',
         'Buyer_Status',

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Order extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $table = 'Order'; // Ensure this matches your actual table name
     protected $primaryKey = 'Order_ID';
     protected $keyType = 'string'; // Indicate that the primary key is a string

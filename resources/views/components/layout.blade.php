@@ -92,6 +92,10 @@
       <a href="#" class="dropdown-item">
         <i class="fas fa-comments mr-2"></i> Chats
       </a>
+      <a href="{{ route('site.settings') }}" class="dropdown-item">
+    <i class="fas fa-comments mr-2"></i> Settings
+</a>
+
       <div class="dropdown-divider"></div>
       <a href="#" class="dropdown-item dropdown-footer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
         Logout

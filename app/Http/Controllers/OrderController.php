@@ -17,27 +17,26 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            // Specify your validation rules
-            'client_id' => 'required|exists:clients,id',
-            'product_name' => 'required|string|max:255',
-            'product_description' => 'required|string',
-            'product_price' => 'required|numeric',
-            'quantity' => 'required|integer|min:1',
-            'notes' => 'nullable|string'
-        ]);
-
-        // Create a new order using the validated data
-        $order = Order::create($validatedData);
-        // When storing a new order
-$order = new Order($request->all());
-$order->Order_ID = 'ORD-' . time() . '-' . Str::random(5); // 'ORD-' prefix with a unique identifier
-$order->save();
-
+        // When storing a new order, directly use request data
+        $orderData = $request->all(); // This gets all input data
+    
+        // Check if Order_ID is sent from the form, if not generate a unique one
+        if (empty($orderData['Order_ID'])) {
+            $orderData['Order_ID'] = 'ORD-' . time() . '-' . Str::random(5);
+        }
+    
+        // Ensure Order_Status and Request_Status have a value
+        $orderData['Order_Status'] = $orderData['Order_Status'] ?? 'Active';
+        $orderData['Request_Status'] = $orderData['Request_Status'] ?? 'Active';
+    
+        // Create and save the order
+        $order = new Order($orderData);
+        $order->save();
+    
         // Redirect to the orders page with a success message
         return redirect()->route('orders.index')->with('success', 'New order has been created.');
     }
+    
 
     // Add other necessary methods as needed
 }
