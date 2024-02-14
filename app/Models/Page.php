@@ -9,10 +9,12 @@ class Page extends Model
 {
     use HasFactory;
     protected $table = 'Page';
-    public function permissions()
+   // Page.php
+public function permissions()
 {
-    return $this->hasMany(Permission::class, 'Page_ID', 'id');
+    return $this->hasMany(Permission::class, 'Page_ID', 'Page_ID');
 }
+
 // Page.php
 
 public function employees()
