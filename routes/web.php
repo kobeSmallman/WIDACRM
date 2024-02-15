@@ -107,7 +107,7 @@ Route::get('/permissions', [PermissionController::class, 'index'])->name('permis
 
 Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
 
-// Add this to your web.php file within the routes group
+Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
 
 
 
