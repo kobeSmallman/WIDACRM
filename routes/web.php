@@ -64,6 +64,18 @@ Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 // Vendor routes
 Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 Route::resource('vendors', VendorController::class);
+// Place these inside the web.php file
+Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+
+// Edit vendor form
+Route::get('/vendors/{vendor}/edit', [VendorController::class, 'edit'])->name('vendors.edit');
+
+// Update vendor
+Route::put('/vendors/{vendor}', [VendorController::class, 'update'])->name('vendors.update');
+
+// Delete vendor
+Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])->name('vendors.destroy');
+
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');

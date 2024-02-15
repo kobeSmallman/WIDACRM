@@ -58,6 +58,31 @@
                     </div>
                 </form>
             </div>
+            <!-- Bootstrap Modal for Edit Vendor -->
+<div class="modal fade" id="editVendorModal" tabindex="-1" role="dialog" aria-labelledby="editVendorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="editVendorForm" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="modal-header">
+          <h5 class="modal-title" id="editVendorModalLabel">Edit Vendor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Dynamically filled form fields will go here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
                     <!-- Vendors Table -->
                     <div class="card">
                         <div class="card-header">
@@ -147,4 +172,53 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+        var table = $("#vendors-table").DataTable({
+            ...
+        });
+
+        // Inline Editing
+        $('#vendors-table').on('blur', 'td[contenteditable="true"]', function() {
+            var vendorId = $(this).data('id');
+            var column = $(this).data('column');
+            var value = $(this).text();
+
+            $.ajax({
+                url: '{{ route("vendors.inlineUpdate") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: vendorId,
+                    column: column,
+                    value: value
+                },
+                success: function(response) {
+                    // Response handling
+                    console.log(response);
+                }
+            });
+        });
+
+        // Delete vendor
+        $('.delete-vendor-btn').click(function() {
+            var vendorId = $(this).data('id');
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    url: '/vendors/' + vendorId,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
+                        // Reload the page or remove the row from the table
+                        table.row($(this).parents('tr')).remove().draw();
+                    }
+                });
+            }
+        });
+    });
 </script>
