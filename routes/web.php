@@ -55,9 +55,13 @@ Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.sh
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
+// web.php
+Route::get('/clients/{id}/orders', [ClientController::class, 'getClientOrders'])->name('clients.orders');
 
 
-// Orders route
+// Add a route to fetch all orders for all clients
+Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
+
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 // Route to store a new order
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
@@ -113,6 +117,9 @@ Route::get('/requests/{request}', [RequestController::class, 'show'])->name('req
 Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name('requests.edit');
 Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
+
+
+
 
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
 

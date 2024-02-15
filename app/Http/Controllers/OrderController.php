@@ -51,6 +51,11 @@ class OrderController extends Controller
         return redirect()->route('orders.index')->with('success', 'New order has been created.');
     }
     
-
+    public function getAllOrders()
+{
+    $orders = Order::with('products')->get();
+    return response()->json($orders);
+}
+    
     // Add other necessary methods as needed
 }

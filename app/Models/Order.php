@@ -35,11 +35,11 @@ class Order extends Model
         'SSA_Path',
         // ...other fields
     ];
-    public function products()
-    {
-        // Assuming 'order_id' is the foreign key in the 'products' table
-        return $this->hasMany(Product::class, 'Order_id');
-    }
+// Order.php
+public function products()
+{
+    return $this->hasMany(Product::class, 'Order_ID', 'Order_ID');
+}
 
     public function getOrderIDAttribute()
 {
