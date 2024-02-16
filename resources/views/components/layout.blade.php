@@ -4,11 +4,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CRM | WIDA</title>
+  <title>WIDACRM</title>
+  <link rel="icon" type="image/x-icon" href="dist/img/WIDA/WIDA.ico">
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700&display=fallback">
+
+  <!-- Google Font: Montserrat -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700&display=fallback">
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
@@ -20,7 +24,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
+
+
+
+  <!-- jQuery -->
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
 </head>
 <!--
 `body` tag options:
@@ -124,9 +134,10 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
-    <img src="dist/img/WIDALogo.png" alt="WIDA Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">CRM</span>
+    <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
+    <img src="dist/img/WIDA/wida100x100.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-bold" style="color: #5a75f7">WIDA</span>
+    <span class="brand-text font-weight-normal" style="margin-left:-4px">CRM</span>
 </a>
 
 
@@ -142,7 +153,7 @@
     @php
         $dashboardRoute = (auth()->user()->Role_ID == 1) ? 'admin.dashboard' : 'employee.dashboard';
     @endphp
-    <a href="{{ route($dashboardRoute) }}" class="nav-link">
+    <a href="{{ route($dashboardRoute) }}" class="nav-link" style="margin-top: 10px; margin-bottom: 10px;">
         <i class="nav-icon fa-solid fa-house"></i>
         <p>Dashboard</p>
     </a>
@@ -265,7 +276,7 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2024 <a href="">Hexabridge Technologies</a>.</strong>
+      <strong>Copyright &copy; 2024 <a href="" style="color: #5a75f7">Hexabridge Technologies</a>.</strong>
       All rights reserved.
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 0.0.1
@@ -279,9 +290,7 @@
   <!-- REQUIRED SCRIPTS -->
 
 
-
-  <!-- jQuery -->
-  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  
   <!-- Bootstrap -->
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE -->
