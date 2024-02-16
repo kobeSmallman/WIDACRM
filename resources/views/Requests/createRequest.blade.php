@@ -2,92 +2,76 @@
     <div class="container mt-4">
         <h2>Create Request</h2>
 
-        <!-- Request Form -->
-        <form action="{{ route('requests.store') }}" method="POST" id="requestForm">
-            @csrf
+        <div id="clientOrdersContainer">
+            <h3>Client Orders</h3>
+            <table class="table" id="clientOrdersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Client ID</th>
+                        <th>Company Name</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Orders will be filled here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
 
-            <!-- Client Selection Dropdown -->
-            <div class="mb-3">
-                <label for="clientSelect" class="form-label">Select Client:</label>
-                <select id="clientSelect" name="client_id" class="form-control" onchange="fetchClientOrders(this.value)">
-    <option value="">All Clients</option>
-    @foreach ($clients as $client)
-        <option value="{{ $client->Client_ID }}">{{ $client->Client_ID }} - {{ $client->Company_Name }}</option>
-    @endforeach
-</select>
-
-
-
-            </div>
-
-            <!-- Here we'll display client's orders -->
-            <div id="clientOrdersContainer" style="display:none;">
-                <h3>Client Orders</h3>
-                <table class="table" id="clientOrdersTable">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <!-- Add more columns as needed -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Orders will be filled here by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Product Requests Container -->
-            <div id="productRequestsContainer">
-                <!-- Dynamic product requests will be added here -->
-            </div>
-
-            <!-- Add Request Button -->
-            <button type="button" class="btn btn-info mt-3" id="addRequestButton">Add Another Request</button>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary mt-3">Submit All Requests</button>
-        </form>
+        <a href="{{ route('orders.index') }}" class="btn btn-primary mt-3">Make New Request</a>
     </div>
 
-    <script>
-        let productRequestIndex = 0;
+    <!-- Include DataTables scripts -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
 
-        // Function to dynamically add product request forms
-        function addProductRequestForm() {
-            // Your existing function to add product request forms
+    <script>
+        function fetchAllClientOrders() {
+            fetch('/orders/all') // Adjust the endpoint as necessary
+                .then(response => response.json())
+                .then(orders => {
+                    const ordersTableBody = document.getElementById('clientOrdersTable').querySelector('tbody');
+                    ordersTableBody.innerHTML = ''; // Clear existing rows
+
+                    orders.forEach(order => {
+                        (order.products || []).forEach(product => {
+                            const row = `<tr>
+                                            <td>${order.Order_ID}</td>
+                                            <td>${order.Client_ID}</td>
+                                            <td>${order.client.Company_Name}</td>
+                                            <td>${product.Product_Name}</td>
+                                            <td>${product.Quantity}</td>
+                                            <td>${product.Price}</td>
+                                          </tr>`;
+                            ordersTableBody.insertAdjacentHTML('beforeend', row);
+                        });
+                    });
+
+                    // Initialize DataTable
+                    $('#clientOrdersTable').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        responsive: true,
+                        autoWidth: false,
+                    });
+                })
+                .catch(error => console.error('Error:', error));
         }
 
-        function fetchClientOrders(clientId) {
-    let url = clientId ? `/clients/${clientId}/orders` : '/orders/all';
-
-    fetch(url)
-        .then(response => response.json())
-        .then(orders => {
-            const ordersTableBody = document.getElementById('clientOrdersTable').querySelector('tbody');
-            ordersTableBody.innerHTML = ''; // Clear existing rows
-            
-            orders.forEach(order => {
-                (order.products || []).forEach(product => {
-                    const row = `<tr>
-                                    <td>${order.Order_ID}</td>
-                                    <td>${product.Product_Name}</td>
-                                    <td>${product.Quantity}</td>
-                                    <td>${product.Price}</td>
-                                </tr>`;
-                    ordersTableBody.insertAdjacentHTML('beforeend', row);
-                });
-            });
-            
-            document.getElementById('clientOrdersContainer').style.display = 'block';
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-// Initialize with all orders when the page loads
-fetchClientOrders();
-
+        // Call the function to fetch all client orders when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchAllClientOrders();
+        });
     </script>
 </x-layout>

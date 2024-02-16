@@ -185,21 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var vendorId = $(this).data('id');
             var column = $(this).data('column');
             var value = $(this).text();
-
-            $.ajax({
-                url: '{{ route("vendors.inlineUpdate") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: vendorId,
-                    column: column,
-                    value: value
-                },
-                success: function(response) {
-                    // Response handling
-                    console.log(response);
-                }
-            });
         });
 
         // Delete vendor

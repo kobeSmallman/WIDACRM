@@ -55,16 +55,41 @@ Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.sh
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
-// web.php
+Route::get('/clients/{clientId}/orders', [ClientController::class, 'getClientOrders']);
 Route::get('/clients/{id}/orders', [ClientController::class, 'getClientOrders'])->name('clients.orders');
 
 
 // Add a route to fetch all orders for all clients
+// Display a listing of the orders
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+// Show the form for creating a new order
+Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+
+// Store a newly created order in storage
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
+// Display the specified order
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+// Show the form for editing the specified order
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+
+// Update the specified order in storage
+Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+
+// Remove the specified order from storage
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+// You might want to add a route for fetching all orders or specific order details for AJAX calls
 Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
 
-Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-// Route to store a new order
-Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/details/{orderId}', [OrderController::class, 'getOrderDetails'])->name('orders.details');
+
+// Update an existing order (this could be used for the edit functionality)
+Route::post('/orders/update/{orderId}', [OrderController::class, 'update'])->name('orders.update');
+
+// Route to fetch orders for a specific client
 // Vendor routes
 Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 Route::resource('vendors', VendorController::class);

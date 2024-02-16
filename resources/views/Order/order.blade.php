@@ -1,240 +1,184 @@
+{{-- order.blade.php --}}
 <x-layout>
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Orders</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Begin Page Content -->
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
     <div class="container-fluid">
-        <!-- Orders Table -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Current Orders</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Client ID</th>
-                                <th>Created By</th>
-                                <th>Request Date</th>
-                                <th>Request Status</th>
-                                <th>Remarks</th>
-                                <th>Order Date</th>
-                                <th>Order Status</th>
-                                <th>Quotation Date</th>
-                                <th>CSA Path</th>
-                                <th>SSA Path</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orders as $order)
-                            <tr>
-                                <td>{{ $order->Order_ID }}</td>
-                                <td>{{ $order->Client_ID }}</td>
-                                <td>{{ $order->Created_By }}</td>
-                                <td>{{ $order->Request_DATE }}</td>
-                                <td>{{ $order->Request_Status }}</td>
-                                <td>{{ $order->Remarks }}</td>
-                                <td>{{ $order->Order_DATE }}</td>
-                                <td>{{ $order->Order_Status }}</td>
-                                <td>{{ $order->Quotation_DATE }}</td>
-                                <td>{{ $order->CSA_Path }}</td>
-                                <td>{{ $order->SSA_Path }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Orders</h1>
         </div>
-
-
-        <!-- New Order Form -->
-     <!-- New Order Form -->
-<!-- New Order Form -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Add New Order</h6>
+      </div>
     </div>
-    <div class="card-body">
-        <form action="{{ route('orders.store') }}" method="POST" id="newOrderForm">
-            @csrf
-            <div class="form-group">
-                <label for="client_id">Client ID:</label>
-                <input type="text" class="form-control" id="client_id" name="client_id" required>
-            </div>
-            <div class="form-group">
-                <label for="created_by">Created By:</label>
-                <input type="text" class="form-control" id="created_by" name="created_by" required>
-            </div>
-            <div class="form-group">
-                <label for="request_date">Request Date:</label>
-                <input type="date" class="form-control" id="request_date" name="request_date" required>
-            </div>
-            <div class="form-group">
-                <label for="request_status">Request Status:</label>
-                <input type="text" class="form-control" id="request_status" name="request_status" required>
-            </div>
-            <div class="form-group">
-                <label for="remarks">Remarks:</label>
-                <textarea class="form-control" id="remarks" name="remarks"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="order_date">Order Date:</label>
-                <input type="date" class="form-control" id="order_date" name="order_date" required>
-            </div>
-            <div class="form-group">
-                <label for="order_status">Order Status:</label>
-                <input type="text" class="form-control" id="order_status" name="order_status" required>
-            </div>
-            <div class="form-group">
-                <label for="quotation_date">Quotation Date:</label>
-                <input type="date" class="form-control" id="quotation_date" name="quotation_date">
-            </div>
-            <div class="form-group">
-                <label for="csa_path">CSA Path:</label>
-                <input type="text" class="form-control" id="csa_path" name="csa_path">
-            </div>
-            <div class="form-group">
-                <label for="ssa_path">SSA Path:</label>
-                <input type="text" class="form-control" id="ssa_path" name="ssa_path">
-            </div>
-            <!-- Client Selection Dropdown from createRequest -->
-            <div class="mb-3">
-                <label for="clientSelect" class="form-label">Select Client:</label>
-                <select id="clientSelect" name="client_id" class="form-control" onchange="handleClientSelection()">
-                    <option value="">Select a Client</option>
-                    @foreach ($clients as $Client)
-                        <option value="{{ $Client->Client_ID }}">{{ $Client->Client_ID }} - {{ $Client->Company_Name }}</option>
-                    @endforeach
-                </select>
-            </div>
+  </div>
 
-            <!-- Product Requests Container -->
-            <div id="productRequestsContainer">
-                        <!-- Dynamic product requests will be added here -->
-                    </div>
-
-            <!-- Add Request Button -->
-            <button type="button" class="btn btn-info mt-3" id="addRequestButton">Add Another Request</button>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary mt-3">Submit Order and Requests</button>
-            
-        </form>
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Orders Table -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Current Orders</h6>
+        <button id="createOrder" class="btn btn-success float-right">Create New Order</button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="ordersTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Client Name</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <!-- All other fields from the Client and Product tables -->
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{-- Rows will be populated by the DataTables script --}}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <!-- Create/Edit Order Form Modal -->
+    <div class="modal fade" id="orderFormModal" tabindex="-1" role="dialog" aria-labelledby="orderFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+    <h5 class="modal-title" id="orderFormModalLabel">Order Details</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
-</form>
+<div class="modal-body">
+    <form id="orderForm">
+        @csrf
+        <input type="hidden" id="order_id" name="order_id"> <!-- Hidden field for order ID (used in edit) -->
+        <!-- Fields for order details -->
+        <div class="form-group">
+            <label for="client_id">Client ID:</label>
+            <input type="text" class="form-control" id="client_id" name="client_id" required>
+        </div>
+        <!-- ... All other fields for the order ... -->
+        <!-- Client details section -->
+        <h4>Client Details</h4>
+        <div class="form-group">
+            <label for="company_name">Company Name:</label>
+            <input type="text" class="form-control" id="company_name" name="company_name" required>
+        </div>
+        <!-- ... All other fields for the client ... -->
+        <!-- Product details section -->
+        <h4>Product Details</h4>
+        <div id="products_container">
+            <!-- Product items will be dynamically added here -->
+        </div>
+        <button type="button" class="btn btn-info" id="addProductButton">Add Product</button>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
 </div>
-</div>
-</div>
-<!-- /.container-fluid -->
-</x-layout>
 <script>
-    let productRequestIndex = 0;
-
-    function addProductRequestForm() {
-        const container = document.getElementById('productRequestsContainer');
-        const html = `
-            <div class="product-request-form mb-3" data-index="${productRequestIndex}">
-                <!-- Dynamic Request Form Fields -->
-                <!-- ... -->
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', html);
-        productRequestIndex++;
-    }
-
-    function handleClientSelection() {
-        // Implement any additional logic when client is selected, e.g., setting status to lead
-    }
-
-    document.getElementById('addRequestButton').addEventListener('click', addProductRequestForm);
-
-    // Add the first product request form on initial page load
-    window.addEventListener('DOMContentLoaded', (event) => {
-        addProductRequestForm();
+$(document).ready(function() {
+    // DataTables Initialization
+    var table = $('#ordersTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('orders.all') }}",
+        columns: [
+            { data: 'Order_ID' },
+            { data: 'client.Name' },
+            { data: 'client.Company_Name' },
+            { data: 'client.Email' },
+            { data: 'client.Phone_Number' },
+            // Additional columns as needed
+            {
+                data: null,
+                className: "dt-center",
+                defaultContent: '<button class="btn btn-primary editor-edit">Edit</button> <button class="btn btn-danger editor-delete">Delete</button>',
+                orderable: false
+            }
+        ]
     });
-</    // ... (continuing from the previous JavaScript code)
 
-// Add the first product request form on initial page load
-window.addEventListener('DOMContentLoaded', (event) => {
-    addProductRequestForm();
-});
+    // Dynamic Product Addition
+    $('#addProductButton').click(function() {
+        var productInput = `
+            <div class="product-entry">
+                <input type="text" class="form-control mb-2" name="products[]" placeholder="Product Name" required>
+                <input type="number" class="form-control mb-2" name="quantities[]" placeholder="Quantity" required>
+                <input type="number" class="form-control mb-2" name="prices[]" placeholder="Price" step="0.01" required>
+                <button type="button" class="btn btn-danger removeProductButton">Remove</button>
+            </div>`;
+        $('#products_container').append(productInput);
+    });
 
-// Function to handle client selection and set to lead if necessary
-function handleClientSelection() {
-    const clientSelect = document.getElementById('clientSelect');
-    const selectedClient = clientSelect.value;
-    // Implement logic as required when a client is selected
-    // For example, you might want to set a client's status to 'lead'
-    // or fetch and display the client's previous orders for reference
-}
-</script>
-<script>
-    let productRequestIndex = 0;
-    let actualRequestCount = 1; // Keep track of the actual number of requests
+    // Remove Product Entry
+    $(document).on('click', '.removeProductButton', function() {
+        $(this).closest('.product-entry').remove();
+    });
 
-    function addProductRequestForm() {
-        const container = document.getElementById('productRequestsContainer');
-        const isCancelable = actualRequestCount > 1; // Only allow canceling if more than one request exists
-        const cancelButtonHTML = isCancelable ? `<button type="button" class="btn btn-danger cancelRequestButton" onclick="removeProductRequestForm(${productRequestIndex})">Cancel Request</button>` : '';
+    // Form Submission for Creating/Updating Orders
+    $('#orderForm').submit(function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var formUrl = $('#order_id').val() ? "{{ route('orders.update', ['order' => '']) }}/" + $('#order_id').val() : "{{ route('orders.store') }}";
+        var formMethod = $('#order_id').val() ? 'PUT' : 'POST';
 
-        const html = `
-            <div class="product-request-form mb-3" data-index="${productRequestIndex}">
-                <h5>Product Request ${actualRequestCount}</h5>
-                <div class="mb-3">
-                    <label>Product Name:</label>
-                    <input type="text" class="form-control" name="product_requests[${productRequestIndex}][name]" required>
-                </div>
-                <div class="mb-3">
-                    <label>Product Description:</label>
-                    <textarea class="form-control" name="product_requests[${productRequestIndex}][description]" rows="3"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label>Product Price ($):</label>
-                    <input type="number" class="form-control" name="product_requests[${productRequestIndex}][price]" required>
-                </div>
-                <div class="mb-3">
-                    <label>Quantity:</label>
-                    <input type="number" class="form-control" name="product_requests[${productRequestIndex}][quantity]" required>
-                </div>
-                ${cancelButtonHTML}
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', html);
-        productRequestIndex++; // Increment the index for unique naming
-        actualRequestCount++; // Increment the actual count of product requests
-    }
-
-    function removeProductRequestForm(index) {
-        const requestForm = document.querySelector(`.product-request-form[data-index="${index}"]`);
-        if (requestForm) {
-            requestForm.remove();
-            actualRequestCount--; // Decrement the actual count of product requests
-        }
-        // Re-adjust indexes for remaining product requests
-        document.querySelectorAll('.product-request-form').forEach((form, newIndex) => {
-            form.setAttribute('data-index', newIndex);
-            form.querySelector('h5').textContent = `Product Request ${newIndex + 1}`;
+        $.ajax({
+            url: formUrl,
+            method: 'POST', // Always POST for compatibility with Laravel's method field
+            data: formData + "&_method=" + formMethod, // Include method spoofing for PUT
+            success: function(response) {
+                $('#orderFormModal').modal('hide');
+                table.ajax.reload(null, false); // Reload DataTable without resetting paging
+                alert('Order saved successfully.');
+            },
+            error: function(xhr) {
+                alert('An error occurred: ' + xhr.responseJSON.message);
+            }
         });
-        productRequestIndex = actualRequestCount - 1; // Adjust the index for new additions
-    }
-
-    document.getElementById('addRequestButton').addEventListener('click', addProductRequestForm);
-
-    // Add the first product request form by default and ensure it's not cancelable
-    window.addEventListener('DOMContentLoaded', (event) => {
-        addProductRequestForm();
     });
+
+    // Edit Button Click
+    $('#ordersTable').on('click', 'button.editor-edit', function() {
+        var data = table.row($(this).parents('tr')).data();
+        // Populate form fields with data
+        // Example:
+        $('#order_id').val(data.Order_ID);
+        // Populate other fields as needed
+        $('#orderFormModal').modal('show');
+    });
+
+    // Delete Button Click
+    $('#ordersTable').on('click', 'button.editor-delete', function() {
+        var orderId = table.row($(this).parents('tr')).data().Order_ID;
+        if (confirm('Are you sure you want to delete this order?')) {
+            $.ajax({
+                url: "{{ route('orders.destroy', ['order' => '']) }}/" + orderId,
+                method: 'POST',
+                data: {
+                    "_method": "DELETE",
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    table.ajax.reload(null, false); // Reload DataTable without resetting paging
+                    alert('Order deleted successfully.');
+                },
+                error: function(xhr) {
+                    alert('An error occurred: ' + xhr.responseJSON.message);
+                }
+            });
+        }
+    });
+
+    // Create New Order Button Click
+    $('#createOrder').click(function() {
+        $('#orderForm')[0].reset(); // Reset form fields
+        $('#order_id').val(''); // Clear the order ID field for a new order
+        $('#products_container').empty(); // Clear dynamically added product fields
+        $('#orderFormModal').modal('show'); // Show the form modal
+    });
+});
 </script>
 
