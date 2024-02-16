@@ -23,6 +23,12 @@
 
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
+
+
+
+  <!-- jQuery -->
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
 </head>
 <!--
 `body` tag options:
@@ -281,9 +287,7 @@
   <!-- REQUIRED SCRIPTS -->
 
 
-
-  <!-- jQuery -->
-  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  
   <!-- Bootstrap -->
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE -->
