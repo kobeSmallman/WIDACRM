@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class NoteController extends Controller
 {
@@ -33,6 +35,12 @@ class NoteController extends Controller
 
         // Redirect to notes index with a success message
         return redirect()->route('notes.index')->with('success', 'Note added successfully.');
+    }
+
+    public static function list(): View {
+        $notes = DB::select('select * from Notes');
+
+        return view('notes.listNotes', ['notes' => $notes]);
     }
 
     // ... Other methods you may have in this controller

@@ -175,7 +175,7 @@
 
 
             <li class="nav-item">
-    <a href="{{ route('takeNotes') }}" class="nav-link">
+    <a href="{{ route('notes.list') }}" class="nav-link">
         <i class="nav-icon fa-solid fa-note-sticky"></i>
         <p>Notes</p>
     </a>

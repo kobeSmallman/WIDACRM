@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Note extends Model
 {
@@ -18,7 +19,11 @@ class Note extends Model
         'Description',
     ];
 
-   
+    public static function list($id) {
+        $notes = DB::select(['select * from Notes where Client_ID = ?', [$id]]);
+
+        return $notes;
+    }
       
     
         // Relationships

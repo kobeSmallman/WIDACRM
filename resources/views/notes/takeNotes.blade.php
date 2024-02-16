@@ -1,41 +1,66 @@
 {{-- takeNotes.blade.php --}}
 <x-layout>
     <div class="container mt-4">
-        <h2>Take Notes</h2>
-        <div class="mb-3">
-            <label for="clientSelect" class="form-label">Select Client:</label>
-            <select id="clientSelect" name="client_id" class="form-select" onchange="clientSelected(this)">
-                <option value="">Choose...</option>
-                @foreach ($clients as $client)
-                    <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }} (ID: {{ $client->Client_ID }})</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div id="clientInfo" class="mb-3" style="display: none;">
-            <h3>Client Information</h3>
-            <div id="clientDetails"></div>
-        </div>
-
-        <form id="notesForm" action="{{ route('notes.store') }}" method="POST" style="display: none;">
-            @csrf
-            <input type="hidden" name="client_id" id="formClientId">
-            
-            <div class="mb-3">
-                <label for="noteDate" class="form-label">Date:</label>
-                <input type="datetime-local" class="form-control" id="noteDate" name="date" required>
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Search bar and client list -->
+                <input type="text" id="searchClients" class="form-control" placeholder="Search Clients" onkeyup="searchClients()">
+                <div id="clientsList" class="list-group">
+                    <!-- Alphabetically ordered clients will be listed here -->
+                </div>
             </div>
-            
-            <div class="mb-3">
-                <label for="noteText" class="form-label">Notes:</label>
-                <textarea class="form-control" id="noteText" name="note" rows="4" required></textarea>
+            <div class="col-md-8">
+                <!-- Client details -->
+                <div id="clientDetails" class="d-flex flex-column">
+                    <!-- Placeholder for client information -->
+                    <h2>Client Information</h2>
+                    <p><strong>Company Name:</strong> {{ $client->Company_Name }}</p>
+                    <p><strong>Main Contact:</strong> {{ $client->Main_Contact }}</p>
+                    <p><strong>Shipping Address:</strong> {{ $client->Shipping_Address }}</p>
+                    <p><strong>Billing Address:</strong> {{ $client->Billing_Address }}</p>
+                    <p><strong>Email:</strong> {{ $client->Email }}</p>
+                    <p><strong>Phone Number:</strong> {{ $client->Phone_Number }}</p>
+                    <p><strong>Lead Status:</strong> {{ $client->Lead_Status }}</p>
+                    <p><strong>Buyer Status:</strong> {{ $client->Buyer_Status }}</p>
+                </div>
+                <!-- Interaction section -->
+                <div class="mt-3">
+                    <select id="interactionType" class="form-select">
+                        <!-- Interaction types options -->
+                    </select>
+                    <input type="date" id="chooseDate" class="form-control mt-1">
+                    <textarea id="notesDisplay" class="form-control mt-1" ondblclick="readNote()">
+                        <!-- Notes will be displayed here -->
+                    </textarea>
+                    <button id="newNote" class="btn btn-primary mt-1">New</button>
+                </div>
+                <!-- Old notes section -->
+                <div class="mt-3">
+                    <button id="oldNotes" class="btn btn-secondary">Client Old Notes</button>
+                    <!-- Old notes display or additional textarea -->
+                </div>
+                <!-- Note metadata placeholders -->
+                <div id="noteMeta" class="d-flex flex-column mt-3">
+                    <!-- Note metadata placeholders -->
+                </div>
+                <!-- Action buttons -->
+                <div class="mt-3">
+                    <button id="attachFiles" class="btn btn-secondary">Attach Files</button>
+                    <button id="addRequest" class="btn btn-secondary">Add Request</button>
+                    <button id="saveNote" class="btn btn-primary">Save</button>
+                </div>
+                <!-- Client order details -->
+                <div id="clientOrders" class="mt-3">
+                    <!-- Client order details placeholder -->
+                </div>
             </div>
-            
-            <button type="submit" class="btn btn-primary">Save Notes</button>
-        </form>
+        </div>
     </div>
 
     <script>
-       // ... Your existing JavaScript here ...
+        // JavaScript functions to implement:
+        // searchClients(), fetchClientDetails(), readNote(), createNewNote(), fetchOldNotes(), fetchClientOrders()
+
+        // Implement the functions as required.
     </script>
 </x-layout>

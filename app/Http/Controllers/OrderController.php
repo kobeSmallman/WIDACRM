@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -35,6 +37,12 @@ class OrderController extends Controller
     
         // Redirect to the orders page with a success message
         return redirect()->route('orders.index')->with('success', 'New order has been created.');
+    }
+
+    public static function list(): View {
+        $orders = DB::select('select * from u126104410_Hexacrm.Order');
+                                            // variable i will call on blade
+        return view('notes.orderDetails', ['orders' => $orders]);
     }
     
 
