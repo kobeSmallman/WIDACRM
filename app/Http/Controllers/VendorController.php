@@ -11,11 +11,56 @@ class VendorController extends Controller
     {
         // Fetch all vendors from the database
         $vendors = Vendor::all();
-
-        // Return the vendors view and pass the vendors data to it
         return view('vendors.vendors', compact('vendors'));
     }
 
-    // You can add more methods as needed for create, store, edit, update, delete operations
-    // ...
+    public function create()
+    {
+        // Return the view to create a new vendor
+        return view('vendors.create');
+    }
+
+    public function store(Request $request)
+    {
+        // Validate the request and add new vendor
+        $validatedData = $request->validate([
+            'Vendor_Name' => 'required|string|max:255',
+            'Active_Status' => 'required|string|max:20',
+            'Remarks' => 'nullable|string|max:255',
+        ]);
+        
+        Vendor::create($validatedData);
+        return redirect()->route('vendors.index')->with('success', 'Vendor added successfully.');
+    }
+
+    public function edit($id)
+    {
+        // Find the vendor by ID and return the edit view
+        $vendor = Vendor::findOrFail($id);
+        return view('vendors.edit', compact('vendor'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate the request and update the vendor
+        $validatedData = $request->validate([
+            'Vendor_Name' => 'required|string|max:255',
+            'Active_Status' => 'required|string|max:20',
+            'Remarks' => 'nullable|string|max:255',
+        ]);
+        
+        $vendor = Vendor::findOrFail($id);
+        $vendor->update($validatedData);
+        return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        // Delete the vendor
+        $vendor = Vendor::findOrFail($id);
+        $vendor->delete();
+        return redirect()->route('vendors.index')->with('success', 'Vendor deleted successfully.');
+    }
+
+    // Add any other methods you need for the controller
 }
