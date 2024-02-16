@@ -86,12 +86,22 @@ public function store(Request $request)
 
 public function createRequest()
 {
-    // Fetch all clients
-    $clients = Client::all(); // Assuming you want to list all clients in the dropdown
-
-    // Pass the clients to your view
+    $clients = Client::all(); // Fetch all clients
     return view('createRequest', compact('clients'));
 }
 
+
+
     // Add any other necessary methods here
+    public function getClientOrders($id)
+    {
+        // Fetch the client along with their orders and the products for those orders
+        $clientOrders = Client::with(['orders.products'])->findOrFail($id);
+    
+        // Return the orders and products in JSON format
+        return response()->json($clientOrders->orders);
+    }
+    
+
 }
+

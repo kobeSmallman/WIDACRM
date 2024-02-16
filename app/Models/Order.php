@@ -35,6 +35,17 @@ class Order extends Model
         'SSA_Path',
         // ...other fields
     ];
+// Order.php
+public function products()
+{
+    return $this->hasMany(Product::class, 'Order_ID', 'Order_ID');
+}
+
+    public function getOrderIDAttribute()
+{
+    return $this->attributes['Order_ID']; // Ensure this matches your database column name
+}
+
 
     // Relationships and other model methods...
 }

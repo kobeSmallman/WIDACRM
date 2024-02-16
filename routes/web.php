@@ -55,15 +55,31 @@ Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.sh
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
+// web.php
+Route::get('/clients/{id}/orders', [ClientController::class, 'getClientOrders'])->name('clients.orders');
 
 
-// Orders route
+// Add a route to fetch all orders for all clients
+Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
+
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 // Route to store a new order
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 // Vendor routes
 Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 Route::resource('vendors', VendorController::class);
+// Place these inside the web.php file
+Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+
+// Edit vendor form
+Route::get('/vendors/{vendor}/edit', [VendorController::class, 'edit'])->name('vendors.edit');
+
+// Update vendor
+Route::put('/vendors/{vendor}', [VendorController::class, 'update'])->name('vendors.update');
+
+// Delete vendor
+Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])->name('vendors.destroy');
+
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
@@ -104,12 +120,15 @@ Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name
 Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
 Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
+
+
+
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
 
 
 Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
 
-// Add this to your web.php file within the routes group
+Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
 
 
 

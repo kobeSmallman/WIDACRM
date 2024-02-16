@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Client; // Make sure to include the Client model
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -13,8 +14,10 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all(); // Fetch all orders from the database
-        // Make sure the view path matches the file location within the resources/views directory
-        return view('Order.order', compact('orders'));
+        $clients = Client::all(); // Fetch all clients from the database to be used in the order form dropdown
+        
+        // Pass both $orders and $clients to the view
+        return view('Order.order', compact('orders', 'clients'));
     }
 
     public function store(Request $request)
@@ -31,6 +34,17 @@ class OrderController extends Controller
         $orderData['Order_Status'] = $orderData['Order_Status'] ?? 'Active';
         $orderData['Request_Status'] = $orderData['Request_Status'] ?? 'Active';
     
+        // Handle product requests if they are included
+        if (isset($orderData['product_requests'])) {
+            foreach ($orderData['product_requests'] as $productRequest) {
+                // Here you would handle each product request.
+                // For simplicity, we are just logging the data.
+                // You would typically save this to the database.
+                \Log::info('Product Request:', $productRequest);
+            }
+            unset($orderData['product_requests']); // Remove product requests from order data to prevent issues on saving the order
+        }
+    
         // Create and save the order
         $order = new Order($orderData);
         $order->save();
@@ -45,6 +59,11 @@ class OrderController extends Controller
         return view('notes.orderDetails', ['orders' => $orders]);
     }
     
-
+    public function getAllOrders()
+{
+    $orders = Order::with('products')->get();
+    return response()->json($orders);
+}
+    
     // Add other necessary methods as needed
 }

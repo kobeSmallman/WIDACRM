@@ -19,16 +19,70 @@
     </section>
 
     <!-- Main content -->
+    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Create New Vendor Button -->
-                    <div class="mb-3">
-                        <a href="{{ route('vendors.create') }}" class="btn btn-success">
-                            <i class="fas fa-plus-circle"></i> Add New Vendor
-                        </a>
+            <!-- Button to toggle the form -->
+            <div class="mb-3">
+                <button id="toggleVendorFormBtn" class="btn btn-success">
+                    <i class="fas fa-plus-circle"></i> Add New Vendor
+                </button>
+            </div>
+
+            <!-- Hidden form for creating a new vendor -->
+            <div id="newVendorForm" style="display: none;" class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Add New Vendor</h3>
+                </div>
+                <form role="form" action="{{ route('vendors.store') }}" method="post">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="vendorName">Vendor Name:</label>
+                            <input type="text" class="form-control" id="vendorName" name="vendorName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="activeStatus">Active Status:</label>
+                            <select class="form-control" id="activeStatus" name="activeStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="remarks">Remarks:</label>
+                            <textarea class="form-control" id="remarks" name="remarks"></textarea>
+                        </div>
                     </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-info">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Bootstrap Modal for Edit Vendor -->
+<div class="modal fade" id="editVendorModal" tabindex="-1" role="dialog" aria-labelledby="editVendorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="editVendorForm" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="modal-header">
+          <h5 class="modal-title" id="editVendorModalLabel">Edit Vendor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Dynamically filled form fields will go here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
                     <!-- Vendors Table -->
                     <div class="card">
                         <div class="card-header">
@@ -99,5 +153,72 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#vendors-table_wrapper .col-md-6:eq(0)');
+    });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('toggleVendorFormBtn').addEventListener('click', function() {
+        var form = document.getElementById('newVendorForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+            this.textContent = 'Cancel Add New Vendor';
+            this.classList.remove('btn-success');
+            this.classList.add('btn-danger');
+        } else {
+            form.style.display = 'none';
+            this.textContent = 'Add New Vendor';
+            this.classList.remove('btn-danger');
+            this.classList.add('btn-success');
+        }
+    });
+});
+</script>
+
+<script>
+    $(document).ready(function() {
+        var table = $("#vendors-table").DataTable({
+            ...
+        });
+
+        // Inline Editing
+        $('#vendors-table').on('blur', 'td[contenteditable="true"]', function() {
+            var vendorId = $(this).data('id');
+            var column = $(this).data('column');
+            var value = $(this).text();
+
+            $.ajax({
+                url: '{{ route("vendors.inlineUpdate") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: vendorId,
+                    column: column,
+                    value: value
+                },
+                success: function(response) {
+                    // Response handling
+                    console.log(response);
+                }
+            });
+        });
+
+        // Delete vendor
+        $('.delete-vendor-btn').click(function() {
+            var vendorId = $(this).data('id');
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    url: '/vendors/' + vendorId,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
+                        // Reload the page or remove the row from the table
+                        table.row($(this).parents('tr')).remove().draw();
+                    }
+                });
+            }
+        });
     });
 </script>

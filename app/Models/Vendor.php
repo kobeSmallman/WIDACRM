@@ -8,7 +8,7 @@ class Vendor extends Model
 {
     // If your vendor table name is different, set it here
     protected $table = 'Vendor';
-
+    protected $primaryKey = 'Vendor_ID';
     // Column names as they appear in your database
     protected $fillable = [
         'Vendor_ID',       // Assuming 'Vendor_ID' is auto-incrementing
