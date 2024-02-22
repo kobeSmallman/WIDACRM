@@ -30,7 +30,7 @@
 
   <!-- jQuery -->
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-
+  @stack('scripts')
 </head>
 <!--
 `body` tag options:
@@ -341,8 +341,10 @@
 
 
 
+@vite(['resources/js/app.js'])
 
-
+{{-- Stack for pushing additional scripts specific to a page --}}
+@stack('scripts')
 </body>
 
 </html>

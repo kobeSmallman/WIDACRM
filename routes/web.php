@@ -11,19 +11,8 @@ use App\Http\Controllers\RequestController; // Ensure you have this controller c
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 
-
-// ... other routes ...
-
-
-
-// ... other routes ...
-
-// ...
-
-
-
-
-
+// Web.php
+use App\Http\Controllers\AnalyticsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +36,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard routes
 Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+
+Route::get('/analytics/renewals', [AnalyticsController::class, 'getRenewalsData'])->name('analytics.renewals');
+Route::get('/analytics/communication-frequency', [AnalyticsController::class, 'getCommunicationFrequencyData'])->name('analytics.communicationFrequency');
+Route::get('/analytics/interaction-timeline', [AnalyticsController::class, 'getInteractionTimelineData'])->name('analytics.interactionTimeline');
+
 Route::get('/dashboard/employee', [DashboardController::class, 'employeeDashboard'])->name('employee.dashboard');
 
 //client routes
