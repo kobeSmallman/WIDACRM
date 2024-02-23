@@ -42,6 +42,14 @@
                             <input type="text" class="form-control" id="vendorName" name="vendorName" required>
                         </div>
                         <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+            </div>
+                        <div class="form-group">
                             <label for="activeStatus">Active Status:</label>
                             <select class="form-control" id="activeStatus" name="activeStatus">
                                 <option value="1">Active</option>
@@ -96,6 +104,8 @@
                                         <th>Vendor ID</th>
                                         <th>Vendor Name</th>
                                         <th>Active Status</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
                                         <th>Remarks</th>
                                         <th>Actions</th>
                                     </tr>
@@ -106,6 +116,8 @@
                                             <td>{{ $vendor->Vendor_ID }}</td>
                                             <td>{{ $vendor->Vendor_Name }}</td>
                                             <td>{{ $vendor->Active_Status }}</td>
+                                            <td>{{ $vendor->Email }}</td>
+                                            <td>{{ $vendor->PhoneNumber }}</td>
                                             <td>{{ $vendor->Remarks }}</td>
                                             <td>
                                                 <!-- Example of possible actions -->
@@ -123,15 +135,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Vendor ID</th>
-                                        <th>Vendor Name</th>
-                                        <th>Active Status</th>
-                                        <th>Remarks</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </tfoot>
+                               
                             </table>
                         </div>
                         <!-- /.card-body -->
