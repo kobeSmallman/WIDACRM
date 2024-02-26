@@ -12,36 +12,63 @@ class NoteController extends Controller
 {
     public function create()
     {
-        // Fetch all clients and pass them to the view
+        // Fetch all clients
         $clients = Client::all();
+
         return view('notes.takeNotes', compact('clients'));
     }
 
     public function store(Request $request)
     {
-        // Validate the request
+        // Validate the request fields
         $validatedData = $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'note' => 'required|string|max:1000',
-            'date' => 'required|date',
+            'client_id' => 'required|exists:clients,Client_ID',
+            'interaction_type' => 'required|string|max:50', // Adjust the max value based on your column's definition
+            'created_by' => 'required|exists:employees,Employee_ID',
+            'date_time' => 'required|date',
+            'description' => 'required|string|max:255',
         ]);
 
-        // Create a new note and save it
-        $note = new Note;
-        $note->client_id = $validatedData['client_id'];
-        $note->content = $validatedData['note'];
-        $note->note_date = $validatedData['date'];
+        // Create and save the note
+        $note = new Note($validatedData);
         $note->save();
 
-        // Redirect to notes index with a success message
-        return redirect()->route('notes.index')->with('success', 'Note added successfully.');
+        return response()->json(['note_id' => $note->id], 200);
     }
 
-    public static function list(): View {
-        $notes = DB::select('select * from Notes');
-
-        return view('notes.listNotes', ['notes' => $notes]);
+    public function getCompanyInfo($id)
+    {
+        $client = Client::findOrFail($id);
+        return response()->json([
+            'companyName' => $client->Company_Name,
+            'mainContact' => $client->Main_Contact,
+            'email' => $client->Email,
+            'phone' => $client->Phone_Number,
+            // Consider including the client's ID or other relevant information if needed.
+        ]);
     }
 
-    // ... Other methods you may have in this controller
+    public function edit(Note $note)
+    {
+        // This will return the note information as JSON, which can be used to populate an edit form on the front-end.
+        return response()->json($note);
+    }
+
+    public function update(Request $request, Note $note)
+    {
+        // Validate the request data. Assuming 'interaction_type' is a string and doesn't need to be checked against specific values.
+        $validatedData = $request->validate([
+            'interaction_type' => 'required|string|max:50', // Adjust the max value based on your column's definition
+            'date_time' => 'required|date',
+            'description' => 'required|string|max:255', // Match the length to your database schema.
+        ]);
+
+        // Update the note with the validated data.
+        $note->update($validatedData);
+
+        // Return a successful response, perhaps with the updated note data.
+        return response()->json(['message' => 'Note updated successfully.', 'note' => $note]);
+    }
+
+    // Consider adding methods to fetch notes for a client if not already implemented elsewhere.
 }

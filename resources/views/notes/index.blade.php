@@ -1,4 +1,3 @@
-{{-- resources/views/notes/index.blade.php --}}
 <x-layout>
     <link rel="stylesheet" href="{{ asset('css/notesIndex.css') }}">
 

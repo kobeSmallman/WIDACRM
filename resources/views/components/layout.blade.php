@@ -2,10 +2,15 @@
 <html lang="en">
 
 <head>
+  
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WIDACRM</title>
-  <link rel="icon" type="image/x-icon" href="dist/img/WIDA/WIDA.ico">
+  <title>CRM | WIDA</title>
+
+  <!-- Include jQuery
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  -->
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700&display=fallback">
@@ -163,7 +168,7 @@
 
 
             <li class="nav-item">
-    <a href="{{ route('notes.list') }}" class="nav-link">
+    <a href="{{ route('notes.create') }}" class="nav-link">
         <i class="nav-icon fa-solid fa-note-sticky"></i>
         <p>Notes</p>
     </a>

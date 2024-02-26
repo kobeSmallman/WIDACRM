@@ -11,10 +11,9 @@ class Order extends Model
     public $timestamps = false;
     protected $table = 'Order'; // Ensure this matches your actual table name
     protected $primaryKey = 'Order_ID';
-    protected $keyType = 'string'; // Indicate that the primary key is a string
-    public $incrementing = false; // Indicate that the primary key is not auto-incrementing
+    protected $keyType = 'string';
+    public $incrementing = false;
 
-    // Specify the actual format of your dates if different
     protected $casts = [
         'Request_DATE' => 'datetime:Y-m-d',
         'Order_DATE' => 'datetime:Y-m-d',
@@ -33,7 +32,7 @@ class Order extends Model
         'Quotation_DATE',
         'CSA_Path',
         'SSA_Path',
-        // ...other fields
+        // Ensure all necessary fields are included
     ];
 // Order.php
 public function products()
@@ -47,5 +46,10 @@ public function products()
 }
 
 
-    // Relationships and other model methods...
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'Client_ID', 'Client_ID');
+    }
+
+    // Consider adding other relationships here
 }

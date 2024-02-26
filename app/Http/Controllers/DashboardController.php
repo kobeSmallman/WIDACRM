@@ -28,13 +28,13 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function adminDashboard()
-{
-    // Fetch clients with the notes and employees who interacted with them
-    $clients = Client::with(['notes', 'notes.employee'])->get();
+        public function adminDashboard()
+    {
+        // Fetch clients with the notes and employees who interacted with them
+        $clients = Client::with(['notes', 'notes.employee'])->get();
 
-    return view('dashboard.admin', compact('clients'));
-}
+        return view('dashboard.admin', compact('clients'));
+    }
 
 
     /**
