@@ -3,11 +3,70 @@
     <style>
         .container {
             display: grid;
-            grid-template-columns: 1fr 3fr;
-            grid-template-rows: auto auto 1fr; /* Added rows for notes and orders */
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr); /* Creates two columns */
+            grid-gap: 20px;
             padding: 20px;
         }
+
+        /* Mobile view */
+        @media (max-width: 768px) {
+            .container {
+            grid-template-columns: 1fr; /* Stack on top of each other on small screens */
+            }
+
+            .client-details,
+            .notes-links,
+            .note-content,
+            .orders-details {
+                grid-column: 1 / -1; /* Stretch across the full width */
+            }
+        }
+
+        .client-list {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            width: 100%; /* Full width of the grid column */
+        }
+
+        .client-details {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            width: 100%; /* Full width of the grid column */
+        }
+
+        .notes-links {
+            grid-column: 1 / 2; /* Spanning across both columns */
+            width: 100%; /* Full width */
+            display: inline-block; /* Side-by-side display */
+        }
+        .note-content {
+            grid-column: 2 / 3; /* Spanning across both columns */
+            width: 100%; /* Full width */
+            display: inline-block; /* Side-by-side display */
+        }
+
+        .orders-details {
+            grid-column: 1 / 3;
+            width: 100%; /* Full width */
+            overflow-x: auto; /* Enables horizontal scrolling if table is wider than screen */
+        }
+
+        .orders-table {
+            width: 100%; /* Table width is 100% of its container */
+            border-collapse: collapse; /* Remove space between borders */
+            table-layout: fixed; /* Fixed table layout */
+            background-color: #f8f9fa;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            border: 1px solid #ced4da;
+            padding: 8px; /* Adjusted padding for a balanced look */
+            text-align: center; /* Center text horizontally */
+            vertical-align: middle; /* Center text vertically */
+            min-width: 120px; /* Minimum width for each cell */
+        }   
+
         .client-list,
         .client-details,
         .notes-links,
@@ -18,16 +77,19 @@
             border-radius: .25rem;
             background-color: #f8f9fa;
         }
+
         .client-list div:hover,
         .notes-links div:hover,
         .orders-details li:hover {
-            background-color: #e9ecef;
+            background-color: #007bff;
             cursor: pointer;
         }
+
         .active {
             background-color: #007bff;
             color: white;
         }
+
         .note-link {
             padding: 5px;
             margin: 2px;
@@ -36,23 +98,13 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .note-link:hover {
             background-color: #e0e0e0;
         }
-        .orders-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .orders-table th,
-        .orders-table td {
-            border: 1px solid #ced4da;
-            padding: 8px;
-            text-align: left;
-        }
-        .orders-table th {
-            background-color: #f8f9fa;
-        }
     </style>
+
+
 
    <!-- Layout structure -->
    <div class="container">
@@ -68,38 +120,42 @@
         <!-- Client Details -->
         <div class="client-details" id="clientDetails">
             <!-- Client information will be loaded here via JavaScript -->
-            <p>Select a client to view details</p>
+            <p>Select a client to view Information details</p>
         </div>
 
         <!-- Notes Links -->
         <div class="notes-links" id="notesLinks">
+        <p>Select a client to view Older Notes</p>
             <!-- Links to individual notes will be loaded here via JavaScript -->
         </div>
 
         <!-- Note Content -->
         <div class="note-content" id="noteContent">
+        <p>Select a Note to view Note details</p>
             <!-- Selected note content will be displayed here -->
         </div>
 
         <!-- Orders Details -->
         <div class="orders-details" id="ordersDetails">
             <!-- Orders will be loaded here via JavaScript -->
-            <table class="orders-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Last 5 orders will be loaded here -->
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Created By</th>
+                            <th>Request Date</th>
+                            <th>Request Status</th>
+                            <th>Order Date</th>
+                            <th>Order Status</th>
+                            <th>Quotation Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Last 5 orders will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -121,7 +177,7 @@
                 })
                 .catch(error => console.error('Error:', error));
                 
-                fetch(`/clients/${clientId}/notesAJAX`)
+            fetch(`/clients/${clientId}/notesAJAX`)
                 .then(response => response.json())
                 .then(notes => {
                     const linksDiv = document.getElementById('notesLinks');
@@ -137,41 +193,30 @@
                 .catch(error => console.error('Error:', error));
                 
                 fetch(`/clients/${clientId}/last-orders`)
-        .then(response => response.json())
-        .then(orders => {
-            const ordersDiv = document.getElementById('ordersDetails');
-            if (orders.length > 0) {
-                // Create the table structure
-                let tableHtml = '<h3>Last 5 Orders</h3>';
-                tableHtml += '<table>';
-                tableHtml += '<tr>';
-                tableHtml += '<th>Order ID</th>';
-                tableHtml += '<th>Created By</th>';
-                tableHtml += '<th>Request Date</th>';
-                tableHtml += '<th>Request Status</th>';
-                tableHtml += '<th>Order Date</th>';
-                tableHtml += '<th>Order Status</th>';
-                tableHtml += '<th>Quotation Date</th>';
-                tableHtml += '</tr>';
-                // Populate the table with order data
-                orders.forEach(order => {
-                    tableHtml += '<tr>';
-                    tableHtml += `<td>${order.Order_ID}</td>`;
-                    tableHtml += `<td>${order.Created_By}</td>`;
-                    tableHtml += `<td>${order.Request_DATE}</td>`;
-                    tableHtml += `<td>${order.Request_Status}</td>`;
-                    tableHtml += `<td>${order.Order_DATE}</td>`;
-                    tableHtml += `<td>${order.Order_Status}</td>`;
-                    tableHtml += `<td>${order.Quotation_DATE}</td>`;
-                    tableHtml += '</tr>';
-                });
-                tableHtml += '</table>';
-                ordersDiv.innerHTML = tableHtml;
-            } else {
-                ordersDiv.innerHTML = '<p>No recent orders available for the selected client</p>';
-            }
-        })
-        .catch(error => console.error('Error:', error));
+    .then(response => response.json())
+    .then(orders => {
+        const ordersTableBody = document.querySelector('.orders-table tbody'); // Select the tbody within the orders-table
+        if (orders.length > 0) {
+            let tableRowsHtml = ''; // Initialize an empty string to build the rows
+            // Populate the rows with order data
+            orders.forEach(order => {
+                tableRowsHtml += '<tr>';
+                tableRowsHtml += `<td>${order.Order_ID}</td>`;
+                tableRowsHtml += `<td>${order.Created_By}</td>`;
+                tableRowsHtml += `<td>${order.Request_DATE}</td>`;
+                tableRowsHtml += `<td>${order.Request_Status}</td>`;
+                tableRowsHtml += `<td>${order.Order_DATE}</td>`;
+                tableRowsHtml += `<td>${order.Order_Status}</td>`;
+                tableRowsHtml += `<td>${order.Quotation_DATE}</td>`;
+                tableRowsHtml += '</tr>';
+            });
+            ordersTableBody.innerHTML = tableRowsHtml; // Insert the rows into the tbody
+        } else {
+            ordersTableBody.innerHTML = '<tr><td colspan="7">No recent orders available for the selected client</td></tr>'; // Handle no orders
+        }
+    })
+    .catch(error => console.error('Error:', error));
+
         }
 
         function fetchNotesDetails(clientId) {
