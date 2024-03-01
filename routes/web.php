@@ -36,6 +36,19 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard routes
 Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+// web.php
+
+Route::get('/tab-content/showcaseOne', function () {
+    return view('dashboard.adminDashboardShowcaseOne');
+})->name('tabs.showcaseOne');
+
+Route::get('/tab-content/showcaseTwo', function () {
+    return view('dashboard.adminDashboardShowcaseTwo');
+})->name('tabs.showcaseTwo');
+
+Route::get('/tab-content/showcaseThree', function () {
+    return view('dashboard.adminDashboardShowcaseThree');
+})->name('tabs.showcaseThree');
 
 Route::get('/analytics/renewals', [AnalyticsController::class, 'getRenewalsData'])->name('analytics.renewals');
 Route::get('/analytics/communication-frequency', [AnalyticsController::class, 'getCommunicationFrequencyData'])->name('analytics.communicationFrequency');
@@ -127,15 +140,6 @@ Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.crea
 Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
 //request page
 // Define a route for the createRequest view
-
-Route::get('/create-request', [RequestController::class, 'createRequest'])->name('createRequest');
-Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
-Route::get('/requests/create', [RequestController::class, 'create'])->name('requests.create');
-Route::post('/requests', [RequestController::class, 'store'])->name('requests.store');
-Route::get('/requests/{request}', [RequestController::class, 'show'])->name('requests.show');
-Route::get('/requests/{request}/edit', [RequestController::class, 'edit'])->name('requests.edit');
-Route::put('/requests/{request}', [RequestController::class, 'update'])->name('requests.update');
-Route::delete('/requests/{request}', [RequestController::class, 'destroy'])->name('requests.destroy');
 
 
 

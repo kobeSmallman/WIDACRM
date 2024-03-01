@@ -1,0 +1,6 @@
+[29-Feb-2024 00:23:09 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) in C:\Users\student\WIDACRM\storage\framework\views\fea21e1ca31a526c27389ec16c858687.php on line 1
+[29-Feb-2024 00:23:10 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 110592 bytes) in C:\Users\student\WIDACRM\vendor\spatie\flare-client-php\src\Truncation\ReportTrimmer.php on line 41
+[29-Feb-2024 00:23:33 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) in C:\Users\student\WIDACRM\storage\framework\views\fea21e1ca31a526c27389ec16c858687.php on line 1
+[29-Feb-2024 00:23:33 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) in C:\Users\student\WIDACRM\vendor\spatie\ignition\src\Ignition.php on line 118
+[29-Feb-2024 00:26:50 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) in C:\Users\student\WIDACRM\storage\framework\views\fea21e1ca31a526c27389ec16c858687.php on line 1
+[29-Feb-2024 00:26:50 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) in C:\Users\student\WIDACRM\vendor\spatie\ignition\src\Ignition.php on line 342

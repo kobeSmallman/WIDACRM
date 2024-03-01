@@ -180,16 +180,6 @@
 
             <li class="nav-item">
       
-            <a href="{{ route('createRequest') }}" class="nav-link">
-    <i class="nav-icon fa-solid fa-ticket"></i>
-    <p>Requests</p>
-</a>
-
-</li>
-</li>
-
-            <li class="nav-item">
-      
             <a href="{{ route('orders.index') }}" class="nav-link">
     <i class="nav-icon fa-solid fa-ticket"></i>
     <p>Orders</p>
