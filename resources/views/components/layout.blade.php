@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  
+
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <meta charset="utf-8">
@@ -75,67 +75,67 @@
           </div>
         </li>
          ... other parts of your HTML above ... -->
- 
-        <ul class="navbar-nav ml-auto">
-  <!-- User Account Dropdown Menu -->
-  <li class="nav-item dropdown user-menu">
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-      @if ($employee->profile_image)
-        <img src="data:image/jpeg;base64,{{ $employee->profile_image }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
-      @else
-        <img src="{{ asset('default/path/to/default_image.jpg') }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
-      @endif
-      <span>{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</span>
-    </a>
-    <div class="dropdown-menu dropdown-menu-right">
-      <!-- Dropdown links -->
-      <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
-        <i class="fas fa-user-edit mr-2"></i> Edit Profile
-      </a>
-      <a href="#" class="dropdown-item">
-        <i class="fas fa-inbox mr-2"></i> Inbox
-      </a>
-      <a href="#" class="dropdown-item">
-        <i class="fas fa-tasks mr-2"></i> Tasks
-      </a>
-      <a href="#" class="dropdown-item">
-        <i class="fas fa-comments mr-2"></i> Chats
-      </a>
-      <a href="{{ route('site.settings') }}" class="dropdown-item">
-    <i class="fas fa-comments mr-2"></i> Settings
-</a>
 
-      <div class="dropdown-divider"></div>
-      <a href="#" class="dropdown-item dropdown-footer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        Logout
-      </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form>
-    </div>
-  </li>
-</ul>
+      <ul class="navbar-nav ml-auto">
+        <!-- User Account Dropdown Menu -->
+        <li class="nav-item dropdown user-menu">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            @if ($employee->profile_image)
+            <img src="data:image/jpeg;base64,{{ $employee->profile_image }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
+            @else
+            <img src="{{ asset('default/path/to/default_image.jpg') }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
+            @endif
+            <span>{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- Dropdown links -->
+            <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
+              <i class="fas fa-user-edit mr-2"></i> Edit Profile
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-inbox mr-2"></i> Inbox
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-tasks mr-2"></i> Tasks
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-comments mr-2"></i> Chats
+            </a>
+            <a href="{{ route('site.settings') }}" class="dropdown-item">
+              <i class="fas fa-comments mr-2"></i> Settings
+            </a>
 
-
-<!-- ... rest of your HTML ... -->
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+          </div>
+        </li>
+      </ul>
 
 
+      <!-- ... rest of your HTML ... -->
 
 
-          
-           
-     
+
+
+
+
+
     </nav>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-    <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
-    <img src="dist/img/WIDA/wida100x100.png" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-bold" style="color: #5a75f7">WIDA</span>
-    <span class="brand-text font-weight-normal" style="margin-left:-4px">CRM</span>
-</a>
+      <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
+        <img src="dist/img/WIDA/wida100x100.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-bold" style="color: #5a75f7">WIDA</span>
+        <span class="brand-text font-weight-normal" style="margin-left:-4px">CRM</span>
+      </a>
 
 
       <!-- Sidebar -->
@@ -146,61 +146,61 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item menu-open">
-    @php
-        $dashboardRoute = (auth()->user()->Role_ID == 1) ? 'admin.dashboard' : 'employee.dashboard';
-    @endphp
-    <a href="{{ route($dashboardRoute) }}" class="nav-link" style="margin-top: 10px; margin-bottom: 10px;">
-        <i class="nav-icon fa-solid fa-house"></i>
-        <p>Dashboard</p>
-    </a>
-</li>
+            <li class="nav-item menu-open">
+              @php
+              $dashboardRoute = (auth()->user()->Role_ID == 1) ? 'admin.dashboard' : 'employee.dashboard';
+              @endphp
+              <a href="{{ route($dashboardRoute) }}" class="nav-link" style="margin-top: 10px; margin-bottom: 10px;">
+                <i class="nav-icon fa-solid fa-house"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
 
 
             <li class="nav-header">TRANSACTION</li>
-     
-<li class="nav-item">
-    <a href="{{ route('clients.index') }}" class="nav-link">
-        <i class="nav-icon fas fa-users"></i>
-        <p>Clients</p>
-    </a>
+
+            <li class="nav-item">
+              <a href="{{ route('clients.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Clients</p>
+              </a>
 
 
 
             <li class="nav-item">
-    <a href="{{ route('notes.create') }}" class="nav-link">
-        <i class="nav-icon fa-solid fa-note-sticky"></i>
-        <p>Notes</p>
-    </a>
-</li>
-</li>
+              <a href="{{ route('notes.create') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-note-sticky"></i>
+                <p>Notes</p>
+              </a>
+            </li>
+            </li>
 
             <li class="nav-item">
-      
-            <a href="{{ route('createRequest') }}" class="nav-link">
-    <i class="nav-icon fa-solid fa-ticket"></i>
-    <p>Requests</p>
-</a>
 
-</li>
-</li>
+              <a href="{{ route('createRequest') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-ticket"></i>
+                <p>Requests</p>
+              </a>
+
+            </li>
+            </li>
 
             <li class="nav-item">
-      
-            <a href="{{ route('orders.index') }}" class="nav-link">
-    <i class="nav-icon fa-solid fa-ticket"></i>
-    <p>Orders</p>
-</a>
 
-</li>
-           <!-- Update this in your sidebar menu blade file where you list your navigation links -->
+              <a href="{{ route('orders.index') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-ticket"></i>
+                <p>Orders</p>
+              </a>
 
-<li class="nav-item">
-    <a href="{{ route('vendors.index') }}" class="nav-link">
-        <i class="nav-icon fa-solid fa-box"></i>
-        <p>Vendors</p>
-    </a>
-</li>
+            </li>
+            <!-- Update this in your sidebar menu blade file where you list your navigation links -->
+
+            <li class="nav-item">
+              <a href="{{ route('vendors.index') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-box"></i>
+                <p>Vendors</p>
+              </a>
+            </li>
 
 
             <li class="nav-header">ADMINISTRATION</li>
@@ -216,35 +216,39 @@
 
 
             <li class="nav-item">
-    <a href="{{ route('permissions') }}" class="nav-link">
-        <i class="nav-icon fa-solid fa-user-lock"></i>
-        <p>Permissions</p>
-    </a>
-</li>
+              <a href="{{ route('permissions') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-user-lock"></i>
+                <p>Permissions</p>
+              </a>
+            </li>
 
 
             <li class="nav-header">REPORTS</li>
-              <li class="nav-item">
+            <li class="nav-item">
               <a href="{{ route('clientsummary.index') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-table-list"></i>
-                  <p>Client Summary</p>
-                </a>
-              </li>
-              <li class="nav-item">
+                <i class="nav-icon fa-solid fa-table-list"></i>
+                <p>Client Summary</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{ route('ordersummary.index') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-table-list"></i>
-                  <p>Order Summary</p>
-                </a>
-              </li>
-              <li class="nav-item">
+                <i class="nav-icon fa-solid fa-table-list"></i>
+                <p>Order Summary</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-table-list"></i>
-                  <p>Vendor Summary</p>
-                </a>
-              </li>
+                <i class="nav-icon fa-solid fa-table-list"></i>
+                <p>Vendor Summary</p>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
+
+        <!-- resources/views/welcome.blade.php -->
+        <livewire:note-modal />
+
       </div>
       <!-- /.sidebar -->
     </aside>
@@ -255,7 +259,7 @@
 
       <!-- Main content -->
       <div class="content">
-        <div class="container-fluid">        
+        <div class="container-fluid">
           {{ $slot }}
         </div>
         <!-- /.container-fluid -->
@@ -263,6 +267,8 @@
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -316,24 +322,57 @@
 
 
   <script>
+    $(document).ready(function() {
+      var currentRoute = "{{ Route::currentRouteName() }}";
+      console.log("Current Route: ", currentRoute);
 
-  $(document).ready(function() {
-    var currentRoute = "{{ Route::currentRouteName() }}";
-    console.log("Current Route: ", currentRoute);
+      // Extract the part before the dot (.)
+      var currentRouteWithoutIndex = currentRoute.split('.')[0];
 
-    // Extract the part before the dot (.)
-    var currentRouteWithoutIndex = currentRoute.split('.')[0];
-
-    $('.nav-link').each(function() {
+      $('.nav-link').each(function() {
         var href = $(this).attr('href');
         console.log("Href: ", href);
 
         // Check if the href contains the currentRoute without the '.index'
         if (currentRouteWithoutIndex && href && href.includes(currentRouteWithoutIndex)) {
-            $(this).addClass('active');
+          $(this).addClass('active');
         }
+      });
     });
-});
+
+    function draggableModal() {
+    const modal = document.querySelector('.modal-content');
+    let isDragging = false;
+
+    modal.onmousedown = function(event) {
+        isDragging = true;
+        let shiftX = event.clientX - modal.getBoundingClientRect().left;
+        let shiftY = event.clientY - modal.getBoundingClientRect().top;
+
+        function moveAt(pageX, pageY) {
+            modal.style.left = pageX - shiftX + 'px';
+            modal.style.top = pageY - shiftY + 'px';
+        }
+
+        function onMouseMove(event) {
+            if (isDragging) {
+                moveAt(event.pageX, event.pageY);
+            }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMouseMove);
+        }, { once: true });
+    };
+
+    modal.ondragstart = function() {
+        return false;
+    };
+}
+
 
   </script>
 
