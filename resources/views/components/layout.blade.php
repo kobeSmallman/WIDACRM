@@ -32,15 +32,7 @@
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   @stack('scripts')
 </head>
-<!--
-`body` tag options:
 
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
 
 <body class="hold-transition sidebar-mini {{ session('dark_mode') ? 'dark-mode' : '' }}">
   <div class="wrapper">
@@ -49,36 +41,13 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+    <i class="fas fa-bars" style="transform: rotate(90deg);"></i>
+</a>
+
         </li>
 
       </ul>
-
-      <!-- Right navbar links -->
-      <!-- <ul class="navbar-nav ml-auto">
-        // Navbar Search 
-        <li class="nav-item">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-            <i class="fas fa-search"></i>
-          </a>
-          <div class="navbar-search-block">
-            <form class="form-inline">
-              <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
-         ... other parts of your HTML above ... -->
- 
         <ul class="navbar-nav ml-auto">
   <!-- User Account Dropdown Menu -->
   <li class="nav-item dropdown user-menu">
@@ -119,15 +88,6 @@
   </li>
 </ul>
 
-
-<!-- ... rest of your HTML ... -->
-
-
-
-
-          
-           
-     
     </nav>
     <!-- /.navbar -->
 
@@ -176,7 +136,8 @@
         <p>Notes</p>
     </a>
 </li>
-</li>
+
+
 
             <li class="nav-item">
       
@@ -308,6 +269,8 @@
 
 
   <script>
+// Example with jQuery AJAX
+
 
   $(document).ready(function() {
     var currentRoute = "{{ Route::currentRouteName() }}";

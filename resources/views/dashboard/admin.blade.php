@@ -115,21 +115,9 @@ function initializeCalendar() {
 
 
 function initializeCharts() {
-    // Initialize Area Chart
-    var areaChartCanvas = document.getElementById('areaChart').getContext('2d');
-    var areaChart = new Chart(areaChartCanvas, {
-        type: 'line',
-        data: {
-            // Your data here
-        },
-        options: {
-            // Your options here
-        }
-    });
-    $(function () {
+  
     // ChartJS initialization for each chart
-
-    // Area Chart
+   
     var donutChartCtx = document.getElementById('donutChart').getContext('2d');
     var donutChartData = {
         labels: ['Chrome', 'IE', 'FireFox', 'Safari', 'Opera', 'Navigator'],
@@ -198,7 +186,6 @@ function initializeCharts() {
     });
 
     
-});
     // Pie Chart
     var pieChartCtx = document.getElementById('pieChart').getContext('2d');
     new Chart(pieChartCtx, {
