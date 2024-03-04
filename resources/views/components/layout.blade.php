@@ -246,7 +246,19 @@
         </nav>
         <!-- /.sidebar-menu -->
 
-        <!-- resources/views/welcome.blade.php -->
+        <!-- Note Taking Modal Option 2 save the state thing-->
+        <div id="noteModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
+                <button onclick="saveNote()">Save Note</button>
+            </div>
+        </div>
+
+        <!-- Button to Open Modal -->
+        <button id="myBtn" style="position:fixed; bottom:20px; right:20px;">Take Note</button>
+
+        <!-- resources/views/welcome.blade.php==++ option 1 livewire -->
         <livewire:note-modal />
 
       </div>
@@ -340,46 +352,147 @@
       });
     });
 
-    function draggableModal() {
-    const modal = document.querySelector('.modal-content');
+// Note Taking Modal Option 2
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById("noteModal");
+    const btn = document.getElementById("myBtn");
+    const span = document.getElementsByClassName("close")[0];
+    const noteContent = document.getElementById("noteContent");
+
     let isDragging = false;
 
-    modal.onmousedown = function(event) {
+    // Function to open the modal
+    function openModal() {
+        modal.style.display = "block";
+        const savedNote = localStorage.getItem('savedNote');
+        if (savedNote) {
+            noteContent.value = savedNote;
+        }
+        // Save modal's state as open
+        localStorage.setItem('modalState', 'open');
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        if (!isDragging) {
+            modal.style.display = "none";
+            // Save modal's state as closed
+            localStorage.setItem('modalState', 'closed');
+        }
+        isDragging = false; // Reset dragging state
+    }
+
+    btn.onclick = openModal;
+
+    span.onclick = closeModal;
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    window.saveNote = function() {
+        console.log('Note saved:', noteContent.value);
+        localStorage.removeItem('savedNote');
+        closeModal();
+    }
+
+    noteContent.addEventListener('input', function() {
+        localStorage.setItem('savedNote', noteContent.value);
+    });
+
+    // Check if modal was open and reopen if true
+    if (localStorage.getItem('modalState') === 'open') {
+        openModal();
+    }
+
+    // Draggable functionality
+    const modalContent = document.querySelector('.modal-content');
+    modalContent.onmousedown = function(e) {
         isDragging = true;
-        let shiftX = event.clientX - modal.getBoundingClientRect().left;
-        let shiftY = event.clientY - modal.getBoundingClientRect().top;
+
+        let shiftX = e.clientX - modalContent.getBoundingClientRect().left;
+        let shiftY = e.clientY - modalContent.getBoundingClientRect().top;
 
         function moveAt(pageX, pageY) {
-            modal.style.left = pageX - shiftX + 'px';
-            modal.style.top = pageY - shiftY + 'px';
+            modalContent.style.left = pageX - shiftX + 'px';
+            modalContent.style.top = pageY - shiftY + 'px';
         }
 
         function onMouseMove(event) {
-            if (isDragging) {
-                moveAt(event.pageX, event.pageY);
-            }
+            moveAt(event.pageX, event.pageY);
         }
 
         document.addEventListener('mousemove', onMouseMove);
 
-        document.addEventListener('mouseup', function() {
-            isDragging = false;
+        modalContent.onmouseup = function() {
             document.removeEventListener('mousemove', onMouseMove);
-        }, { once: true });
+            modalContent.onmouseup = null;
+            isDragging = false;
+        };
     };
 
-    modal.ondragstart = function() {
+    modalContent.ondragstart = function() {
         return false;
     };
-}
 
+    // Reopen modal if it was previously open
+    if (localStorage.getItem('modalState') === 'open') {
+        openModal();
+    }
+});
+
+
+
+// Call makeDraggable on your modal
+document.addEventListener('DOMContentLoaded', function () {
+    makeDraggable(document.getElementById("noteModal"));
+});
 
   </script>
-
-
-
-
 
 </body>
 
 </html>
+
+<style>
+  /* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+    /* Additional styles to ensure it's draggable */
+    cursor: move; /* Change mouse pointer to indicate moving */
+    position: relative; /* Needed for the positioning in JavaScript */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+</style>
