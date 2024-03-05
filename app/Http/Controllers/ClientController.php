@@ -39,11 +39,35 @@ class ClientController extends Controller
         abort(404, 'Page not found.');
     }
     
+    public function notesAJAX($id)
+    {
+        $client = Client::with('notes')->findOrFail($id);
+        return response()->json($client->notes);
+    }
+
+    public function lastOrders($id)
+    {
+        $client = Client::with(['orders' => function ($query) {
+            $query->latest('Request_DATE')->take(5);
+        }])->findOrFail($id);
+
+        return response()->json($client->orders);
+    }
+
+
+
     public function notes($id)
-{
-    $client = Client::with('notes.employee')->findOrFail($id);
-    return view('notes.index', compact('client'));
-}
+    {
+        $client = Client::with('notes.employee')->findOrFail($id);
+        return view('notes.index', compact('client'));
+    }
+
+    public function notesCount($id)
+    {
+        $client = Client::findOrFail($id);
+        $notesCount = $client->notes->count();
+        return response()->json($notesCount);
+    }
 
 
 
