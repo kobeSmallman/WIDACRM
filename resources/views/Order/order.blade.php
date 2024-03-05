@@ -67,6 +67,9 @@
                         <label for="ssa_path">SSA Path:</label>
                         <input type="text" class="form-control" id="ssa_path" name="ssa_path">
                     </div>
+                    <!-- Add Product Button -->
+                    <button type="button" class="btn btn-info mt-3" id="addProductButton">Add Another Product</button>
+                    <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary mt-3">Submit Order</button>
                 </form>
             </div>

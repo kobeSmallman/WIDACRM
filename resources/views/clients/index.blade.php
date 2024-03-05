@@ -26,7 +26,10 @@
 
         <!-- New Client Form, initially hidden -->
         <div id="newClientForm" style="display: none;" class="card card-info">
-        
+            <div class="card-header py-3">
+                <h3 class="card-title">Add New Client</h3>
+            </div>
+            <div class="card-body">
             <form action="{{ route('clients.store') }}" method="POST" class="client-form">
                 @csrf
                 <!-- Form fields -->
@@ -67,54 +70,58 @@
                 </div>
             </form>
         </div>
+    </div>
 
         <!-- Card for Client List -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">List of Clients</h3>
-            </div>
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">List of Clients</h6>
+                </div>
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Client Name</th>
-                            <th>Main Contact</th>
-                            <th>Shipping Address</th>
-                            <th>Billing Address</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Lead Status</th>
-                            <th>Buyer Status</th>
-                            <th>Orders</th> {{-- New column for orders --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($clients as $client)
-                        <tr>
-                            <td>{{ $client->Company_Name }}</td>
-                            <td>{{ $client->Main_Contact }}</td>
-                            <td>{{ $client->Shipping_Address }}</td>
-                            <td>{{ $client->Billing_Address }}</td>
-                            <td>{{ $client->Email }}</td>
-                            <td>{{ $client->Phone_Number }}</td>
-                            <td>{{ $client->Lead_Status }}</td>
-                            <td>{{ $client->Buyer_Status }}</td>
-                            <td>
-                                @foreach ($client->orders as $order)
-                                    <details>
-                                        <summary>Order ID: {{ $order->Order_ID }}</summary>
-                                        <div>
-                                            @foreach ($order->products as $product)
-                                                <p>{{ $product->Product_Name }} - Quantity: {{ $product->Quantity }}</p>
-                                            @endforeach
-                                        </div>
-                                    </details>
-                                @endforeach
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Client Name</th>
+                                <th>Main Contact</th>
+                                <th>Shipping Address</th>
+                                <th>Billing Address</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Lead Status</th>
+                                <th>Buyer Status</th>
+                                <th>Orders</th> {{-- New column for orders --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($clients as $client)
+                            <tr>
+                                <td>{{ $client->Company_Name }}</td>
+                                <td>{{ $client->Main_Contact }}</td>
+                                <td>{{ $client->Shipping_Address }}</td>
+                                <td>{{ $client->Billing_Address }}</td>
+                                <td>{{ $client->Email }}</td>
+                                <td>{{ $client->Phone_Number }}</td>
+                                <td>{{ $client->Lead_Status }}</td>
+                                <td>{{ $client->Buyer_Status }}</td>
+                                <td>
+                                    @foreach ($client->orders as $order)
+                                        <details>
+                                            <summary>Order ID: {{ $order->Order_ID }}</summary>
+                                            <div>
+                                                @foreach ($order->products as $product)
+                                                    <p>{{ $product->Product_Name }} - Quantity: {{ $product->Quantity }}</p>
+                                                @endforeach
+                                            </div>
+                                        </details>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
