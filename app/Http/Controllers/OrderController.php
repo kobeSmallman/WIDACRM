@@ -90,6 +90,13 @@ class OrderController extends Controller
         // Redirect to the orders page with a success message
         return redirect()->route('orders.index')->with('success', 'New order has been created.');
     }
+
+    // For Notes
+    public static function list(): View {
+        $orders = DB::select('select * from u126104410_Hexacrm.Order');
+    // variable i will call on blade
+        return view('notes.orderDetails', ['orders' => $orders]);
+    }
     
     public function getAllOrders()
 {
