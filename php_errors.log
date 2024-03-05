@@ -3,3 +3,8 @@
 Stack trace:
 #0 {main}
   thrown in C:\Users\student\WIDACRM\artisan on line 18
+[07-Feb-2024 18:02:16 UTC] PHP Warning:  require(C:\Users\student\Desktop\WIDACRM/vendor/autoload.php): Failed to open stream: No such file or directory in C:\Users\student\Desktop\WIDACRM\artisan on line 18
+[07-Feb-2024 18:02:16 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\Users\student\Desktop\WIDACRM/vendor/autoload.php' (include_path='.;C:\php\pear') in C:\Users\student\Desktop\WIDACRM\artisan:18
+Stack trace:
+#0 {main}
+  thrown in C:\Users\student\Desktop\WIDACRM\artisan on line 18
