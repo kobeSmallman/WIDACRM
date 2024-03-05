@@ -246,20 +246,16 @@
         </nav>
         <!-- /.sidebar-menu -->
 
-        <!-- Note Taking Modal Option 2 save the state thing-->
-        <div id="noteModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
-                <button onclick="saveNote()">Save Note</button>
-            </div>
-        </div>
-
         <!-- Button to Open Modal -->
-        <button id="myBtn" style="position:fixed; bottom:20px; right:20px;">Take Note</button>
-
-        <!-- resources/views/welcome.blade.php==++ option 1 livewire -->
-        <livewire:note-modal />
+        <div id="noteModal" class="modal" style="display:none;">
+        <div class="modal-content">
+        <div class="modal-header" id="dragHandle">Drag me</div>
+        <span class="close">&times;</span>
+        <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
+        <button onclick="saveNote()">Save Note</button>
+        </div>
+        </div>
+        <button id="myBtn">Take Note</button>
 
       </div>
       <!-- /.sidebar -->
@@ -352,110 +348,98 @@
       });
     });
 
-// Note Taking Modal Option 2
+// Add an event listener for when the DOM content is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    const modal = document.getElementById("noteModal");
-    const btn = document.getElementById("myBtn");
-    const span = document.getElementsByClassName("close")[0];
-    const noteContent = document.getElementById("noteContent");
+    // Get references to the modal elements
+    const modal = document.getElementById("noteModal"); // The modal dialog
+    const btn = document.getElementById("myBtn"); // The button that opens the modal
+    const span = document.getElementsByClassName("close")[0]; // The 'close' button inside the modal
+    const noteContent = document.getElementById("noteContent"); // The textarea for note content
+    const dragHandle = document.getElementById("dragHandle"); // The draggable area at the top of the modal
 
-    let isDragging = false;
-
-    // Function to open the modal
+    // Opens the modal window
     function openModal() {
-        modal.style.display = "block";
-        const savedNote = localStorage.getItem('savedNote');
+        modal.style.display = "block"; // Show the modal
+        const savedNote = localStorage.getItem('savedNote'); // Retrieve saved note content from localStorage
         if (savedNote) {
-            noteContent.value = savedNote;
+            noteContent.value = savedNote; // If there is saved content, display it in the textarea
         }
-        // Save modal's state as open
-        localStorage.setItem('modalState', 'open');
+        localStorage.setItem('modalState', 'open'); // Save the state of the modal as open
     }
-    //alert(localStorage.getItem('modalState'));
+
+    // Automatically open the modal if it was previously left open
     if (localStorage.getItem('modalState') === 'open') {
-      //if (localStorage.getItem('savedNote') !== '') {
-      //alert('is open');
-      openModal();
+        openModal();
     }
 
-    // Function to close the modal
+    // Closes the modal window
     function closeModal() {
-        if (!isDragging) {
-            modal.style.display = "none";
-            // Save modal's state as closed
-            //localStorage.setItem('modalState', 'closed');
-        }
-        isDragging = false; // Reset dragging state
+        modal.style.display = "none"; // Hide the modal
+        // Optionally update modalState in localStorage here if desired
     }
 
-    btn.onclick = openModal;
+    // Event listeners for opening and closing the modal
+    btn.onclick = openModal; // When the 'Take Note' button is clicked, open the modal
+    span.onclick = closeModal; // When the 'close' span is clicked, close the modal
 
-    span.onclick = closeModal;
-
+    // Close the modal if the user clicks outside of it
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             closeModal();
         }
     }
 
+    // Save the note content to localStorage and close the modal
     window.saveNote = function() {
-        console.log('Note saved:', noteContent.value);
-        localStorage.removeItem('savedNote');
-        closeModal();
-        localStorage.setItem('modalState', 'closed');
+        console.log('Note saved:', noteContent.value); // Log the saved note for debugging
+        localStorage.removeItem('savedNote'); // Clear previous saved note
+        closeModal(); // Close the modal
     }
 
+    // Autosave note content as the user types
     noteContent.addEventListener('input', function() {
-        localStorage.setItem('savedNote', noteContent.value);
+        localStorage.setItem('savedNote', noteContent.value); // Save current content to localStorage
     });
 
-    // Check if modal was open and reopen if true
-    if (localStorage.getItem('modalState') === 'open') {
-        openModal();
-    }
+    // Dragging functionality for the modal
+    let isDragging = false; // Flag to track dragging state
 
-    // Draggable functionality
-    const modalContent = document.querySelector('.modal-content');
-    modalContent.onmousedown = function(e) {
-        isDragging = true;
+    // Allow the modal to be dragged by the mouse
+    dragHandle.addEventListener('mousedown', function(e) {
+        let shiftX = e.clientX - modal.offsetLeft; // Horizontal position where the drag started
+        let shiftY = e.clientY - modal.offsetTop; // Vertical position where the drag started
 
-        let shiftX = e.clientX - modalContent.getBoundingClientRect().left;
-        let shiftY = e.clientY - modalContent.getBoundingClientRect().top;
-
-        function moveAt(pageX, pageY) {
-            modalContent.style.left = pageX - shiftX + 'px';
-            modalContent.style.top = pageY - shiftY + 'px';
+        // Function to move the modal as the mouse is moved
+        function onMouseMove(e) {
+            modal.style.left = e.pageX - shiftX + 'px';
+            modal.style.top = e.pageY - shiftY + 'px';
         }
 
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-
-        modalContent.onmouseup = function() {
+        // Stop moving the modal when the mouse button is released
+        function onMouseUp() {
             document.removeEventListener('mousemove', onMouseMove);
-            modalContent.onmouseup = null;
-            isDragging = false;
-        };
-    };
+            modal.onmouseup = null;
+            isDragging = false; // Reset dragging state
+        }
 
-    modalContent.ondragstart = function() {
+        // Attach event listeners for moving and stopping
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp, {once: true});
+
+        e.preventDefault(); // Prevent default drag behavior
+    });
+
+    // Prevent the modal content from being selected during drag
+    dragHandle.ondragstart = function() {
         return false;
     };
 
-    // Reopen modal if it was previously open
+    // Re-open the modal if it was previously open (useful for page reloads)
     if (localStorage.getItem('modalState') === 'open') {
         openModal();
     }
 });
 
-
-
-// Call makeDraggable on your modal
-document.addEventListener('DOMContentLoaded', function () {
-    makeDraggable(document.getElementById("noteModal"));
-});
 
   </script>
 
@@ -464,42 +448,50 @@ document.addEventListener('DOMContentLoaded', function () {
 </html>
 
 <style>
-  /* Modal Styles */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+  .modal {
+    display: none; /* Initially hidden */
+    position: fixed; /* Fixed positioning relative to the viewport */
+    z-index: 1; /* Ensures modal is on top of other content */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    
+    overflow: auto; /* Allows scrolling if modal content is too tall */
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-    /* Additional styles to ensure it's draggable */
-    cursor: move; /* Change mouse pointer to indicate moving */
-    position: relative; /* Needed for the positioning in JavaScript */
+    background-color: #fefefe; /* White background */
+    margin: 15% auto; /* Centered vertically and horizontally */
+    padding: 20px; /* Padding around the content */
+    border: 1px solid #888; /* Gray border */
+    width: 50%; /* Half the width of the viewport */
+    position: absolute; /* Absolute positioning within the modal */
+    left: 50%; /* Horizontally centered */
+    top: 50%; /* Vertically centered */
+    transform: translate(-50%, -50%); /* Adjust the position to truly center the element */
+}
+
+.modal-header {
+    cursor: move; /* Indicates the header is draggable */
+    padding: 10px; /* Padding inside the header */
+    background-color: #f3f3f3; /* Light gray background */
+    color: #333; /* Dark text color */
+    width: 100%; /* Full width of the modal-content */
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    color: #aaa; /* Light gray 'x' button */
+    float: right; /* Positioned to the right */
+    font-size: 28px; /* Large 'x' icon */
+    font-weight: bold; /* Make 'x' bold */
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover, .close:focus {
+    color: black; /* Darken 'x' on hover/focus */
+    text-decoration: none; /* No underline */
+    cursor: pointer; /* Pointer cursor on hover/focus */
 }
+
+
 
 </style>

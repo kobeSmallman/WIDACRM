@@ -130,7 +130,7 @@
         </div>
 
         <!-- Note Content -->
-        <div class="note-content" id="noteContent">
+        <div class="note-content" id="clientNote">
         <p>Select a Note to view Note details</p>
             <!-- Selected note content will be displayed here -->
         </div>
@@ -192,30 +192,30 @@
                 })
                 .catch(error => console.error('Error:', error));
                 
-                fetch(`/clients/${clientId}/last-orders`)
-    .then(response => response.json())
-    .then(orders => {
-        const ordersTableBody = document.querySelector('.orders-table tbody'); // Select the tbody within the orders-table
-        if (orders.length > 0) {
-            let tableRowsHtml = ''; // Initialize an empty string to build the rows
-            // Populate the rows with order data
-            orders.forEach(order => {
-                tableRowsHtml += '<tr>';
-                tableRowsHtml += `<td>${order.Order_ID}</td>`;
-                tableRowsHtml += `<td>${order.Created_By}</td>`;
-                tableRowsHtml += `<td>${order.Request_DATE}</td>`;
-                tableRowsHtml += `<td>${order.Request_Status}</td>`;
-                tableRowsHtml += `<td>${order.Order_DATE}</td>`;
-                tableRowsHtml += `<td>${order.Order_Status}</td>`;
-                tableRowsHtml += `<td>${order.Quotation_DATE}</td>`;
-                tableRowsHtml += '</tr>';
-            });
-            ordersTableBody.innerHTML = tableRowsHtml; // Insert the rows into the tbody
-        } else {
-            ordersTableBody.innerHTML = '<tr><td colspan="7">No recent orders available for the selected client</td></tr>'; // Handle no orders
-        }
-    })
-    .catch(error => console.error('Error:', error));
+            fetch(`/clients/${clientId}/last-orders`)
+                .then(response => response.json())
+                .then(orders => {
+                    const ordersTableBody = document.querySelector('.orders-table tbody'); // Select the tbody within the orders-table
+                    if (orders.length > 0) {
+                        let tableRowsHtml = ''; // Initialize an empty string to build the rows
+                        // Populate the rows with order data
+                        orders.forEach(order => {
+                            tableRowsHtml += '<tr>';
+                            tableRowsHtml += `<td>${order.Order_ID}</td>`;
+                            tableRowsHtml += `<td>${order.Created_By}</td>`;
+                            tableRowsHtml += `<td>${order.Request_DATE}</td>`;
+                            tableRowsHtml += `<td>${order.Request_Status}</td>`;
+                            tableRowsHtml += `<td>${order.Order_DATE}</td>`;
+                            tableRowsHtml += `<td>${order.Order_Status}</td>`;
+                            tableRowsHtml += `<td>${order.Quotation_DATE}</td>`;
+                            tableRowsHtml += '</tr>';
+                        });
+                        ordersTableBody.innerHTML = tableRowsHtml; // Insert the rows into the tbody
+                    } else {
+                        ordersTableBody.innerHTML = '<tr><td colspan="7">No recent orders available for the selected client</td></tr>'; // Handle no orders
+                    }
+                })
+                .catch(error => console.error('Error:', error));
 
         }
 
@@ -233,7 +233,7 @@
         }
 
         function showNoteContent(note) {
-            const contentDiv = document.getElementById('noteContent');
+            const contentDiv = document.getElementById('clientNote');
             // Populate the div with the note content
             contentDiv.innerHTML = `
                 <h3>Note Details</h3>
