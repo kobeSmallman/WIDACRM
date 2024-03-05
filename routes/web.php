@@ -60,10 +60,13 @@ Route::get('/dashboard/employee', [DashboardController::class, 'employeeDashboar
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
-Route::get('/clients/{id}/notes', [ClientController::class, 'show'])->name('clients.notes');
-Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
 Route::get('/clients/{clientId}/orders', [ClientController::class, 'getClientOrders']);
 Route::get('/clients/{id}/orders', [ClientController::class, 'getClientOrders'])->name('clients.orders');
+
+// Notes
+Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
+Route::get('/clients/{id}/notesCount', [ClientController::class, 'notesCount'])->name('clients.notesCount');
+Route::get('/clients/{id}/last-orders', [ClientController::class, 'lastOrders'])->name('clients.lastOrders');
 
 
 // Add a route to fetch all orders for all clients
@@ -127,11 +130,15 @@ Route::get('/ordersummary', [OrderSummaryController::class, 'index'])->name('ord
 Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
 Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
 
-// Display the page to take notes with a list of clients
-Route::get('/takeNotes', [NoteController::class, 'create'])->name('takeNotes');
-
-// Store the notes into the database
+// (NOTES) Display the page to take notes with a list of clients ||||| Notes page
+Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
+Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
 Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+Route::get('/clients/{id}/notesAJAX', [ClientController::class, 'notesAJAX'])->name('clients.notesAJAX');
+// Route to show the form for editing a specific note
+Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
+// Route to update a specific note
+Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
 
 // Display the page to create a new request based on the selected client
 // This assumes you have a separate RequestController for handling requests
