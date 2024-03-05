@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController; // Add this line to use AuthController
 use App\Http\Controllers\DashboardController;
@@ -157,9 +158,3 @@ Route::get('/permissions', [PermissionController::class, 'index'])->name('permis
 Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
 
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
-
-
-
-
-
-

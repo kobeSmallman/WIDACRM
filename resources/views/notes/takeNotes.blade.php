@@ -3,7 +3,8 @@
     <style>
         .container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Creates two columns */
+            grid-template-columns: repeat(2, 1fr);
+            /* Creates two columns */
             grid-gap: 20px;
             padding: 20px;
         }
@@ -11,61 +12,81 @@
         /* Mobile view */
         @media (max-width: 768px) {
             .container {
-            grid-template-columns: 1fr; /* Stack on top of each other on small screens */
+                grid-template-columns: 1fr;
+                /* Stack on top of each other on small screens */
             }
 
             .client-details,
             .notes-links,
             .note-content,
             .orders-details {
-                grid-column: 1 / -1; /* Stretch across the full width */
+                grid-column: 1 / -1;
+                /* Stretch across the full width */
             }
         }
 
         .client-list {
             grid-column: 1 / 2;
             grid-row: 1 / 2;
-            width: 100%; /* Full width of the grid column */
+            width: 100%;
+            /* Full width of the grid column */
         }
 
         .client-details {
             grid-column: 2 / 3;
             grid-row: 1 / 2;
-            width: 100%; /* Full width of the grid column */
+            width: 100%;
+            /* Full width of the grid column */
         }
 
         .notes-links {
-            grid-column: 1 / 2; /* Spanning across both columns */
-            width: 100%; /* Full width */
-            display: inline-block; /* Side-by-side display */
+            grid-column: 1 / 2;
+            /* Spanning across both columns */
+            width: 100%;
+            /* Full width */
+            display: inline-block;
+            /* Side-by-side display */
         }
+
         .note-content {
-            grid-column: 2 / 3; /* Spanning across both columns */
-            width: 100%; /* Full width */
-            display: inline-block; /* Side-by-side display */
+            grid-column: 2 / 3;
+            /* Spanning across both columns */
+            width: 100%;
+            /* Full width */
+            display: inline-block;
+            /* Side-by-side display */
         }
 
         .orders-details {
             grid-column: 1 / 3;
-            width: 100%; /* Full width */
-            overflow-x: auto; /* Enables horizontal scrolling if table is wider than screen */
+            width: 100%;
+            /* Full width */
+            overflow-x: auto;
+            /* Enables horizontal scrolling if table is wider than screen */
         }
 
         .orders-table {
-            width: 100%; /* Table width is 100% of its container */
-            border-collapse: collapse; /* Remove space between borders */
-            table-layout: fixed; /* Fixed table layout */
+            width: 100%;
+            /* Table width is 100% of its container */
+            border-collapse: collapse;
+            /* Remove space between borders */
+            table-layout: fixed;
+            /* Fixed table layout */
             background-color: #f8f9fa;
         }
 
         .orders-table th,
         .orders-table td {
             border: 1px solid #ced4da;
-            padding: 8px; /* Adjusted padding for a balanced look */
-            text-align: center; /* Center text horizontally */
-            vertical-align: middle; /* Center text vertically */
-            min-width: 120px; /* Minimum width for each cell */
-        }   
+            padding: 8px;
+            /* Adjusted padding for a balanced look */
+            text-align: center;
+            /* Center text horizontally */
+            vertical-align: middle;
+            /* Center text vertically */
+            min-width: 120px;
+            /* Minimum width for each cell */
+        }
 
         .client-list,
         .client-details,
@@ -106,8 +127,8 @@
 
 
 
-   <!-- Layout structure -->
-   <div class="container">
+    <!-- Layout structure -->
+    <div class="container">
         <!-- Client list -->
         <div class="client-list">
             @foreach ($clients as $client)
@@ -125,13 +146,13 @@
 
         <!-- Notes Links -->
         <div class="notes-links" id="notesLinks">
-        <p>Select a client to view Older Notes</p>
+            <p>Select a client to view Older Notes</p>
             <!-- Links to individual notes will be loaded here via JavaScript -->
         </div>
 
         <!-- Note Content -->
         <div class="note-content" id="clientNote">
-        <p>Select a Note to view Note details</p>
+            <p>Select a Note to view Note details</p>
             <!-- Selected note content will be displayed here -->
         </div>
 
@@ -176,7 +197,7 @@
                     fetchNotesDetails(clientId);
                 })
                 .catch(error => console.error('Error:', error));
-                
+
             fetch(`/clients/${clientId}/notesAJAX`)
                 .then(response => response.json())
                 .then(notes => {
@@ -191,7 +212,7 @@
                     });
                 })
                 .catch(error => console.error('Error:', error));
-                
+
             fetch(`/clients/${clientId}/last-orders`)
                 .then(response => response.json())
                 .then(orders => {

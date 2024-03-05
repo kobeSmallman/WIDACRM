@@ -333,6 +333,7 @@
       function closeModal() {
         modal.style.display = "none"; // Hide the modal
         // Optionally update modalState in localStorage here if desired
+        localStorage.setItem('modalState', 'closed'); // Consider adding this line if you want to explicitly set the modal's state to closed
       }
 
       // Event listeners for opening and closing the modal
