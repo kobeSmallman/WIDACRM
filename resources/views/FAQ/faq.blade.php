@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row gy-5 gy-lg-0 align-items-lg-center">
       <div class="col-12 col-lg-6">
-      <img class="img-fluid rounded" loading="lazy" src="{{ asset('dist/img/image.png') }}" alt="How can we help you?">
+        <img class="img-fluid rounded" loading="lazy" src="{{ asset('dist/img/image.png') }}" alt="How can we help you?">
       </div>
       <div class="col-12 col-lg-6">
         <div class="row justify-content-xl-end">
@@ -14,54 +14,86 @@
             <h2 class="h1 mb-3">How can we help you?</h2>
             <p class="lead fs-4 text-secondary mb-5">We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.</p>
             <div class="accordion accordion-flush" id="accordionExample">
+
+              {{-- Custom Questions --}}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    How Do I Change My Billing Information?
+                <h2 class="accordion-header" id="headingNewUser">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNewUser" aria-expanded="false" aria-controls="collapseNewUser">
+                    How can I add a new user or employee?
                   </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="collapseNewUser" class="accordion-collapse collapse" aria-labelledby="headingNewUser" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <p>To change your billing information, please follow these steps:</p>
-                    <ul>
-                      <li>Go to our website and sign in to your account.</li>
-                      <li>Click on your profile picture in the top right corner of the page and select "Account Settings."</li>
-                      <li>Under the "Billing Information" section, click on "Edit."</li>
-                      <li>Make your changes and click on "Save."</li>
-                    </ul>
+                    To add a new user or employee, log in to your administrative account, navigate to the "System Users" section in the side navigation, then choose "Add New Employee." Fill out the form with the required information, and upon completion, select "Create Employee."
                   </div>
                 </div>
               </div>
+              
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    How Does Payment System Work?
+                <h2 class="accordion-header" id="headingNewClient">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNewClient" aria-expanded="false" aria-controls="collapseNewClient">
+                    How do I add a new client or customer?
                   </button>
                 </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div id="collapseNewClient" class="accordion-collapse collapse" aria-labelledby="headingNewClient" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    A payment system is a way to transfer money from one person or organization to another. It is a complex process that involves many different parties, including banks, credit card companies, and merchants.
+                    Upon logging in, navigate to the "Clients" tab in the side navigation. Click on "Add New Client," fill out the form, and confirm the entry once completed.
                   </div>
                 </div>
               </div>
+              
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    How Do I Cancel My Account?
+                <h2 class="accordion-header" id="headingNewOrder">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNewOrder" aria-expanded="false" aria-controls="collapseNewOrder">
+                    What's the process for adding a new order?
                   </button>
                 </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div id="collapseNewOrder" class="accordion-collapse collapse" aria-labelledby="headingNewOrder" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <p>To cancel your account, please follow these steps:</p>
-                    <ul>
-                      <li>Go to our website and sign in to your account.</li>
-                      <li>Click on your profile picture in the top right corner of the page and select "Account Settings."</li>
-                      <li>Scroll to the bottom of the page and click on "Cancel Account."</li>
-                      <li>Enter your password and click on "Cancel Account."</li>
-                    </ul>
+                    Head to the "Orders" tab on the side navigation, then select "Add New Order." Fill in the necessary details in the table provided and submit the order by pressing "Submit Order."
                   </div>
                 </div>
               </div>
+              
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPermissions">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePermissions" aria-expanded="false" aria-controls="collapsePermissions">
+                    How can I check the permissions assigned to each employee for different pages?
+                  </button>
+                </h2>
+                <div id="collapsePermissions" class="accordion-collapse collapse" aria-labelledby="headingPermissions" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    Navigate to the "Permissions" tab on the side navigation. Select the page you're interested in, and from the dropdown menu on the right side of the table, review the permissions assigned to each employee for that specific page.
+                  </div>
+                </div>
+              </div>
+              
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingUserProfile">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUserProfile" aria-expanded="false" aria-controls="collapseUserProfile">
+                    How do I access my user profile to update information such as name and profile picture?
+                  </button>
+                </h2>
+                <div id="collapseUserProfile" class="accordion-collapse collapse" aria-labelledby="headingUserProfile" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    Click on your name located at the top right corner of the header. From the dropdown menu, select "Edit Profile" to access and update your user profile.
+                  </div>
+                </div>
+              </div>
+              
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingLogout">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogout" aria-expanded="false" aria-controls="collapseLogout">
+                    What's the procedure for logging out?
+                  </button>
+                </h2>
+                <div id="collapseLogout" class="accordion-collapse collapse" aria-labelledby="headingLogout" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    To log out, click on your user profile at the top right corner. From the dropdown menu that appears, scroll down to find the logout button and select it to log out of your account.
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
