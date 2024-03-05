@@ -371,13 +371,19 @@ document.addEventListener('DOMContentLoaded', function () {
         // Save modal's state as open
         localStorage.setItem('modalState', 'open');
     }
+    //alert(localStorage.getItem('modalState'));
+    if (localStorage.getItem('modalState') === 'open') {
+      //if (localStorage.getItem('savedNote') !== '') {
+      //alert('is open');
+      openModal();
+    }
 
     // Function to close the modal
     function closeModal() {
         if (!isDragging) {
             modal.style.display = "none";
             // Save modal's state as closed
-            localStorage.setItem('modalState', 'closed');
+            //localStorage.setItem('modalState', 'closed');
         }
         isDragging = false; // Reset dragging state
     }
@@ -396,6 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Note saved:', noteContent.value);
         localStorage.removeItem('savedNote');
         closeModal();
+        localStorage.setItem('modalState', 'closed');
     }
 
     noteContent.addEventListener('input', function() {
