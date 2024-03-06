@@ -19,7 +19,7 @@ class PaymentController extends Controller
                                     ->pluck('PMT_Type_Name', 'PMT_Type_ID');
 
         // Return the add payment view with the data
-        return view('addPayment', compact('orders', 'paymentTypes'));
+        return view('payment.addPayment', compact('orders', 'paymentTypes'));
     }
 
     public function store(Request $request)
