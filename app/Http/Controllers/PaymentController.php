@@ -19,7 +19,7 @@ class PaymentController extends Controller
                                     ->pluck('PMT_Type_Name', 'PMT_Type_ID');
 
         // Return the add payment view with the data
-        return view('addPayment', compact('orders', 'paymentTypes'));
+        return view('payment.addPayment', compact('orders', 'paymentTypes'));
     }
 
     public function store(Request $request)
@@ -37,7 +37,8 @@ class PaymentController extends Controller
 
         $payment->save();
 
-        return redirect()->route('some.route')->with('success', 'Payment added successfully.');
+        // Instead of redirecting with a flash message, return back with success data
+        return back()->with('success', 'Payment added successfully.');
     }
 
     // Other necessary methods...

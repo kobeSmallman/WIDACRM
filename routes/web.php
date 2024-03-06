@@ -134,6 +134,8 @@ Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registra
 Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])->name('systemusers.profile');
 Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])->name('systemusers.updateEmployee');
 
+Route::post('/system-users/save-employee', [SystemUsersController::class, 'saveEmployee'])->name('save.employee');
+
 
 
 // Place this inside the web routes in web.php
@@ -176,7 +178,11 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('site.settin
 
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
 Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
+
 Route::get('/payment', [PaymentController::class, 'showPayment'])->name('payment.show');
+use App\Http\Controllers\PaymentController;
+Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+
 
 //agreements page
 Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');

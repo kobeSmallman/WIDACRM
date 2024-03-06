@@ -14,7 +14,7 @@ class SystemUsersController extends BaseController
 {
     private $selectedEmployee;
 
-    public function storeEmployee(Request $request)
+    public function saveEmployee(Request $request)
     {
         Log::info('Employee creation method called with data:', $request->all());
     
@@ -25,14 +25,15 @@ class SystemUsersController extends BaseController
             'First_Name',
             'Department',
             'Position',
+            // Skipping 'Role_ID' from the request
             'Employee_Status',
-            'Role_ID',
-            'Password',
+            // Skipping 'Password' from the request
             // Any other fields you expect from the request
         ]);
-        
-        // Manually hash the password
-        $employeeData['Password'] = Hash::make($employeeData['Password']);
+    
+        // Set default values for 'Password' and 'Employee_Status'
+        $employeeData['Password'] = Hash::make('Password1');
+        $employeeData['Employee_Status'] = 'ACTIVE';
     
         try {
             \DB::beginTransaction();
@@ -45,7 +46,7 @@ class SystemUsersController extends BaseController
             Log::info('Employee created successfully.', ['employee_id' => $employee->Employee_ID]);
     
             // Redirect to the system users page with a success message
-            return redirect()->route('system-users')->with('success', 'Employee created successfully.');
+            return redirect()->route('systemusers')->with('success', 'Employee created successfully.');
         } catch (\Throwable $e) {
             \DB::rollBack();
             Log::error('Failed to create employee: ' . $e->getMessage());
@@ -57,7 +58,7 @@ class SystemUsersController extends BaseController
             return back()->withErrors('Failed to create employee: ' . $e->getMessage())->withInput();
         }
     }
-
+    
     public function showSystemUsers()
     {
         $activeEmployees = Employee::with('permissions')->where('Employee_Status', 'Active')->get();
@@ -69,8 +70,11 @@ class SystemUsersController extends BaseController
 
 
     public function registration()
-    {
-        return view('systemusers.add-employee');
+    { 
+        $departments = Employee::distinct()->pluck('Department')->toArray();
+        $departments = array_map('strtoupper', $departments); 
+        sort($departments);
+        return view('systemusers.add-employee', compact('departments')); 
     }
 
 
