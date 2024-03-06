@@ -8,12 +8,20 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NoteController;
-use App\Http\Controllers\RequestController; // Ensure you have this controller created
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 
 // Web.php
 use App\Http\Controllers\AnalyticsController;
+// web.php
+// Inside web.php
+
+use App\Http\Controllers\FAQController;
+
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -161,3 +169,4 @@ Route::get('/permissions', [PermissionController::class, 'index'])->name('permis
 Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
 
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
+Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');

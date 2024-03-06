@@ -19,13 +19,12 @@
     </section>
 
     <!-- Main content -->
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <!-- Button to toggle the form -->
             <div class="mb-3">
-                <button id="toggleVendorFormBtn" class="btn btn-success">
-                    <i class="fas fa-plus-circle"></i> Add New Vendor
+                <button id="toggleVendorFormBtn" class="btn btn-primary">
+                     Add New Vendor
                 </button>
             </div>
 
@@ -172,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             form.style.display = 'none';
             this.textContent = 'Add New Vendor';
             this.classList.remove('btn-danger');
-            this.classList.add('btn-success');
+            this.classList.add('btn-primary');
         }
     });
 });
