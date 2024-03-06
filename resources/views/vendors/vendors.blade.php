@@ -34,7 +34,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Add New Vendor</h3>
                 </div>
-                <form role="form" action="{{ route('vendors.store') }}" method="post">
+                <form role="form" action="{{ route('vendors.store') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
