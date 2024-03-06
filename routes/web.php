@@ -176,5 +176,9 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('site.settin
 
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
 Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
+
 Route::get('/payment', [PaymentController::class, 'showPayment'])->name('payment.show');
+use App\Http\Controllers\PaymentController;
+Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+
 Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
