@@ -211,6 +211,12 @@
         <p>Agreement Form</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('payment.show') }}" class="nav-link">
+        <i class="nav-icon fas fa-regular fa-credit-card"></i>
+        <p>Payment</p>
+    </a>
+</li>
 
           </ul>
           
