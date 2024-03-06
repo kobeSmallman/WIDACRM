@@ -127,6 +127,14 @@ Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])->name('
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
+
+Route::get('/systemusers', [SystemUsersController::class, 'showSystemUsers'])->name('systemusers');
+Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registration'])->name('systemusers.registration');
+Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])->name('systemusers.profile');
+Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])->name('systemusers.updateEmployee');
+
+
+
 // Place this inside the web routes in web.php
 Route::post('/employees/create', [AuthController::class, 'storeEmployee'])->name('employees.create');
 

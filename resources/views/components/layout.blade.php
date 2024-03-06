@@ -19,17 +19,17 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
-  <!-- DataTables -->
+  <!-- DataTables --> 
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
 
 
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
 
   <!-- jQuery -->
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -37,7 +37,7 @@
 </head>
 
 
-<body class="hold-transition sidebar-mini {{ session('dark_mode') ? 'dark-mode' : '' }}">
+<body class="hold-transition sidebar-mini layout-fixed {{ session('dark_mode') ? 'dark-mode' : '' }}">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -162,7 +162,7 @@
 
             <li class="nav-header">ADMINISTRATION</li>
             <li class="nav-item">
-              <a href="{{ route('system-users') }}" class="nav-link">
+              <a href="{{ route('systemusers') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-address-card"></i>
                 <p>
                   System Users
@@ -270,6 +270,9 @@
   <!-- AdminLTE -->
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
+
+  <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
   <!-- OPTIONAL SCRIPTS -->
   <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
@@ -286,6 +289,8 @@
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+  <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 
   <!-- JavaScript to dynamically add active class to the navigation link -->
