@@ -177,4 +177,10 @@ Route::get('/settings', [SettingsController::class, 'index'])->name('site.settin
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
 Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
 Route::get('/payment', [PaymentController::class, 'showPayment'])->name('payment.show');
+
+//agreements page
 Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
+// Display the form
+Route::get('/agreement', [AgreementController::class, 'create'])->name('agreement.create');
+// Handle form submission
+Route::post('/agreement', [AgreementController::class, 'store'])->name('agreement.store');
