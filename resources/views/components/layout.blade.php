@@ -207,7 +207,7 @@
 </li>
 <li class="nav-item">
     <a href="{{ route('agreement.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-question-circle"></i>
+    <i class="nav-icon fas fa-solid fa-file-contract"></i>
         <p>Agreement Form</p>
     </a>
 </li>
