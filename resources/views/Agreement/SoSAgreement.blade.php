@@ -358,6 +358,77 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <h3>Schedule “A” - Services</h3>
+            <p>(Client to initial the description for each service accepted under this agreement)</p>
+
+            <table class="table table-bordered" style="width: 100%; table-layout: fixed;">
+                <colgroup>
+                    <col style="width: 25%;">
+                    <col style="width: 15%;">
+                    <col style="width: 60%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Check</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Supply Chain Management</td>
+                        <td><input type="checkbox" name="service_supply_chain_management"></td>
+                        <td><input type="text" name="description_supply_chain_management" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Strategic Sourcing & Procurement</td>
+                        <td><input type="checkbox" name="service_strategic_sourcing_procurement"></td>
+                        <td><input type="text" name="description_strategic_sourcing_procurement" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Custom Private & Client Branding / Private Label</td>
+                        <td><input type="checkbox" name="service_custom_private_label"></td>
+                        <td><input type="text" name="description_custom_private_label" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Import Service</td>
+                        <td><input type="checkbox" name="service_import"></td>
+                        <td><input type="text" name="description_import" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>3rd Party Logistics</td>
+                        <td><input type="checkbox" name="service_3pl"></td>
+                        <td><input type="text" name="description_3pl" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Quality Assurance</td>
+                        <td><input type="checkbox" name="service_quality_assurance"></td>
+                        <td><input type="text" name="description_quality_assurance" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Design Services</td>
+                        <td><input type="checkbox" name="service_design_services"></td>
+                        <td><input type="text" name="description_design_services" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Warehousing</td>
+                        <td><input type="checkbox" name="service_warehousing"></td>
+                        <td><input type="text" name="description_warehousing" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Distribution</td>
+                        <td><input type="checkbox" name="service_distribution"></td>
+                        <td><input type="text" name="description_distribution" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <h3>Schedule "B" - Form of Purchase Order</h3>
+        </div>
+
 
             <button type="submit" class="btn btn-primary">Submit Agreement</button>
         </form>
@@ -393,4 +464,43 @@ document.addEventListener('DOMContentLoaded', function() {
 .notice-group input[type="email"] {
     flex: 1;
 }
+
+.table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table, .table th, .table td {
+        border: 1px solid black;
+    }
+    .table th, .table td {
+        text-align: left;
+        padding: 8px;
+    }
+    .table th {
+        background-color: #f2f2f2;
+    }
+    .table td {
+        vertical-align: middle; 
+    }
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    input[type="checkbox"] {
+        margin-right: 10px;
+    }
 </style>
