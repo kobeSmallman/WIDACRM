@@ -37,7 +37,8 @@ class PaymentController extends Controller
 
         $payment->save();
 
-        return redirect()->route('some.route')->with('success', 'Payment added successfully.');
+        // Instead of redirecting with a flash message, return back with success data
+        return back()->with('success', 'Payment added successfully.');
     }
 
     // Other necessary methods...

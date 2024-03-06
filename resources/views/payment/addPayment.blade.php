@@ -67,4 +67,20 @@
             </div>
         </div>
     </section>
+
+        <!-- Include SweetAlert2 library -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Check for the 'success' session variable and display a SweetAlert -->
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'Good job!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        @endif
+
 </x-layout>
