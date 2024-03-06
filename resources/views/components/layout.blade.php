@@ -159,6 +159,19 @@
               </a>
             </li>
 
+            <li class="nav-item">
+                <a href="{{ route('payment.show') }}" class="nav-link">
+                    <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                    <p>Payments</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('agreement.show') }}" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-file-contract"></i>
+                  <p>Agreement Forms</p>
+              </a>
+             </li>
 
             <li class="nav-header">ADMINISTRATION</li>
             <li class="nav-item">
@@ -203,18 +216,6 @@
     <a href="{{ route('faq.show') }}" class="nav-link">
         <i class="nav-icon fas fa-question-circle"></i>
         <p>FAQ</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('agreement.show') }}" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-file-contract"></i>
-        <p>Agreement Form</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('payment.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-regular fa-credit-card"></i>
-        <p>Payment</p>
     </a>
 </li>
 
