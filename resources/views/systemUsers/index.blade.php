@@ -18,7 +18,7 @@
             <!-- /.card-header -->
             <div class="card-body">
 
-            <a class="btn btn-primary mb-3 mr-3" id="show-alert">Sample Alert</button>
+                <a class="btn btn-primary mb-3 mr-3" id="show-alert">Sample Alert</a>
 
                 <a href="{{ route('systemusers.registration') }}" class="btn btn-primary mb-3">New Employee</a>
 

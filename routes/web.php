@@ -133,6 +133,8 @@ Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registra
 Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])->name('systemusers.profile');
 Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])->name('systemusers.updateEmployee');
 
+Route::post('/system-users/save-employee', [SystemUsersController::class, 'saveEmployee'])->name('save.employee');
+
 
 
 // Place this inside the web routes in web.php
