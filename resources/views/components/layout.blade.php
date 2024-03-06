@@ -205,6 +205,12 @@
         <p>FAQ</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('agreement.show') }}" class="nav-link">
+        <i class="nav-icon fas fa-question-circle"></i>
+        <p>Agreement Form</p>
+    </a>
+</li>
 
           </ul>
           
