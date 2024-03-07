@@ -38,6 +38,14 @@ class AppServiceProvider extends ServiceProvider
          Blade::directive('breadcrumbs', function () {
             return "<?= json_encode(explode('.', Route::currentRouteName())); ?>";
          });
+
+          View::composer('components.layout', function ($view) {
+            $view->with('clients', Client::all());
+        });
+
+        View::composer('*', function ($view) {
+            $view->with('employees', Employee::all());
+        });
          
      }
      
