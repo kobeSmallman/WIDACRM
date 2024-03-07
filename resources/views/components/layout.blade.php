@@ -246,16 +246,53 @@
         </nav>
         <!-- /.sidebar-menu -->
 
-        <!-- Button to Open Modal -->
+         <!-- Button to Open Modal -->
         <div id="noteModal" class="modal" style="display:none;">
-        <div class="modal-content">
-        <div class="modal-header" id="dragHandle">Drag me</div>
-        <span class="close">&times;</span>
-        <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
-        <button onclick="saveNote()">Save Note</button>
+          <div class="modal-content">
+            <div class="modal-header" id="dragHandle">Drag me</div>
+            <span class="close">&times;</span>
+
+            <!-- Client Selection Dropdown -->
+            <label for="clientSelect">Select Client:</label>
+            <select id="clientSelect">
+              <option value="">--Select a Client--</option>
+              <!-- Options will be populated dynamically from the $clients array -->
+              @foreach ($clients as $client)
+              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
+              @endforeach
+            </select>
+
+            <!-- Interaction Type Dropdown -->
+            <label for="interactionType">Interaction Type:</label>
+            <select id="interactionType">
+              <option value="">--Select Type--</option>
+              <option value="call">Call</option>
+              <option value="email">Email</option>
+              <option value="in_person">In Person</option>
+            </select>
+
+            <!-- Created By Dropdown (assuming you have a list of employees) -->
+            <label for="createdBy">Created By:</label>
+            <select id="createdBy">
+              <option value="">--Select Employee--</option>
+              @foreach ($employees as $employee) <!-- Make sure to pass $employees to the view -->
+              <option value="{{ $employee->Employee_ID }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</option>
+              @endforeach
+            </select>
+
+            <!-- Date Time Picker -->
+            <label for="dateTime">Date & Time:</label>
+            <input type="datetime-local" id="dateTime">
+
+            <!-- Image Upload -->
+            <label for="imageUpload">Image:</label>
+            <input type="file" id="imageUpload">
+
+            <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
+            <button onclick="saveNote()">Save Note</button>
+          </div>
         </div>
-        </div>
-        <button id="myBtn">Take Note</button>
+        <button id="myBtn">Create New Note</button>
 
       </div>
       <!-- /.sidebar -->
