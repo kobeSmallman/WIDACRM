@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AgreementController;
 
 // Web.php
 use App\Http\Controllers\AnalyticsController;
@@ -130,6 +131,16 @@ Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])->name('
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
 Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
+
+Route::get('/systemusers', [SystemUsersController::class, 'showSystemUsers'])->name('systemusers');
+Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registration'])->name('systemusers.registration');
+Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])->name('systemusers.profile');
+Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])->name('systemusers.updateEmployee');
+
+Route::post('/system-users/save-employee', [SystemUsersController::class, 'saveEmployee'])->name('save.employee');
+
+
+
 // Place this inside the web routes in web.php
 Route::post('/employees/create', [AuthController::class, 'storeEmployee'])->name('employees.create');
 
@@ -145,28 +156,51 @@ Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('v
 // (NOTES) Display the page to take notes with a list of clients ||||| Notes page
 Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
 Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
-Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+//notes page
+Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
 Route::get('/clients/{id}/notesAJAX', [ClientController::class, 'notesAJAX'])->name('clients.notesAJAX');
 // Route to show the form for editing a specific note
 Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
 // Route to update a specific note
-Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
-
+//Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
+//Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
 // Display the page to create a new request based on the selected client
 // This assumes you have a separate RequestController for handling requests
-//notes page
-Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
-Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+
 //request page
 // Define a route for the createRequest view
 
 
 
-
+//PERMISSIONS
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
 
-
+//SETTINGS
 Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
-
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
+
+//FAQ
 Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
+
+//PAYMENTS
+    // Show summary of payments
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+
+    // Go to the form to add a new payment
+    Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+
+    // Store a new payment record
+    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+
+    // Show an individual payment profile
+    Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
+
+
+
+//AGREEMENTS
+Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
+// Display the form
+Route::get('/agreement', [AgreementController::class, 'create'])->name('agreement.create');
+// Handle form submission
+Route::post('/agreement', [AgreementController::class, 'store'])->name('agreement.store');
