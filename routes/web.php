@@ -180,11 +180,6 @@ Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->nam
 //FAQ
 Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
 
-<<<<<<< Updated upstream
-Route::get('/payment', [PaymentController::class, 'showPayment'])->name('payment.index');
-use App\Http\Controllers\PaymentController;
-Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
-=======
 //PAYMENTS
     // Show summary of payments
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
@@ -197,7 +192,6 @@ Route::post('/payment', [PaymentController::class, 'store'])->name('payment.stor
 
     // Show an individual payment profile
     Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
->>>>>>> Stashed changes
 
 
 
