@@ -10,4 +10,15 @@ class AgreementController extends Controller
     {
         return view('Agreement.SoSAgreement');
     }
+    public function create()
+    {
+        return view('Agreement.SoSAgreement');
+    }
+
+    public function store(Request $request)
+    {
+    // Validate and store the agreement form data
+    // Redirect or return a view as needed
+    }
 }
+

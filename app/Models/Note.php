@@ -22,6 +22,7 @@ class Note extends Model
         'Created_By',
         'Date_Time',
         'Description',
+        //'Image',
     ];
 
     // Relationship with Client

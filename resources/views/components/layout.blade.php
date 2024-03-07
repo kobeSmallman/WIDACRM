@@ -19,7 +19,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
-  <!-- DataTables --> 
+  <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
@@ -154,12 +154,7 @@
                 <p>Vendors</p>
               </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('payment.index') }}" class="nav-link">
-                    <i class="nav-icon fas fa-regular fa-credit-card"></i>
-                    <p>Payment</p>
-                </a>
-            </li>
+
 
             <li class="nav-header">ADMINISTRATION</li>
             <li class="nav-item">
@@ -211,15 +206,26 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('faq.show') }}" class="nav-link">
-                    <i class="nav-icon fas fa-question-circle"></i>
-                    <p>FAQ</p>
-                </a>
-            </li>
-
+    <a href="{{ route('faq.show') }}" class="nav-link">
+        <i class="nav-icon fas fa-question-circle"></i>
+        <p>FAQ</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('agreement.show') }}" class="nav-link">
+    <i class="nav-icon fas fa-solid fa-file-contract"></i>
+        <p>Agreement Form</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('payment.show') }}" class="nav-link">
+        <i class="nav-icon fas fa-regular fa-credit-card"></i>
+        <p>Payment</p>
+    </a>
+</li>
 
           </ul>
-          
+
         </nav>
         <!-- /.sidebar-menu -->
 
@@ -228,11 +234,49 @@
           <div class="modal-content">
             <div class="modal-header" id="dragHandle">Drag me</div>
             <span class="close">&times;</span>
+
+            <!-- Client Selection Dropdown -->
+            <label for="clientSelect">Select Client:</label>
+            <select id="clientSelect">
+              <option value="">--Select a Client--</option>
+              <!-- Options will be populated dynamically from the $clients array -->
+              @foreach ($clients as $client)
+              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
+              @endforeach
+            </select>
+
+            <!-- Interaction Type Dropdown -->
+            <label for="interactionType">Interaction Type:</label>
+            <select id="interactionType">
+              <option value="">--Select Type--</option>
+              <option value="call">Call</option>
+              <option value="email">Email</option>
+              <option value="in_person">In Person</option>
+            </select>
+
+            <!-- Created By Dropdown (assuming you have a list of employees) -->
+            <label for="createdBy">Created By:</label>
+            <select id="createdBy">
+              <option value="">--Select Employee--</option>
+              @foreach ($employees as $employee) <!-- Make sure to pass $employees to the view -->
+              <option value="{{ $employee->Employee_ID }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</option>
+              @endforeach
+            </select>
+
+            <!-- Date Time Picker -->
+            <label for="dateTime">Date & Time:</label>
+            <input type="datetime-local" id="dateTime">
+
+            <!-- Image Upload -->
+            <label for="imageUpload">Image:</label>
+            <input type="file" id="imageUpload">
+
             <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
             <button onclick="saveNote()">Save Note</button>
           </div>
         </div>
-        <button id="myBtn">Take Note</button>
+        <button id="myBtn">Create New Note</button>
+
 
       </div>
       <!-- /.sidebar -->
@@ -328,7 +372,7 @@
       });
     });
 
-    // Add an event listener for when the DOM content is fully loaded
+    // Add an event listener for when the DOM content is fully loaded ///// This is for the notes 
     document.addEventListener('DOMContentLoaded', function() {
       // Get references to the modal elements
       const modal = document.getElementById("noteModal"); // The modal dialog
@@ -372,9 +416,65 @@
 
       // Save the note content to localStorage and close the modal
       window.saveNote = function() {
-        console.log('Note saved:', noteContent.value); // Log the saved note for debugging
-        localStorage.removeItem('savedNote'); // Clear previous saved note
-        closeModal(); // Close the modal
+        const clientSelect = document.getElementById('clientSelect').value;
+        const interactionType = document.getElementById('interactionType').value;
+        const createdBy = document.getElementById('createdBy').value;
+        const dateTime = document.getElementById('dateTime').value;
+        const noteText = noteContent.value;
+        // const imageFile = document.getElementById('imageUpload').files[0]; // This is a File object
+
+
+        // Validation
+        if (!clientSelect || !interactionType || !createdBy || !dateTime || !noteText) {
+          alert('Please fill in all fields.');
+          return;
+        }
+
+        // Create FormData object to send data as form/multipart
+        const formData = new FormData();
+        formData.append('client_id', clientSelect);
+        formData.append('interaction_type', interactionType);
+        formData.append('created_by', createdBy);
+        formData.append('date_time', dateTime);
+        formData.append('description', noteText);
+
+        // if (imageFile) {
+        //   formData.append('image', imageFile);
+        // }
+
+        // Send a POST request with the form data
+        fetch('/notes/store', { // Update the URL to the route that handles note saving
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+            },
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Handle success
+            if (data.success) {
+              Swal.fire('Success', 'The note has been saved successfully.', 'success');
+              // Additional actions like closing the modal or clearing the form can go here
+            }
+          })
+          .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+            Swal.fire('Error', 'There was a problem saving the note.', 'error');
+          });
+
+        // Prevent form from submitting normally
+        return false;
+
+        console.log('Note saved for client ID:', selectedClientId, 'Note:', noteText);
+
+        // Clear the saved note content as it's now been saved
+        localStorage.removeItem('savedNote');
+        localStorage.setItem('modalState', 'closed'); // Update the modal state in localStorage
+
+        // Close the modal
+        closeModal();
       }
 
       // Autosave note content as the user types
