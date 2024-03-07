@@ -28,25 +28,28 @@
 
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
+
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
+
+  <!-- jQuery -->
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  @stack('scripts')
 </head>
-<!--
-`body` tag options:
 
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
 
-  * sidebar-collapse
-  * sidebar-mini
--->
-
-<body class="hold-transition sidebar-mini {{ session('dark_mode') ? 'dark-mode' : '' }}">
+<body class="hold-transition sidebar-mini layout-fixed {{ session('dark_mode') ? 'dark-mode' : '' }}">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+            <i class="fas fa-bars" style="transform: rotate(90deg);"></i>
+          </a>
+
         </li>
 
       </ul>
@@ -75,56 +78,56 @@
           </div>
         </li>
          ... other parts of your HTML above ... -->
+ 
+        <ul class="navbar-nav ml-auto">
+  <!-- User Account Dropdown Menu -->
+  <li class="nav-item dropdown user-menu">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      @if ($employee->profile_image)
+        <img src="data:image/jpeg;base64,{{ $employee->profile_image }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
+      @else
+        <img src="{{ asset('default/path/to/default_image.jpg') }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
+      @endif
+      <span>{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      <!-- Dropdown links -->
+      <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
+        <i class="fas fa-user-edit mr-2"></i> Edit Profile
+      </a>
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-inbox mr-2"></i> Inbox
+      </a>
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-tasks mr-2"></i> Tasks
+      </a>
+      <a href="#" class="dropdown-item">
+        <i class="fas fa-comments mr-2"></i> Chats
+      </a>
+      <a href="{{ route('site.settings') }}" class="dropdown-item">
+    <i class="fas fa-comments mr-2"></i> Settings
+</a>
 
-      <ul class="navbar-nav ml-auto">
-        <!-- User Account Dropdown Menu -->
-        <li class="nav-item dropdown user-menu">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            @if ($employee->profile_image)
-            <img src="data:image/jpeg;base64,{{ $employee->profile_image }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
-            @else
-            <img src="{{ asset('default/path/to/default_image.jpg') }}" class="user-image img-circle elevation-2" alt="User Image" style="width: 32px; height: 32px; object-fit: cover;">
-            @endif
-            <span>{{ Auth::user()->First_Name }} {{ Auth::user()->Last_Name }}</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <!-- Dropdown links -->
-            <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
-              <i class="fas fa-user-edit mr-2"></i> Edit Profile
-            </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-inbox mr-2"></i> Inbox
-            </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-tasks mr-2"></i> Tasks
-            </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-comments mr-2"></i> Chats
-            </a>
-            <a href="{{ route('site.settings') }}" class="dropdown-item">
-              <i class="fas fa-comments mr-2"></i> Settings
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-              Logout
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-            </form>
-          </div>
-        </li>
-      </ul>
-
-
-      <!-- ... rest of your HTML ... -->
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item dropdown-footer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        Logout
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+    </div>
+  </li>
+</ul>
 
 
+<!-- ... rest of your HTML ... -->
 
 
 
 
-
+          
+           
+     
     </nav>
     <!-- /.navbar -->
 
@@ -168,22 +171,22 @@
 
 
             <li class="nav-item">
-              <a href="{{ route('notes.create') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-note-sticky"></i>
-                <p>Notes</p>
-              </a>
-            </li>
-            </li>
+    <a href="{{ route('takeNotes') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-note-sticky"></i>
+        <p>Notes</p>
+    </a>
+</li>
+</li>
 
             <li class="nav-item">
+      
+            <a href="{{ route('createRequest') }}" class="nav-link">
+    <i class="nav-icon fa-solid fa-ticket"></i>
+    <p>Requests</p>
+</a>
 
-              <a href="{{ route('createRequest') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-ticket"></i>
-                <p>Requests</p>
-              </a>
-
-            </li>
-            </li>
+</li>
+</li>
 
             <li class="nav-item">
 
@@ -202,10 +205,23 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="{{ route('payment.show') }}" class="nav-link">
+                <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                <p>Payments</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('agreement.show') }}" class="nav-link">
+                <i class="nav-icon fas fa-solid fa-file-contract"></i>
+                <p>Agreement Forms</p>
+              </a>
+            </li>
 
             <li class="nav-header">ADMINISTRATION</li>
             <li class="nav-item">
-              <a href="{{ route('system-users') }}" class="nav-link">
+              <a href="{{ route('systemusers') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-address-card"></i>
                 <p>
                   System Users
@@ -238,62 +254,14 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Vendor Summary</p>
-              </a>
-            </li>
+                  <i class="nav-icon fa-solid fa-table-list"></i>
+                  <p>Vendor Summary</p>
+                </a>
+              </li>
           </ul>
+
         </nav>
         <!-- /.sidebar-menu -->
-
-         <!-- Button to Open Modal -->
-        <div id="noteModal" class="modal" style="display:none;">
-          <div class="modal-content">
-            <div class="modal-header" id="dragHandle">Drag me</div>
-            <span class="close">&times;</span>
-
-            <!-- Client Selection Dropdown -->
-            <label for="clientSelect">Select Client:</label>
-            <select id="clientSelect">
-              <option value="">--Select a Client--</option>
-              <!-- Options will be populated dynamically from the $clients array -->
-              @foreach ($clients as $client)
-              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
-              @endforeach
-            </select>
-
-            <!-- Interaction Type Dropdown -->
-            <label for="interactionType">Interaction Type:</label>
-            <select id="interactionType">
-              <option value="">--Select Type--</option>
-              <option value="call">Call</option>
-              <option value="email">Email</option>
-              <option value="in_person">In Person</option>
-            </select>
-
-            <!-- Created By Dropdown (assuming you have a list of employees) -->
-            <label for="createdBy">Created By:</label>
-            <select id="createdBy">
-              <option value="">--Select Employee--</option>
-              @foreach ($employees as $employee) <!-- Make sure to pass $employees to the view -->
-              <option value="{{ $employee->Employee_ID }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</option>
-              @endforeach
-            </select>
-
-            <!-- Date Time Picker -->
-            <label for="dateTime">Date & Time:</label>
-            <input type="datetime-local" id="dateTime">
-
-            <!-- Image Upload -->
-            <label for="imageUpload">Image:</label>
-            <input type="file" id="imageUpload">
-
-            <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
-            <button onclick="saveNote()">Save Note</button>
-          </div>
-        </div>
-        <button id="myBtn">Create New Note</button>
-
       </div>
       <!-- /.sidebar -->
     </aside>
@@ -307,6 +275,7 @@
         <div class="container-fluid">
           {{ $slot }}
         </div>
+
         <!-- /.container-fluid -->
       </div>
       <!-- /.content -->
@@ -338,12 +307,13 @@
 
 
 
-  <!-- jQuery -->
-  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <!-- Bootstrap -->
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE -->
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+
+
+  <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
   <!-- OPTIONAL SCRIPTS -->
   <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
@@ -362,14 +332,17 @@
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+  <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
 
   <!-- JavaScript to dynamically add active class to the navigation link -->
 
 
   <script>
-    $(document).ready(function() {
-      var currentRoute = "{{ Route::currentRouteName() }}";
-      console.log("Current Route: ", currentRoute);
+
+  $(document).ready(function() {
+    var currentRoute = "{{ Route::currentRouteName() }}";
+    console.log("Current Route: ", currentRoute);
 
       // Extract the part before the dot (.)
       var currentRouteWithoutIndex = currentRoute.split('.')[0];
@@ -382,52 +355,52 @@
         if (currentRouteWithoutIndex && href && href.includes(currentRouteWithoutIndex)) {
           $(this).addClass('active');
         }
-      });
     });
+});
 
-// Add an event listener for when the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-    // Get references to the modal elements
-    const modal = document.getElementById("noteModal"); // The modal dialog
-    const btn = document.getElementById("myBtn"); // The button that opens the modal
-    const span = document.getElementsByClassName("close")[0]; // The 'close' button inside the modal
-    const noteContent = document.getElementById("noteContent"); // The textarea for note content
-    const dragHandle = document.getElementById("dragHandle"); // The draggable area at the top of the modal
+    // Add an event listener for when the DOM content is fully loaded ///// This is for the notes 
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get references to the modal elements
+      const modal = document.getElementById("noteModal"); // The modal dialog
+      const btn = document.getElementById("myBtn"); // The button that opens the modal
+      const span = document.getElementsByClassName("close")[0]; // The 'close' button inside the modal
+      const noteContent = document.getElementById("noteContent"); // The textarea for note content
+      const dragHandle = document.getElementById("dragHandle"); // The draggable area at the top of the modal
 
-    // Opens the modal window
-    function openModal() {
+      // Opens the modal window
+      function openModal() {
         modal.style.display = "block"; // Show the modal
         const savedNote = localStorage.getItem('savedNote'); // Retrieve saved note content from localStorage
         if (savedNote) {
-            noteContent.value = savedNote; // If there is saved content, display it in the textarea
+          noteContent.value = savedNote; // If there is saved content, display it in the textarea
         }
         localStorage.setItem('modalState', 'open'); // Save the state of the modal as open
-    }
+      }
 
-    // Automatically open the modal if it was previously left open
-    if (localStorage.getItem('modalState') === 'open') {
+      // Automatically open the modal if it was previously left open
+      if (localStorage.getItem('modalState') === 'open') {
         openModal();
-    }
+      }
 
-    // Closes the modal window
-    function closeModal() {
+      // Closes the modal window
+      function closeModal() {
         modal.style.display = "none"; // Hide the modal
         // Optionally update modalState in localStorage here if desired
         localStorage.setItem('modalState', 'closed'); // Consider adding this line if you want to explicitly set the modal's state to closed
-    }
+      }
 
-    // Event listeners for opening and closing the modal
-    btn.onclick = openModal; // When the 'Take Note' button is clicked, open the modal
-    span.onclick = closeModal; // When the 'close' span is clicked, close the modal
+      // Event listeners for opening and closing the modal
+      btn.onclick = openModal; // When the 'Take Note' button is clicked, open the modal
+      span.onclick = closeModal; // When the 'close' span is clicked, close the modal
 
-    // Close the modal if the user clicks outside of it
-    window.onclick = function(event) {
+      // Close the modal if the user clicks outside of it
+      window.onclick = function(event) {
         if (event.target === modal) {
-            closeModal();
+          closeModal();
         }
-    }
+      }
 
-    // Save the note content to localStorage and close the modal
+      // Save the note content to localStorage and close the modal
       window.saveNote = function() {
         const clientSelect = document.getElementById('clientSelect').value;
         const interactionType = document.getElementById('interactionType').value;
@@ -490,107 +463,58 @@ document.addEventListener('DOMContentLoaded', function () {
         closeModal();
       }
 
-    // Autosave note content as the user types
-    noteContent.addEventListener('input', function() {
+      // Autosave note content as the user types
+      noteContent.addEventListener('input', function() {
         localStorage.setItem('savedNote', noteContent.value); // Save current content to localStorage
-    });
+      });
 
-    // Dragging functionality for the modal
-    let isDragging = false; // Flag to track dragging state
+      // Dragging functionality for the modal
+      let isDragging = false; // Flag to track dragging state
 
-    // Allow the modal to be dragged by the mouse
-    dragHandle.addEventListener('mousedown', function(e) {
+      // Allow the modal to be dragged by the mouse
+      dragHandle.addEventListener('mousedown', function(e) {
         let shiftX = e.clientX - modal.offsetLeft; // Horizontal position where the drag started
         let shiftY = e.clientY - modal.offsetTop; // Vertical position where the drag started
 
         // Function to move the modal as the mouse is moved
         function onMouseMove(e) {
-            modal.style.left = e.pageX - shiftX + 'px';
-            modal.style.top = e.pageY - shiftY + 'px';
+          modal.style.left = e.pageX - shiftX + 'px';
+          modal.style.top = e.pageY - shiftY + 'px';
         }
 
         // Stop moving the modal when the mouse button is released
         function onMouseUp() {
-            document.removeEventListener('mousemove', onMouseMove);
-            modal.onmouseup = null;
-            isDragging = false; // Reset dragging state
+          document.removeEventListener('mousemove', onMouseMove);
+          modal.onmouseup = null;
+          isDragging = false; // Reset dragging state
         }
 
         // Attach event listeners for moving and stopping
         document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp, {once: true});
+        document.addEventListener('mouseup', onMouseUp, {
+          once: true
+        });
 
         e.preventDefault(); // Prevent default drag behavior
-    });
+      });
 
-    // Prevent the modal content from being selected during drag
-    dragHandle.ondragstart = function() {
+      // Prevent the modal content from being selected during drag
+      dragHandle.ondragstart = function() {
         return false;
-    };
+      };
 
-    // Re-open the modal if it was previously open (useful for page reloads)
-    if (localStorage.getItem('modalState') === 'open') {
+      // Re-open the modal if it was previously open (useful for page reloads)
+      if (localStorage.getItem('modalState') === 'open') {
         openModal();
-    }
-});
-
-
+      }
+    });
   </script>
 
     @vite(['resources/js/app.js'])
 
-  {{-- Stack for pushing additional scripts specific to a page --}}
-  @stack('scripts')
+
+
 
 </body>
 
 </html>
-
-<style>
-  .modal {
-    display: none; /* Initially hidden */
-    position: fixed; /* Fixed positioning relative to the viewport */
-    z-index: 1; /* Ensures modal is on top of other content */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Allows scrolling if modal content is too tall */
-}
-
-.modal-content {
-    background-color: #fefefe; /* White background */
-    margin: 15% auto; /* Centered vertically and horizontally */
-    padding: 20px; /* Padding around the content */
-    border: 1px solid #888; /* Gray border */
-    width: 50%; /* Half the width of the viewport */
-    position: absolute; /* Absolute positioning within the modal */
-    left: 50%; /* Horizontally centered */
-    top: 50%; /* Vertically centered */
-    transform: translate(-50%, -50%); /* Adjust the position to truly center the element */
-}
-
-.modal-header {
-    cursor: move; /* Indicates the header is draggable */
-    padding: 10px; /* Padding inside the header */
-    background-color: #f3f3f3; /* Light gray background */
-    color: #333; /* Dark text color */
-    width: 100%; /* Full width of the modal-content */
-}
-
-.close {
-    color: #aaa; /* Light gray 'x' button */
-    float: right; /* Positioned to the right */
-    font-size: 28px; /* Large 'x' icon */
-    font-weight: bold; /* Make 'x' bold */
-}
-
-.close:hover, .close:focus {
-    color: black; /* Darken 'x' on hover/focus */
-    text-decoration: none; /* No underline */
-    cursor: pointer; /* Pointer cursor on hover/focus */
-}
-
-
-
-</style>

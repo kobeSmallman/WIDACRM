@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use App\Models\Client;
+use App\Models\Employee;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -38,14 +41,6 @@ class AppServiceProvider extends ServiceProvider
          Blade::directive('breadcrumbs', function () {
             return "<?= json_encode(explode('.', Route::currentRouteName())); ?>";
          });
-
-          View::composer('components.layout', function ($view) {
-            $view->with('clients', Client::all());
-        });
-
-        View::composer('*', function ($view) {
-            $view->with('employees', Employee::all());
-        });
          
      }
      

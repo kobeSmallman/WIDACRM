@@ -40,6 +40,11 @@ public function products()
     return $this->hasMany(Product::class, 'Order_ID', 'Order_ID');
 }
 
+public function client()
+{
+    return $this->belongsTo(Client::class, 'Client_ID', 'Client_ID');
+}
+
     public function getOrderIDAttribute()
 {
     return $this->attributes['Order_ID']; // Ensure this matches your database column name

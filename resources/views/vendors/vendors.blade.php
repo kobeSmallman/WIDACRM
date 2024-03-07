@@ -19,13 +19,12 @@
     </section>
 
     <!-- Main content -->
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <!-- Button to toggle the form -->
             <div class="mb-3">
-                <button id="toggleVendorFormBtn" class="btn btn-success">
-                    <i class="fas fa-plus-circle"></i> Add New Vendor
+                <button id="toggleVendorFormBtn" class="btn btn-primary">
+                     Add New Vendor
                 </button>
             </div>
 
@@ -41,6 +40,14 @@
                             <label for="vendorName">Vendor Name:</label>
                             <input type="text" class="form-control" id="vendorName" name="vendorName" required>
                         </div>
+                        <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+            </div>
                         <div class="form-group">
                             <label for="activeStatus">Active Status:</label>
                             <select class="form-control" id="activeStatus" name="activeStatus">
@@ -96,6 +103,8 @@
                                         <th>Vendor ID</th>
                                         <th>Vendor Name</th>
                                         <th>Active Status</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
                                         <th>Remarks</th>
                                         <th>Actions</th>
                                     </tr>
@@ -106,6 +115,8 @@
                                             <td>{{ $vendor->Vendor_ID }}</td>
                                             <td>{{ $vendor->Vendor_Name }}</td>
                                             <td>{{ $vendor->Active_Status }}</td>
+                                            <td>{{ $vendor->Email }}</td>
+                                            <td>{{ $vendor->PhoneNumber }}</td>
                                             <td>{{ $vendor->Remarks }}</td>
                                             <td>
                                                 <!-- Example of possible actions -->
@@ -123,15 +134,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Vendor ID</th>
-                                        <th>Vendor Name</th>
-                                        <th>Active Status</th>
-                                        <th>Remarks</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </tfoot>
+                               
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -168,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             form.style.display = 'none';
             this.textContent = 'Add New Vendor';
             this.classList.remove('btn-danger');
-            this.classList.add('btn-success');
+            this.classList.add('btn-primary');
         }
     });
 });
@@ -185,21 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var vendorId = $(this).data('id');
             var column = $(this).data('column');
             var value = $(this).text();
-
-            $.ajax({
-                url: '{{ route("vendors.inlineUpdate") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: vendorId,
-                    column: column,
-                    value: value
-                },
-                success: function(response) {
-                    // Response handling
-                    console.log(response);
-                }
-            });
         });
 
         // Delete vendor
