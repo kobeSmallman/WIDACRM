@@ -185,7 +185,7 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 
     // Go to the form to add a new payment
-    Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+    Route::get('/payment/add-payment', [PaymentController::class, 'create'])->name('payment.create');
 
     // Store a new payment record
     Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
