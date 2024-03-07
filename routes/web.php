@@ -170,21 +170,38 @@ Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.e
 
 
 
-
+//PERMISSIONS
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
 
-
+//SETTINGS
 Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
-
 Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
+
+//FAQ
 Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
 
+<<<<<<< Updated upstream
 Route::get('/payment', [PaymentController::class, 'showPayment'])->name('payment.index');
 use App\Http\Controllers\PaymentController;
 Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+=======
+//PAYMENTS
+    // Show summary of payments
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+
+    // Go to the form to add a new payment
+    Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+
+    // Store a new payment record
+    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+
+    // Show an individual payment profile
+    Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
+>>>>>>> Stashed changes
 
 
-//agreements page
+
+//AGREEMENTS
 Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
 // Display the form
 Route::get('/agreement', [AgreementController::class, 'create'])->name('agreement.create');

@@ -9,7 +9,14 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function showPayment()
+    // Show the summary of payments
+    public function index() {
+        $payments = Payment::all(); // Retrieve all payments
+        return view('payment.index', compact('payments'));
+    }
+
+    // Show the form to add a new payment
+    public function create()
     {
         // Fetch all order IDs to populate the dropdowns
         $orders = Order::pluck('Order_ID', 'Order_ID');
@@ -22,9 +29,10 @@ class PaymentController extends Controller
         return view('payment.addPayment', compact('orders', 'paymentTypes'));
     }
 
+    // Store a new payment record
     public function store(Request $request)
     {
-        // Validation and storing logic here
+        // To do: Add validation and storing logic here
 
         // Assuming Payment is your Eloquent model for the payment table
         $payment = new Payment();
@@ -37,9 +45,12 @@ class PaymentController extends Controller
 
         $payment->save();
 
-        // Instead of redirecting with a flash message, return back with success data
-        return back()->with('success', 'Payment added successfully.');
+        // After storing, redirect to the summary of payments
+        return redirect()->route('payment.index')->with('success', 'Payment added successfully.');
     }
-
-    // Other necessary methods...
+    // Show the profile of a payment
+        public function show($PMT_ID) {
+        $payment = Payment::findOrFail($PMT_ID); // Find the payment by id
+        return view('payment.profile', compact('payment'));
+    }
 }
