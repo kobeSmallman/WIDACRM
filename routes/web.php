@@ -153,18 +153,18 @@ Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('v
 // (NOTES) Display the page to take notes with a list of clients ||||| Notes page
 Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
 Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
-Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+//notes page
+Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
 Route::get('/clients/{id}/notesAJAX', [ClientController::class, 'notesAJAX'])->name('clients.notesAJAX');
 // Route to show the form for editing a specific note
 Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
 // Route to update a specific note
-Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
-
+//Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
+//Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
 // Display the page to create a new request based on the selected client
 // This assumes you have a separate RequestController for handling requests
-//notes page
-Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
-Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+
 //request page
 // Define a route for the createRequest view
 
