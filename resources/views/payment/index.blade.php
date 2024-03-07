@@ -51,7 +51,7 @@
                                 <td>{{ $payment->PMT_Cat}}</td>
                                 <td>{{ $payment->Date}}</td>
                                 <td>{{ $payment->Amount}}</td>
-                                <td>{{ $payment->PMT_Type_Name }}</td>  
+                                <td>{{ $payment->paymentType ? $payment->paymentType->PMT_Type_Name : 'N/A' }}</td>
                             </tr>
                         @endforeach
                     </tbody> 

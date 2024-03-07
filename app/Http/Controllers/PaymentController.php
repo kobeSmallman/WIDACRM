@@ -12,6 +12,7 @@ class PaymentController extends Controller
     // Show the summary of payments
     public function index() {
         $payments = Payment::all(); // Retrieve all payments
+        $payments = Payment::with('paymentType')->get(); // Eager load the payment type relationship
         return view('payment.index', compact('payments'));
     }
 
@@ -32,7 +33,14 @@ class PaymentController extends Controller
     // Store a new payment record
     public function store(Request $request)
     {
-        // To do: Add validation and storing logic here
+        // Add validation for the request data
+        $request->validate([
+            'Order_ID' => 'required|exists:Order,Order_ID', // make sure the Order_ID exists in the Order table
+            'Date' => 'required|date',
+            'PMT_Cat' => 'required|string|max:255',
+            'Amount' => 'required|numeric',
+            'PMT_Type_ID' => 'required|exists:Payment_Type,PMT_Type_ID', // ensure PMT_Type_ID exists in Payment_Type table
+        ]);
 
         // Assuming Payment is your Eloquent model for the payment table
         $payment = new Payment();
@@ -40,12 +48,12 @@ class PaymentController extends Controller
         $payment->Date = $request->Date;
         $payment->PMT_Cat = $request->PMT_Cat;
         $payment->Amount = $request->Amount;
-        // The payment type is identified by PMT_Type_ID, not PMT_Type_Name
+        // Assign the payment type ID from the request directly
         $payment->PMT_Type_ID = $request->PMT_Type_ID;
 
         $payment->save();
 
-        // After storing, redirect to the summary of payments
+        // After storing, redirect to the summary of payments with a success message
         return redirect()->route('payment.index')->with('success', 'Payment added successfully.');
     }
     // Show the profile of a payment

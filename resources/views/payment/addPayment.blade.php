@@ -54,11 +54,12 @@
 
                         <div class="form-group">
                             <label for="PMT_Type_Name">Payment Type:</label>
-                            <select name="PMT_Type_Name" id="PMT_Type_Name" class="form-control">
-                                @foreach($paymentTypes as $id => $type)
-                                    <option value="{{ $id }}">{{ $type }}</option>
+                            <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control">
+                                @foreach($paymentTypes as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
                             </select>
+
                         </div>
 
                         <div class="form-group row">
