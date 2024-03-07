@@ -413,6 +413,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeModal() {
         modal.style.display = "none"; // Hide the modal
         // Optionally update modalState in localStorage here if desired
+        localStorage.setItem('modalState', 'closed'); // Consider adding this line if you want to explicitly set the modal's state to closed
     }
 
     // Event listeners for opening and closing the modal
@@ -427,11 +428,67 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Save the note content to localStorage and close the modal
-    window.saveNote = function() {
-        console.log('Note saved:', noteContent.value); // Log the saved note for debugging
-        localStorage.removeItem('savedNote'); // Clear previous saved note
-        closeModal(); // Close the modal
-    }
+      window.saveNote = function() {
+        const clientSelect = document.getElementById('clientSelect').value;
+        const interactionType = document.getElementById('interactionType').value;
+        const createdBy = document.getElementById('createdBy').value;
+        const dateTime = document.getElementById('dateTime').value;
+        const noteText = noteContent.value;
+        // const imageFile = document.getElementById('imageUpload').files[0]; // This is a File object
+
+
+        // Validation
+        if (!clientSelect || !interactionType || !createdBy || !dateTime || !noteText) {
+          alert('Please fill in all fields.');
+          return;
+        }
+
+        // Create FormData object to send data as form/multipart
+        const formData = new FormData();
+        formData.append('client_id', clientSelect);
+        formData.append('interaction_type', interactionType);
+        formData.append('created_by', createdBy);
+        formData.append('date_time', dateTime);
+        formData.append('description', noteText);
+
+        // if (imageFile) {
+        //   formData.append('image', imageFile);
+        // }
+
+        // Send a POST request with the form data
+        fetch('/notes/store', { // Update the URL to the route that handles note saving
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+            },
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Handle success
+            if (data.success) {
+              Swal.fire('Success', 'The note has been saved successfully.', 'success');
+              // Additional actions like closing the modal or clearing the form can go here
+            }
+          })
+          .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+            Swal.fire('Error', 'There was a problem saving the note.', 'error');
+          });
+
+        // Prevent form from submitting normally
+        return false;
+
+        console.log('Note saved for client ID:', selectedClientId, 'Note:', noteText);
+
+        // Clear the saved note content as it's now been saved
+        localStorage.removeItem('savedNote');
+        localStorage.setItem('modalState', 'closed'); // Update the modal state in localStorage
+
+        // Close the modal
+        closeModal();
+      }
 
     // Autosave note content as the user types
     noteContent.addEventListener('input', function() {
@@ -479,6 +536,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   </script>
+
+    @vite(['resources/js/app.js'])
+
+  {{-- Stack for pushing additional scripts specific to a page --}}
+  @stack('scripts')
 
 </body>
 
