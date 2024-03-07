@@ -5,9 +5,13 @@
         margin-left: -5rem; 
     }
 
-    
-</style>
+    .swal-custom-html-container ul {
+        text-align: left;
+        margin-left: 0;
+        padding-left: 1.5em;
+    }
 
+</style>
 
     <div class="content-header">
         <div class="container-fluid">
@@ -36,7 +40,7 @@
                         <h3 class="card-title"><i class="fa-solid fa-user-plus mr-2"></i>Employee Registration</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('save.employee') }}" method="POST" class="p-3 rounded">
+                        <form action="{{ route('save.employee') }}" method="POST" class="p-3 rounded" id="employee-form">
                             @csrf
                             <div class="form-group row ">
                                 <label for="EmployeeID" class="col-sm-3 col-form-label text-right ml-neg-5">Employee ID</label>
@@ -59,37 +63,33 @@
                             <div class="form-group row">
                                 <label for="Department" class="col-sm-3 col-form-label text-right ml-neg-5">Department</label>
                                 <div class="col-sm-6">
-                                    <!-- <input type="text" class="form-control" name="Department" id="Department" placeholder="Department" required> -->
-                                    <select class="form-control" name="Department" id="Department" required>
+                                    <select class="form-control" name="Department" id="DepartmentSelect" required>
                                         <option value="">Select Department</option>
                                         @foreach($departments as $department)
                                             <option value="{{ $department }}">{{ $department }}</option>
                                         @endforeach
+                                        <option value="other">OTHER (SPECIFY)</option>
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="form-group row" id="otherDepartmentInput" style="display: none;">
+                                <label for="OtherDepartment" class="col-sm-3 col-form-label text-right ml-neg-5"></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="OtherDepartment" id="OtherDepartment" placeholder="Other Department">
+                                </div>
+                            </div>
+                            
                             <div class="form-group row">
                                 <label for="Position" class="col-sm-3 col-form-label text-right ml-neg-5">Position</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="Position" id="Position" placeholder="Position" required>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="EmployeeStatus" class="col-sm-3 col-form-label text-right ml-neg-5">Employee Status</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="Employee_Status" id="EmployeeStatus" placeholder="Employee Status">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="Password" class="col-sm-3 col-form-label text-right ml-neg-5">Password</label>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control" name="Password" id="Password" placeholder="Password" required>
-                                </div>
-                            </div>
-                            
+                           
                             <div class="form-group row">
                                 <div class="offset-sm-3 col-sm-6">
-                                    <button type="submit" class="btn btn-primary btn-fixed ml-neg-5">Save</button>
+                                    <button type="submit" id="btnSave" class="btn btn-primary btn-fixed ml-neg-5">Save</button>
                                     <a href="{{ route('systemusers') }}" class="btn btn-default btn-fixed">Cancel</a>
                                 </div>
                             </div>
@@ -108,4 +108,68 @@
             event.target.value = event.target.value.toUpperCase();
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('employee-form');
+        const submitBtn = document.getElementById('btnSave');
+
+        // SUBMIT CONFIRMATION
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            Swal.fire({
+                title: 'CONFIRMATION MESSAGE',
+                text: 'Do you want to save this new employee?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) { 
+                    form.submit(); 
+                }
+            });
+        }); 
+
+        // Check if validation errors exist and display them
+        const validationErrors = @json($errors->all());
+        if (validationErrors.length > 0) {
+            let errorMessage = '';
+            if (validationErrors.length > 1) {
+                errorMessage += '<ul>';
+                validationErrors.forEach(error => {
+                    errorMessage += `<li>${error}</li>`;
+                });
+                errorMessage += '</ul>';
+            } else {
+                errorMessage = validationErrors[0];
+            }
+
+            Swal.fire({
+                title: 'WARNING MESSAGE',
+                html: errorMessage,
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    htmlContainer: 'swal-custom-html-container'
+                }
+            });
+        }
+
+        // DISPLAY OTHER FIELD
+        const departmentSelect = document.getElementById('DepartmentSelect');
+        const otherDepartmentInput = document.getElementById('otherDepartmentInput');
+
+        departmentSelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                otherDepartmentInput.style.display = 'flex';
+            } else {
+                otherDepartmentInput.style.display = 'none';
+            }
+        });
+
+
+    });
+
+
 </script>

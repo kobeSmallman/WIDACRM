@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage; 
 use Illuminate\Support\Facades\Log; 
+use App\Rules\UniqueEmployeeID;  
+use App\Rules\UniqueEmployeeName;  
 
 
 class SystemUsersController extends BaseController
@@ -17,6 +19,16 @@ class SystemUsersController extends BaseController
     public function saveEmployee(Request $request)
     {
         Log::info('Employee creation method called with data:', $request->all());
+
+        $request->validate([
+            'Employee_ID' => ['required', new UniqueEmployeeID],
+            'Last_Name' => ['required', new UniqueEmployeeName($request->input('Last_Name'), $request->input('First_Name'))],
+            'First_Name' => ['required'],
+            'Position' => ['required'],
+            // Add other validation rules as needed
+            // 'Department' => ['required'], // Example
+        ]);
+    
     
         // For debugging, bypassing the validation
         $employeeData = $request->only([
@@ -25,15 +37,20 @@ class SystemUsersController extends BaseController
             'First_Name',
             'Department',
             'Position',
-            // Skipping 'Role_ID' from the request
             'Employee_Status',
-            // Skipping 'Password' from the request
-            // Any other fields you expect from the request
         ]);
     
         // Set default values for 'Password' and 'Employee_Status'
         $employeeData['Password'] = Hash::make('Password1');
         $employeeData['Employee_Status'] = 'ACTIVE';
+
+        // Check if the department selected is "other"
+        if ($request->input('Department') === 'other') { 
+            $employeeData['Department'] = $request->input('OtherDepartment');
+        } else { 
+            $employeeData['Department'] = $request->input('Department');
+        }
+
     
         try {
             \DB::beginTransaction();
@@ -46,7 +63,8 @@ class SystemUsersController extends BaseController
             Log::info('Employee created successfully.', ['employee_id' => $employee->Employee_ID]);
     
             // Redirect to the system users page with a success message
-            return redirect()->route('systemusers')->with('success', 'Employee created successfully.');
+            Return redirect()->route('systemusers')->with('success', 'Employee created successfully.');
+ 
         } catch (\Throwable $e) {
             \DB::rollBack();
             Log::error('Failed to create employee: ' . $e->getMessage());
@@ -61,7 +79,10 @@ class SystemUsersController extends BaseController
     
     public function showSystemUsers()
     {
-        $activeEmployees = Employee::with('permissions')->where('Employee_Status', 'Active')->get();
+        $activeEmployees = Employee::with('permissions')
+                            ->where('Employee_Status', 'Active')
+                            ->orderBy('First_Name')  
+                            ->get();
         $inactiveEmployees = Employee::where('Employee_Status', 'Inactive')->get();
 
         // The variable must match what you use in the view

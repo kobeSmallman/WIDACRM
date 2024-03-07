@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WIDACRM</title>
-  <link rel="icon" type="image/x-icon" href="dist/img/WIDA/WIDA.ico">
+  <link rel="icon" type="image/x-icon" href="{{ asset('dist/img/WIDA/WIDA.ico') }}">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700&display=fallback">
@@ -28,8 +28,7 @@
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
 
 
-  <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
+
 
   <!-- jQuery -->
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -98,7 +97,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
-        <img src="dist/img/WIDA/wida100x100.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img  src="{{ asset('dist/img/WIDA/wida100x100.png') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-bold" style="color: #5a75f7">WIDA</span>
         <span class="brand-text font-weight-normal" style="margin-left:-4px">CRM</span>
       </a>
@@ -122,7 +121,6 @@
               </a>
             </li>
 
-
             <li class="nav-header">TRANSACTION</li>
 
             <li class="nav-item">
@@ -130,8 +128,6 @@
                 <i class="nav-icon fas fa-users"></i>
                 <p>Clients</p>
               </a>
-
-
 
             <li class="nav-item">
               <a href="{{ route('notes.create') }}" class="nav-link">
@@ -158,7 +154,12 @@
                 <p>Vendors</p>
               </a>
             </li>
-
+            <li class="nav-item">
+                <a href="{{ route('payment.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                    <p>Payment</p>
+                </a>
+            </li>
 
             <li class="nav-header">ADMINISTRATION</li>
             <li class="nav-item">
@@ -181,42 +182,41 @@
 
 
             <li class="nav-header">REPORTS</li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="{{ route('clientsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Client Summary</p>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="{{ route('ordersummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Order Summary</p>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Vendor Summary</p>
               </a>
+            </li> -->
+
+
+            <li class="nav-header">OTHERS</li>
+
+            <li class="nav-item">
+                <a href="{{ route('agreement.show') }}" class="nav-link">
+                <i class="nav-icon fas fa-solid fa-file-contract"></i>
+                    <p>Agreement Form</p>
+                </a>
             </li>
             <li class="nav-item">
-    <a href="{{ route('faq.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-question-circle"></i>
-        <p>FAQ</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('agreement.show') }}" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-file-contract"></i>
-        <p>Agreement Form</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('payment.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-regular fa-credit-card"></i>
-        <p>Payment</p>
-    </a>
-</li>
+                <a href="{{ route('faq.show') }}" class="nav-link">
+                    <i class="nav-icon fas fa-question-circle"></i>
+                    <p>FAQ</p>
+                </a>
+            </li>
+
 
           </ul>
           
@@ -282,13 +282,12 @@
   <!-- AdminLTE -->
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
-
-  <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
-
   <!-- OPTIONAL SCRIPTS -->
   <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
   <!-- DataTables  & Plugins -->
+
+  <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -302,7 +301,6 @@
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
-  <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 
   <!-- JavaScript to dynamically add active class to the navigation link -->

@@ -17,9 +17,6 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-
-                <a class="btn btn-primary mb-3 mr-3" id="show-alert">Sample Alert</a>
-
                 <a href="{{ route('systemusers.registration') }}" class="btn btn-primary mb-3">New Employee</a>
 
                 <table id="tblSystemUsers" class="table table-bordered table-striped">
@@ -46,7 +43,7 @@
                                     </a>
                                 </td>
                                 <td>{{ $employee->Employee_ID }}</td>
-                                <td>{{ $employee->First_Name }} {{ $employee->Last_Name }}</td>
+                                <td><a href="{{ route('systemusers.profile', $employee->Employee_ID) }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</a></td>
                                 <td>{{ $employee->Department }}</td>
                                 <td>{{ $employee->Position }}</td>
                                 <td>{{ $employee->Employee_Status }}</td>  
@@ -58,6 +55,19 @@
             <!-- /.card-body -->
         </div>
     </div>      
+
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'INFORMATION MESSAGE',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif  
 </x-layout>
 
 
@@ -95,12 +105,6 @@
             }
         });
 
-    document.getElementById('show-alert').addEventListener('click', () => {
-        Swal.fire({
-            title: 'Hello, Laravel 10!',
-            text: 'Sweetalert2 is now integrated into your Laravel 10 Vite project!',
-            icon: 'success',
-    });
-});
+ 
 </script>
 
