@@ -55,6 +55,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                                <div class="col-12 text-center">
+                                    <button type="" class="btn btn-primary btn-fixed ml-neg-5">Update</button>
+                                    <!-- to do: create an action for Update -->
+                                    <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed">Back</a>
+                                </div>
+                </div>
             </div>
         </div>
     </div>
