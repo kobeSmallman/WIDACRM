@@ -64,8 +64,7 @@
                         <div class="form-group row">
                                 <div class="offset-sm-3 col-sm-6">
                                     <button type="submit" class="btn btn-primary btn-fixed ml-neg-5">Save</button>
-                                    <a href="{{ route('systemusers') }}" class="btn btn-default btn-fixed">Cancel</a>
-                                    <!-- need to edit route to index of payment -->
+                                    <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed">Cancel</a>
                                 </div>
                             </div>
                     </form>

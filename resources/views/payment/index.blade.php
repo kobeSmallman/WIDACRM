@@ -40,9 +40,6 @@
                             <tr>
                                 <td> 
                                     <a href="{{ route('payment.show', $payment->PMT_ID) }}">
-                                    <i class="fas fa-pen-to-square"></i>
-                                    </a>
-
                                     <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
                                     <a href="#" class="btn btn-default btn-sm">

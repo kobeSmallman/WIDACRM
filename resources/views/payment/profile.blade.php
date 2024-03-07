@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="card card-primary card-outline">
                     <div class="card-body">
-                        <h3 class="profile-username text-center">Payment Record #{{ $payment->id }}</h3>
+                        <h3 class="profile-username text-center">Payment Record # {{ $payment->PMT_ID }}</h3>
                         <p class="text-muted text-center">Transaction Details</p>
 
                         <div class="row">
