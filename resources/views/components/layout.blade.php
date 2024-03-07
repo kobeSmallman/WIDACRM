@@ -128,25 +128,7 @@
                 <i class="nav-icon fas fa-users"></i>
                 <p>Clients</p>
               </a>
-
-            <li class="nav-item">
-              <a href="{{ route('notes.create') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-note-sticky"></i>
-                <p>Notes</p>
-              </a>
             </li>
-
-
-
-            <li class="nav-item">
-
-              <a href="{{ route('orders.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-ticket"></i>
-                <p>Orders</p>
-              </a>
-
-            </li>
-            <!-- Update this in your sidebar menu blade file where you list your navigation links -->
 
             <li class="nav-item">
               <a href="{{ route('vendors.index') }}" class="nav-link">
@@ -155,8 +137,29 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="{{ route('notes.create') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-note-sticky"></i>
+                <p>Notes</p>
+              </a>
+            </li>
+ 
+            <li class="nav-item"> 
+              <a href="{{ route('orders.index') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-ticket"></i>
+                <p>Orders</p>
+              </a> 
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('payment.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                  <p>Payments</p>
+              </a>
+            </li>
 
             <li class="nav-header">ADMINISTRATION</li>
+
             <li class="nav-item">
               <a href="{{ route('systemusers') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-address-card"></i>
@@ -165,8 +168,7 @@
                   <span class="badge badge-info right"></span>
                 </p>
               </a>
-            </li>
-
+            </li> 
 
             <li class="nav-item">
               <a href="{{ route('permissions') }}" class="nav-link">
@@ -174,8 +176,7 @@
                 <p>Permissions</p>
               </a>
             </li>
-
-
+ 
             <li class="nav-header">REPORTS</li>
             <!-- <li class="nav-item">
               <a href="{{ route('clientsummary.index') }}" class="nav-link">
@@ -206,26 +207,12 @@
                 </a>
             </li>
             <li class="nav-item">
-    <a href="{{ route('faq.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-question-circle"></i>
-        <p>FAQ</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('agreement.show') }}" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-file-contract"></i>
-        <p>Agreement Form</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="{{ route('payment.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-regular fa-credit-card"></i>
-        <p>Payment</p>
-    </a>
-</li>
-
+                <a href="{{ route('faq.show') }}" class="nav-link">
+                    <i class="nav-icon fas fa-question-circle"></i>
+                    <p>FAQ</p>
+                </a>
+            </li>
           </ul>
-
         </nav>
         <!-- /.sidebar-menu -->
 
