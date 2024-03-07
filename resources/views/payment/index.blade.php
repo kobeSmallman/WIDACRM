@@ -5,6 +5,12 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">Payments</h1>
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Payments</a></li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
@@ -46,8 +52,10 @@
                                     <i class="fa-regular fa-trash-can"></i>
                                     </a>
                                 </td>
-                                <td>{{ $payment->PMT_ID }}</td>
+                                <td><a href="{{ route('payment.show', $payment->PMT_ID) }}">{{ $payment->PMT_ID }}</td>
                                 <td>{{ $payment->Order_ID}}</td>
+                                <!-- <td><a href="{{ route('orders.show', $payment->Order_ID) }}">{{ $payment->Order_ID}}</td> -->
+                                <!-- To Do: Link to Order Profile once that is already working -->
                                 <td>{{ $payment->PMT_Cat}}</td>
                                 <td>{{ $payment->Date}}</td>
                                 <td>{{ $payment->Amount}}</td>
