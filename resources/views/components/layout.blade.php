@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WIDACRM</title>
-  <link rel="icon" type="image/x-icon" href="dist/img/WIDA/WIDA.ico">
+  <link rel="icon" type="image/x-icon" href="{{ asset('dist/img/WIDA/WIDA.ico') }}">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700&display=fallback">
@@ -23,11 +23,10 @@
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
+
 
 
 
@@ -37,7 +36,7 @@
 </head>
 
 
-<body class="hold-transition sidebar-mini {{ session('dark_mode') ? 'dark-mode' : '' }}">
+<body class="hold-transition sidebar-mini layout-fixed {{ session('dark_mode') ? 'dark-mode' : '' }}">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -98,7 +97,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
-        <img src="dist/img/WIDA/wida100x100.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img  src="{{ asset('dist/img/WIDA/wida100x100.png') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-bold" style="color: #5a75f7">WIDA</span>
         <span class="brand-text font-weight-normal" style="margin-left:-4px">CRM</span>
       </a>
@@ -122,7 +121,6 @@
               </a>
             </li>
 
-
             <li class="nav-header">TRANSACTION</li>
 
             <li class="nav-item">
@@ -130,27 +128,7 @@
                 <i class="nav-icon fas fa-users"></i>
                 <p>Clients</p>
               </a>
-
-
-
-            <li class="nav-item">
-              <a href="{{ route('notes.create') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-note-sticky"></i>
-                <p>Notes</p>
-              </a>
             </li>
-
-
-
-            <li class="nav-item">
-
-              <a href="{{ route('orders.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-ticket"></i>
-                <p>Orders</p>
-              </a>
-
-            </li>
-            <!-- Update this in your sidebar menu blade file where you list your navigation links -->
 
             <li class="nav-item">
               <a href="{{ route('vendors.index') }}" class="nav-link">
@@ -159,18 +137,38 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="{{ route('notes.create') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-note-sticky"></i>
+                <p>Notes</p>
+              </a>
+            </li>
+ 
+            <li class="nav-item"> 
+              <a href="{{ route('orders.index') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-ticket"></i>
+                <p>Orders</p>
+              </a> 
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('payment.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                  <p>Payments</p>
+              </a>
+            </li>
 
             <li class="nav-header">ADMINISTRATION</li>
+
             <li class="nav-item">
-              <a href="{{ route('system-users') }}" class="nav-link">
+              <a href="{{ route('systemusers') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-address-card"></i>
                 <p>
                   System Users
                   <span class="badge badge-info right"></span>
                 </p>
               </a>
-            </li>
-
+            </li> 
 
             <li class="nav-item">
               <a href="{{ route('permissions') }}" class="nav-link">
@@ -178,36 +176,43 @@
                 <p>Permissions</p>
               </a>
             </li>
-
-
+ 
             <li class="nav-header">REPORTS</li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="{{ route('clientsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Client Summary</p>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a href="{{ route('ordersummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Order Summary</p>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
                 <p>Vendor Summary</p>
               </a>
+            </li> -->
+
+
+            <li class="nav-header">OTHERS</li>
+
+            <li class="nav-item">
+                <a href="{{ route('agreement.show') }}" class="nav-link">
+                <i class="nav-icon fas fa-solid fa-file-contract"></i>
+                    <p>Agreement Form</p>
+                </a>
             </li>
             <li class="nav-item">
-    <a href="{{ route('faq.show') }}" class="nav-link">
-        <i class="nav-icon fas fa-question-circle"></i>
-        <p>FAQ</p>
-    </a>
-</li>
-
+                <a href="{{ route('faq.show') }}" class="nav-link">
+                    <i class="nav-icon fas fa-question-circle"></i>
+                    <p>FAQ</p>
+                </a>
+            </li>
           </ul>
-          
         </nav>
         <!-- /.sidebar-menu -->
 
@@ -216,11 +221,49 @@
           <div class="modal-content">
             <div class="modal-header" id="dragHandle">Drag me</div>
             <span class="close">&times;</span>
+
+            <!-- Client Selection Dropdown -->
+            <label for="clientSelect">Select Client:</label>
+            <select id="clientSelect">
+              <option value="">--Select a Client--</option>
+              <!-- Options will be populated dynamically from the $clients array -->
+              @foreach ($clients as $client)
+              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
+              @endforeach
+            </select>
+
+            <!-- Interaction Type Dropdown -->
+            <label for="interactionType">Interaction Type:</label>
+            <select id="interactionType">
+              <option value="">--Select Type--</option>
+              <option value="call">Call</option>
+              <option value="email">Email</option>
+              <option value="in_person">In Person</option>
+            </select>
+
+            <!-- Created By Dropdown (assuming you have a list of employees) -->
+            <label for="createdBy">Created By:</label>
+            <select id="createdBy">
+              <option value="">--Select Employee--</option>
+              @foreach ($employees as $employee) <!-- Make sure to pass $employees to the view -->
+              <option value="{{ $employee->Employee_ID }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</option>
+              @endforeach
+            </select>
+
+            <!-- Date Time Picker -->
+            <label for="dateTime">Date & Time:</label>
+            <input type="datetime-local" id="dateTime">
+
+            <!-- Image Upload -->
+            <label for="imageUpload">Image:</label>
+            <input type="file" id="imageUpload">
+
             <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
             <button onclick="saveNote()">Save Note</button>
           </div>
         </div>
-        <button id="myBtn">Take Note</button>
+        <button id="myBtn">Create New Note</button>
+
 
       </div>
       <!-- /.sidebar -->
@@ -274,6 +317,8 @@
   <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
   <!-- DataTables  & Plugins -->
+
+  <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -286,6 +331,7 @@
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
 
 
   <!-- JavaScript to dynamically add active class to the navigation link -->
@@ -313,7 +359,7 @@
       });
     });
 
-    // Add an event listener for when the DOM content is fully loaded
+    // Add an event listener for when the DOM content is fully loaded ///// This is for the notes 
     document.addEventListener('DOMContentLoaded', function() {
       // Get references to the modal elements
       const modal = document.getElementById("noteModal"); // The modal dialog
@@ -357,9 +403,65 @@
 
       // Save the note content to localStorage and close the modal
       window.saveNote = function() {
-        console.log('Note saved:', noteContent.value); // Log the saved note for debugging
-        localStorage.removeItem('savedNote'); // Clear previous saved note
-        closeModal(); // Close the modal
+        const clientSelect = document.getElementById('clientSelect').value;
+        const interactionType = document.getElementById('interactionType').value;
+        const createdBy = document.getElementById('createdBy').value;
+        const dateTime = document.getElementById('dateTime').value;
+        const noteText = noteContent.value;
+        // const imageFile = document.getElementById('imageUpload').files[0]; // This is a File object
+
+
+        // Validation
+        if (!clientSelect || !interactionType || !createdBy || !dateTime || !noteText) {
+          alert('Please fill in all fields.');
+          return;
+        }
+
+        // Create FormData object to send data as form/multipart
+        const formData = new FormData();
+        formData.append('client_id', clientSelect);
+        formData.append('interaction_type', interactionType);
+        formData.append('created_by', createdBy);
+        formData.append('date_time', dateTime);
+        formData.append('description', noteText);
+
+        // if (imageFile) {
+        //   formData.append('image', imageFile);
+        // }
+
+        // Send a POST request with the form data
+        fetch('/notes/store', { // Update the URL to the route that handles note saving
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+            },
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Handle success
+            if (data.success) {
+              Swal.fire('Success', 'The note has been saved successfully.', 'success');
+              // Additional actions like closing the modal or clearing the form can go here
+            }
+          })
+          .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+            Swal.fire('Error', 'There was a problem saving the note.', 'error');
+          });
+
+        // Prevent form from submitting normally
+        return false;
+
+        console.log('Note saved for client ID:', selectedClientId, 'Note:', noteText);
+
+        // Clear the saved note content as it's now been saved
+        localStorage.removeItem('savedNote');
+        localStorage.setItem('modalState', 'closed'); // Update the modal state in localStorage
+
+        // Close the modal
+        closeModal();
       }
 
       // Autosave note content as the user types

@@ -2582,14 +2582,14 @@ fieldset:disabled a.btn {
 .btn-primary {
   color: #fff;
   background-color: #5a75f7;
-  border-color: #007bff;
+  border-color: #4f67db;
   box-shadow: none;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #3c5af7;
+  border-color: #2a45d4;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -53014,3 +53014,41 @@ a.text-muted:hover {
   border-color: #4b545c !important;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+
+/* Customized by Chester */
+.btn-fixed {
+  margin-right: 0.5rem !important;
+  width: 120px;
+
+}
+
+.swal2-popup {
+  font-family: "Open Sans";
+  font-size: 0.95rem !important; 
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+.swal2-title {
+  font-family: 'Montserrat' !important;
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+  line-height: 0.2 !important;
+}
+
+.swal2-confirm {
+  font-size: 1em;
+  color: #fff !important;
+  background-color: #5a75f7 !important;
+  border-color: #4f67db !important;
+  box-shadow: none !important;
+}
+
+.swal2-cancel {
+  font-size: 1em;
+  color: #444 !important;
+  background-color: #e8e8e8 !important; 
+  border-color: #4f67db !important;
+  box-shadow: none !important;
+}
