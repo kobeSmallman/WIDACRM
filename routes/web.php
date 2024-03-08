@@ -67,7 +67,11 @@ Route::get('/analytics/interaction-timeline', [AnalyticsController::class, 'getI
 Route::get('/dashboard/employee', [DashboardController::class, 'employeeDashboard'])->name('employee.dashboard');
 
 //client routes
-Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+Route::get('/clients', [ClientController::class, 'index'])->name('clients');
+Route::get('/clients/add-client', [ClientController::class, 'addClient'])->name('clients.addClient');
+Route::post('/clients/save-client', [ClientController::class, 'saveClient'])->name('clients.saveClient');
+Route::get('/clients/client-info/{client}', [ClientController::class, 'editClient'])->name('clients.editClient');
+
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{clientId}/orders', [ClientController::class, 'getClientOrders']);

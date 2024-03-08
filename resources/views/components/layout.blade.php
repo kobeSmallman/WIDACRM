@@ -44,7 +44,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-            <i class="fas fa-bars" style="transform: rotate(90deg);"></i>
+            <i class="fas fa-bars"></i>
           </a>
 
         </li>
@@ -124,7 +124,7 @@
             <li class="nav-header">TRANSACTION</li>
 
             <li class="nav-item">
-              <a href="{{ route('clients.index') }}" class="nav-link">
+              <a href="{{ route('clients') }}" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Clients</p>
               </a>

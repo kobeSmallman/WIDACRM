@@ -17,13 +17,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">System Users</h1>
+                    <h1 class="m-0">Clients</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('systemusers') }}">System Users</a></li>
-                        <li class="breadcrumb-item active">Employee Registration</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('clients') }}">Clients</a></li>
+                        <li class="breadcrumb-item active">Client Registration</a></li>
                     </ol>
                 </div>
             </div>
@@ -32,64 +32,68 @@
 
     <div class="container-fluid">
         <div class="row">  
-            <div class="col-md-12">
-                <!-- Profile Details Card -->
+            <div class="col-md-12"> 
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fa-solid fa-user-plus mr-2"></i>Employee Registration</h3>
+                    <div class="card-header"> 
+                        <h3 class="card-title"><i class="fa-solid fa-user-plus mr-2"></i>Client Registration</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('save.employee') }}" method="POST" class="p-3 rounded" id="employee-form">
+                        <form action="{{ route('clients.saveClient') }}" method="POST" class="p-3 rounded" id="client-form">
                             @csrf
-                            <div class="form-group row ">
-                                <label for="EmployeeID" class="col-sm-3 col-form-label text-right ml-neg-5">Employee ID</label>
+                            <!-- Form fields -->
+                            <div class="form-group row">
+                                <label for="Company_Name" class="col-sm-3 col-form-label text-right ml-neg-5">Company Name:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="Employee_ID" id="EmployeeID" placeholder="Employee ID" required>
+                                    <input type="text" class="form-control" name="Company_Name" id="Company_Name" placeholder="Company Name" required>
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="Main_Contact" class="col-sm-3 col-form-label text-right ml-neg-5">Main Contact:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="Main_Contact" name="Main_Contact" class="form-control" placeholder="Main Contact">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="LastName" class="col-sm-3 col-form-label text-right ml-neg-5">Last Name</label>
+                                <label for="Shipping_Address" class="col-sm-3 col-form-label text-right ml-neg-5">Shipping Address:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="Last_Name" id="LastName" placeholder="Last Name" required>
+                                    <input type="text" id="Shipping_Address" name="Shipping_Address" class="form-control" placeholder="Shipping Address">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="FirstName" class="col-sm-3 col-form-label text-right ml-neg-5">First Name</label>
+                                <label for="Billing_Address" class="col-sm-3 col-form-label text-right ml-neg-5">Billing Address:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="First_Name" id="FirstName" placeholder="First Name" required>
+                                    <input type="text" id="Billing_Address" name="Billing_Address" class="form-control" placeholder="Billing Address">
+                                </div>
+                            </div> 
+                            <div class="form-group row">
+                                <label for="Email" class="col-sm-3 col-form-label text-right ml-neg-5">Email:</label>
+                                <div class="col-sm-6">
+                                    <input type="email" id="Email" name="Email" class="form-control"  placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="Department" class="col-sm-3 col-form-label text-right ml-neg-5">Department</label>
+                                <label for="Phone_Number" class="col-sm-3 col-form-label text-right ml-neg-5">Phone Number:</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="Department" id="DepartmentSelect" required>
-                                        <option value="">Select Department</option>
-                                        @foreach($departments as $department)
-                                            <option value="{{ $department }}">{{ $department }}</option>
-                                        @endforeach
-                                        <option value="other">OTHER (SPECIFY)</option>
-                                    </select>
+                                    <input type="text" id="Phone_Number" name="Phone_Number" class="form-control"  placeholder="Phone Number">
                                 </div>
                             </div>
-
-                            <div class="form-group row" id="otherDepartmentInput" style="display: none;">
-                                <label for="OtherDepartment" class="col-sm-3 col-form-label text-right ml-neg-5"></label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="OtherDepartment" id="OtherDepartment" placeholder="Other Department">
-                                </div>
-                            </div>
-                            
                             <div class="form-group row">
-                                <label for="Position" class="col-sm-3 col-form-label text-right ml-neg-5">Position</label>
+                                <label for="Lead_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Lead Status:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="Position" id="Position" placeholder="Position" required>
+                                    <input type="text" id="Lead_Status" name="Lead_Status" class="form-control" placeholder="Lead Status" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Buyer_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Buyer Status:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="Buyer_Status" name="Buyer_Status" class="form-control" placeholder="Buyer Status" required>
                                 </div>
                             </div>
                            
                             <div class="form-group row">
                                 <div class="offset-sm-3 col-sm-6">
                                     <button type="submit" id="btnSave" class="btn btn-primary btn-fixed ml-neg-5">Save</button>
-                                    <a href="{{ route('systemusers') }}" class="btn btn-default btn-fixed">Cancel</a>
+                                    <a href="{{ route('clients') }}" class="btn btn-default btn-fixed">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -103,13 +107,13 @@
 </x-layout>
 <script>
     document.addEventListener('input', function(event) {
-        if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+        if ((event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') && event.target.type !== 'email') {
             event.target.value = event.target.value.toUpperCase();
         }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('employee-form');
+        const form = document.getElementById('client-form');
         const submitBtn = document.getElementById('btnSave');
 
         // SUBMIT CONFIRMATION
@@ -117,7 +121,7 @@
             event.preventDefault(); 
             Swal.fire({
                 title: 'CONFIRMATION MESSAGE',
-                text: 'Do you want to save this new employee?',
+                text: 'Do you want to save this new client?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
@@ -154,19 +158,7 @@
                 }
             });
         }
-
-        // DISPLAY OTHER FIELD
-        const departmentSelect = document.getElementById('DepartmentSelect');
-        const otherDepartmentInput = document.getElementById('otherDepartmentInput');
-
-        departmentSelect.addEventListener('change', function() {
-            if (this.value === 'other') {
-                otherDepartmentInput.style.display = 'flex';
-            } else {
-                otherDepartmentInput.style.display = 'none';
-            }
-        });
-
+ 
 
     });
 
