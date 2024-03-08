@@ -67,9 +67,9 @@
 
                     <div class="card-footer">
                         <button type="button" id="addProductButton" class="btn btn-info">Add Product</button>
-                        <button type="submit" class="btn btn-success float 
--right">Create Order</button>
-</div>
+                        <button type="submit" class="btn btn-success float-right">Create Order</button>
+                        <a href="{{ route('orders.index') }}" class="btn btn-secondary float-right mr-2">Back to Orders</a>
+                    </div>
 </form>
 </div>
 </div><!-- /.container-fluid -->
