@@ -14,7 +14,7 @@ class Product extends Model
 
     protected $fillable = [
         'Item_ID',
-        'Order_ID',
+        'Order_ID',//TODO MAKE THE ADD NEW PRODUCT HAVE ALL OF THE FIELDS.
         'Product_Name',
         'Quantity',
         'Vendor_ID',

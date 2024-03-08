@@ -290,7 +290,7 @@
       <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
-
+    
     <!-- Main Footer -->
     <footer class="main-footer">
       <strong>Copyright &copy; 2024 <a href="" style="color: #5a75f7">Hexabridge Technologies</a>.</strong>
@@ -412,18 +412,18 @@
 
 
         // Validation
-        if (!clientSelect || !interactionType || !createdBy || !dateTime || !noteText) {
+        if (!clientSelect && !interactionType && !createdBy && !dateTime && !noteText) {
           alert('Please fill in all fields.');
           return;
         }
 
         // Create FormData object to send data as form/multipart
         const formData = new FormData();
-        formData.append('client_id', clientSelect);
-        formData.append('interaction_type', interactionType);
-        formData.append('created_by', createdBy);
-        formData.append('date_time', dateTime);
-        formData.append('description', noteText);
+        formData.append('Client_ID', clientSelect);
+        formData.append('Interaction_Type', interactionType);
+        formData.append('Created_By', createdBy);
+        formData.append('Date_Time', dateTime);
+        formData.append('Description', noteText);
 
         // if (imageFile) {
         //   formData.append('image', imageFile);

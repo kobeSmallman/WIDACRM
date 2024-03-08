@@ -13,7 +13,7 @@ class Note extends Model
 
     public $incrementing = true; // Set to false if 'Note_ID' is not auto-incrementing
 
-    public $timestamps = true; // Set to false if your table does not have 'created_at' and 'updated_at'
+    public $timestamps = false; // Set to false if your table does not have 'created_at' and 'updated_at'
 
     // Fillable attributes for mass assignment
     protected $fillable = [
@@ -22,7 +22,7 @@ class Note extends Model
         'Created_By',
         'Date_Time',
         'Description',
-        //'Image',
+        'Image',
     ];
 
     // Relationship with Client
