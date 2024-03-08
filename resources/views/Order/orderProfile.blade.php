@@ -15,12 +15,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 20px; /* Adjust font size */
+            font-weight: bold; /* Adjust font weight */
         }
         .card-body {
             background-color: #e9ecef;
             display: grid;
             grid-template-columns: 2fr 1fr;
             grid-gap: 20px;
+            font-size: 16px; /* Adjust font size */
+            font-weight: bold; /* Adjust font weight */
         }
         .client-info-box {
             background: white;
@@ -72,6 +76,7 @@
                         <button onclick="saveOrder()" class="btn btn-success">Save</button>
                     </div>
                 </div>
+                <a href="{{ route('orders.index') }}" class="btn btn-secondary back-button">Back to Orders</a>
                 </div>
                 <div class="card-body">
                     <div class="order-details">
@@ -135,6 +140,7 @@
             @endif
                     </div>
                 </div>
+                
             </div>
         </div><!-- /.container-fluid -->
     </section>
