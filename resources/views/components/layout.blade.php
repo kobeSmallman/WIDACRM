@@ -247,7 +247,7 @@
       <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
-
+    
     <!-- Main Footer -->
     <footer class="main-footer">
       <strong>Copyright &copy; 2024 <a href="" style="color: #5a75f7">Hexabridge Technologies</a>.</strong>
