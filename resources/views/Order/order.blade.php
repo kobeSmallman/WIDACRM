@@ -20,7 +20,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="mb-3">
-                <a href="{{ route('orders.create') }}" class="btn btn-success">Create New Order</a>
+                <a href="{{ route('orders.create') }}" class="btn btn-primary">Create New Order</a>
             </div>
 
             <!-- Orders Table -->
@@ -33,6 +33,7 @@
                     <table id="orders-table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>Manage</th>
                                 <th>Order ID</th>
                                 <th>Client ID</th>
                                 <th>Created By</th>
@@ -41,27 +42,30 @@
                                 <th>Order Date</th>
                                 <th>Order Status</th>
                                 <th>Quotation Date</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
-                                <tr>
-                                    <td>{{ $order->Order_ID }}</td>
-                                    <td>{{ $order->Client_ID }}</td>
-                                    <td>{{ $order->Created_By }}</td>
-                                    <td>{{ optional($order->Request_DATE)->format('Y-m-d') ?: 'N/A' }}</td>
-                                    <td>{{ $order->Request_Status }}</td>
-                                    <td>{{ optional($order->Order_DATE)->format('Y-m-d') ?: 'N/A' }}</td>
-                                    <td>{{ $order->Order_Status }}</td>
-                                    <td>{{ optional($order->Quotation_DATE)->format('Y-m-d') ?: 'N/A' }}</td>
-                                    <td>
-                                    <!-- Inside your Orders Table -->
-                                    <a href="/orders/{{ $order->Order_ID }}/profile" class="btn btn-info btn-sm">Edit</a>
-
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tr>
+                            <td>
+                            <a href="{{ route('orders.profile', $order->Order_ID) }}" class="btn btn-default btn-sm" style="color: gray;">
+        <i class="fas fa-edit"></i>
+    </a>
+    <!-- Delete button -->
+    <button type="button" class="btn btn-default btn-sm delete-order-btn" data-id="{{ $order->Order_ID }}" style="color: gray;">
+        <i class="fas fa-trash"></i>
+    </button>
+</td>
+<td>  <a href="{{ route('orders.profile', $order->Order_ID) }}">{{ $order->Order_ID }}</a></td>
+    <td>{{ $order->client->Company_Name ?? 'Unknown Client' }} ({{ $order->Client_ID }})</td>
+    <td>{{ optional($order->creator)->First_Name ?? 'Unknown' }} ({{ $order->Created_By }})</td>
+    <td>{{ optional($order->Request_DATE)->format('Y-m-d') ?: 'N/A' }}</td>
+    <td>{{ $order->Request_Status }}</td>
+    <td>{{ optional($order->Order_DATE)->format('Y-m-d') ?: 'N/A' }}</td>
+    <td>{{ $order->Order_Status }}</td>
+    <td>{{ optional($order->Quotation_DATE)->format('Y-m-d') ?: 'N/A' }}</td>
+</tr>
+@endforeach
                         </tbody>
                     </table>
                 </div>
@@ -71,9 +75,10 @@
     </section>
     <!-- /.content -->
 </x-layout>
+
 <script>
 $(document).ready(function() {
-    $('#orders-table').DataTable({
+    var table = $('#orders-table').DataTable({
         "pagingType": "full_numbers",
         "pageLength": 15,
         "lengthMenu": [15, 30, 45, 60],
@@ -81,39 +86,44 @@ $(document).ready(function() {
         "info": true,
         "responsive": true,
         "dom": 'lBfrtip',
-        "buttons": [
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+        "buttons": ["copyHtml5", "csvHtml5", "excelHtml5", "pdfHtml5", "print", "colvis"]
+    });
+
+    $('.delete-order-btn').click(function() {
+        var orderId = $(this).data('id');
+        if (confirm('Are you sure you want to delete this order?')) {
+            // Implement the delete functionality here
+            // For example, using AJAX to send a request to your Laravel backend
+            console.log("Deleting order ID: " + orderId);
+            // Refresh or update the DataTable row here after successful deletion
+        }
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('.delete-order-btn').click(function(e) {
+        e.preventDefault();
+        var orderId = $(this).data('id');
+        var token = $("meta[name='csrf-token']").attr("content");
+
+        if (confirm('Are you sure you want to delete this order and its related products?')) {
+            $.ajax({
+                url: "/orders/" + orderId,
+                type: 'DELETE',
+                data: {
+                    "id": orderId,
+                    "_token": token,
+                },
+                success: function(response) {
+                    alert('Order deleted successfully');
+                    location.reload(); // Or you can remove the row from the DataTable without reloading
+                },
+                error: function(response) {
+                    alert('Failed to delete the order');
                 }
-            },
-            {
-                extend: 'csvHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            },
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                }
-            },
-            'colvis'
-        ]
+            });
+        }
     });
 });
 </script>

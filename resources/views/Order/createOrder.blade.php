@@ -85,25 +85,49 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to add a product form
     function addProductForm(productFormIndex) {
     var productFormHTML = `
-        <div class="product-form" data-index="${productFormIndex}">
+    <div class="product-form" data-index="${productFormIndex}">
             <h5>Product ${productFormIndex}</h5>
             <div class="form-group">
                 <label for="Product_Name_${productFormIndex}">Product Name:</label>
-                <input type="text" class="form-control" id="Product_Name_${productFormIndex}" name="Products[${productFormIndex}][Product_Name]" placeholder="Enter Product Name" required>
+                <input type="text" class="form-control" id="Product_Name_${productFormIndex}" name="products[${productFormIndex}][Product_Name]" placeholder="Enter Product Name" required>
             </div>
             <div class="form-group">
                 <label for="Quantity_${productFormIndex}">Quantity:</label>
-                <input type="number" class="form-control" id="Quantity_${productFormIndex}" name="Products[${productFormIndex}][Quantity]" placeholder="Enter Quantity" required>
+                <input type="number" class="form-control" id="Quantity_${productFormIndex}" name="products[${productFormIndex}][Quantity]" placeholder="Enter Quantity" required>
             </div>
             <div class="form-group">
                 <label for="Vendor_ID_${productFormIndex}">Vendor ID:</label>
-                <input type="number" class="form-control" id="Vendor_ID_${productFormIndex}" name="Products[${productFormIndex}][Vendor_ID]" placeholder="Enter Vendor ID" required>
+                <input type="number" class="form-control" id="Vendor_ID_${productFormIndex}" name="products[${productFormIndex}][Vendor_ID]" placeholder="Enter Vendor ID" required>
+            </div>
+            <div class="form-group">
+                <label for="Shipping_Status_${productFormIndex}">Shipping Status:</label>
+                <input type="text" class="form-control" id="Shipping_Status_${productFormIndex}" name="products[${productFormIndex}][Shipping_Status]" placeholder="Enter Shipping Status" required>
+            </div>
+            <div class="form-group">
+                <label for="Shipped_Qty_${productFormIndex}">Shipped Quantity:</label>
+                <input type="number" class="form-control" id="Shipped_Qty_${productFormIndex}" name="products[${productFormIndex}][Shipped_Qty]" placeholder="Enter Shipped Quantity" required>
             </div>
             <div class="form-group">
                 <label for="Product_Price_${productFormIndex}">Product Price:</label>
-                <input type="text" class="form-control" id="Product_Price_${productFormIndex}" name="Products[${productFormIndex}][Product_Price]" placeholder="Enter Product Price" required>
+                <input type="text" class="form-control" id="Product_Price_${productFormIndex}" name="products[${productFormIndex}][Product_Price]" placeholder="Enter Product Price" required>
             </div>
-            <button type="button" class="btn btn-danger removeProductButton" onclick="removeProductForm(${productFormIndex})">Remove Product</button>
+            <div class="form-group">
+                <label for="Product_Status_${productFormIndex}">Product Status:</label>
+                <input type="text" class="form-control" id="Product_Status_${productFormIndex}" name="products[${productFormIndex}][Product_Status]" placeholder="Enter Product Status" required>
+            </div>
+            <div class="form-group">
+                <label for="QA_Status_${productFormIndex}">QA Status:</label>
+                <input type="text" class="form-control" id="QA_Status_${productFormIndex}" name="products[${productFormIndex}][QA_Status]" placeholder="Enter QA Status" required>
+            </div>
+            <div class="form-group">
+                <label for="Storage_Status_${productFormIndex}">Storage Status:</label>
+                <input type="text" class="form-control" id="Storage_Status_${productFormIndex}" name="products[${productFormIndex}][Storage_Status]" placeholder="Enter Storage Status" required>
+            </div>
+            <div>
+            <label for="Prod_Status_${productFormIndex}">Product Status:</label>
+    <input type="text" class="form-control" id="Prod_Status_${productFormIndex}" name="products[${productFormIndex}][Prod_Status]" placeholder="Enter Product Status" required>
+    </div>      
+    <button type="button" class="btn btn-danger removeProductButton" onclick="removeProductForm(${productFormIndex})">Remove Product</button>
         </div>
     `;
 
