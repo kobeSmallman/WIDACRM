@@ -41,9 +41,12 @@
         <div class="input-group mb-3">
           <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
           <div class="input-group-append">
-            <div class="input-group-text">
+          <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+            <span class="fas fa-eye-slash" aria-hidden="true"></span>
+          </button>
+<!--             <div class="input-group-text">
               <span class="fas fa-lock"></span>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="row">
@@ -93,6 +96,31 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- Script to toggle password visibility -->
+<script>
+  $(document).ready(function() {
+    // Listen for a click on the togglePassword button
+    $('#togglePassword').click(function() {
+      // Select the password input field and the icon inside the button
+      const password = $('#password');
+      const icon = $(this).find('span');
+
+      // Check the type of the password field
+      if (password.attr('type') === 'password') {
+        // Change the password field to text
+        password.attr('type', 'text');
+        // Switch the icon to an open eye
+        icon.removeClass('fa-eye-slash').addClass('fa-eye');
+      } else {
+        // Change the text field back to password
+        password.attr('type', 'password');
+        // Switch the icon to a slashed eye
+        icon.removeClass('fa-eye').addClass('fa-eye-slash');
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
 

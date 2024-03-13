@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;// Add this line to use the Auth facade
 
 class VendorController extends Controller
 {
@@ -27,10 +28,19 @@ class VendorController extends Controller
             'Vendor_Name' => 'required|string|max:255',
             'Active_Status' => 'required|string|max:20',
             'Remarks' => 'nullable|string|max:255',
+            'Email' => 'nullable|string|max:255',
+            'PhoneNumber' => 'nullable|string|max:255',
         ]);
-        
-        Vendor::create($validatedData);
-        return redirect()->route('vendors.index')->with('success', 'Vendor added successfully.');
+        //added this part -van 
+       
+        try{ 
+            Vendor::create($validatedData);
+            return redirect()->route('vendors.index')->with('success', 'Vendor add  ed successfully.');
+        } catch (\Exception $e){
+            \Log::error($e->getMessage());
+            return back()->withErrors('Failed to add vendor: '. $e->getMessage())->withInput();
+        }
+        //added this part -van 
     }
 
     public function edit($id)

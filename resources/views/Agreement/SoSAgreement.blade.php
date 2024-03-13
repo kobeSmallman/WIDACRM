@@ -1,14 +1,14 @@
 {{-- SoSAgreement.blade.php --}}
 <x-layout>
-    <div class="container mt-4">
-        <h2>Scope of Service Agreement</h2>
+    <div class="container mt-4" id="agreementContent">
+        <h2 style="text-decoration: underline;">Scope of Service Agreement</h2>
         <form action="{{ route('agreement.store') }}" method="POST">
             @csrf
 
         <div class="form-group">
             <h4>1. THE PARTIES</h4>
             <p>This Agreement is made effective as of <input type="date" name="effective_date" required>, by and between:</p>
-            <p>Consultant: WIDA Procurement & Supply Chain Solutions Ltd. with a mailing address of <input type="text" name="consultant_address" value="3215E 16 Ave N, Lethbridge, AB T1H 5E8" required>;</p>
+            <p>Consultant: WIDA Procurement & Supply Chain Solutions Ltd. with a mailing address of 3215A 16 Ave N, Lethbridge, AB T1H 5E8</p>
             <p>Client: <input type="text" name="client_name" placeholder="Client Name" required> with a mailing address of <input type="text" name="client_address" placeholder="Client Address" required>.</p>
         </div>
 
@@ -57,9 +57,9 @@
                 <input type="checkbox" id="per_hour" name="compensation[]" value="per_hour">
                 <label for="per_hour">Per Hour, based on the hourly rate set out for the Services in Schedule “A”.</label><br>
                 <input type="checkbox" id="per_order" name="compensation[]" value="per_order">
-                <label for="per_order">Per Purchase Order. Amount for the completion of said order is $</label><input type="text" name="per_order_amount" placeholder="Amount"><br>
+                <label for="per_order">Per Purchase Order. Amount for the completion of said order is $</label><input type="text" name="per_order_amount"><br>
                 <input type="checkbox" id="per_service_order" name="compensation[]" value="per_service_order">
-                <label for="per_service_order">Per Service Order. Amount for the completion of said service is $</label><input type="text" name="per_service_order_amount" placeholder="Amount"><br>
+                <label for="per_service_order">Per Service Order. Amount for the completion of said service is $</label><input type="text" name="per_service_order_amount"><br>
                 <input type="checkbox" id="other_compensation" name="compensation[]" value="other">
                 <label for="other_compensation">Other:</label> <input type="text" name="other_compensation_details">
             </div>
@@ -92,23 +92,29 @@
             <h4>8. PAYMENT METHOD</h4>
             <p>Consultant shall be paid in accordance with section 5 in the following manner: (check all that apply)</p>
             <div>
-                <input type="checkbox" id="payment_weekly" name="payment_frequency[]" value="weekly">
-                <label for="payment_weekly">On a weekly basis beginning on</label> <input type="date" name="payment_start_date_weekly"><br>
+                <div class="payment-frequency-group">
+                    <input type="radio" id="select_payment" name="payment_option" value="selected" onclick="togglePaymentFrequency(true);">
+                    <label for="select_payment">On a </label>
+
+                    <input type="checkbox" id="payment_weekly" name="payment_frequency[]" value="weekly" disabled>
+                    <label for="payment_weekly">weekly </label>
+
+                    <input type="checkbox" id="payment_monthly" name="payment_frequency[]" value="monthly" disabled>
+                    <label for="payment_monthly">monthly </label>
+
+                    <input type="checkbox" id="payment_quarterly" name="payment_frequency[]" value="quarterly" disabled>
+                    <label for="payment_quarterly">quarterly basis beginning on</label>
+                    <input type="date" name="payment_start_date" disabled style="margin-right: 10px;">
+                </div>
                 
-                <input type="checkbox" id="payment_monthly" name="payment_frequency[]" value="monthly">
-                <label for="payment_monthly">On a monthly basis beginning on</label> <input type="date" name="payment_start_date_monthly"><br>
-                
-                <input type="checkbox" id="payment_quarterly" name="payment_frequency[]" value="quarterly">
-                <label for="payment_quarterly">On a quarterly basis beginning on</label> <input type="date" name="payment_start_date_quarterly"><br>
-                
-                <input type="checkbox" id="payment_completion" name="payment_frequency[]" value="completion">
+                <input type="radio" id="payment_completion" name="payment_option" value="completion" onclick="togglePaymentFrequency(false);">
                 <label for="payment_completion">At completion of the Services performed</label><br>
                 
-                <input type="checkbox" id="payment_invoice" name="payment_frequency[]" value="invoice">
+                <input type="radio" id="payment_invoice" name="payment_option" value="invoice" onclick="togglePaymentFrequency(false);">
                 <label for="payment_invoice">Upon the Client receiving an Invoice from the Consultant</label><br>
                 
-                <input type="checkbox" id="payment_other" name="payment_frequency[]" value="other">
-                <label for="payment_other">Other:</label> <input type="text" name="payment_method_other_details"><br>
+                <input type="radio" id="payment_other" name="payment_option" value="other" onclick="togglePaymentFrequency(false);">
+                <label for="payment_other">Other:</label> <input type="text" name="payment_method_other_details" disabled><br>
             </div>
 
             <div>
@@ -123,20 +129,21 @@
 
         <div class="form-group">
             <h4>9. RETAINER</h4>
-            <p>The Client is: (check one)</p>
-            <div>
-             <input type="checkbox" id="retainer_required" name="retainer_required" value="1" onchange="toggleRetainerAmount(this)">
-             <label for="retainer_required">Required to pay a Retainer. </label>The Client is required to pay a Retainer in the amount of $
-             <input type="number" id="retainer_amount" name="retainer_amount" placeholder="Amount" disabled>
-             to the Consultant as an advance on future Services to be provided ("Retainer").
+                <div>
+                    <input type="radio" id="retainer_required" name="retainer_option" value="required" onclick="toggleRetainerOptions(true);">
+                    <label for="retainer_required">- Required to pay a Retainer.</label> The Client is required to pay a Retainer in the amount of $
+                    <input type="text" id="retainer_amount" name="retainer_amount" style="width: 80px;"> to the Consultant as an advance on future Services to be provided ("Retainer").
+                <div class="indent">
+                The Retainer is: (check one) <br>
+                    <input type="radio" id="retainer_refundable" name="retainer_type" value="refundable" disabled>
+                    <label for="retainer_refundable">- Refundable.</label><br>
+                    <input type="radio" id="retainer_non_refundable" name="retainer_type" value="non_refundable" disabled>
+                    <label for="retainer_non_refundable">- Non-Refundable.</label>
+                </div>
             </div>
             <div>
-                The Retainer is: <br>
-                <input type="radio" id="retainer_refundable" name="retainer_type" value="refundable" enabled>
-                <label for="retainer_refundable">Refundable</label><br>
-                
-                <input type="radio" id="retainer_non_refundable" name="retainer_type" value="non_refundable" enabled checked>
-                <label for="retainer_non_refundable">Non-Refundable</label>
+                <input type="radio" id="retainer_not_required" name="retainer_option" value="not_required" onclick="toggleRetainerOptions(false);">
+                <label for="retainer_not_required">- Not required to pay a Retainer.</label> The Client is not required to pay a Retainer before the Consultant is able to provide Services.
             </div>
         </div>
 
@@ -148,12 +155,12 @@
                 <label for="contingency_yes">There SHALL be a contingency-fee arrangement in accordance with: </label><br>
                 <div style="margin-left: 20px;">
                     <input type="checkbox" name="contingency_fee_type" value="percentage" aria-label="Percentage based fee">
-                    <input type="number" name="contingency_fee_percentage" placeholder="%" style="width: 80px;"> of
-                    <input type="text" name="contingency_fee_percentage_description" placeholder="Description">
+                    <input type="number" name="contingency_fee_percentage" style="width: 80px;"> % of
+                    <input type="text" name="contingency_fee_percentage_description" placeholder="description">
                 </div>
                 <div style="margin-left: 20px;">
                     <input type="checkbox" name="contingency_fee_type" value="flat_fee" aria-label="Flat fee">
-                    Flat fee of $<input type="number" name="contingency_fee_flat_amount" placeholder="Amount" style="width: 100px;"> for the following:
+                    Flat fee of $<input type="number" name="contingency_fee_flat_amount" style="width: 100px;"> for the following:
                     <input type="text" name="contingency_fee_flat_description" placeholder="Description">
                 </div>
                 
@@ -428,11 +435,14 @@
         <div class="form-group">
             <h3>Schedule "B" - Form of Purchase Order</h3>
         </div>
-
-
-            <button type="submit" class="btn btn-primary">Submit Agreement</button>
         </form>
+        <button onclick="printDocument();" class="btn btn-primary print-button">Print Form</button>
+
+<!--      function does not work
+       <button type="button" onclick="saveAsPDF();" class="btn btn-primary">Save as PDF</button> 
+    -->
     </div>
+
 </x-layout>
 
 <script>
@@ -447,6 +457,83 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- translates page to PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+<!-- could not get this script to work properly -->
+<!-- <script>
+  function saveAsPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.html(document.querySelector('#agreementContent'), {
+      callback: function (pdf) {
+        pdf.save('Service-Agreement.pdf');
+      },
+      x: 10,
+      y: 10
+    });
+  }
+</script> -->
+
+<script>
+  function printDocument() {
+    window.print();
+  }
+</script>
+
+<script>
+function toggleRetainerOptions(isRequired) {
+  document.getElementById('retainer_refundable').disabled = !isRequired;
+  document.getElementById('retainer_non_refundable').disabled = !isRequired;
+  // If 'not required' is selected, clear any selections for retainer type.
+  if (!isRequired) {
+    document.getElementById('retainer_refundable').checked = false;
+    document.getElementById('retainer_non_refundable').checked = false;
+    document.getElementById('retainer_amount').value = ''; // Clear the retainer amount
+    document.getElementById('retainer_amount').disabled = true; // Disable the amount input
+    } else {
+    document.getElementById('retainer_amount').disabled = false; // Enable the amount input
+    }
+}
+
+// Call this function initially to set up the correct disabled state based on the preselected value
+document.addEventListener('DOMContentLoaded', function() {
+// Assuming "Not required" is the default selected option
+toggleRetainerOptions(false);
+});
+</script>
+
+<script>
+function togglePaymentFrequency(enable) {
+    // Enable or disable weekly/monthly/quarterly checkboxes and date input
+    document.getElementById('payment_weekly').disabled = !enable;
+    document.getElementById('payment_monthly').disabled = !enable;
+    document.getElementById('payment_quarterly').disabled = !enable;
+    document.querySelector('input[name="payment_start_date"]').disabled = !enable;
+
+    // If the "On a weekly/monthly/quarterly basis" option is not selected
+    if (!enable) {
+        // Uncheck and disable the other payment frequency options
+        document.getElementById('payment_weekly').checked = false;
+        document.getElementById('payment_monthly').checked = false;
+        document.getElementById('payment_quarterly').checked = false;
+        // Disable and clear the "Other" text input if the radio button for other is not selected
+        const otherInput = document.querySelector('input[name="payment_method_other_details"]');
+        otherInput.disabled = !document.getElementById('payment_other').checked;
+        if (!document.getElementById('payment_other').checked) {
+            otherInput.value = '';
+        }
+    }
+}
+
+// Event listener for document ready to initialize the form state
+document.addEventListener('DOMContentLoaded', function() {
+    // Check which payment_option is selected and adjust the form accordingly
+    const selectedOption = document.querySelector('input[name="payment_option"]:checked') || {};
+    togglePaymentFrequency(selectedOption.value === 'selected');
+});
+</script>
 
 <style>
 .notice-group {
@@ -454,7 +541,9 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center;
     gap: 10px;
 }
-
+.indent {
+        margin-left: 40px;
+    }
 .notice-group label {
     flex-basis: 220px;
     margin-right: 10px;
@@ -464,25 +553,41 @@ document.addEventListener('DOMContentLoaded', function() {
 .notice-group input[type="email"] {
     flex: 1;
 }
-
+.payment-frequency-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .payment-frequency-group label {
+    margin: 0 5px;
+  }
+  .payment-frequency-group input[type='checkbox'] {
+    margin-right: 5px;
+  }
+  .payment-frequency-group input[type='date'] {
+    margin-right: 5px;
+  }
+  .payment-frequency-group input[type='text'] {
+    width: 60px;
+  }
 .table {
         width: 100%;
         border-collapse: collapse;
     }
-    .table, .table th, .table td {
+.table, .table th, .table td {
         border: 1px solid black;
     }
-    .table th, .table td {
+.table th, .table td {
         text-align: left;
         padding: 8px;
     }
-    .table th {
+.table th {
         background-color: #f2f2f2;
     }
-    .table td {
+.table td {
         vertical-align: middle; 
     }
-    .form-control {
+.form-control {
         display: block;
         width: 100%;
         padding: 0.375rem 0.75rem;
@@ -495,12 +600,17 @@ document.addEventListener('DOMContentLoaded', function() {
         border-radius: 0.25rem;
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
-    .form-control:focus {
+.form-control:focus {
         border-color: #80bdff;
         outline: 0;
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
-    input[type="checkbox"] {
+input[type="checkbox"] {
         margin-right: 10px;
     }
+ @media print {
+    .print-button {
+        display: none;
+  }
+}
 </style>
