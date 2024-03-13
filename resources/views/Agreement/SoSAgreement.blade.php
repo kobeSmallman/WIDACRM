@@ -54,14 +54,20 @@
         <div class="form-group">
             <h4>5. COMPENSATION FOR SERVICES</h4>
             <div>
-                <input type="checkbox" id="per_hour" name="compensation[]" value="per_hour">
+                <input type="radio" id="per_hour" name="compensation" value="per_hour" onclick="toggleCompensationOptions('per_hour');">
                 <label for="per_hour">Per Hour, based on the hourly rate set out for the Services in Schedule “A”.</label><br>
-                <input type="checkbox" id="per_order" name="compensation[]" value="per_order">
-                <label for="per_order">Per Purchase Order. Amount for the completion of said order is $</label><input type="text" name="per_order_amount"><br>
-                <input type="checkbox" id="per_service_order" name="compensation[]" value="per_service_order">
-                <label for="per_service_order">Per Service Order. Amount for the completion of said service is $</label><input type="text" name="per_service_order_amount"><br>
-                <input type="checkbox" id="other_compensation" name="compensation[]" value="other">
-                <label for="other_compensation">Other:</label> <input type="text" name="other_compensation_details">
+
+                <input type="radio" id="per_order" name="compensation" value="per_order" onclick="toggleCompensationOptions('per_order');">
+                <label for="per_order">Per Purchase Order. Amount for the completion of said order is $</label>
+                <input type="text" id="per_order_amount" name="per_order_amount" disabled><br>
+
+                <input type="radio" id="per_service_order" name="compensation" value="per_service_order" onclick="toggleCompensationOptions('per_service_order');">
+                <label for="per_service_order">Per Service Order. Amount for the completion of said service is $</label>
+                <input type="text" id="per_service_order_amount" name="per_service_order_amount" disabled><br>
+
+                <input type="radio" id="other_compensation" name="compensation" value="other" onclick="toggleCompensationOptions('other_compensation');">
+                <label for="other_compensation">Other:</label>
+                <input type="text" id="other_compensation_details" name="other_compensation_details" disabled>
             </div>
         </div>
 
@@ -151,20 +157,24 @@
             <h4>10. CONTINGENCY</h4>
             <p>As part of the Consultant's Pay: (check one)</p>
             <div>
-                <input type="radio" id="contingency_yes" name="contingency" value="yes">
+                <input type="radio" id="contingency_yes" name="contingency" value="yes" onclick="toggleContingencyDetails(true);">
                 <label for="contingency_yes">There SHALL be a contingency-fee arrangement in accordance with: </label><br>
                 <div style="margin-left: 20px;">
-                    <input type="checkbox" name="contingency_fee_type" value="percentage" aria-label="Percentage based fee">
-                    <input type="number" name="contingency_fee_percentage" style="width: 80px;"> % of
-                    <input type="text" name="contingency_fee_percentage_description" placeholder="description">
+                    <input type="radio" id="contingency_percentage" name="contingency_fee_type" value="percentage" disabled>
+                    <label for="contingency_percentage">Percentage of </label>
+                    <input type="number" id="contingency_fee_percentage" name="contingency_fee_percentage" disabled> 
+                    <label for="contingency_fee_percentage">% </label>
+                    <input type="text" id="contingency_fee_percentage_description" name="contingency_fee_percentage_description" disabled placeholder="Description">
                 </div>
                 <div style="margin-left: 20px;">
-                    <input type="checkbox" name="contingency_fee_type" value="flat_fee" aria-label="Flat fee">
-                    Flat fee of $<input type="number" name="contingency_fee_flat_amount" style="width: 100px;"> for the following:
-                    <input type="text" name="contingency_fee_flat_description" placeholder="Description">
+                    <input type="radio" id="contingency_flat_fee" name="contingency_fee_type" value="flat_fee" disabled>
+                    <label for="contingency_flat_fee">Flat fee of $</label>
+                    <input type="number" id="contingency_fee_flat_amount" name="contingency_fee_flat_amount" disabled> 
+                    <label for="contingency_fee_flat_amount">for the following: </label>
+                    <input type="text" id="contingency_fee_flat_description" name="contingency_fee_flat_description" disabled placeholder="Description">
                 </div>
-                
-                <input type="radio" id="contingency_no" name="contingency" value="no">
+
+                <input type="radio" id="contingency_no" name="contingency" value="no" onclick="toggleContingencyDetails(false);">
                 <label for="contingency_no">There SHALL NOT be a contingency-fee arrangement</label><br>
             </div>
         </div>
@@ -481,7 +491,31 @@ document.addEventListener('DOMContentLoaded', function() {
     window.print();
   }
 </script>
+<!-- script to handle radio and checkbox toggling limitations for compensation options -->
+<script>
+function toggleCompensationOptions(selectedOption) {
+    // Disable all inputs first
+    document.getElementById('per_order_amount').disabled = true;
+    document.getElementById('per_service_order_amount').disabled = true;
+    document.getElementById('other_compensation_details').disabled = true;
 
+    // Enable only the selected option's input
+    if (selectedOption === 'per_order') {
+        document.getElementById('per_order_amount').disabled = false;
+    } else if (selectedOption === 'per_service_order') {
+        document.getElementById('per_service_order_amount').disabled = false;
+    } else if (selectedOption === 'other_compensation') {
+        document.getElementById('other_compensation_details').disabled = false;
+    }
+}
+
+// Initialize the form with compensation inputs disabled
+document.addEventListener('DOMContentLoaded', function() {
+    // Assuming that no compensation option is selected by default
+    toggleCompensationOptions(null);
+});
+</script>
+<!-- script to handle radio and checkbox toggling limitations for retainer options -->
 <script>
 function toggleRetainerOptions(isRequired) {
   document.getElementById('retainer_refundable').disabled = !isRequired;
@@ -503,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
 toggleRetainerOptions(false);
 });
 </script>
-
+<!-- script to handle radio and checkbox toggling limitations for payment frequency options -->
 <script>
 function togglePaymentFrequency(enable) {
     // Enable or disable weekly/monthly/quarterly checkboxes and date input
@@ -533,6 +567,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedOption = document.querySelector('input[name="payment_option"]:checked') || {};
     togglePaymentFrequency(selectedOption.value === 'selected');
 });
+</script>
+
+<script>
+function toggleContingencyDetails(enableContingency) {
+    document.getElementById('contingency_percentage').disabled = !enableContingency;
+    document.getElementById('contingency_fee_percentage').disabled = !enableContingency;
+    document.getElementById('contingency_fee_percentage_description').disabled = !enableContingency;
+    document.getElementById('contingency_flat_fee').disabled = !enableContingency;
+    document.getElementById('contingency_fee_flat_amount').disabled = !enableContingency;
+    document.getElementById('contingency_fee_flat_description').disabled = !enableContingency;
+
+    // If contingency is not enabled, also clear any inputs and reset the checked state
+    if (!enableContingency) {
+        document.getElementById('contingency_fee_percentage').value = '';
+        document.getElementById('contingency_fee_percentage_description').value = '';
+        document.getElementById('contingency_fee_flat_amount').value = '';
+        document.getElementById('contingency_fee_flat_description').value = '';
+        document.getElementById('contingency_percentage').checked = false;
+        document.getElementById('contingency_flat_fee').checked = false;
+    }
+}
+
+// Initialize the form with the contingency options disabled
+document.addEventListener('DOMContentLoaded', function() {
+    toggleContingencyDetails(document.getElementById('contingency_yes').checked);
+});
+
+// Attach the toggle function to the 'contingency_no' radio button as well, for when it's clicked.
+document.getElementById('contingency_no').onclick = function() {
+    toggleContingencyDetails(false);
+};
 </script>
 
 <style>
@@ -612,5 +677,11 @@ input[type="checkbox"] {
     .print-button {
         display: none;
   }
+}
+.contingency-details {
+    margin-bottom: 10px;
+}
+.contingency-details input[type='number'], .contingency-details input[type='text'] {
+    margin-right: 5px;
 }
 </style>
