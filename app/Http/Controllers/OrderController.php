@@ -29,16 +29,26 @@ public function store(Request $request)
     Log::info('Request Data:', $request->all());
 
       // Temporarily commenting out validation for debugging purposes
-    // $validatedData = $request->validate([
-    //     'Client_ID' => 'required|exists:clients,Client_ID',
-    //     'Created_By' => 'required|integer',
-    //     'Request_DATE' => 'required|date',
-    //     'Request_Status' => 'required|string|max:255',
-    //     'Remarks' => 'nullable|string',
-    //     'Order_DATE' => 'required|date',
-    //     'Order_Status' => 'required|string|max:255',
-    //     'Quotation_DATE' => 'nullable|date',
-    // ]);
+     $validatedData = $request->validate([
+         'Client_ID' => 'required|exists:Client,Client_ID',
+         'Created_By' => 'required|integer',
+         'Request_DATE' => 'required|date',
+         'Request_Status' => 'required|string|max:255',
+         'Remarks' => 'nullable|string',
+         'Order_DATE' => 'required|date',
+         'Order_Status' => 'required|string|max:255',
+         'Quotation_DATE' => 'nullable|date',
+         'products.*.Product_Name' => 'required|string|max:255',
+         'products.*.Quantity' => 'required|integer|min:1',
+         'products.*.Vendor_ID' => 'required|exists:Vendor,Vendor_ID', // Adjust Vendor,Vendor_ID based on your Vendor table and primary key
+         'products.*.Shipping_Status' => 'required|string|max:255',
+         'products.*.Shipped_Qty' => 'required|integer|min:0',
+         'products.*.Product_Price' => 'required|numeric|min:0',
+         'products.*.Product_Status' => 'required|string|max:255',
+         'products.*.QA_Status' => 'required|string|max:255',
+         'products.*.Storage_Status' => 'required|string|max:255',
+         'products.*.Prod_Status' => 'required|string|max:255',
+     ]);
 
     // Begin a transaction to ensure data integrity
     $orderData = $request->all();
@@ -78,12 +88,17 @@ public function store(Request $request)
             // Add your validation logic here if needed
             
             $product = new Product([
-                'Order_ID' => $order->Order_ID,
-                'Product_Name' => $productData['Product_Name'],
-                'Quantity' => $productData['Quantity'],
-                'Vendor_ID' => $productData['Vendor_ID'],
-                'Product_Price' => $productData['Product_Price'],
-                // ... any other product fields
+                'Order_ID' => $order->Order_ID, // the ID of the Order to which this Product is related
+                'Product_Name' => $productData['Product_Name'], // name of the product
+                'Quantity' => $productData['Quantity'], // quantity of the product
+                'Vendor_ID' => $productData['Vendor_ID'], // the ID of the Vendor
+                'Shipping_Status' => $productData['Shipping_Status'], // shipping status of the product
+                'Shipped_Qty' => $productData['Shipped_Qty'], // quantity of the product that was shipped
+                'Product_Price' => $productData['Product_Price'], // price of the product
+                'Product_Status' => $productData['Product_Status'], // status of the product
+                'QA_Status' => $productData['QA_Status'], // QA status of the product
+                'Storage_Status' => $productData['Storage_Status'], // storage status of the product
+                'Prod_Status' => $productData['Prod_Status'], // production status of the product
             ]);
         
             // Add this log to see the attributes just before saving
@@ -141,10 +156,29 @@ public function store(Request $request)
 
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
-        $order->delete();
-        return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
+        try {
+            $order = Order::findOrFail($id);
+    
+            // Begin transaction
+            DB::beginTransaction();
+    
+            // Delete related products first to maintain referential integrity
+            $order->products()->delete();
+    
+            // Now delete the order
+            $order->delete();
+    
+            // Commit the transaction
+            DB::commit();
+    
+            return response()->json(['success' => 'Order and related products deleted successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e->getMessage());
+            return response()->json(['error' => 'Failed to delete order.'], 500);
+        }
     }
+    
     public function profile($orderId)
 {
     $order = Order::with(['client', 'products'])->where('Order_ID', $orderId)->firstOrFail();

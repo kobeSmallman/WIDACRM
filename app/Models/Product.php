@@ -10,11 +10,12 @@ class Product extends Model
 
     protected $primaryKey = 'Item_ID'; // Replace with your actual primary key column name
 
-    public $timestamps = true; // Set to false if you don't have timestamps
+    public $timestamps = false;
+ // Set to false if you don't have timestamps
 
     protected $fillable = [
         'Item_ID',
-        'Order_ID',//TODO MAKE THE ADD NEW PRODUCT HAVE ALL OF THE FIELDS.
+        'Order_ID',
         'Product_Name',
         'Quantity',
         'Vendor_ID',
@@ -24,6 +25,7 @@ class Product extends Model
         'Product_Status',
         'QA_Status',
         'Storage_Status',
+        'Prod_Status',
         // Add other fields as necessary
     ];
 

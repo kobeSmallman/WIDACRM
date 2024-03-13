@@ -46,6 +46,11 @@ public function client()
     return $this->belongsTo(Client::class, 'Client_ID', 'Client_ID');
 }
 
+public function creator() // Assuming 'creator' represents the 'Created_By' user
+{
+    return $this->belongsTo(Employee::class, 'Created_By'); // Adjust User::class as needed
+}
+
     public function getOrderIDAttribute()
 {
     return $this->attributes['Order_ID']; // Ensure this matches your database column name
