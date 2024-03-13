@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\PaymentType;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class PaymentController extends Controller
 {
@@ -42,7 +43,21 @@ class PaymentController extends Controller
             'PMT_Type_ID' => 'required|exists:Payment_Type,PMT_Type_ID', // ensure PMT_Type_ID exists in Payment_Type table
         ]);
 
-        // Assuming Payment is your Eloquent model for the payment table
+        // Check if there is an existing Product Payment
+        if ($request->PMT_Cat !== 'Freight') {
+        $existingPayment = Payment::where('Order_ID', $request->Order_ID)
+                                ->where('PMT_Cat', 'Product') 
+                                ->first();
+
+        if ($existingPayment) {
+            // Redirect back with error message if payment exists
+            return redirect()->back()->withErrors([
+                'msg' => 'There is already an associated Product Payment for this order: <a href="'.route('payment.show', ['id' => $existingPayment->PMT_ID]).'">PMT_ID '.$existingPayment->PMT_ID.'</a>'
+            ]);
+        }
+    }
+
+        // Assuming Payment is the your Eloquent model for the payment table
         $payment = new Payment();
         $payment->Order_ID = $request->Order_ID;
         $payment->Date = $request->Date;
@@ -60,5 +75,12 @@ class PaymentController extends Controller
         public function show($PMT_ID) {
         $payment = Payment::findOrFail($PMT_ID); // Find the payment by id
         return view('payment.profile', compact('payment'));
+    }
+
+    //Get products of each order
+    public function getProductsForOrder($Order_ID) {
+        $products = Product::where('Order_ID', $Order_ID)->get();
+    
+        return response()->json($products);
     }
 }

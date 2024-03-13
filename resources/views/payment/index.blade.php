@@ -28,7 +28,7 @@
 
                 <a href="{{ route('payment.create') }}" class="btn btn-primary mb-3">Add Payment</a>
 
-                <table id="tblSystemUsers" class="table table-bordered table-striped">
+                <table id="paymentRecords" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th style="width: 70px !important;">Manage</th>
@@ -73,37 +73,19 @@
 
 <script> 
    $(document).ready(function() {   
-        $("#tblSystemUsers").DataTable({
+        $("#paymentRecords").DataTable({
             "aaSorting": [],
             "columnDefs": [
-                { "orderable": false, "targets": [0,4] }
+                { "orderable": false, "targets": [0] }
             ],
             "responsive": true, 
             "lengthChange": false, 
             "autoWidth": false, 
             "buttons": ["excel", "pdf", "print", "colvis"]
             
-        }).buttons().container().appendTo('#tblSystemUsers_wrapper .col-md-6:eq(0)');
+        }).buttons().container().appendTo('#paymentRecords_wrapper .col-md-6:eq(0)');
 
     });
-
-    $('.delete-vendor-btn').click(function() {
-            var vendorId = $(this).data('id');
-            if (confirm('Are you sure?')) {
-                $.ajax({
-                    url: '/vendors/' + vendorId,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        _method: 'DELETE'
-                    },
-                    success: function(response) {
-                        // Reload the page or remove the row from the table
-                        table.row($(this).parents('tr')).remove().draw();
-                    }
-                });
-            }
-        });
 
     document.getElementById('show-alert').addEventListener('click', () => {
         Swal.fire({

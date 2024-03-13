@@ -52,6 +52,10 @@
                                 <!-- Assuming PaymentType relation is defined in Payment model -->
                                 <p class="text-muted">{{ $payment->paymentType ? $payment->paymentType->PMT_Type_Name : 'N/A' }}</p>
                             </div>
+                            <div class="col-sm-4">
+                                <strong>Product</strong>
+                                <p class="text-muted">{{ $payment->products ? $payment->products->Product_Name : 'N/A' }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

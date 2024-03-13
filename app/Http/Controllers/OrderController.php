@@ -115,7 +115,7 @@ public function store(Request $request)
     public function show($id)
     {
         $order = Order::with(['client', 'products'])->findOrFail($id);
-        return view('orderProfile', compact('order'));
+        return view('Order.orderProfile', compact('order'));
     }
 
     public function edit($id)

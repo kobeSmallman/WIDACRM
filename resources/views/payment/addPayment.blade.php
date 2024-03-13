@@ -48,6 +48,39 @@
                             </select>
                         </div>
 
+                {{-- This div will contain the dropdown for products and will initially be hidden --}}
+                    <div id="product_dropdown" class="form-group" style="display: none;">
+                        <label for="Product_Name">Product:</label>
+                        <select id="Product_Name" name="Product_Name" class="form-control">
+                            {{-- Product options will be added here dynamically --}}
+                        </select>
+                    </div>
+
+                <script>
+                document.getElementById('PMT_Cat').addEventListener('change', function() {
+                    var category = this.value;
+                    var orderId = document.getElementById('Order_ID').value; 
+
+                    if (category === 'Freight') {
+                        fetch('/get-products-for-order/' + orderId)
+                            .then(response => response.json())
+                            .then(data => {
+                                var productSelect = document.getElementById('Product_Name');
+                                productSelect.innerHTML = ''; // Clear existing options
+
+                                data.forEach(function(product) {
+                                    var option = new Option(product.Product_Name, product.Item_ID);
+                                    productSelect.appendChild(option);
+                                });
+
+                                document.getElementById('product_dropdown').style.display = 'block';
+                            });
+                    } else {
+                        document.getElementById('product_dropdown').style.display = 'none';
+                    }
+                });
+                </script>
+
                         <div class="form-group">
                             <label for="Amount">Amount:</label>
                             <input type="text" name="Amount" id="Amount" class="form-control" placeholder="$0.00">
@@ -88,6 +121,17 @@
                     confirmButtonText: 'OK'
                 });
             </script>
+        @endif
+
+        <!-- Check for errors -->
+        @if ($errors->any())
+         <div class="alert alert-danger">
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{!! $error !!}</li>
+            @endforeach
+            </ul>
+        </div>
         @endif
 
 </x-layout>

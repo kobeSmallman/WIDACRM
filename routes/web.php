@@ -11,6 +11,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AgreementController;
+use App\Http\Controllers\PaymentController;
 
 // Web.php
 use App\Http\Controllers\AnalyticsController;
@@ -208,6 +209,7 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
     // Show an individual payment profile
     Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
 
+    Route::get('/get-products-for-order/{orderId}', [PaymentController::class, 'getProductsForOrder']);
 
 
 //AGREEMENTS

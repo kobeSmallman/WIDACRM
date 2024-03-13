@@ -39,5 +39,9 @@ class Payment extends Model
         return $this->belongsTo(PaymentType::class, 'PMT_Type_ID', 'PMT_Type_ID');
     }
 
-    // Other model methods...
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'Item_ID', 'Item_ID');
+    }
+
 }
