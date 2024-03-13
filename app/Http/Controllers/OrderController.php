@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Client;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -20,8 +21,11 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('Order.createOrder');
+        $clients = Client::all(); // Retrieve all clients
+        $vendors = Vendor::all();
+       return view('Order.createOrder', compact('clients', 'vendors')); 
     }
+    
 
  
 public function store(Request $request)

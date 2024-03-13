@@ -23,14 +23,17 @@
                     @csrf
                     <!-- Order Information -->
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="Client_ID">Client ID:</label>
-                            <input type="number" class="form-control" id="Client_ID" name="Client_ID" placeholder="Enter Client ID" required>
-
+                    <div class="form-group">
+                            <label for="Client_ID">Client:</label>
+                            <select class="form-control select2" id="Client_ID" name="Client_ID" required>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }} ({{ $client->Client_ID }})</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="Created_By">Created By (Employee ID):</label>
-                            <input type="number" class="form-control" id="Created_By" name="Created_By" placeholder="Enter Your ID" required>
+                            <input type="text" class="form-control" id="Created_By" name="Created_By" value="{{ auth()->user()->Employee_ID }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="Request_DATE">Request Date:</label>
@@ -38,7 +41,10 @@
                         </div>
                         <div class="form-group">
                             <label for="Request_Status">Request Status:</label>
-                            <input type="text" class="form-control" id="Request_Status" name="Request_Status" placeholder="Enter Request Status" required>
+                            <select class="form-control select2" id="Request_Status" name="Request_Status" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="Remarks">Remarks:</label>
@@ -50,7 +56,11 @@
                         </div>
                         <div class="form-group">
                             <label for="Order_Status">Order Status:</label>
-                            <input type="text" class="form-control" id="Order_Status" name="Order_Status" placeholder="Enter Order Status" required>
+                            <select class="form-control select2" id="Order_Status" name="Order_Status" required>
+                                <option value="Completed">Completed</option>
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="Quotation_DATE">Quotation Date:</label>
@@ -76,15 +86,18 @@
 </section>
 <!-- /.content -->
 </x-layout>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var vendors = @json($vendors); // Make sure $vendors is passed correctly to the view
     var productContainer = document.getElementById('productContainer');
     var addProductButton = document.getElementById('addProductButton');
 
-    // Function to add a product form
     function addProductForm(productFormIndex) {
-    var productFormHTML = `
+    var vendorOptions = vendors.map(function(vendor) {
+        return `<option value="${vendor.Vendor_ID}">${vendor.Vendor_Name} (${vendor.Vendor_ID})</option>`;
+    }).join('');
+
+        var productFormHTML = `
     <div class="product-form" data-index="${productFormIndex}">
             <h5>Product ${productFormIndex}</h5>
             <div class="form-group">
@@ -96,13 +109,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="number" class="form-control" id="Quantity_${productFormIndex}" name="products[${productFormIndex}][Quantity]" placeholder="Enter Quantity" required>
             </div>
             <div class="form-group">
-                <label for="Vendor_ID_${productFormIndex}">Vendor ID:</label>
-                <input type="number" class="form-control" id="Vendor_ID_${productFormIndex}" name="products[${productFormIndex}][Vendor_ID]" placeholder="Enter Vendor ID" required>
+                <label for="Vendor_ID_${productFormIndex}">Vendor:</label>
+                <select class="form-control select2" id="Vendor_ID_${productFormIndex}" name="products[${productFormIndex}][Vendor_ID]" required>
+    ${vendorOptions}
+</select>
+
             </div>
-            <div class="form-group">
-                <label for="Shipping_Status_${productFormIndex}">Shipping Status:</label>
-                <input type="text" class="form-control" id="Shipping_Status_${productFormIndex}" name="products[${productFormIndex}][Shipping_Status]" placeholder="Enter Shipping Status" required>
-            </div>
+    <div class="form-group">
+        <label for="Shipping_Status_${productFormIndex}">Shipping Status:</label>
+        <select class="form-control select2" id="Shipping_Status_${productFormIndex}" name="products[${productFormIndex}][Shipping_Status]" required>
+            <option value="Pending">Pending</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Completed">Shipped</option>
+            <!-- Add other statuses as needed -->
+        </select>
+    </div>
             <div class="form-group">
                 <label for="Shipped_Qty_${productFormIndex}">Shipped Quantity:</label>
                 <input type="number" class="form-control" id="Shipped_Qty_${productFormIndex}" name="products[${productFormIndex}][Shipped_Qty]" placeholder="Enter Shipped Quantity" required>
@@ -112,76 +133,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="text" class="form-control" id="Product_Price_${productFormIndex}" name="products[${productFormIndex}][Product_Price]" placeholder="Enter Product Price" required>
             </div>
             <div class="form-group">
-                <label for="Product_Status_${productFormIndex}">Product Status:</label>
-                <input type="text" class="form-control" id="Product_Status_${productFormIndex}" name="products[${productFormIndex}][Product_Status]" placeholder="Enter Product Status" required>
-            </div>
+        <label for="Product_Status_${productFormIndex}">Product Status:</label>
+        <select class="form-control select2" id="Product_Status_${productFormIndex}" name="products[${productFormIndex}][Product_Status]" required>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="QA_Status_${productFormIndex}">QA Status:</label>
+        <select class="form-control select2" id="QA_Status_${productFormIndex}" name="products[${productFormIndex}][QA_Status]" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>
             <div class="form-group">
-                <label for="QA_Status_${productFormIndex}">QA Status:</label>
-                <input type="text" class="form-control" id="QA_Status_${productFormIndex}" name="products[${productFormIndex}][QA_Status]" placeholder="Enter QA Status" required>
-            </div>
-            <div class="form-group">
-                <label for="Storage_Status_${productFormIndex}">Storage Status:</label>
-                <input type="text" class="form-control" id="Storage_Status_${productFormIndex}" name="products[${productFormIndex}][Storage_Status]" placeholder="Enter Storage Status" required>
-            </div>
-            <div>
-            <label for="Prod_Status_${productFormIndex}">Product Status:</label>
-    <input type="text" class="form-control" id="Prod_Status_${productFormIndex}" name="products[${productFormIndex}][Prod_Status]" placeholder="Enter Product Status" required>
-    </div>      
-    <button type="button" class="btn btn-danger removeProductButton" onclick="removeProductForm(${productFormIndex})">Remove Product</button>
-        </div>
+        <label for="Storage_Status_${productFormIndex}">Storage Status:</label>
+        <select class="form-control select2" id="Storage_Status_${productFormIndex}" name="products[${productFormIndex}][Storage_Status]" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>  
+    <div class="form-group">
+        <label for="Prod_Status_${productFormIndex}">Production Status:</label>
+        <select class="form-control select2" id="Prod_Status_${productFormIndex}" name="products[${productFormIndex}][Prod_Status]" required>
+            <option value="In progress">In Progress</option>
+            <option value="Not Started">Not Started</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
     `;
 
     productContainer.insertAdjacentHTML('beforeend', productFormHTML);
-}
-
-
-    // Initialize the first product form
-    addProductForm(1);
+        $('.select2').select2(); // Reinitialize Select2 for all select elements including newly added ones
+    }
 
     addProductButton.addEventListener('click', function() {
-        let productFormIndex = document.querySelectorAll('.product-form').length + 1;
-        addProductForm(productFormIndex);
+        var productForms = document.querySelectorAll('.product-form');
+        var nextIndex = productForms.length + 1;
+        addProductForm(nextIndex);
     });
+
+    window.removeProductForm = function(index) {
+        var formToRemove = document.querySelector('.product-form[data-index="' + index + '"]');
+        if (formToRemove) {
+            formToRemove.remove();
+        }
+    };
 });
-
-// Function to add a product form
-function addProductForm(index) {
-    // Implementation of your addProductForm function
-}
-
-// Function to remove a product form
-function removeProductForm(index) {
-    let productForm = document.querySelector('.product-form[data-index="' + index + '"]');
-    if (productForm) {
-        productContainer.removeChild(productForm);
-    }
-    // Re-index the remaining product forms
-    updateProductFormIndexes();
-}
-
-// Function to update indexes of all product forms
-function updateProductFormIndexes() {
-    let productForms = document.querySelectorAll('.product-form');
-    productForms.forEach((form, index) => {
-        form.setAttribute('data-index', index + 1); // Set the new index based on position in the NodeList
-        form.querySelector('h5').innerText = 'Product ' + (index + 1); // Update the visual index for the user
-        // Update the names and ids of form inputs accordingly
-        // You'll need to adjust selectors based on your input names and structure
-        form.querySelectorAll('input, select, textarea').forEach(input => {
-            let name = input.name.match(/^(.+)\[\d+\](.+)$/);
-            if (name) {
-                input.name = name[1] + '[' + (index + 1) + ']' + name[2];
-            }
-        });
-    });
-
-    // If all product forms are removed, add a new one with index 1
-    if (productForms.length === 0) {
-        addProductForm(1);
-    }
-}
-
-// The missing function definition for addProductForm should be added here, after the previous script content.
 </script>
-
 
