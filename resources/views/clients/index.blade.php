@@ -29,7 +29,7 @@
             <table id="tblClients" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 70px !important;">Manage</th>
+                        <th style="width: 70px !important;">Delete</th>
                         <th>Client Name</th>
                         <th>Main Contact</th>
                         <th>Shipping Address</th>
@@ -43,13 +43,14 @@
                 <tbody> 
                     @foreach ($clients as $client)
                         <tr>
-                            <td> 
-                                <a href="" class="btn btn-default btn-sm">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a href="#" class="btn btn-default btn-sm">
-                                <i class="fa-regular fa-trash-can"></i>
-                                </a>
+                            <td>
+                                <form id="deleteForm{{ $client->Client_ID }}" action="{{ route('clients.deleteClient', $client->Client_ID) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-default btn-sm delete-btn" data-client-id="{{ $client->Client_ID }}">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </form>
                             </td>
                             <td><a href="{{ route('clients.editClient', $client->Client_ID) }}">{{ $client->Company_Name }}</td>
                             <td>{{ $client->Main_Contact }}</td>
@@ -82,67 +83,48 @@
     </script>
 @endif  
 
-<!-- 
-<div class="table-responsive">
-    <table id="example1" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Client Name</th>
-                <th>Main Contact</th>
-                <th>Shipping Address</th>
-                <th>Billing Address</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Lead Status</th>
-                <th>Buyer Status</th>
-                <th>Orders</th> {{-- New column for orders --}}
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($clients as $client)
-            <tr>
-                <td>{{ $client->Company_Name }}</td>
-                <td>{{ $client->Main_Contact }}</td>
-                <td>{{ $client->Shipping_Address }}</td>
-                <td>{{ $client->Billing_Address }}</td>
-                <td>{{ $client->Email }}</td>
-                <td>{{ $client->Phone_Number }}</td>
-                <td>{{ $client->Lead_Status }}</td>
-                <td>{{ $client->Buyer_Status }}</td>
-                <td>
-                    @foreach ($client->orders as $order)
-                        <details>
-                            <summary>Order ID: {{ $order->Order_ID }}</summary>
-                            <div>
-                                @foreach ($order->products as $product)
-                                    <p>{{ $product->Product_Name }} - Quantity: {{ $product->Quantity }}</p>
-                                @endforeach
-                            </div>
-                        </details>
-                    @endforeach
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div> -->
+
 
 <script>
 
-$(document).ready(function() {   
-    $("#tblClients").DataTable({
-        "aaSorting": [],
-        "columnDefs": [
-            { "orderable": false, "targets": [0,4] }
-        ],
-        "responsive": true, 
-        "lengthChange": false, 
-        "autoWidth": false, 
-        "buttons": ["excel", "pdf", "print", "colvis"]
-        
-    }).buttons().container().appendTo('#tblClients_wrapper .col-md-6:eq(0)');
+    $(document).ready(function() {   
+        $("#tblClients").DataTable({
+            "aaSorting": [],
+            "columnDefs": [
+                { "orderable": false, "targets": [0,4] }
+            ],
+            "responsive": true, 
+            "lengthChange": false, 
+            "autoWidth": false, 
+            "buttons": ["excel", "pdf", "print", "colvis"]
+            
+        }).buttons().container().appendTo('#tblClients_wrapper .col-md-6:eq(0)');
 
-});
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const clientId = button.getAttribute('data-client-id');
+                const deleteForm = document.querySelector(`#deleteForm${clientId}`);
+
+                Swal.fire({
+                    title: 'CONFIRMATION MESSAGE',
+                    text: 'Do you want to delete this client?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteForm.submit();
+                    }
+                });
+            });
+        });
+    });
 
 </script>
 

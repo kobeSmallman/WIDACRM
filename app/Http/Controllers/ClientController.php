@@ -23,11 +23,23 @@ class ClientController extends BaseController
     public function editClient($clientID)
     { 
 
-        $selectedClient = Client::findOrFail($clientID);
- 
-        return view('clients.client-info', compact('selectedClient')); 
+        $selectedClient = Client::findOrFail($clientID); 
+        $orderHistory = $selectedClient->orders()->latest('Request_Date')->get(); 
+
+
+        //$orderHistory = Client::with(['orders.products'])->findOrFail($clientID);
+    
+        return view('clients.client-info', compact('selectedClient', 'orderHistory')); 
     }
 
+    public function update(Request $request, $id)
+    { 
+        $client = Client::findOrFail($id);
+         
+        $client->update($request->all());
+ 
+        return redirect()->route('clients.editClient', compact('client')); 
+    }
     
 
     public function saveClient(Request $request)
@@ -56,7 +68,14 @@ class ClientController extends BaseController
         }
     }
 
-
+    public function deleteClient($id)
+    { 
+        $client = Client::findOrFail($id); 
+        $client->delete();
+ 
+        return redirect()->route('clients')->with('success', 'Client deleted successfully.');
+        // return redirect()->back()->with('success', 'Client deleted successfully.');
+    }
     
     public function show($id)
     {
@@ -85,15 +104,6 @@ class ClientController extends BaseController
     {
         $client = Client::with('notes')->findOrFail($id);
         return response()->json($client->notes);
-    }
-
-    public function lastOrders($id)
-    {
-        $client = Client::with(['orders' => function ($query) {
-            $query->latest('Request_DATE')->take(5);
-        }])->findOrFail($id);
-
-        return response()->json($client->orders);
     }
 
 
