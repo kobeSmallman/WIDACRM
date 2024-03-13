@@ -8,7 +8,7 @@
         <div class="form-group">
             <h4>1. THE PARTIES</h4>
             <p>This Agreement is made effective as of <input type="date" name="effective_date" required>, by and between:</p>
-            <p>Consultant: WIDA Procurement & Supply Chain Solutions Ltd. with a mailing address of <input type="text" name="consultant_address" value="3215E 16 Ave N, Lethbridge, AB T1H 5E8" required>;</p>
+            <p>Consultant: WIDA Procurement & Supply Chain Solutions Ltd. with a mailing address of 3215A 16 Ave N, Lethbridge, AB T1H 5E8</p>
             <p>Client: <input type="text" name="client_name" placeholder="Client Name" required> with a mailing address of <input type="text" name="client_address" placeholder="Client Address" required>.</p>
         </div>
 
@@ -127,7 +127,7 @@
             <div>
              <input type="checkbox" id="retainer_required" name="retainer_required" value="1" onchange="toggleRetainerAmount(this)">
              <label for="retainer_required">Required to pay a Retainer. </label>The Client is required to pay a Retainer in the amount of $
-             <input type="number" id="retainer_amount" name="retainer_amount" placeholder="Amount" disabled>
+             <input type="number" id="retainer_amount" name="retainer_amount" placeholder="Amount" enabled>
              to the Consultant as an advance on future Services to be provided ("Retainer").
             </div>
             <div>
@@ -430,7 +430,8 @@
         </div>
 
 
-            <button type="submit" class="btn btn-primary">Submit Agreement</button>
+        <button onclick="printDocument();" class="btn btn-primary">Print Form</button>
+        <button onclick="saveAsPDF();" class="btn btn-primary">Save as PDF</button>
         </form>
     </div>
 </x-layout>
@@ -447,6 +448,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- translates page to PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+<script>
+  async function saveAsPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.html(document.body, {
+      callback: function (doc) {
+        doc.save('Service-Agreement.pdf');
+      },
+      x: 10,
+      y: 10
+    });
+  }
+</script>
+
+<script>
+  function printDocument() {
+    window.print();
+  }
+</script>
 
 <style>
 .notice-group {
