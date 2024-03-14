@@ -472,25 +472,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- could not get this script to work properly -->
  <script>
-  function saveAsPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-   // const canvasOptions = {
-     //   scale: 3, // Adjust scale as necessary to improve quality or fit content
-      //  width: width, // Set canvas width
-     //   height: height, // Set canvas height
-     //   scrollX: -window.scrollX,
-     //   scrollY: -window.scrollY,
-     //   backgroundColor: null // To allow for transparent backgrounds
-    //};
-    doc.html(document.querySelector('#agreementContent'), {
-      callback: function (pdf) {
-        pdf.save('Service-Agreement.pdf');
-      },
-      scrollX: -window.scrollX,
-        scrollY: -window.scrollY,
-    });
-  }
+function saveAsPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.html(document.querySelector('#agreementContent'), {
+    callback: function (pdf) {
+      pdf.save('Service-Agreement.pdf');
+    },
+    x: 15,
+    y: 15,
+    html2canvas: { 
+      scale: 0.16
+    }
+  });
+}
 </script> 
 
 <script>

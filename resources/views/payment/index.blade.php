@@ -53,7 +53,7 @@
                             </td>
                                 </td>
                                 <td><a href="{{ route('payment.editPayment', $payment->PMT_ID) }}">{{ $payment->PMT_ID }}</td>
-                                <td><a href="{{ route('orders.show', $payment->Order_ID) }}">{{ $payment->Order_ID}}</td>
+                                <td>{{ $payment->Order_ID }}</td>
                                 <td>{{ $payment->PMT_Cat}}</td>
                                 <td>{{ $payment->Date}}</td>
                                 <td>{{ $payment->Amount}}</td>

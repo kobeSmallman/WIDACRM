@@ -134,7 +134,7 @@ Route::put('/orders/{orderId}/update', [OrderController::class, 'update'])->name
 Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 Route::resource('vendors', VendorController::class);
 // Place these inside the web.php file
-Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+//Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 
 //store route - Van
 Route::post('/vendors/store', [VendorController::class, 'store'])->name('vendors.store');
@@ -217,6 +217,7 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
     // Show an individual payment profile
     Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
 
+    // Get the products associated with an order
     Route::get('/get-products-for-order/{orderId}', [PaymentController::class, 'getProductsForOrder']);
 
     // Delete a payment record
@@ -224,6 +225,9 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
 
     // Edit a payment record
     Route::get('/payment/profile/{id}', [PaymentController::class, 'editPayment'])->name('payment.editPayment');
+
+    // Update a payment record
+    Route::post('/payment/{id}/update', [PaymentController::class, 'updatePayment'])->name('payment.updatePayment'); 
 
 
 //AGREEMENTS
