@@ -109,7 +109,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <div class="card card-info">
+        <div class="card card-info" id="element-to-download">
             <div class="card-header sidebar-dark-primary">
                
                 <div class="edit-btn-group">
@@ -189,78 +189,128 @@
     </section>
     <!-- /.content -->
     </x-layout>
+  
+
     <script>
   // JavaScript function to trigger printing the order details
   function printOrder() {
     window.print();
   }
+ // JavaScript function to download the order details as a PDF
+ function downloadOrder() {
+    const element = document.getElementById('element-to-download'); // Make sure this is the ID of the element you want to download
 
-  // JavaScript function to download the order details as a PDF
-  async function downloadOrder() {
-    const html2canvas = window.html2canvas;  // Ensure html2canvas is accessible
-    const jsPDF = window.jspdf.jsPDF;       // Ensure jsPDF is accessible
-    
-    // Replace '.content' with the actual class or ID of the div you want to download as PDF
-    const content = document.querySelector('.content'); 
-    
-    const canvas = await html2canvas(content);
-    const imgData = canvas.toDataURL('image/png');
-    
-    const pdf = new jsPDF({
-        orientation: 'portrait',
-    });
-    
-    const imgProps= pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('order-details.pdf');
-}
-
-
-
-  // JavaScript function to toggle edit mode for order details
-  function toggleEditableSection(section) {
-    section.classList.toggle('editing');
-    section.querySelectorAll('input, textarea, select').forEach(input => {
-        input.disabled = !section.classList.contains('editing');
-    });
-}
-
-function editOrder() {
-    // If you want to toggle all fields at once, you can select them all
-    document.querySelectorAll('.order-details, .client-details, .product-details, .payment-details').forEach(toggleEditableSection);
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Add click event listeners to each section for individual editing
-    document.querySelectorAll('.order-details, .client-details, .product-details, .payment-details').forEach(section => {
-        section.addEventListener('click', function() {
-            toggleEditableSection(section);
-        });
-    });
-
-    // If you have an 'Edit' button, set up its event listener as well
-    const editButton = document.querySelector('.edit-btn-group .btn-info'); // Adjust selector as needed
-    if (editButton) {
-        editButton.addEventListener('click', editOrder);
+    if (!element) {
+        console.error(`Element with ID "element-to-download" not found.`);
+        return;
     }
-});
 
+    const margin = 10; // Margin for the PDF
+    const width = element.scrollWidth + margin * 2; // Calculate width with margins
+    const height = element.scrollHeight + margin * 2; // Calculate height with margins
 
+    // Options for html2canvas
+    const canvasOptions = {
+        scale: 3, // Adjust scale as necessary to improve quality or fit content
+        width: width, // Set canvas width
+        height: height, // Set canvas height
+        scrollX: -window.scrollX,
+        scrollY: -window.scrollY,
+        backgroundColor: null // To allow for transparent backgrounds
+    };
 
- 
-  window.onbeforeunload = function() {
-    return "Do you really want to leave? You have unsaved changes.";
-};
+    html2canvas(element, canvasOptions).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
 
-function saveOrder() {
-    // Save order logic here
-    window.onbeforeunload = null; // Clear the alert if save is successful
-    console.log("Save functionality will be implemented later.");
+        // Create a PDF with the same dimensions as the canvas
+        const pdf = new jsPDF({
+            orientation: 'landscape', // Set orientation based on your content
+            unit: 'px',
+            format: [canvas.width, canvas.height]
+        });
+
+        // Add the canvas image to the PDF
+        pdf.addImage(imgData, 'PNG', margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
+        pdf.save('download.pdf');
+    }).catch(error => console.error('Error generating PDF', error));
 }
+
+// Edit functionality
+function editOrder() {
+    // Select all sections that need to become editable
+    const sections = document.querySelectorAll('.order-details, .client-details, .product-details, .payment-details');
+
+    // Toggle the 'editable' class and the contenteditable property
+    sections.forEach(section => {
+        const isEditable = section.isContentEditable;
+        section.contentEditable = !isEditable; // Toggle contenteditable
+    });
+}
+
+// Function to collect data from contenteditable sections and send it to server
+// Function to save edits
+async function saveOrder() {
+    //TODO: GET THIS WORKING, IT DOES NOT SAVE THE DATA, I CAN EDIT BUT NOT SAVE.
+    // Object to hold the data for the order
+    const orderData = {
+        Order_ID: document.querySelector('input[name="Order_ID"]').value,
+        Remarks: document.querySelector('textarea[name="Remarks"]').value,
+        Order_Status: document.querySelector('select[name="Order_Status"]').value,
+        // Add other order properties as necessary
+    };
+
+    // Object to hold the data for the client
+    const clientData = {
+        Client_ID: document.querySelector('input[name="Client_ID"]').value,
+        Company_Name: document.querySelector('input[name="Company_Name"]').value,
+        // Add other client properties as necessary
+    };
+
+    // Array to hold data for each product
+    const productData = Array.from(document.querySelectorAll('.product-details')).map(productDetail => {
+        return {
+            Item_ID: productDetail.querySelector('input[name="Item_ID"]').value,
+            Product_Price: productDetail.querySelector('input[name="Product_Price"]').value,
+            // Add other product properties as necessary
+        };
+    });
+
+    // Compile all the data into a single object
+    const payload = {
+        order: orderData,
+        client: clientData,
+        products: productData,
+        // If there are other related entities, like payment or vendor, add them here as well
+    };
+
+    // Send the payload to the server using Fetch API
+    try {
+        const response = await fetch('/api/save-order', { // Use your actual endpoint here
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Laravel CSRF token
+            },
+            body: JSON.stringify(payload)
+        });
+        const responseData = await response.json();
+
+        // Handle the response from the server
+        if (response.ok) {
+            console.log('Save successful', responseData);
+            // You might want to update the UI or redirect the user
+        } else {
+            console.error('Save failed', responseData);
+            // Handle errors, such as displaying them to the user
+        }
+    } catch (error) {
+        console.error('Error during save', error);
+        // Handle network errors or other unexpected issues
+    }
+}
+
+
+// Add event listener for the save button
+document.querySelector('.btn-success').addEventListener('click', saveOrder);
 
 </script>
-
-
