@@ -91,4 +91,26 @@ class PaymentController extends Controller
  
         return redirect()->route('payment.index')->with('success', 'Payment deleted successfully.');
     }
+
+    public function editPayment($id)
+    { 
+        // Retrieve the order ID from the payment
+        $payment = Payment::findOrFail($id);
+        $selectedOrder = Order::findOrFail($payment->Order_ID);
+        $orderDetails = $selectedOrder->products()->get();
+        $selectedPayment = Payment::where('PMT_ID', $id)->first();
+    
+        return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment'));
+    }
+
+    public function update(Request $request, $id)
+    { 
+        $payment = Payment::findOrFail($id);
+         
+        $payment->update($request->all());
+ 
+        return redirect()->route('clients.editPayment', compact('payment')); 
+    }
+    
+    
 }
