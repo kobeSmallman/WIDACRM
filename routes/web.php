@@ -218,6 +218,12 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
 
     Route::get('/get-products-for-order/{orderId}', [PaymentController::class, 'getProductsForOrder']);
 
+    // Delete a payment record
+    Route::delete('/payment/{id}', [PaymentController::class, 'deletePayment'])->name('payment.deletePayment');
+
+    // Edit a payment record
+    Route::get('/payment/profile/{id}', [PaymentController::class, 'editPayment'])->name('payment.editPayment');
+
 
 //AGREEMENTS
 Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
