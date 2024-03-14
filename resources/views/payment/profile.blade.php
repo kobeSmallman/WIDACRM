@@ -45,15 +45,15 @@
                         <div class="post">
                         </div>
 
-                        <form action="{{ route('updatePayment', ['id' => $payment->PMT_ID]) }}" method="POST" class="p-3 rounded" id="client-form">
+                        <form action="{{ route('payment.updatePayment', ['id' => $payment->PMT_ID]) }}" method="POST" class="p-3 rounded" id="payment-form">
                         @csrf
                         <div class="form-group row">
                             <label for="Order_ID" class="col-sm-3 col-form-label text-right">Order ID:</label>
                             <div class="col-sm-6">
-                                <select name="Order_ID" id="Order_ID" class="form-control" disabled>
-                                @foreach($orders as $id => $orderID)
-                                    <option value="{{ $id }}">{{ $orderID }}</option>
-                                @endforeach
+                            <select name="Order_ID" id="Order_ID" class="form-control" disabled>
+                            @foreach($orders as $id => $orderID)
+                                <option value="{{ $id }}" @if($id == $payment->Order_ID) selected @endif>{{ $orderID }}</option>
+                            @endforeach
                             </select>
                             </div>
                         </div>
@@ -104,6 +104,8 @@
                                 <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
                             </div>
                         </div>
+                    <!--Hidden field to carry Order ID info-->
+                    <input type="hidden" name="Order_ID" value="{{ $payment->Order_ID }}">
                 </form>
                     </div>
                 </div>

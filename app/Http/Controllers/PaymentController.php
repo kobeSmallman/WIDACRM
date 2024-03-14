@@ -71,11 +71,14 @@ class PaymentController extends Controller
         // After storing, redirect to the summary of payments with a success message
         return redirect()->route('payment.index')->with('success', 'Payment added successfully.');
     }
+    /*
+    This function is repleced by editPayment
     // Show the profile of a payment
         public function show($PMT_ID) {
         $payment = Payment::findOrFail($PMT_ID); // Find the payment by id
         return view('payment.profile', compact('payment'));
     }
+    */
 
     //Get products of each order
     public function getProductsForOrder($Order_ID) {
@@ -107,14 +110,24 @@ class PaymentController extends Controller
         return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
     }
 
-    public function update(Request $request, $id)
+    public function updatePayment(Request $request, $id)
     { 
         $payment = Payment::findOrFail($id);
-         
-        $payment->update($request->all());
- 
-        return redirect()->route('clients.editPayment', compact('payment')); 
+        
+        $validatedData = $request->validate([
+            'Date' => 'required|date',
+            'PMT_Cat' => 'required|string|max:255',
+            'Amount' => 'required|numeric',
+            'PMT_Type_ID' => 'required|exists:Payment_Type,PMT_Type_ID',
+        ]);
+    
+        $validatedData['Amount'] = floatval(str_replace(',', '', $request->Amount)); // Sanitize the Amount
+    
+        $payment->update($validatedData);
+    
+        return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.');
     }
+    
     
     
 }

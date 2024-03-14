@@ -226,7 +226,7 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
     Route::get('/payment/profile/{id}', [PaymentController::class, 'editPayment'])->name('payment.editPayment');
 
     // Update a payment record
-    Route::post('/payment/{id}/update', [PaymentController::class, 'updatePayment'])->name('updatePayment'); 
+    Route::post('/payment/{id}/update', [PaymentController::class, 'updatePayment'])->name('payment.updatePayment'); 
 
 
 //AGREEMENTS
