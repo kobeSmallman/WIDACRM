@@ -448,9 +448,9 @@
         </form>
         <button onclick="printDocument();" class="btn btn-primary print-button">Print Form</button>
 
-<!--      function does not work
+    
        <button type="button" onclick="saveAsPDF();" class="btn btn-primary">Save as PDF</button> 
-    -->
+    
     </div>
 
 </x-layout>
@@ -471,20 +471,27 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 
 <!-- could not get this script to work properly -->
-<!-- <script>
+ <script>
   function saveAsPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-
+   // const canvasOptions = {
+     //   scale: 3, // Adjust scale as necessary to improve quality or fit content
+      //  width: width, // Set canvas width
+     //   height: height, // Set canvas height
+     //   scrollX: -window.scrollX,
+     //   scrollY: -window.scrollY,
+     //   backgroundColor: null // To allow for transparent backgrounds
+    //};
     doc.html(document.querySelector('#agreementContent'), {
       callback: function (pdf) {
         pdf.save('Service-Agreement.pdf');
       },
-      x: 10,
-      y: 10
+      scrollX: -window.scrollX,
+        scrollY: -window.scrollY,
     });
   }
-</script> -->
+</script> 
 
 <script>
   function printDocument() {
