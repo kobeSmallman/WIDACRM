@@ -30992,7 +30992,7 @@ html.maximized-card {
 .dark-mode .bg-gray-dark > .card-header .btn-tool,
 .dark-mode .bg-gradient-gray-dark > .card-header .btn-tool,
 .dark-mode .card-gray-dark:not(.card-outline) > .card-header .btn-tool {
-  color: rgba(255, 255, 255, 0.8);
+  color: red;
 }
 
 .dark-mode .bg-gray-dark > .card-header .btn-tool:hover,

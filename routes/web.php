@@ -121,7 +121,8 @@ Route::get('/orders/{order}/profile', [OrderController::class, 'profile'])->name
 Route::get('/api/orders/{id}', [OrderController::class, 'showAjax'])->name('orders.showAjax');
 Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
 Route::get('/orders/details/{orderId}', [OrderController::class, 'getOrderDetails'])->name('orders.details');
-Route::post('/save-order', 'OrderController@updateOrder');
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{orderId}/update', [OrderController::class, 'update'])->name('orders.update');
 
 
 // Make sure you have only one edit route and that the method is GET for showing the form
