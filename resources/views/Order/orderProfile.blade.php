@@ -1,83 +1,126 @@
 <x-layout>
+<!-- Add your existing <style> tag here with the CSS adjustments -->
 <style>
-        body {
-            padding-top: 20px;
-        }
-        .container-fluid {
-            padding: 15px;
-        }
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        }
-        .card-header {
-            background-color: #17a2b8;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 20px; /* Adjust font size */
-            font-weight: bold; /* Adjust font weight */
-        }
-        .card-body {
-            background-color: #e9ecef;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            grid-gap: 20px;
-            font-size: 16px; /* Adjust font size */
-            font-weight: bold; /* Adjust font weight */
-        }
-        .client-info-box {
-            background: white;
-            border: 1px solid #dee2e6;
-            padding: 10px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-        .edit-btn-group {
-            text-align: right;
-        }
-        .edit-btn-group button {
-            margin-left: 10px;
-        }
-        .back-button {
-            margin-bottom: 20px;
-        }
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
-        }
-    </style>
+    body {
+        padding-top: 20px;
+    }
+    .container-fluid {
+        padding: 15px;
+    }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    .card-header {
+        
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative; /* Adjusted for absolute positioning */
+        padding: 0.75rem; /* Adjusted padding */
+        height: 40px;
+    }
 
-    <!-- Content Header -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Order Profile</h1>
+    .card-title {
+        margin-bottom: 0; /* Remove bottom margin from h3 to prevent overflow */
+        padding-left: 1rem; /* Add padding to ensure it doesn't overlap with the back button */
+    }
+    .card-body {
+        background-color: #e9ecef;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 20px;
+        font-size: 16px; /* Adjust font size */
+        font-weight: bold; /* Adjust font weight */
+    }
+    .client-info-box {
+        background: white;
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+    .back-button {
+        background-color: #343a40; /* Adjusted to match the header */
+        border: none;
+        color: white;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        padding: 5px 10px; /* Adjusted padding */
+        font-size: 0.875rem; /* Adjusted font size */
+        border-radius: 0.25rem; /* Added border-radius */
+    }
+
+    .edit-btn-group {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Back button style */
+    .back-button {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+        background-color: #343a40;
+        color: white;
+        text-decoration: none;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.25rem;
+        border: none;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+        background-color: #2c3034; /* Slightly darker on hover */
+        color: white;
+        text-decoration: none;
+    }
+
+
+    .edit-btn-group button:hover {
+        background-color: #138496; /* Darken button on hover for visual feedback */
+    }
+    .card-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+    /* Card-like sections */
+    .order-details, .client-details, .product-details, .payment-details {
+        background-color: white;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        cursor: pointer; /* Indicates that section is clickable */
+    }
+    .order-details:hover, .client-details:hover, .product-details:hover, .payment-details:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: scale(1.03); /* Slightly enlarges the section */
+    }
+</style>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-info">
+            <div class="card-header sidebar-dark-primary">
+               
+                <div class="edit-btn-group">
+                    <!-- Buttons here will be absolutely positioned inside the header -->
+                    <button onclick="printOrder()" class="btn btn-sm btn-primary">Print</button>
+                    <button onclick="downloadOrder()" class="btn btn-sm btn-secondary">Download</button>
+                    <button onclick="editOrder()" class="btn btn-sm btn-info">Edit</button>
+                    <button onclick="saveOrder()" class="btn btn-sm btn-success">Save</button>
                 </div>
+                <a href="{{ route('orders.index') }}" class="btn back-button">Back to Orders</a>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="card card-info">
-                <div class="card-header">
-                    <h3 class="card-title">Order Details</h3>
-                    <!-- Buttons for actions -->
-                   
-                    <div class="edit-btn-group">
-                        <button onclick="printOrder()" class="btn btn-primary">Print</button>
-                        <button onclick="downloadOrder()" class="btn btn-secondary">Download</button>
-                        <button onclick="editOrder()" class="btn btn-info">Edit</button>
-                        <button onclick="saveOrder()" class="btn btn-success">Save</button>
-                    </div>
-                </div>
-                <a href="{{ route('orders.index') }}" class="btn btn-secondary back-button">Back to Orders</a>
-                </div>
                 <div class="card-body">
                     <div class="order-details">
                         <h4>Basic Information</h4>
@@ -153,26 +196,71 @@
   }
 
   // JavaScript function to download the order details as a PDF
-  function downloadOrder() {
-    // This would require a library or a backend function to generate a PDF
-    alert("This functionality needs to be implemented based on your PDF generation method.");
-  }
+  async function downloadOrder() {
+    const html2canvas = window.html2canvas;  // Ensure html2canvas is accessible
+    const jsPDF = window.jspdf.jsPDF;       // Ensure jsPDF is accessible
+    
+    // Replace '.content' with the actual class or ID of the div you want to download as PDF
+    const content = document.querySelector('.content'); 
+    
+    const canvas = await html2canvas(content);
+    const imgData = canvas.toDataURL('image/png');
+    
+    const pdf = new jsPDF({
+        orientation: 'portrait',
+    });
+    
+    const imgProps= pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('order-details.pdf');
+}
+
+
 
   // JavaScript function to toggle edit mode for order details
-  function editOrder() {
-    // Toggle all input fields to be enabled or disabled based on an isEditing flag
-    const isEditing = document.getElementById('orderEditForm').classList.contains('editing');
-    document.querySelectorAll('#orderEditForm input, #orderEditForm textarea').forEach(input => {
-      input.disabled = !isEditing;
+  function toggleEditableSection(section) {
+    section.classList.toggle('editing');
+    section.querySelectorAll('input, textarea, select').forEach(input => {
+        input.disabled = !section.classList.contains('editing');
     });
-    document.getElementById('orderEditForm').classList.toggle('editing');
-  }
+}
 
-  // Placeholder function for saving order details
-  function saveOrder() {
-    // This will need to collect the form data and make a POST request to your backend
+function editOrder() {
+    // If you want to toggle all fields at once, you can select them all
+    document.querySelectorAll('.order-details, .client-details, .product-details, .payment-details').forEach(toggleEditableSection);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click event listeners to each section for individual editing
+    document.querySelectorAll('.order-details, .client-details, .product-details, .payment-details').forEach(section => {
+        section.addEventListener('click', function() {
+            toggleEditableSection(section);
+        });
+    });
+
+    // If you have an 'Edit' button, set up its event listener as well
+    const editButton = document.querySelector('.edit-btn-group .btn-info'); // Adjust selector as needed
+    if (editButton) {
+        editButton.addEventListener('click', editOrder);
+    }
+});
+
+
+
+ 
+  window.onbeforeunload = function() {
+    return "Do you really want to leave? You have unsaved changes.";
+};
+
+function saveOrder() {
+    // Save order logic here
+    window.onbeforeunload = null; // Clear the alert if save is successful
     console.log("Save functionality will be implemented later.");
-  }
+}
+
 </script>
 
 
