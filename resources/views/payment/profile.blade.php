@@ -50,7 +50,11 @@
                         <div class="form-group row">
                             <label for="Order_ID" class="col-sm-3 col-form-label text-right">Order ID:</label>
                             <div class="col-sm-6">
-                                <input type="text" id="Order_ID" name="Order_ID" class="form-control" placeholder="Order ID" value="{{ $payment->Order_ID }}" disabled>
+                                <select name="Order_ID" id="Order_ID" class="form-control" disabled>
+                                @foreach($orders as $id => $orderID)
+                                    <option value="{{ $id }}">{{ $orderID }}</option>
+                                @endforeach
+                            </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -62,7 +66,10 @@
                         <div class="form-group row">
                             <label for="PMT_Cat" class="col-sm-3 col-form-label text-right">Payment Category:</label>
                             <div class="col-sm-6">
-                                <input type="text" id="PMT_Cat" name="PMT_Cat" class="form-control" placeholder="Payment Category" value="{{ $payment->PMT_Cat }}" disabled>
+                                <select name="PMT_Cat" id="PMT_Cat" class="form-control" disabled>
+                                    <option value="Product">Product</option>
+                                    <option value="Freight">Freight</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -74,13 +81,19 @@
                         <div class="form-group row">
                             <label for="PMT_Type" class="col-sm-3 col-form-label text-right">Payment Type:</label>
                             <div class="col-sm-6">
-                                <input type="text" id="PMT_Type" name="PMT_Type" class="form-control" placeholder="Payment Type" value="{{ $payment->paymentType ? $payment->paymentType->PMT_Type_Name : 'N/A' }}" disabled>
+                                <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control" disabled>
+                                    @foreach($paymentTypes as $id => $name)
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>   
                         <div class="form-group row">
-                            <label for="Product" class="col-sm-3 col-form-label text-right">Product:</label>
+                            <label for="Product_Name" class="col-sm-3 col-form-label text-right">Product:</label>
                             <div class="col-sm-6">
-                                <input type="text" id="Product" name="Product" class="form-control" placeholder="Product" value="{{ $payment->products ? $payment->products->Product_Name : 'N/A' }}" disabled>
+                                <select id="Product_Name" name="Product_Name" class="form-control" disabled>
+                                 {{-- Product options will be added here dynamically --}}
+                                </select>
                             </div>
                         </div>  
                         
@@ -101,12 +114,12 @@
     <script>
 
     function enableFields() {
-        document.getElementById('Order_ID').disabled = false;
+        document.getElementById('Order_ID').disabled = true;
         document.getElementById('Date').disabled = false;
         document.getElementById('PMT_Cat').disabled = false;
         document.getElementById('Amount').disabled = false;
-        document.getElementById('PMT_Type').disabled = false;
-        document.getElementById('Product').disabled = false;
+        document.getElementById('PMT_Type_ID').disabled = false;
+        document.getElementById('Product_Name').disabled = false;
         document.getElementById('btnSave').style.display = 'inline';
         document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
@@ -117,8 +130,8 @@
         document.getElementById('Date').disabled = true;
         document.getElementById('PMT_Cat').disabled = true;
         document.getElementById('Amount').disabled = true;
-        document.getElementById('PMT_Type').disabled = true;
-        document.getElementById('Product').disabled = true;
+        document.getElementById('PMT_Type_ID').disabled = true;
+        document.getElementById('Product_Name').disabled = true;
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';

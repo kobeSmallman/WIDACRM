@@ -99,8 +99,12 @@ class PaymentController extends Controller
         $selectedOrder = Order::findOrFail($payment->Order_ID);
         $orderDetails = $selectedOrder->products()->get();
         $selectedPayment = Payment::where('PMT_ID', $id)->first();
+        $orders = Order::pluck('Order_ID', 'Order_ID'); // Get all orders for the dropdown
+        // Fetch only active payment types to populate the dropdowns
+        $paymentTypes = PaymentType::where('Active_Status', 'Active')
+                                    ->pluck('PMT_Type_Name', 'PMT_Type_ID');
     
-        return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment'));
+        return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
     }
 
     public function update(Request $request, $id)
