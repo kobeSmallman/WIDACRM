@@ -13,16 +13,14 @@ class Note extends Model
 
     public $incrementing = true; // Set to false if 'Note_ID' is not auto-incrementing
 
-    public $timestamps = false; // Set to false if your table does not have 'created_at' and 'updated_at'
+    public $timestamps = true; // Set to false if your table does not have 'created_at' and 'updated_at'
 
     // Fillable attributes for mass assignment
     protected $fillable = [
         'Client_ID', // Assuming 'Client_ID' is correctly set to allow mass assignment
         'Interaction_Type',
         'Created_By',
-        'Date_Time',
         'Description',
-        'Image',
     ];
 
     // Relationship with Client
@@ -35,6 +33,12 @@ class Note extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'Created_By', 'Employee_ID');
+    }
+
+    // Relationship with Note
+    public function image()
+    {
+        return $this->hasMany(Client::class, 'Note_ID', 'Note_ID');
     }
 
     // Add any other model properties or methods you might need

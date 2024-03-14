@@ -260,8 +260,9 @@
                 <h3>Note Details</h3>
                 <p><strong>Type:</strong> ${note.Interaction_Type}</p>
                 <p><strong>Created By:</strong> ${note.Created_By}</p>
-                <p><strong>Date:</strong> ${note.Date_Time}</p>
-                <p>${note.Description}</p>
+                <p><strong>Date Created:</strong> ${note.Created_At}</p>
+                <p><strong>Date Updated:</strong> ${note.Updated_At}</p>
+                <p><strong>Details:</strong> ${note.Description}</p>
             `;
         }
     </script>

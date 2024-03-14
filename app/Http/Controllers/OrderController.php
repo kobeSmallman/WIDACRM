@@ -27,7 +27,6 @@ class OrderController extends Controller
     }
     
 
- 
 public function store(Request $request)
 {
     Log::info('Request Data:', $request->all());

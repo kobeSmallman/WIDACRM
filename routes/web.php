@@ -88,6 +88,7 @@ Route::get('/clients/{id}/notesCount', [ClientController::class, 'notesCount'])-
 Route::get('/clients/{id}/last-orders', [ClientController::class, 'lastOrders'])->name('clients.lastOrders');
 
 
+
 // Add a route to fetch all orders for all clients
 
 // Display a listing of the orders
@@ -174,6 +175,7 @@ Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('v
 // (NOTES) Display the page to take notes with a list of clients ||||| Notes page
 Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
 Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
+Route::post('/notes/{noteId}/images', [ImageController::class, 'store'])->name('images.store');
 //notes page
 Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
 Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
@@ -215,6 +217,12 @@ Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
     Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
 
     Route::get('/get-products-for-order/{orderId}', [PaymentController::class, 'getProductsForOrder']);
+
+    // Delete a payment record
+    Route::delete('/payment/{id}', [PaymentController::class, 'deletePayment'])->name('payment.deletePayment');
+
+    // Edit a payment record
+    Route::get('/payment/profile/{id}', [PaymentController::class, 'editPayment'])->name('payment.editPayment');
 
 
 //AGREEMENTS

@@ -83,4 +83,12 @@ class PaymentController extends Controller
     
         return response()->json($products);
     }
+
+    public function deletePayment($id)
+    { 
+        $payment = Payment::findOrFail($id); 
+        $payment->delete();
+ 
+        return redirect()->route('payment.index')->with('success', 'Payment deleted successfully.');
+    }
 }
