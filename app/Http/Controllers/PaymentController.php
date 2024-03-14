@@ -52,7 +52,7 @@ class PaymentController extends Controller
         if ($existingPayment) {
             // Redirect back with error message if payment exists
             return redirect()->back()->withErrors([
-                'msg' => 'There is already an associated Product Payment for this order: <a href="'.route('payment.show', ['id' => $existingPayment->PMT_ID]).'">PMT_ID '.$existingPayment->PMT_ID.'</a>'
+                'msg' => 'There is already an associated Product Payment for this order: <a href="'.route('payment.editPayment', ['id' => $existingPayment->PMT_ID]).'">PMT_ID '.$existingPayment->PMT_ID.'</a>'
             ]);
         }
     }
