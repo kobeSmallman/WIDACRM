@@ -100,41 +100,38 @@
                             <table id="vendors-table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Manage</th>
                                         <th>Vendor ID</th>
                                         <th>Vendor Name</th>
                                         <th>Active Status</th>
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Remarks</th>
-                                        <th>Actions</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($vendors as $vendor)
                                         <tr>
+                                            <td>
+                                                <form id="deleteForm{{ $vendor->VENDOR_ID }}" action="{{ route('vendors.destroy', $vendor->Vendor_ID) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-default btn-sm delete-btn" data-client-id="{{ $vendor->VENDOR_ID }}">
+                                                        <i class="fa-regular fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                             <td>{{ $vendor->Vendor_ID }}</td>
                                             <td>{{ $vendor->Vendor_Name }}</td>
                                             <td>{{ $vendor->Active_Status }}</td>
                                             <td>{{ $vendor->Email }}</td>
                                             <td>{{ $vendor->PhoneNumber }}</td>
                                             <td>{{ $vendor->Remarks }}</td>
-                                            <td>
-                                                <!-- Example of possible actions -->
-                                                <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}" class="btn btn-info btn-sm">
-                                                    Edit
-                                                </a>
-                                                <form action="{{ route('vendors.destroy', $vendor->Vendor_ID) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            </td>
+
                                         </tr>
                                     @endforeach
-                                </tbody>
-                               
+                                </tbody>                              
                             </table>
                         </div>
                         <!-- /.card-body -->
