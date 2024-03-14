@@ -38,26 +38,26 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="vendorName">Vendor Name:</label>
-                            <input type="text" class="form-control" id="vendorName" name="vendorName" required>
+                            <input type="text" class="form-control" id="Vendor_Name" name="vendorName" required>
                         </div>
                         <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="Email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number:</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                <input type="text" class="form-control" id="PhoneNumber" name="phoneNumber" required>
             </div>
                         <div class="form-group">
                             <label for="activeStatus">Active Status:</label>
-                            <select class="form-control" id="activeStatus" name="activeStatus">
+                            <select class="form-control" id="Active_Status" name="activeStatus">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="remarks">Remarks:</label>
-                            <textarea class="form-control" id="remarks" name="remarks"></textarea>
+                            <textarea class="form-control" id="Remarks" name="remarks"></textarea>
                         </div>
                     </div>
                     <div class="card-footer">

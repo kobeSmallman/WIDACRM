@@ -34,8 +34,17 @@ class VendorController extends Controller
         //added this part -van 
        
         try{ 
-            Vendor::create($validatedData);
-            return redirect()->route('vendors.index')->with('success', 'Vendor add  ed successfully.');
+           // Vendor::create($validatedData);
+            $vendor = new Vendor();
+            $vendor->Vendor_Name= $request->Vendor_Name;
+            $vendor->Active_Status = $request->Active_Status;
+            $vendor->Remarks = $request->Remarks;
+            $vendor->Email = $request->Email ;
+            $vendor->PhoneNumber= $request-> PhoneNumber;
+            
+            $vendor->save();
+
+            return redirect()->route('vendors.index')->with('success', 'Vendor added successfully.');
         } catch (\Exception $e){
             \Log::error($e->getMessage());
             return back()->withErrors('Failed to add vendor: '. $e->getMessage())->withInput();

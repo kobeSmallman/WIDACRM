@@ -133,7 +133,7 @@ Route::post('/save-order', 'OrderController@updateOrder');
 Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 Route::resource('vendors', VendorController::class);
 // Place these inside the web.php file
-Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+//Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 
 //store route - Van
 Route::post('/vendors/store', [VendorController::class, 'store'])->name('vendors.store');
