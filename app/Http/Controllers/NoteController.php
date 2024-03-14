@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\Client;
+use App\Models\Image;
+use App\Http\Controllers\ImageController;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,17 +32,16 @@ class NoteController extends Controller
     $note->Client_ID = $request->get('Client_ID');
     $note->Interaction_Type = $request->get('Interaction_Type');
     $note->Created_By = $request->get('Created_By');
-    $note->Date_Time = $request->get('Date_Time');
     $note->Description = $request->get('Description');
 
+    $note->save();
+
     // Uploading an image
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('public/notes');
-        $note->Image = Storage::url($path);
+    if ($request->hasFile('images')) {
+        $imageController = new ImageController();
+        return $imageController->store($request, $note); // Pass the note ID to the image store method
     }
 
-
-    $note->save();
 
     // Return a JSON response
     return response()->json(['success' => true, 'message' => 'Note saved successfully']);

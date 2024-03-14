@@ -250,10 +250,6 @@
               @endforeach
             </select>
 
-            <!-- Date Time Picker -->
-            <label for="dateTime">Date & Time:</label>
-            <input type="datetime-local" id="dateTime">
-
             <!-- Image Upload -->
             <label for="imageUpload">Image:</label>
             <input type="file" id="imageUpload">
@@ -406,15 +402,14 @@
         const clientSelect = document.getElementById('clientSelect').value;
         const interactionType = document.getElementById('interactionType').value;
         const createdBy = document.getElementById('createdBy').value;
-        const dateTime = document.getElementById('dateTime').value;
         const noteText = noteContent.value;
-        // const imageFile = document.getElementById('imageUpload').files[0]; // This is a File object
+        const imageFile = document.getElementById('imageUpload').files; // This is a File object
 
 
         // Validation
-        if (!clientSelect && !interactionType && !createdBy && !dateTime && !noteText) {
+        if (!clientSelect || !interactionType || !createdBy || !noteText) {
           alert('Please fill in all fields.');
-          return;
+          return false;
         }
 
         // Create FormData object to send data as form/multipart
@@ -422,12 +417,13 @@
         formData.append('Client_ID', clientSelect);
         formData.append('Interaction_Type', interactionType);
         formData.append('Created_By', createdBy);
-        formData.append('Date_Time', dateTime);
         formData.append('Description', noteText);
 
-        // if (imageFile) {
-        //   formData.append('image', imageFile);
-        // }
+        if (imageFile.length > 0) {
+          for (let i = 0; i < imageFile.length; i++) {
+            formData.append('images[]', imageFile[i]);
+          }
+        }
 
         // Send a POST request with the form data
         fetch('/notes/store', { // Update the URL to the route that handles note saving
@@ -443,7 +439,9 @@
             if (data.success) {
               Swal.fire('Success', 'The note has been saved successfully.', 'success');
               // Additional actions like closing the modal or clearing the form can go here
-            }
+            } else {
+                    Swal.fire('Error', data.message, 'error');
+                  }
           })
           .catch(error => {
             // Handle errors
