@@ -76,7 +76,7 @@
               <i class="fas fa-comments mr-2"></i> Chats
             </a>
             <a href="{{ route('site.settings') }}" class="dropdown-item">
-              <i class="fas fa-comments mr-2"></i> Settings
+              <i class="fas fa-cog mr-2"></i> Settings
             </a>
 
             <div class="dropdown-divider"></div>
