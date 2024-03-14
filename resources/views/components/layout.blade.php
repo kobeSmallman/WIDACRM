@@ -29,7 +29,7 @@
 
 
 
-
+  @vite('resources/js/app.js')
   <!-- jQuery -->
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   @stack('scripts')

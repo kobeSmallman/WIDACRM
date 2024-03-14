@@ -143,6 +143,24 @@ public function store(Request $request)
     return view('orders.edit', compact('order', 'clients'));
 }
 
+public function updateOrder(Request $request) {
+    // Validate the request data as necessary
+    $validated = $request->validate([
+        'order.remarks' => 'required|string',
+        // Add other validation rules as necessary
+    ]);
+
+    // Update the Order
+    $order = Order::findOrFail($request->input('order.id'));
+    $order->remarks = $request->input('order.remarks');
+    // Update other fields as necessary
+    $order->save();
+
+    // Update Client, Products, etc., in a similar fashion
+
+    // Return a response, e.g., a JSON object indicating success
+    return response()->json(['success' => 'Order updated successfully']);
+}
 
     public function update(Request $request, $id)
     {
