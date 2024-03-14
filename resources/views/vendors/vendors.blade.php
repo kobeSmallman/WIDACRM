@@ -37,27 +37,27 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="vendorName">Vendor Name:</label>
-                            <input type="text" class="form-control" id="Vendor_Name" name="vendorName" required>
+                            <label for="Vendor_Name">Vendor Name:</label>
+                            <input type="text" class="form-control" id="Vendor_Name" name="Vendor_Name" required>
                         </div>
                         <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="Email" name="email" required>
+                <label for="Email">Email:</label>
+                <input type="email" class="form-control" id="Email" name="Email" required>
             </div>
             <div class="form-group">
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="text" class="form-control" id="PhoneNumber" name="phoneNumber" required>
+                <label for="PhoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" required>
             </div>
                         <div class="form-group">
-                            <label for="activeStatus">Active Status:</label>
-                            <select class="form-control" id="Active_Status" name="activeStatus">
+                            <label for="Active_Status">Active Status:</label>
+                            <select class="form-control" id="Active_Status" name="Active_Status">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="remarks">Remarks:</label>
-                            <textarea class="form-control" id="Remarks" name="remarks"></textarea>
+                            <label for="Remarks">Remarks:</label>
+                            <textarea class="form-control" id="Remarks" name="Remarks"></textarea>
                         </div>
                     </div>
                     <div class="card-footer">
