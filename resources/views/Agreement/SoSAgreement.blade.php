@@ -489,14 +489,6 @@ function saveAsPDF() {
 }
 </script> 
 
-<!-- // const canvasOptions = {
-     //   scale: 3, // Adjust scale as necessary to improve quality or fit content
-      //  width: width, // Set canvas width
-     //   height: height, // Set canvas height
-     //   scrollX: -window.scrollX,
-     //   scrollY: -window.scrollY,
-     //   backgroundColor: null // To allow for transparent backgrounds
-    //}; -->
 <script>
   function printDocument() {
     window.print();

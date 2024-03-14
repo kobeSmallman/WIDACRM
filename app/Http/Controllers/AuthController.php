@@ -88,7 +88,7 @@ public function showSystemUsers()
         return view('auth.login');
     }
 
-    public function login(Request $request)
+/*     public function login(Request $request)
     {
         // Validate the form data
         $request->validate([
@@ -112,7 +112,39 @@ public function showSystemUsers()
         return back()->withErrors([
             'Employee_ID' => 'The provided credentials do not match our records.',
         ])->withInput($request->only('Employee_ID'));
+    } */
+
+    public function login(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'Employee_ID' => 'required|integer',
+            'password' => 'required|string',
+        ]);
+    
+        // Attempt to log the user in
+        // Manually constructing credentials array to use 'Employee_ID' as the username
+        $credentials = ['Employee_ID' => $request->Employee_ID, 'password' => $request->password];
+        
+        // Customizing the authentication attempt to use 'Employee_ID' as the username field
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            $user = Auth::user();
+            
+            // Redirect the user based on their role
+            if ($user->isAdmin()) { // Assuming isAdmin is a method to check user role
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('employee.dashboard');
+            }
+        }
+    
+        // If unsuccessful, then redirect back to the login with the form data and error message
+        return back()->withErrors(['login_error' => 'The provided credentials do not match our records.'])
+                     ->withInput($request->only('Employee_ID'));
     }
+    
+
     public function updateProfile(Request $request)
     {
         // Validate the form data
