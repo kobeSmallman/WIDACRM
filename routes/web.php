@@ -136,6 +136,8 @@ Route::resource('vendors', VendorController::class);
 // Place these inside the web.php file
 //Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
 
+// Update vendor
+
 //store route - Van
 Route::post('/vendors/store', [VendorController::class, 'store'])->name('vendors.store');
 
@@ -147,6 +149,13 @@ Route::put('/vendors/{vendor}', [VendorController::class, 'update'])->name('vend
 
 // Delete vendor
 Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])->name('vendors.destroy');
+
+Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+Route::resource('vendors', VendorController::class);
+
+// The create vendor view will be served by the create method in VendorController
+Route::get('vendors/create', [VendorController::class, 'create'])->name('vendors.create');
+
 
 //system users route
 Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
@@ -169,7 +178,6 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('
 Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
 
 // Report routes
-Route::get('/ordersummary', [OrderSummaryController::class, 'index'])->name('ordersummary.index');
 Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
 Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
 

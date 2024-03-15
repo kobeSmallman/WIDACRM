@@ -177,26 +177,7 @@
               </a>
             </li>
  
-            <li class="nav-header">REPORTS</li>
-            <!-- <li class="nav-item">
-              <a href="{{ route('clientsummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Client Summary</p>
-              </a>
-            </li> -->
-            <li class="nav-item">
-              <a href="{{ route('ordersummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Order Summary</p>
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a href="{{ route('vendorsummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Vendor Summary</p>
-              </a>
-            </li> -->
-
+          
 
             <li class="nav-header">OTHERS</li>
 

@@ -15,12 +15,12 @@ class VendorController extends Controller
         return view('vendors.vendors', compact('vendors'));
     }
 
+   
     public function create()
     {
         // Return the view to create a new vendor
-        return view('vendors.create');
+        return view('vendors.createVendor');
     }
-
     public function store(Request $request)
     {
         // Validate the request and add new vendor
@@ -64,34 +64,48 @@ class VendorController extends Controller
 
     public function edit($id)
     {
-        // Find the vendor by ID and return the edit view
         $vendor = Vendor::findOrFail($id);
-        return view('vendors.edit', compact('vendor'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        // Validate the request and update the vendor
-        $validatedData = $request->validate([
-            'Vendor_Name' => 'required|string|max:255',
-            'Active_Status' => 'required|string|max:20',
-            'Remarks' => 'nullable|string|max:255',
-        ]);
-        
-        $vendor = Vendor::findOrFail($id);
-        $vendor->update($validatedData);
-        return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
-
-    }
-
-    public function destroyVendor($id)
-    {
-        // Delete the vendor
-        $vendor = Vendor::findOrFail($id);
-        $vendor->delete();
-        return redirect()->route('vendors.index')->with('success', 'Vendor deleted successfully.');
+        return view('vendors.editVendor', compact('vendor'));
     }
     
+    public function update(Request $request, $id)
+    {
+        // Validate the request with all necessary fields
+        $validatedData = $request->validate([
+            'Vendor_Name' => 'required|string|max:255',
+            'Active_Status' => 'required|in:1,0', // Ensure Active_Status is either '1' or '0'
+            'Remarks' => 'nullable|string|max:255',
+            'Email' => 'nullable|email|max:255',
+            'PhoneNumber' => 'nullable|string|max:255',
+        ]);
+        
+        try {
+            // Find the vendor and update it with the validated data
+            $vendor = Vendor::findOrFail($id);
+            $vendor->update($validatedData);
+    
+            return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
+        } catch (\Exception $e) {
+            // Log the exception and return with an error
+            \Log::error($e->getMessage());
+            return back()->withErrors('Failed to update vendor: ' . $e->getMessage())->withInput();
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            // Find the vendor and delete it
+            $vendor = Vendor::findOrFail($id);
+            $vendor->delete();
+            
+            return redirect()->route('vendors.index')->with('success', 'Vendor deleted successfully.');
+        } catch (\Exception $e) {
+            // Log the exception and return with an error
+            \Log::error($e->getMessage());
+            return back()->withErrors('Failed to delete vendor: ' . $e->getMessage());
+        }
+    }
 
     // Add any other methods you need for the controller
 }

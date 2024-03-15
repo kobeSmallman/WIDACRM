@@ -23,72 +23,12 @@
         <div class="container-fluid">
             <!-- Button to toggle the form -->
             <div class="mb-3">
-                <button id="toggleVendorFormBtn" class="btn btn-primary">
+                <a href="{{ route('vendors.create') }}" class="btn btn-primary">
                      Add New Vendor
-                </button>
+                </a>
             </div>
 
-            <!-- Hidden form for creating a new vendor -->
-            <div id="newVendorForm" style="display: none;" class="card card-info">
-                <div class="card-header">
-                    <h3 class="card-title">Add New Vendor</h3>
-                </div>
-                <form role="form" action="{{ route('vendors.store') }}" method="POST">
-                    @csrf
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="Vendor_Name">Vendor Name:</label>
-                            <input type="text" class="form-control" id="Vendor_Name" name="Vendor_Name" required>
-                        </div>
-                        <div class="form-group">
-                <label for="Email">Email:</label>
-                <input type="email" class="form-control" id="Email" name="Email" required>
-            </div>
-            <div class="form-group">
-                <label for="PhoneNumber">Phone Number:</label>
-                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" required>
-            </div>
-                        <div class="form-group">
-                            <label for="Active_Status">Active Status:</label>
-                            <select class="form-control" id="Active_Status" name="Active_Status">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="Remarks">Remarks:</label>
-                            <textarea class="form-control" id="Remarks" name="Remarks"></textarea>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-info">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <!-- Bootstrap Modal for Edit Vendor -->
-<div class="modal fade" id="editVendorModal" tabindex="-1" role="dialog" aria-labelledby="editVendorModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form id="editVendorForm" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="modal-header">
-          <h5 class="modal-title" id="editVendorModalLabel">Edit Vendor</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- Dynamically filled form fields will go here -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+        
 
                     <!-- Vendors Table -->
                     <div class="card">
@@ -112,19 +52,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($vendors as $vendor)
-                                        <tr>
-                                            <td>
+                                    <tr>
+                                    <td>
+                                        <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}" class="btn btn-default btn-sm" style="color: gray;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                                 <form id="deleteForm{{ $vendor->VENDOR_ID }}" action="{{ route('vendors.destroy', $vendor->Vendor_ID) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-default btn-sm delete-btn" data-client-id="{{ $vendor->VENDOR_ID }}">
-                                                        <i class="fa-regular fa-trash-can"></i>
-                                                    </button>
+                                    <button type="submit" class="btn btn-default btn-sm delete-btn" data-client-id="{{ $vendor->Vendor_ID }}" onclick="return confirm('Are you sure?')">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
                                                 </form>
                                             </td>
-                                            <td>{{ $vendor->Vendor_ID }}</td>
+                                            <td>  <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}">
+                                            {{ $vendor->Vendor_ID }}
+                                        </a></td>
                                             <td>{{ $vendor->Vendor_Name }}</td>
-                                            <td>{{ $vendor->Active_Status }}</td>
+                                            <td>{{ $vendor->Active_Status == '1' ? 'Active' : 'Inactive' }}</td>
                                             <td>{{ $vendor->Email }}</td>
                                             <td>{{ $vendor->PhoneNumber }}</td>
                                             <td>{{ $vendor->Remarks }}</td>
