@@ -43,6 +43,9 @@
                         @foreach ($payments as $payment)
                             <tr>
                             <td>
+                            <a href="{{ route('payment.editPayment', $payment->PMT_ID)  }}" class="btn btn-default btn-sm" style="color: gray;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                             <form id="deleteForm{{ $payment->PMT_ID }}" action="{{ route('payment.deletePayment', $payment->PMT_ID) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
