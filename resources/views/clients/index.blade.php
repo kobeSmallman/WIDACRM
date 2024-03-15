@@ -25,7 +25,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <a href="{{ route('clients.addClient') }}" class="btn btn-primary mb-3">New Client</a>
+            <a href="{{ route('clients.addClient') }}" class="btn btn-primary mb-3">Add New Client</a>
             <table id="tblClients" class="table table-bordered table-striped">
                 <thead>
                     <tr>
