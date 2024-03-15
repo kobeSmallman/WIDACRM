@@ -28,32 +28,43 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Note $note, Request $request)
-{
-    if ($request->hasFile('images')) {
-        $files = $request->file('images');
-        foreach ($files as $file) {
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $folder = 'note_images';
-            $path = $file->storeAs($folder, $filename, 'public');
-            $mimeType = $file->getClientMimeType();
+    // public function store(Request $request, Note $note)
+    // {
+    //     $images = $request->file('images'); // Assuming 'images' is the name attribute in your file input field.
 
-            $image = new Image();
-            $image->Note_ID = $note;
-            $image->IMG_data = $path;
-            $image->IMG_MIME = $mimeType;
-            
-            $image->save();
+    //     foreach ($images as $image) {
+    //         $imageData = file_get_contents($image->getRealPath());
+    //         $mime = $image->getMimeType();
+
+    //         $note->images()->create([
+    //             'image_data' => $imageData,
+    //             'img_mime' => $mime,
+    //         ]);
+    //     }
+    public function store(Request $request, $noteId)
+    {
+        // Find the note by ID
+        $note = Note::findOrFail($noteId);
+
+        // Retrieve uploaded files
+        $images = $request->file('images');
+
+        foreach ($images as $image) {
+            // Save each image with the Note_ID
+            $newImage = new Image();
+            $newImage->Note_ID = $note->Note_ID; // Associate image with the note
+            $newImage->IMG_MIME = $image->getClientMimeType();
+            $newImage->IMG_Data = file_get_contents($image); // Store the image file's contents
+            $newImage->save();
         }
 
-        return response()->json(['success' => true, 'message' => 'Images saved successfully']);
+        // Return a response to the client
+        return response()->json(['success' => true, 'message' => 'Images uploaded successfully']);
     }
 
-    return response()->json(['success' => false, 'message' => 'No images found to upload']);
-}
 
 
-    
+
 
     /**
      * Display the specified resource.
