@@ -29,7 +29,7 @@
             <table id="tblClients" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 70px !important;">Delete</th>
+                        <th style="width: 70px !important;">Manage</th>
                         <th>Client Name</th>
                         <th>Main Contact</th>
                         <th>Shipping Address</th>
