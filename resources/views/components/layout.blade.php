@@ -593,4 +593,33 @@
     cursor: pointer;
     /* Pointer cursor on hover/focus */
   }
+
+    #myBtn {
+    background-color: #2B2B52; /* This color should match your background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px; /* This gives rounded corners */
+    box-shadow: 0 4px #999;
+}
+
+#myBtn:hover {
+    background-color: #3D3D5C; /* This should be a bit lighter or darker than the background */
+    box-shadow: 0 5px #666;
+    transform: translateY(-2px);
+}
+
+#myBtn:active {
+    background-color: #5D5D8D;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
 </style>
