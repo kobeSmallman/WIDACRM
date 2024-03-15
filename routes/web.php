@@ -12,6 +12,11 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ClientOrderSummaryController;
+use App\Http\Controllers\ClientSalesReportController;
+
+// Add this line to your web routes
+
 
 // Web.php
 use App\Http\Controllers\AnalyticsController;
@@ -244,3 +249,8 @@ Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreemen
 Route::get('/agreement', [AgreementController::class, 'create'])->name('agreement.create');
 // Handle form submission
 Route::post('/agreement', [AgreementController::class, 'store'])->name('agreement.store');
+
+
+//reports
+Route::get('/client-sales-summary', [ClientSalesReportController::class, 'index'])->name('clientSalesSummary.index');
+Route::get('/client-order-summary', [ClientOrderSummaryController::class, 'index'])->name('clientOrderSummary.index');

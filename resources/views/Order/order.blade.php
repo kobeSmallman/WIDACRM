@@ -48,7 +48,7 @@
                             @foreach ($orders as $order)
                             <tr>
                             <td>
-                            <a href="{{ route('orders.profile', $order->Order_ID) }}" class="btn btn-default btn-sm" style="color: gray;">
+                            <a href="{{ route('orders.edit', $order->Order_ID) }}" class="btn btn-default btn-sm" style="color: gray;">
         <i class="fas fa-edit"></i>
     </a>
     <!-- Delete button -->
