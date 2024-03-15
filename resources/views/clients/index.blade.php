@@ -55,7 +55,11 @@
                                     </button>
                                 </form>
                             </td>
-                            <td><a href="{{ route('clients.editClient', $client->Client_ID) }}">{{ $client->Company_Name }}</td>
+                            <td>
+    <a href="{{ route('clients.editClient', $client->Client_ID) }}">
+        {{ $client->Company_Name }} ({{ $client->Client_ID }})
+    </a>
+</td>
                             <td>{{ $client->Main_Contact }}</td>
                             <td>{{ $client->Shipping_Address }}</td>
                             <td>{{ $client->Billing_Address }}</td>
