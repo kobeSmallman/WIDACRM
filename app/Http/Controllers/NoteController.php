@@ -23,29 +23,30 @@ class NoteController extends Controller
     }
 
     public function store(Request $request)
-{
-    
+    {
 
-    // Continue with the note creation as before
-    $note = new Note();
-   
-    $note->Client_ID = $request->get('Client_ID');
-    $note->Interaction_Type = $request->get('Interaction_Type');
-    $note->Created_By = $request->get('Created_By');
-    $note->Description = $request->get('Description');
 
-    $note->save();
+        // Continue with the note creation as before
+        $note = Note::create([
 
-    // Uploading an image
-    if ($request->hasFile('images')) {
-        $imageController = new ImageController();
-        return $imageController->store($request, $note); // Pass the note ID to the image store method
+            'Client_ID' => $request->Client_ID,
+            'Interaction_Type' => $request->Interaction_Type,
+            'Created_By' => $request->Created_By,
+            'Description' => $request->Description,
+        ]);
+        //$note->save();
+
+        // Uploading an image
+        if ($request->hasFile('images')) {
+            $imageController = new ImageController();
+            $imageController->store($request, $note->id); // Pass the note ID to the image store method
+        }
+
+
+        // Return a JSON response
+        // NoteController.php
+        return response()->json(['success' => true, 'message' => 'Note saved successfully', 'noteId' => $note->Note_ID]);
     }
-
-
-    // Return a JSON response
-    return response()->json(['success' => true, 'message' => 'Note saved successfully']);
-}
 
 
     public function getCompanyInfo($id)
