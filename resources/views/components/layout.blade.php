@@ -400,12 +400,6 @@
         formData.append('Created_By', createdBy);
         formData.append('Description', noteText);
 
-        if (imageFile.length > 0) {
-          for (let i = 0; i < imageFile.length; i++) {
-            formData.append('images[]', imageFile[i]);
-          }
-        }
-
         // Send a POST request with the form data
         fetch('/notes/store', { // Update the URL to the route that handles note saving
             method: 'POST',
@@ -420,9 +414,36 @@
             if (data.success) {
               Swal.fire('Success', 'The note has been saved successfully.', 'success');
               // Additional actions like closing the modal or clearing the form can go here
+
+              if (imageFile.length > 0) {
+                let imageFormData = new FormData();
+                for (let i = 0; i < imageFile.length; i++) {
+                  imageFormData.append('images[]', imageFile[i]);
+                }
+                // Use the note ID from the response to construct the image upload URL
+                fetch(`/notes/${data.noteId}/images`, {
+                    method: 'POST',
+                    body: imageFormData
+                  })
+                  .then(response => response.json())
+                  .then(imageData => {
+                    // Handle image upload response here
+                    if (imageData.success) {
+                      console.log('Images uploaded successfully');
+                    } else {
+                      console.error('Error uploading images', imageData.message);
+                    }
+                  })
+                  .catch(error => {
+                    // Handle errors for image upload
+                    console.error('Error uploading images:', error);
+                  });
+              }
+
+
             } else {
-                    Swal.fire('Error', data.message, 'error');
-                  }
+              Swal.fire('Error', data.message, 'error');
+            }
           })
           .catch(error => {
             // Handle errors
