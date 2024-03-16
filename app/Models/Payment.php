@@ -27,7 +27,7 @@ class Payment extends Model
         'PMT_Cat',
         'Amount',
         'PMT_Type_ID',
-        // ...other fields if necessary
+        'Remarks',
     ];
 
     // Define relationships

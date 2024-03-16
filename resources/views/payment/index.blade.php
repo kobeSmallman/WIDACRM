@@ -36,6 +36,7 @@
                             <th>Date</th>
                             <th>Amount</th>
                             <th>Payment Type</th>
+                            <th>Remarks</th>
                             <!-- Add more headers if needed -->
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@
                                 <td>{{ $payment->Date}}</td>
                                 <td>{{ $payment->Amount}}</td>
                                 <td>{{ $payment->paymentType ? $payment->paymentType->PMT_Type_Name : 'N/A' }}</td>
+                                <td>{{ $payment->Remarks}}</td>
                             </tr>
                         @endforeach
                     </tbody> 

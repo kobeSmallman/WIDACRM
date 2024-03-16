@@ -93,7 +93,11 @@
                                     <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
                             </select>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="Remarks">Remarks:</label>
+                            <input type="text" name="Remarks" id="Remarks" class="form-control" placeholder="Example: Payment Succesful">
                         </div>
 
                         <div class="form-group row">
