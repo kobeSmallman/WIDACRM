@@ -150,14 +150,6 @@ public function store(Request $request)
     }
 }
 
-    public function lastOrders($id)
-    {
-        $client = Client::with(['orders' => function ($query) {
-            $query->latest('Request_DATE')->take(5);
-        }])->findOrFail($id);
-
-        return response()->json($client->orders);
-    }
 
     public function adminDashboard()
 {
