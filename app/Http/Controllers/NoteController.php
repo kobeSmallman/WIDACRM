@@ -67,6 +67,15 @@ class NoteController extends Controller
         return response()->json($note);
     }
 
+    public function lastOrders($id)
+    {
+        $client = Client::with(['orders' => function ($query) {
+            $query->latest('Request_DATE')->take(5);
+        }])->findOrFail($id);
+
+        return response()->json($client->orders);
+    }
+
     public function update(Request $request, Note $note)
     {
         // Validate the request data. Assuming 'interaction_type' is a string and doesn't need to be checked against specific values.
