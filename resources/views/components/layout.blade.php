@@ -258,9 +258,8 @@
             </select>
 
             <!-- Image Upload -->
-            <!-- <label for="imageUpload">Image:</label>
-            <input type="file" id="imageUpload" multiple=""> -->
-            <a href="{{ url('notes/'.$Note_ID.'/upload')}}" class="btn btn-info">Add Image</a>
+            <label for="imageUpload">Image:</label>
+            <input type="file" id="imageUpload" multiple="">
 
             <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
             <button onclick="saveNote()">Save Note</button>

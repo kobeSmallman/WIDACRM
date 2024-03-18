@@ -64,7 +64,7 @@ class ImageController extends Controller
 
                 $imageData[] = [
                     'note_ID' => $noteId->id,
-                    'image' => $path.$,
+                    'image' => $path.$fileName,
                 ];
             }
         }
@@ -72,7 +72,7 @@ class ImageController extends Controller
         Image::insert($imageData);
 
         // Return a response to the client
-        return response()->json(['success' => true, 'message' => 'Images uploaded successfully']);
+        return response()->json(['success' => true, 'message' => 'Note saved successfully', 'noteId' => $note->Note_ID]);
     }
 
     // public function store(Request $request, $noteId) // maybe add int to $noteId
