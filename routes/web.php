@@ -77,7 +77,7 @@ Route::delete('/clients/{id}', [ClientController::class, 'deleteClient'])->name(
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{clientId}/orders', [ClientController::class, 'getClientOrders']);
-Route::get('/clients/{id}/orders', [ClientController::class, 'getClientOrders'])->name('clients.orders');
+
 
 // Notes
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
@@ -182,6 +182,8 @@ Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('v
 Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
 Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
 Route::post('/notes/{noteId}/images', [ImageController::class, 'store'])->name('images.store');
+// Displays last five Orders route
+Route::get('/clients/{id}/orders', [NoteController::class, 'getClientOrders'])->name('clients.orders');
 //notes page
 Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
 Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
