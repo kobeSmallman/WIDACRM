@@ -41,26 +41,65 @@ class ImageController extends Controller
     //             'img_mime' => $mime,
     //         ]);
     //     }
-    public function store(Request $request, $noteId)
+    public function store(Request $request, $noteId) // maybe add int to $noteId
     {
+        $request->validate([
+            'images.*' => 'required|image|mimes:png,jpg,jpeg,webp'
+        ]);
+
         // Find the note by ID
         $note = Note::findOrFail($noteId);
 
         // Retrieve uploaded files
-        $images = $request->file('images');
+        $imageData = [];
+        if ($images = $request->file('images')) {
 
-        foreach ($images as $image) {
-            // Save each image with the Note_ID
-            $newImage = new Image();
-            $newImage->Note_ID = $note->Note_ID; // Associate image with the note
-            $newImage->IMG_MIME = $image->getClientMimeType();
-            $newImage->IMG_Data = file_get_contents($image); // Store the image file's contents
-            $newImage->save();
+            foreach ($images as $image) {
+                $extension = $image-> getClientOriginalExtent();
+                $fileName = time(). '.' .$extension;
+
+                $path = "notes/{noteId}/images/";
+
+                $image->move($path, $fileName);
+
+                $imageData[] = [
+                    'note_ID' => $noteId->id,
+                    'image' => $path.$,
+                ];
+            }
         }
+
+        Image::insert($imageData);
 
         // Return a response to the client
         return response()->json(['success' => true, 'message' => 'Images uploaded successfully']);
     }
+
+    // public function store(Request $request, $noteId) // maybe add int to $noteId
+    // {
+    //     // Find the note by ID
+    //     $note = Note::findOrFail($noteId);
+
+    //     // Retrieve uploaded files
+    //     $imageData = [];
+    //     if ($images = $request->file('images')) {
+
+    //         foreach ($images as $image) {
+    //             // Save each image with the Note_ID
+    //             $newImage = new Image();
+    //             $newImage->Note_ID = $note->Note_ID; // Associate image with the note
+    //             $newImage->IMG_MIME = $image->getClientMimeType();
+    //             $newImage->IMG_Data = file_get_contents($image); // Store the image file's contents
+    //             $newImage->save();
+
+    //             $imageData[] = [
+    //                 'note_ID' => $noteId->id,
+    //             ];
+    //         }
+    //     }
+    //     // Return a response to the client
+    //     return response()->json(['success' => true, 'message' => 'Images uploaded successfully']);
+    // }
 
 
 

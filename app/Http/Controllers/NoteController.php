@@ -49,7 +49,7 @@ class NoteController extends Controller
             $folder = uniqid('image-', true);
             $image->storeAs('images/tmp/'. $folder, $filename);
 
-            ImageController::create([
+            $image = ImageController::create([
                 'folder' => $folder,
                 'file' => $filename
             ]);
