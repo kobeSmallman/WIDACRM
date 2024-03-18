@@ -12,17 +12,9 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ClientOrderSummaryController;
 use App\Http\Controllers\ClientSalesReportController;
-
-// Add this line to your web routes
-
-
-// Web.php
+use App\Http\Controllers\OrderVolumeReportController;
 use App\Http\Controllers\AnalyticsController;
-// web.php
-// Inside web.php
-
 use App\Http\Controllers\FAQController;
 
 
@@ -253,4 +245,5 @@ Route::post('/agreement', [AgreementController::class, 'store'])->name('agreemen
 
 //reports
 Route::get('/client-sales-summary', [ClientSalesReportController::class, 'index'])->name('clientSalesSummary.index');
-Route::get('/client-order-summary', [ClientOrderSummaryController::class, 'index'])->name('clientOrderSummary.index');
+Route::get('/reports/order-volume', [OrderVolumeReportController::class, 'index'])->name('orderVolumeReport.index');
+
