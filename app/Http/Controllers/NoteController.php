@@ -36,12 +36,25 @@ class NoteController extends Controller
         ]);
         //$note->save();
 
-        // Uploading an image
-        if ($request->hasFile('images')) {
-            $imageController = new ImageController();
-            $imageController->store($request, $note->id); // Pass the note ID to the image store method
-        }
+        // // Uploading an image
+        // if ($request->hasFile('images')) {
+        //     $imageController = new ImageController();
+        //     $imageController->store($request, $note->id); // Pass the note ID to the image store method
+        // }
 
+        //code with Tony youtube
+        if ($request->hasFile('images')) {
+            $image = $request->file('image');
+            $filename = $image->getClientOriginalName();
+            $folder = uniqid('image-', true);
+            $image->storeAs('images/tmp/'. $folder, $filename);
+
+            $image = ImageController::create([
+                'folder' => $folder,
+                'file' => $filename
+            ]);
+            return$folder;
+        }
 
         // Return a JSON response
         // NoteController.php

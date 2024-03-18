@@ -273,7 +273,7 @@
 
             <!-- Image Upload -->
             <label for="imageUpload">Image:</label>
-            <input type="file" id="imageUpload">
+            <input type="file" id="imageUpload" multiple="">
 
             <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
             <button onclick="saveNote()">Save Note</button>
