@@ -36,12 +36,25 @@ class NoteController extends Controller
         ]);
         //$note->save();
 
-        // Uploading an image
-        if ($request->hasFile('images')) {
-            $imageController = new ImageController();
-            $imageController->store($request, $note->id); // Pass the note ID to the image store method
-        }
+        // // Uploading an image
+        // if ($request->hasFile('images')) {
+        //     $imageController = new ImageController();
+        //     $imageController->store($request, $note->id); // Pass the note ID to the image store method
+        // }
 
+        //code with Tony youtube
+        if ($request->hasFile('images')) {
+            $image = $request->file('image');
+            $filename = $image->getClientOriginalName();
+            $folder = uniqid('image-', true);
+            $image->storeAs('images/tmp/'. $folder, $filename);
+
+            $image = ImageController::create([
+                'folder' => $folder,
+                'file' => $filename
+            ]);
+            return$folder;
+        }
 
         // Return a JSON response
         // NoteController.php
@@ -65,6 +78,15 @@ class NoteController extends Controller
     {
         // This will return the note information as JSON, which can be used to populate an edit form on the front-end.
         return response()->json($note);
+    }
+
+    public function lastOrders($id)
+    {
+        $client = Client::with(['orders' => function ($query) {
+            $query->latest('Request_DATE')->take(5);
+        }])->findOrFail($id);
+
+        return response()->json($client->orders);
     }
 
     public function update(Request $request, Note $note)

@@ -185,18 +185,18 @@
               </a>
             </li> -->
             <li class="nav-item">
-              <a href="{{ route('clientOrderSummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Client Order Summary</p>
-              </a>
-            </li>
-            <li class="nav-item">
     <a href="{{ route('clientSalesSummary.index') }}" class="nav-link">
         <i class="nav-icon fa-solid fa-table-list"></i>
         <p>Client Sales Summary</p>
     </a>
 </li>
-
+{{-- Add the new navigation menu item for Order Volume Over Time Report --}}
+<li class="nav-item">
+    <a href="{{ route('orderVolumeReport.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-chart-line"></i>
+        <p>Order Volume By Date</p>
+    </a>
+</li>
             <!-- <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
@@ -259,7 +259,7 @@
 
             <!-- Image Upload -->
             <label for="imageUpload">Image:</label>
-            <input type="file" id="imageUpload">
+            <input type="file" id="imageUpload" multiple="">
 
             <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
             <button onclick="saveNote()">Save Note</button>

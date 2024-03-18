@@ -12,17 +12,9 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ClientOrderSummaryController;
 use App\Http\Controllers\ClientSalesReportController;
-
-// Add this line to your web routes
-
-
-// Web.php
+use App\Http\Controllers\OrderVolumeReportController;
 use App\Http\Controllers\AnalyticsController;
-// web.php
-// Inside web.php
-
 use App\Http\Controllers\FAQController;
 
 
@@ -85,7 +77,7 @@ Route::delete('/clients/{id}', [ClientController::class, 'deleteClient'])->name(
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 Route::post('/clients/store', [ClientController::class, 'store'])->name('clients.store');
 Route::get('/clients/{clientId}/orders', [ClientController::class, 'getClientOrders']);
-Route::get('/clients/{id}/orders', [ClientController::class, 'getClientOrders'])->name('clients.orders');
+
 
 // Notes
 Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
@@ -190,6 +182,8 @@ Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('v
 Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
 Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
 Route::post('/notes/{noteId}/images', [ImageController::class, 'store'])->name('images.store');
+// Displays last five Orders route
+Route::get('/clients/{id}/orders', [NoteController::class, 'getClientOrders'])->name('clients.orders');
 //notes page
 Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
 Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
@@ -253,4 +247,5 @@ Route::post('/agreement', [AgreementController::class, 'store'])->name('agreemen
 
 //reports
 Route::get('/client-sales-summary', [ClientSalesReportController::class, 'index'])->name('clientSalesSummary.index');
-Route::get('/client-order-summary', [ClientOrderSummaryController::class, 'index'])->name('clientOrderSummary.index');
+Route::get('/reports/order-volume', [OrderVolumeReportController::class, 'index'])->name('orderVolumeReport.index');
+
