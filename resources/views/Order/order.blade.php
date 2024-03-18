@@ -62,22 +62,22 @@
                 <!-- Date Range Filter for Request Date -->
                 <div class="col-sm-3 filter-col">
                     <div class="form-group">
-                        <label>Request Date Range:</label>
-                        <input type="text" class="form-control daterange" id="Request_Date_Range" placeholder="YYYY-MM-DD - YYYY-MM-DD">
+                        <label>Request Date:</label>
+                        <input type="text" class="form-control daterange" id="Request_Date_Range" placeholder="YYYY MM DD">
                     </div>
                 </div>
                 <!-- Date Range Filter for Order Date -->
                 <div class="col-sm-3 filter-col">
                     <div class="form-group">
-                        <label>Order Date Range:</label>
-                        <input type="text" class="form-control daterange" id="Order_Date_Range" placeholder="YYYY-MM-DD - YYYY-MM-DD">
+                        <label>Order Date:</label>
+                        <input type="text" class="form-control daterange" id="Order_Date_Range" placeholder="YYYY MM DD">
                     </div>
                 </div>
                 <!-- Date Range Filter for Quotation Date -->
                 <div class="col-sm-3 filter-col">
                     <div class="form-group">
-                        <label>Quotation Date Range:</label>
-                        <input type="text" class="form-control daterange" id="Quotation_Date_Range" placeholder="YYYY-MM-DD - YYYY-MM-DD">
+                        <label>Quotation Date:</label>
+                        <input type="text" class="form-control daterange" id="Quotation_Date_Range" placeholder="YYYY MM DD">
                     </div>
                 </div>
                 <!-- Client Name Filter -->
@@ -168,21 +168,35 @@ $(document).ready(function() {
             "<'row'<'col-sm-12 d-flex justify-content-between'<'d-flex flex-row'Bl><'d-flex flex-row'f>>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'ip>>",
-        buttons: [
-            "copyHtml5",
-            "csvHtml5",
-            "excelHtml5",
-            {
-                extend: "pdfHtml5",
-                orientation: 'landscape',
-                pageSize: 'LEGAL',
-                exportOptions: {
-                    columns: ":visible"
-                }
-            },
-            "print",
-            "colvis"
-        ],
+            buttons: [
+    "copyHtml5",
+    "csvHtml5",
+    {
+        extend: "excelHtml5",
+        exportOptions: {
+            columns: ":visible",
+            search: 'applied'
+        }
+    },
+    {
+        extend: "pdfHtml5",
+        orientation: 'landscape',
+        pageSize: 'LEGAL',
+        exportOptions: {
+            columns: ":visible",
+            search: 'applied'
+        }
+    },
+    {
+        extend: "print",
+        exportOptions: {
+            columns: ":visible",
+            search: 'applied'
+        }
+    },
+    "colvis"
+],
+
        
         initComplete: function() {
             // Toggle Filters button
