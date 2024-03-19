@@ -12,15 +12,13 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AgreementController;
 use App\Http\Controllers\PaymentController;
-
-// Web.php
+use App\Http\Controllers\ClientSalesReportController;
+use App\Http\Controllers\OrderVolumeReportController;
 use App\Http\Controllers\AnalyticsController;
-// web.php
-// Inside web.php
-
 use App\Http\Controllers\FAQController;
-
-
+use App\Http\Controllers\OrderStatusReportController;
+use App\Http\Controllers\SalesByEmployeeReportController;
+use App\Http\Controllers\ImageController;
 
 
 
@@ -51,7 +49,6 @@ Route::get('/access-denied', function () {
  
     // Dashboard routes
     Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
-    // web.php
 
     Route::get('/tab-content/showcaseOne', function () {
         return view('dashboard.adminDashboardShowcaseOne');
@@ -93,7 +90,7 @@ Route::get('/access-denied', function () {
 
     //Permissions routes
     Route::get('/permissions', [PermissionController::class, 'index'])
-    ->name('permissions');
+        ->name('permissions');
 
     // Notes
     Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
@@ -206,16 +203,41 @@ Route::get('/access-denied', function () {
     // Display the page to create a new request based on the selected client
     // This assumes you have a separate RequestController for handling requests
 
-    //request page
-    // Define a route for the createRequest view
+// Display the specified order
+Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+// Show the form for editing the specified order
+Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+
+// Update the specified order in storage
+Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
+
+// Remove the specified order from storage
+Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+// Route to view order profile
+Route::get('/orderProfile/{id}', [OrderController::class, 'orderProfile'])->name('orderProfile');
+Route::get('/orders/{order}/profile', [OrderController::class, 'profile'])->name('orders.profile');
+// Routes for AJAX calls
+Route::get('/api/orders/{id}', [OrderController::class, 'showAjax'])->name('orders.showAjax');
+Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
+Route::get('/orders/details/{orderId}', [OrderController::class, 'getOrderDetails'])->name('orders.details');
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{orderId}/update', [OrderController::class, 'update'])->name('orders.update');
 
 
     //SETTINGS
     Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
     Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
 
-    //FAQ
-    Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
+// Route to fetch orders for a specific client
+// Vendor routes
+Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+Route::resource('vendors', VendorController::class);
+// Place these inside the web.php file
+//Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+
+// Update vendor
 
     //PAYMENTS
         // Show summary of payments
@@ -230,15 +252,108 @@ Route::get('/access-denied', function () {
         // Show an individual payment profile
         Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
 
-        Route::get('/get-products-for-order/{orderId}', [PaymentController::class, 'getProductsForOrder']);
+Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+Route::resource('vendors', VendorController::class);
+
+// The create vendor view will be served by the create method in VendorController
+Route::get('vendors/create', [VendorController::class, 'create'])->name('vendors.create');
 
 
-    //AGREEMENTS
-    Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
-    // Display the form
-    Route::get('/agreement', [AgreementController::class, 'create'])->name('agreement.create');
-    // Handle form submission
-    Route::post('/agreement', [AgreementController::class, 'store'])->name('agreement.store');
+//system users route
+Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
+Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
+
+Route::get('/systemusers', [SystemUsersController::class, 'showSystemUsers'])->name('systemusers');
+Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registration'])->name('systemusers.registration');
+Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])->name('systemusers.profile');
+Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])->name('systemusers.updateEmployee');
+
+Route::post('/system-users/save-employee', [SystemUsersController::class, 'saveEmployee'])->name('save.employee');
 
 
- 
+
+// Place this inside the web routes in web.php
+Route::post('/employees/create', [AuthController::class, 'storeEmployee'])->name('employees.create');
+
+//Employee profile page route
+Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
+
+// Report routes
+Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
+Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
+
+// (NOTES) Display the page to take notes with a list of clients ||||| Notes page
+Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
+Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
+Route::post('/notes/{noteId}/images', [ImageController::class, 'store'])->name('images.store');
+// Displays last five Orders route
+Route::get('/clients/{id}/orders', [NoteController::class, 'getClientOrders'])->name('clients.orders');
+//notes page
+Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
+Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
+Route::get('/clients/{id}/notesAJAX', [ClientController::class, 'notesAJAX'])->name('clients.notesAJAX');
+// Route to show the form for editing a specific note
+Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
+// Route to update a specific note
+//Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
+//Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+// Display the page to create a new request based on the selected client
+// This assumes you have a separate RequestController for handling requests
+
+//request page
+// Define a route for the createRequest view
+
+
+
+//PERMISSIONS
+Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+
+//SETTINGS
+Route::get('/settings', [SettingsController::class, 'index'])->name('site.settings');
+Route::post('/settings/save-mode', [SettingsController::class, 'saveMode'])->name('settings.save-mode');
+
+//FAQ
+Route::get('/faq', [FAQController::class, 'showFAQ'])->name('faq.show');
+
+//PAYMENTS
+    // Show summary of payments
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+
+    // Go to the form to add a new payment
+    Route::get('/payment/add-payment', [PaymentController::class, 'create'])->name('payment.create');
+
+    // Store a new payment record
+    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+
+    // Show an individual payment profile
+    Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
+
+    // Get the products associated with an order
+    Route::get('/get-products-for-order/{orderId}', [PaymentController::class, 'getProductsForOrder']);
+
+    // Delete a payment record
+    Route::delete('/payment/{id}', [PaymentController::class, 'deletePayment'])->name('payment.deletePayment');
+
+    // Edit a payment record
+    Route::get('/payment/profile/{id}', [PaymentController::class, 'editPayment'])->name('payment.editPayment');
+
+    // Update a payment record
+    Route::post('/payment/{id}/update', [PaymentController::class, 'updatePayment'])->name('payment.updatePayment'); 
+
+
+//AGREEMENTS
+Route::get('/Agreement', [AgreementController::class, 'show']) -> name('agreement.show');
+// Display the form
+Route::get('/agreement', [AgreementController::class, 'create'])->name('agreement.create');
+// Handle form submission
+Route::post('/agreement', [AgreementController::class, 'store'])->name('agreement.store');
+
+
+//reports
+Route::get('/client-sales-summary', [ClientSalesReportController::class, 'index'])->name('clientSalesSummary.index');
+Route::get('/reports/order-volume', [OrderVolumeReportController::class, 'index'])->name('orderVolumeReport.index');
+Route::get('/reports/orders-by-status', [OrderStatusReportController::class, 'index'])->name('ordersByStatus.index');
+
+
+Route::get('/reports/sales-by-employee', [SalesByEmployeeReportController::class, 'index'])->name('salesByEmployeeReport.index');

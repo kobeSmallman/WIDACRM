@@ -36,9 +36,9 @@ class Note extends Model
     }
 
     // Relationship with Note
-    public function image()
+    public function images()
     {
-        return $this->hasMany(Client::class, 'Note_ID', 'Note_ID');
+        return $this->hasMany(Note::class, 'Note_ID', 'Note_ID');
     }
 
     // Add any other model properties or methods you might need

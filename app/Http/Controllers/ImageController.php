@@ -28,32 +28,79 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Note $note, Request $request)
-{
-    if ($request->hasFile('images')) {
-        $files = $request->file('images');
-        foreach ($files as $file) {
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $folder = 'note_images';
-            $path = $file->storeAs($folder, $filename, 'public');
-            $mimeType = $file->getClientMimeType();
+    // public function store(Request $request, Note $note)
+    // {
+    //     $images = $request->file('images'); // Assuming 'images' is the name attribute in your file input field.
 
-            $image = new Image();
-            $image->Note_ID = $note;
-            $image->IMG_data = $path;
-            $image->IMG_MIME = $mimeType;
-            
-            $image->save();
+    //     foreach ($images as $image) {
+    //         $imageData = file_get_contents($image->getRealPath());
+    //         $mime = $image->getMimeType();
+
+    //         $note->images()->create([
+    //             'image_data' => $imageData,
+    //             'img_mime' => $mime,
+    //         ]);
+    //     }
+    public function store(Request $request, Note $note) // maybe add int to $noteId
+    {
+        $request->validate([
+            'images.*' => 'required|image|mimes:png,jpg,jpeg'
+        ]);
+
+        // Find the note by ID
+        $note = Note::findOrFail($note->noteId);
+
+        // Retrieve uploaded files
+        $imageData = [];
+        if ($images = $request->file('images')) {
+
+            foreach ($images as $image) {
+                $extension = $image-> getClientOriginalExtension();
+                $fileName = time(). '.' .$extension;
+
+                $imageData[] = [
+                    'note_ID' => $note->id,
+                    'IMG_MIME' => $extension,
+                    'IMG_Data' => $image,
+                ];
+            }
         }
 
-        return response()->json(['success' => true, 'message' => 'Images saved successfully']);
+        Image::insert($imageData);
+
+        // Return a response to the client
+        return response()->json(['success' => true, 'message' => 'Note saved successfully', 'noteId' => $note->Note_ID]);
     }
 
-    return response()->json(['success' => false, 'message' => 'No images found to upload']);
-}
+    // public function store(Request $request, $noteId) // maybe add int to $noteId
+    // {
+    //     // Find the note by ID
+    //     $note = Note::findOrFail($noteId);
+
+    //     // Retrieve uploaded files
+    //     $imageData = [];
+    //     if ($images = $request->file('images')) {
+
+    //         foreach ($images as $image) {
+    //             // Save each image with the Note_ID
+    //             $newImage = new Image();
+    //             $newImage->Note_ID = $note->Note_ID; // Associate image with the note
+    //             $newImage->IMG_MIME = $image->getClientMimeType();
+    //             $newImage->IMG_Data = file_get_contents($image); // Store the image file's contents
+    //             $newImage->save();
+
+    //             $imageData[] = [
+    //                 'note_ID' => $noteId->id,
+    //             ];
+    //         }
+    //     }
+    //     // Return a response to the client
+    //     return response()->json(['success' => true, 'message' => 'Images uploaded successfully']);
+    // }
 
 
-    
+
+
 
     /**
      * Display the specified resource.

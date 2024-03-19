@@ -27,6 +27,13 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
+            <!-- Display Error Message -->
+            @if($errors->has('login_error'))
+              <div class="alert alert-danger" role="alert">
+                {{ $errors->first('login_error') }}
+              </div>
+            @endif
+
       <form action="{{ route('login') }}" method="POST">
         @csrf <!-- CSRF token is required for form submission -->
         

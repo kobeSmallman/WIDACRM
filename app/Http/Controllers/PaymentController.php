@@ -52,7 +52,7 @@ class PaymentController extends Controller
         if ($existingPayment) {
             // Redirect back with error message if payment exists
             return redirect()->back()->withErrors([
-                'msg' => 'There is already an associated Product Payment for this order: <a href="'.route('payment.show', ['id' => $existingPayment->PMT_ID]).'">PMT_ID '.$existingPayment->PMT_ID.'</a>'
+                'msg' => 'There is already an associated Product Payment for this order: <a href="'.route('payment.editPayment', ['id' => $existingPayment->PMT_ID]).'">PMT_ID '.$existingPayment->PMT_ID.'</a>'
             ]);
         }
     }
@@ -71,11 +71,14 @@ class PaymentController extends Controller
         // After storing, redirect to the summary of payments with a success message
         return redirect()->route('payment.index')->with('success', 'Payment added successfully.');
     }
+    /*
+    This function is repleced by editPayment
     // Show the profile of a payment
         public function show($PMT_ID) {
         $payment = Payment::findOrFail($PMT_ID); // Find the payment by id
         return view('payment.profile', compact('payment'));
     }
+    */
 
     //Get products of each order
     public function getProductsForOrder($Order_ID) {
@@ -83,4 +86,48 @@ class PaymentController extends Controller
     
         return response()->json($products);
     }
+
+    public function deletePayment($id)
+    { 
+        $payment = Payment::findOrFail($id); 
+        $payment->delete();
+ 
+        return redirect()->route('payment.index')->with('success', 'Payment deleted successfully.');
+    }
+
+    public function editPayment($id)
+    { 
+        // Retrieve the order ID from the payment
+        $payment = Payment::findOrFail($id);
+        $selectedOrder = Order::findOrFail($payment->Order_ID);
+        $orderDetails = $selectedOrder->products()->get();
+        $selectedPayment = Payment::where('PMT_ID', $id)->first();
+        $orders = Order::pluck('Order_ID', 'Order_ID'); // Get all orders for the dropdown
+        // Fetch only active payment types to populate the dropdowns
+        $paymentTypes = PaymentType::where('Active_Status', 'Active')
+                                    ->pluck('PMT_Type_Name', 'PMT_Type_ID');
+    
+        return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
+    }
+
+    public function updatePayment(Request $request, $id)
+    { 
+        $payment = Payment::findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'Date' => 'required|date',
+            'PMT_Cat' => 'required|string|max:255',
+            'Amount' => 'required|numeric',
+            'PMT_Type_ID' => 'required|exists:Payment_Type,PMT_Type_ID',
+        ]);
+    
+        $validatedData['Amount'] = floatval(str_replace(',', '', $request->Amount)); // Sanitize the Amount
+    
+        $payment->update($validatedData);
+    
+        return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.');
+    }
+    
+    
+    
 }

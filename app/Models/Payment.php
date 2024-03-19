@@ -17,7 +17,9 @@ class Payment extends Model
 
     protected $casts = [
         'Date' => 'datetime:Y-m-d H:i:s', // Format according to your needs
-    ];
+        'Amount' => 'decimal:2', // or 'float' for Laraval lower than 7
+        ];
+        
 
     protected $fillable = [
         'Order_ID',

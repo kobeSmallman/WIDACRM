@@ -23,29 +23,43 @@ class NoteController extends Controller
     }
 
     public function store(Request $request)
-{
-    
+    {
 
-    // Continue with the note creation as before
-    $note = new Note();
-   
-    $note->Client_ID = $request->get('Client_ID');
-    $note->Interaction_Type = $request->get('Interaction_Type');
-    $note->Created_By = $request->get('Created_By');
-    $note->Description = $request->get('Description');
 
-    $note->save();
+        // Continue with the note creation as before
+        $note = Note::create([
 
-    // Uploading an image
-    if ($request->hasFile('images')) {
-        $imageController = new ImageController();
-        return $imageController->store($request, $note); // Pass the note ID to the image store method
+            'Client_ID' => $request->Client_ID,
+            'Interaction_Type' => $request->Interaction_Type,
+            'Created_By' => $request->Created_By,
+            'Description' => $request->Description,
+        ]);
+        //$note->save();
+
+        // // Uploading an image
+        // if ($request->hasFile('images')) {
+        //     $imageController = new ImageController();
+        //     $imageController->store($request, $note->id); // Pass the note ID to the image store method
+        // }
+
+        //code with Tony youtube
+        // if ($request->hasFile('images')) {
+        //     $image = $request->file('image');
+        //     $filename = $image->getClientOriginalName();
+        //     $folder = uniqid('image-', true);
+        //     $image->storeAs('images/tmp/'. $folder, $filename);
+
+        //     $image = ImageController::create([
+        //         'folder' => $folder,
+        //         'file' => $filename
+        //     ]);
+        //     return$folder;
+        // }
+
+        // Return a JSON response
+        // NoteController.php
+        return response()->json(['success' => true, 'message' => 'Note saved successfully', 'noteId' => $note->Note_ID]);
     }
-
-
-    // Return a JSON response
-    return response()->json(['success' => true, 'message' => 'Note saved successfully']);
-}
 
 
     public function getCompanyInfo($id)
@@ -64,6 +78,15 @@ class NoteController extends Controller
     {
         // This will return the note information as JSON, which can be used to populate an edit form on the front-end.
         return response()->json($note);
+    }
+
+    public function lastOrders($id)
+    {
+        $client = Client::with(['orders' => function ($query) {
+            $query->latest('Request_DATE')->take(5);
+        }])->findOrFail($id);
+
+        return response()->json($client->orders);
     }
 
     public function update(Request $request, Note $note)

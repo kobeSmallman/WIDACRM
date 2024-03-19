@@ -90,7 +90,7 @@
               <i class="fas fa-comments mr-2"></i> Chats
             </a>
             <a href="{{ route('site.settings') }}" class="dropdown-item">
-              <i class="fas fa-comments mr-2"></i> Settings
+              <i class="fas fa-cog mr-2"></i> Settings
             </a>
 
             <div class="dropdown-divider"></div>
@@ -111,7 +111,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{{ (auth()->user()->Role_ID == 1) ? route('admin.dashboard') : route('employee.dashboard') }}" class="brand-link">
-        <img  src="{{ asset('dist/img/WIDA/wida100x100.png') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="{{ asset('dist/img/WIDA/wida100x100.png') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-bold" style="color: #5a75f7">WIDA</span>
         <span class="brand-text font-weight-normal" style="margin-left:-4px">CRM</span>
       </a>
@@ -213,16 +213,16 @@
             <li class="nav-header">OTHERS</li>
 
             <li class="nav-item">
-                <a href="{{ route('agreement.show') }}" class="nav-link">
+              <a href="{{ route('agreement.show') }}" class="nav-link">
                 <i class="nav-icon fas fa-solid fa-file-contract"></i>
-                    <p>Agreement Form</p>
-                </a>
+                <p>Agreement Form</p>
+              </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('faq.show') }}" class="nav-link">
-                    <i class="nav-icon fas fa-question-circle"></i>
-                    <p>FAQ</p>
-                </a>
+              <a href="{{ route('faq.show') }}" class="nav-link">
+                <i class="nav-icon fas fa-question-circle"></i>
+                <p>FAQ</p>
+              </a>
             </li>
           </ul>
         </nav>
@@ -264,7 +264,7 @@
 
             <!-- Image Upload -->
             <label for="imageUpload">Image:</label>
-            <input type="file" id="imageUpload">
+            <input type="file" id="imageUpload" multiple="">
 
             <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
             <button onclick="saveNote()">Save Note</button>
@@ -298,7 +298,7 @@
       <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
-    
+
     <!-- Main Footer -->
     <footer class="main-footer">
       <strong>Copyright &copy; 2024 <a href="" style="color: #5a75f7">Hexabridge Technologies</a>.</strong>
@@ -426,6 +426,7 @@
 
         // Create FormData object to send data as form/multipart
         const formData = new FormData();
+        const imageFormData = new FormData();
         formData.append('Client_ID', clientSelect);
         formData.append('Interaction_Type', interactionType);
         formData.append('Created_By', createdBy);
@@ -433,7 +434,7 @@
 
         if (imageFile.length > 0) {
           for (let i = 0; i < imageFile.length; i++) {
-            formData.append('images[]', imageFile[i]);
+            imageFormData.append('images[]', imageFile[i]);
           }
         }
 
@@ -445,15 +446,24 @@
             },
             body: formData
           })
-          .then(response => response.json())
+          .then(response => {return response.json()})
           .then(data => {
+
+            fetch(`/notes/${data.noteId}/images`, { 
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+            },
+            body: imageFormData
+          })
+
             // Handle success
             if (data.success) {
               Swal.fire('Success', 'The note has been saved successfully.', 'success');
               // Additional actions like closing the modal or clearing the form can go here
             } else {
-                    Swal.fire('Error', data.message, 'error');
-                  }
+              Swal.fire('Error', data.message, 'error');
+            }
           })
           .catch(error => {
             // Handle errors

@@ -1,6 +1,15 @@
 <x-layout>
 <!-- Add your existing <style> tag here with the CSS adjustments -->
 <style>
+    @media print {
+  .edit-btn-group, .back-button {
+    display: none;
+  }
+  .card-body {
+    grid-template-columns: 1fr; /* Adjust the layout for print */
+  }
+}
+
     body {
         padding-top: 20px;
     }
@@ -116,13 +125,15 @@
                     <!-- Buttons here will be absolutely positioned inside the header -->
                     <button onclick="printOrder()" class="btn btn-sm btn-primary">Print</button>
                     <button onclick="downloadOrder()" class="btn btn-sm btn-secondary">Download</button>
-                    <button onclick="editOrder()" class="btn btn-sm btn-info">Edit</button>
-                    <button onclick="saveOrder()" class="btn btn-sm btn-success">Save</button>
+                    <a href="{{ route('orders.edit', $order->Order_ID) }}" class="btn btn-sm btn-warning">
+        <i class="fas fa-pencil-alt"></i> Edit Order
+    </a>
                 </div>
                 <a href="{{ route('orders.index') }}" class="btn back-button">Back to Orders</a>
             </div>
                 <div class="card-body">
                     <div class="order-details">
+                 
                         <h4>Basic Information</h4>
                         <p><strong>Order ID:</strong> {{ $order->Order_ID }}</p>
                         <p><strong>Request Date:</strong> {{ $order->Request_DATE }}</p>
@@ -149,8 +160,10 @@
 
                     <div class="product-details">
                         <h4>Products</h4>
+                       
                         @if ($order->products)
                 @foreach ($order->products as $product)
+                
                         <div class="card">
                         <div class="card-body">
                                 <h5>{{ $product->Product_Name }}</h5>
@@ -194,123 +207,48 @@
     <script>
   // JavaScript function to trigger printing the order details
   function printOrder() {
+    
     window.print();
   }
  // JavaScript function to download the order details as a PDF
  function downloadOrder() {
-    const element = document.getElementById('element-to-download'); // Make sure this is the ID of the element you want to download
+    // Define the element you want to download
+    const element = document.getElementById('element-to-download');
 
     if (!element) {
         console.error(`Element with ID "element-to-download" not found.`);
         return;
     }
 
-    const margin = 10; // Margin for the PDF
-    const width = element.scrollWidth + margin * 2; // Calculate width with margins
-    const height = element.scrollHeight + margin * 2; // Calculate height with margins
-
     // Options for html2canvas
     const canvasOptions = {
-        scale: 3, // Adjust scale as necessary to improve quality or fit content
-        width: width, // Set canvas width
-        height: height, // Set canvas height
-        scrollX: -window.scrollX,
-        scrollY: -window.scrollY,
-        backgroundColor: null // To allow for transparent backgrounds
+        scale: 2, // Adjust scale as necessary
+        useCORS: true,
+        onclone: function(clonedDoc) {
+            // Hide the edit buttons and back button in the cloned document
+            clonedDoc.querySelector('.edit-btn-group').style.display = 'none';
+            clonedDoc.querySelector('.back-button').style.display = 'none';
+        }
     };
 
+    // Generate canvas
     html2canvas(element, canvasOptions).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-
-        // Create a PDF with the same dimensions as the canvas
+        // Use jsPDF to generate a PDF
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
         const pdf = new jsPDF({
-            orientation: 'landscape', // Set orientation based on your content
+            orientation: 'landscape',
             unit: 'px',
             format: [canvas.width, canvas.height]
         });
-
-        // Add the canvas image to the PDF
-        pdf.addImage(imgData, 'PNG', margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
-        pdf.save('download.pdf');
-    }).catch(error => console.error('Error generating PDF', error));
-}
-
-// Edit functionality
-function editOrder() {
-    // Select all sections that need to become editable
-    const sections = document.querySelectorAll('.order-details, .client-details, .product-details, .payment-details');
-
-    // Toggle the 'editable' class and the contenteditable property
-    sections.forEach(section => {
-        const isEditable = section.isContentEditable;
-        section.contentEditable = !isEditable; // Toggle contenteditable
+        // Add image to PDF
+        pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+        
+        // Save the PDF
+        pdf.save('order-details.pdf');
+    }).catch(error => {
+        console.error('Error generating PDF', error);
     });
 }
 
-// Function to collect data from contenteditable sections and send it to server
-// Function to save edits
-async function saveOrder() {
-    //TODO: GET THIS WORKING, IT DOES NOT SAVE THE DATA, I CAN EDIT BUT NOT SAVE.
-    // Object to hold the data for the order
-    const orderData = {
-        Order_ID: document.querySelector('input[name="Order_ID"]').value,
-        Remarks: document.querySelector('textarea[name="Remarks"]').value,
-        Order_Status: document.querySelector('select[name="Order_Status"]').value,
-        // Add other order properties as necessary
-    };
-
-    // Object to hold the data for the client
-    const clientData = {
-        Client_ID: document.querySelector('input[name="Client_ID"]').value,
-        Company_Name: document.querySelector('input[name="Company_Name"]').value,
-        // Add other client properties as necessary
-    };
-
-    // Array to hold data for each product
-    const productData = Array.from(document.querySelectorAll('.product-details')).map(productDetail => {
-        return {
-            Item_ID: productDetail.querySelector('input[name="Item_ID"]').value,
-            Product_Price: productDetail.querySelector('input[name="Product_Price"]').value,
-            // Add other product properties as necessary
-        };
-    });
-
-    // Compile all the data into a single object
-    const payload = {
-        order: orderData,
-        client: clientData,
-        products: productData,
-        // If there are other related entities, like payment or vendor, add them here as well
-    };
-
-    // Send the payload to the server using Fetch API
-    try {
-        const response = await fetch('/api/save-order', { // Use your actual endpoint here
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Laravel CSRF token
-            },
-            body: JSON.stringify(payload)
-        });
-        const responseData = await response.json();
-
-        // Handle the response from the server
-        if (response.ok) {
-            console.log('Save successful', responseData);
-            // You might want to update the UI or redirect the user
-        } else {
-            console.error('Save failed', responseData);
-            // Handle errors, such as displaying them to the user
-        }
-    } catch (error) {
-        console.error('Error during save', error);
-        // Handle network errors or other unexpected issues
-    }
-}
-
-
-// Add event listener for the save button
-document.querySelector('.btn-success').addEventListener('click', saveOrder);
 
 </script>

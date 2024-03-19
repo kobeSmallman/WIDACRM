@@ -32,7 +32,7 @@
             <table id="tblClients" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 70px !important;">Delete</th>
+                        <th style="width: 70px !important;">Manage</th>
                         <th>Client Name</th>
                         <th>Main Contact</th>
                         <th>Shipping Address</th>
@@ -47,6 +47,9 @@
                     @foreach ($clients as $client)
                         <tr>
                             <td>
+                            <a href="{{ route('clients.editClient', $client->Client_ID)  }}" class="btn btn-default btn-sm" style="color: gray;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                 <form id="deleteForm{{ $client->Client_ID }}" action="{{ route('clients.deleteClient', $client->Client_ID) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
@@ -55,7 +58,11 @@
                                     </button>
                                 </form>
                             </td>
-                            <td><a href="{{ route('clients.editClient', $client->Client_ID) }}">{{ $client->Company_Name }}</td>
+                            <td>
+                                <a href="{{ route('clients.editClient', $client->Client_ID) }}">
+                                    {{ $client->Company_Name }} ({{ $client->Client_ID }})
+                                </a>
+                            </td>
                             <td>{{ $client->Main_Contact }}</td>
                             <td>{{ $client->Shipping_Address }}</td>
                             <td>{{ $client->Billing_Address }}</td>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $table = 'Inage'; // Explicitly defining the table name
+    protected $table = 'Image'; // Explicitly defining the table name
 
     protected $primaryKey = 'Image_ID'; // Explicitly defining the primary key
 
@@ -18,8 +18,8 @@ class Image extends Model
     // Fillable attributes for mass assignment
     protected $fillable = [
         'Note_ID',
-        'IMG_data',
         'IMG_MIME',
+        'IMG_data', 
     ];
 
     // Relationship with Client

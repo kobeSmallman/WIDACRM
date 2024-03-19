@@ -448,9 +448,9 @@
         </form>
         <button onclick="printDocument();" class="btn btn-primary print-button">Print Form</button>
 
-<!--      function does not work
-       <button type="button" onclick="saveAsPDF();" class="btn btn-primary">Save as PDF</button> 
-    -->
+    
+        <button type="button" onclick="saveAsPDF();" class="btn btn-primary pdf-button">Save as PDF</button> 
+    
     </div>
 
 </x-layout>
@@ -470,27 +470,38 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- translates page to PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 
-<!-- could not get this script to work properly -->
-<!-- <script>
-  function saveAsPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+<!-- script to generate pdf calling jsPDF library for conversion -->
+ <script>
+function saveAsPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-    doc.html(document.querySelector('#agreementContent'), {
-      callback: function (pdf) {
-        pdf.save('Service-Agreement.pdf');
-      },
-      x: 10,
-      y: 10
-    });
-  }
-</script> -->
+    // Hide the buttons
+    document.querySelector('.print-button').style.display = 'none';
+    document.querySelector('.pdf-button').style.display = 'none';
+
+  doc.html(document.querySelector('#agreementContent'), {
+    callback: function (pdf) {
+      pdf.save('Service-Agreement.pdf');
+        // Show the buttons again after saving the PDF
+        document.querySelector('.print-button').style.display = 'inline-block';
+        document.querySelector('.pdf-button').style.display = 'inline-block';
+    },
+    x: 15,
+    y: 15,
+    html2canvas: { 
+      scale: 0.16
+    }
+  });
+}
+</script> 
 
 <script>
   function printDocument() {
     window.print();
   }
 </script>
+
 <!-- script to handle radio and checkbox toggling limitations for compensation options -->
 <script>
 function toggleCompensationOptions(selectedOption) {
@@ -515,6 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleCompensationOptions(null);
 });
 </script>
+
 <!-- script to handle radio and checkbox toggling limitations for retainer options -->
 <script>
 function toggleRetainerOptions(isRequired) {
@@ -674,7 +686,7 @@ input[type="checkbox"] {
         margin-right: 10px;
     }
  @media print {
-    .print-button {
+    .print-button, .pdf-button {
         display: none;
   }
 }

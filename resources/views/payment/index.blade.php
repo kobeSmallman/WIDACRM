@@ -24,8 +24,6 @@
             <!-- /.card-header -->
             <div class="card-body">
 
-                <a class="btn btn-primary mb-3 mr-3" id="show-alert">Sample Alert</a>
-
                 <a href="{{ route('payment.create') }}" class="btn btn-primary mb-3">Add Payment</a>
 
                 <table id="paymentRecords" class="table table-bordered table-striped">
@@ -44,18 +42,21 @@
                     <tbody>
                         @foreach ($payments as $payment)
                             <tr>
-                                <td> 
-                                    <a href="{{ route('payment.show', $payment->PMT_ID) }}">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-default btn-sm">
+                            <td>
+                            <a href="{{ route('payment.editPayment', $payment->PMT_ID)  }}" class="btn btn-default btn-sm" style="color: gray;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                            <form id="deleteForm{{ $payment->PMT_ID }}" action="{{ route('payment.deletePayment', $payment->PMT_ID) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-default btn-sm delete-btn" data-payment-id="{{ $payment->PMT_ID }}">
                                     <i class="fa-regular fa-trash-can"></i>
-                                    </a>
+                                    </button>
+                            </form>
+                            </td>
                                 </td>
-                                <td><a href="{{ route('payment.show', $payment->PMT_ID) }}">{{ $payment->PMT_ID }}</td>
-                                <!--<td>{{ $payment->Order_ID}}</td>-->
-                                <td><a href="{{ route('orders.show', $payment->Order_ID) }}">{{ $payment->Order_ID}}</td>
-                                <!-- To Do: Link to Order Profile once that is already working -->
+                                <td><a href="{{ route('payment.editPayment', $payment->PMT_ID) }}">{{ $payment->PMT_ID }}</td>
+                                <td>{{ $payment->Order_ID }}</td>
                                 <td>{{ $payment->PMT_Cat}}</td>
                                 <td>{{ $payment->Date}}</td>
                                 <td>{{ $payment->Amount}}</td>
@@ -68,7 +69,20 @@
             <!-- /.card-body -->
         </div>
     </div>      
-</x-layout>
+
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'INFORMATION MESSAGE',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+    @endif  
+
 
 
 <script> 
@@ -87,12 +101,30 @@
 
     });
 
-    document.getElementById('show-alert').addEventListener('click', () => {
-        Swal.fire({
-            title: 'Hello, Laravel 10!',
-            text: 'Sweetalert2 is now integrated into your Laravel 10 Vite project!',
-            icon: 'success',
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const paymentId = button.getAttribute('data-payment-id');
+                const deleteForm = document.querySelector(`#deleteForm${paymentId}`);
+
+                Swal.fire({
+                    title: 'CONFIRMATION MESSAGE',
+                    text: 'Do you want to delete this payment record?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteForm.submit();
+                    }
+                });
+            });
+        });
     });
-});
+
 </script>
 
+</x-layout>

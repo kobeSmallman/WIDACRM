@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\Vendor;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +19,10 @@ class OrderController extends Controller
         $clients = Client::all();
         return view('Order.order', compact('orders', 'clients'));
     }
+   
 
+    
+    
     public function create()
     {
         $clients = Client::all(); // Retrieve all clients
@@ -135,45 +139,133 @@ public function store(Request $request)
         $order = Order::with(['client', 'products'])->findOrFail($id);
         return view('Order.orderProfile', compact('order'));
     }
+    public function edit($orderId)
+    {
+        $order = Order::with(['client', 'products'])->findOrFail($orderId);
+        $employeeId = $order->Created_By;
+        $employee = Employee::find($employeeId); // Fetch the employee directly
+    
+        $products = $order->products;
+        $client = $order->client;
+    
+        // Fetch all clients and vendors for the dropdown options
+        $clients = Client::all();
+        $vendors = Vendor::all();
+    
+        // Now pass all the necessary data to the view
+        return view('Order.editOrder', compact('order', 'employee', 'products', 'client', 'clients', 'vendors'));
+    }
 
-    public function edit($id)
+
+    public function updateOrder(Request $request, Order $order)
+    {
+        $validatedData = $request->validate([
+            // Assuming validation rules are provided correctly
+            // Validate order fields
+            'Client_ID' => 'required|exists:Client,Client_ID',
+            'Request_DATE' => 'required|date',
+            'Request_Status' => 'required|string',
+            'Remarks' => 'nullable|string',
+            'Order_DATE' => 'required|date',
+            'Order_Status' => 'required|string',
+            'Quotation_DATE' => 'nullable|date',
+            // Validate product fields, adjust according to your actual form structure
+            'products.*.Product_Name' => 'required|string|max:255',
+            'products.*.Quantity' => 'required|numeric|min:1',
+            'products.*.Product_Price' => 'required|numeric',
+            // Add validation rules for other product fields as necessary
+        ]);
+    
+        // Start transaction
+        DB::beginTransaction();
+        try {
+            $order = Order::findOrFail($order);
+            // Update order fields
+            $order->Client_ID = $validatedData['Client_ID'];
+            $order->Request_DATE = $validatedData['Request_DATE'];
+            $order->Request_Status = $validatedData['Request_Status'];
+            $order->Remarks = $validatedData['Remarks'];
+            $order->Order_DATE = $validatedData['Order_DATE'];
+            $order->Order_Status = $validatedData['Order_Status'];
+            $order->Quotation_DATE = $validatedData['Quotation_DATE'];
+            $order->save();
+    
+            // Update products
+            // First, remove all existing products to handle deletions
+            $order->products()->delete();
+            // Then, add updated/new products
+            foreach ($validatedData['products'] as $productData) {
+                $order->products()->create($productData);
+            }
+    
+            // Commit transaction
+            DB::commit();
+    
+            return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
+        } catch (\Exception $e) {
+            // Rollback transaction on error
+            DB::rollback();
+    
+            // Log error or handle it as necessary
+            return redirect()->route('orders.edit', $order)->withErrors('Failed to update order.');
+        }
+    }
+    
+
+    public function update(Request $request, $orderId)
 {
-    $order = Order::findOrFail($id);
-    $clients = Client::all();
-    return view('orders.edit', compact('order', 'clients'));
-}
-
-public function updateOrder(Request $request) {
-    // Validate the request data as necessary
-    $validated = $request->validate([
-        'order.remarks' => 'required|string',
-        // Add other validation rules as necessary
+    $validatedData = $request->validate([
+        // Validate order fields
+        'Client_ID' => 'required|exists:Client,Client_ID', // Assuming 'Client_ID' is the primary key column in 'Client' table
+        'Request_DATE' => 'required|date',
+        'Request_Status' => 'required|string',
+        'Remarks' => 'nullable|string',
+        'Order_DATE' => 'required|date',
+        'Order_Status' => 'required|string',
+        'Quotation_DATE' => 'nullable|date',
+        // Validate product fields, adjust according to your actual form structure
+        'products.*.Product_Name' => 'required|string|max:255',
+        'products.*.Quantity' => 'required|numeric|min:1',
+        'products.*.Product_Price' => 'required|numeric',
+        // Add validation rules for other product fields as necessary
     ]);
 
-    // Update the Order
-    $order = Order::findOrFail($request->input('order.id'));
-    $order->remarks = $request->input('order.remarks');
-    // Update other fields as necessary
-    $order->save();
+    // Start transaction
+    DB::beginTransaction();
+    try {
+        $order = Order::findOrFail($orderId);
+        // Update order fields
+        $order->Client_ID = $validatedData['Client_ID'];
+        $order->Request_DATE = $validatedData['Request_DATE'];
+        $order->Request_Status = $validatedData['Request_Status'];
+        $order->Remarks = $validatedData['Remarks'];
+        $order->Order_DATE = $validatedData['Order_DATE'];
+        $order->Order_Status = $validatedData['Order_Status'];
+        $order->Quotation_DATE = $validatedData['Quotation_DATE'];
+        $order->save();
 
-    // Update Client, Products, etc., in a similar fashion
+        // Update products
+        // First, remove all existing products to handle deletions
+        $order->products()->delete();
+        // Then, add updated/new products
+        foreach ($validatedData['products'] as $productData) {
+            // Be sure to validate the existence of Vendor_ID against the 'Vendor' table if required
+            $order->products()->create($productData);
+        }
 
-    // Return a response, e.g., a JSON object indicating success
-    return response()->json(['success' => 'Order updated successfully']);
+        // Commit transaction
+        DB::commit();
+
+        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
+    } catch (\Exception $e) {
+        // Rollback transaction on error
+        DB::rollback();
+
+        // Log error or handle it as necessary
+        return redirect()->route('orders.edit', $orderId)->withErrors('Failed to update order.');
+    }
 }
 
-    public function update(Request $request, $id)
-    {
-        $order = Order::findOrFail($id);
-        $orderData = $request->except(['_token', '_method', 'product_requests']);
-        $order->update($orderData);
-        if ($request->has('product_requests')) {
-            foreach ($request->input('product_requests') as $productRequest) {
-                Log::info('Updating product for order: ', $productRequest);
-            }
-        }
-        return redirect()->route('orders.edit', ['id' => $id])->with('success', 'Order updated successfully.');
-    }
 
     public function destroy($id)
     {
