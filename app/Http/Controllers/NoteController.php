@@ -43,18 +43,18 @@ class NoteController extends Controller
         // }
 
         //code with Tony youtube
-        if ($request->hasFile('images')) {
-            $image = $request->file('image');
-            $filename = $image->getClientOriginalName();
-            $folder = uniqid('image-', true);
-            $image->storeAs('images/tmp/'. $folder, $filename);
+        // if ($request->hasFile('images')) {
+        //     $image = $request->file('image');
+        //     $filename = $image->getClientOriginalName();
+        //     $folder = uniqid('image-', true);
+        //     $image->storeAs('images/tmp/'. $folder, $filename);
 
-            $image = ImageController::create([
-                'folder' => $folder,
-                'file' => $filename
-            ]);
-            return$folder;
-        }
+        //     $image = ImageController::create([
+        //         'folder' => $folder,
+        //         'file' => $filename
+        //     ]);
+        //     return$folder;
+        // }
 
         // Return a JSON response
         // NoteController.php
