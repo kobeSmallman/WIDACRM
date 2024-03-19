@@ -435,6 +435,7 @@
 
         // Create FormData object to send data as form/multipart
         const formData = new FormData();
+        const imageFormData = new FormData();
         formData.append('Client_ID', clientSelect);
         formData.append('Interaction_Type', interactionType);
         formData.append('Created_By', createdBy);
@@ -456,6 +457,15 @@
           })
           .then(response => response.json())
           .then(data => {
+
+            fetch(`/notes/${data.noteId}/images`, { 
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+            },
+            body: imageFormData
+          })
+
             // Handle success
             if (data.success) {
               Swal.fire('Success', 'The note has been saved successfully.', 'success');

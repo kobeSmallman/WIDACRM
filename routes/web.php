@@ -18,6 +18,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\OrderStatusReportController;
 use App\Http\Controllers\SalesByEmployeeReportController;
+use App\Http\Controllers\ImageController;
 
 
 
