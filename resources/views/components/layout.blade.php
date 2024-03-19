@@ -443,7 +443,7 @@
 
         if (imageFile.length > 0) {
           for (let i = 0; i < imageFile.length; i++) {
-            formData.append('images[]', imageFile[i]);
+            imageFormData.append('images[]', imageFile[i]);
           }
         }
 
