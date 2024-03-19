@@ -41,14 +41,14 @@ class ImageController extends Controller
     //             'img_mime' => $mime,
     //         ]);
     //     }
-    public function store(Request $request, $noteId) // maybe add int to $noteId
+    public function store(Request $request, Note $note) // maybe add int to $noteId
     {
         $request->validate([
-            'images.*' => 'required|image|mimes:png,jpg,jpeg,webp'
+            'images.*' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
         // Find the note by ID
-        $note = Note::findOrFail($noteId);
+        $note = Note::findOrFail($note->noteId);
 
         // Retrieve uploaded files
         $imageData = [];
@@ -58,13 +58,16 @@ class ImageController extends Controller
                 $extension = $image-> getClientOriginalExtent();
                 $fileName = time(). '.' .$extension;
 
-                $path = "notes/{noteId}/images/";
+                //$path = "notes/{noteId}/images/";
 
-                $image->move($path, $fileName);
+                //$image->move($path, $fileName); Image_ID Note_ID IMG_MIME IMG_Data
+
+
 
                 $imageData[] = [
-                    'note_ID' => $noteId->id,
-                    'image' => $path.$fileName,
+                    'note_ID' => $note->id,
+                    'IMG_MIME'=> $extension,
+                    'IMG_Data' => $image,
                 ];
             }
         }
