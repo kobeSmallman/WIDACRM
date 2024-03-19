@@ -155,7 +155,9 @@
     <!-- /.content -->
 </x-layout>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
+        
+
     // DataTables initialization with custom layout for the "Toggle Filters" button
     var table = $('#orders-table').DataTable({
         pagingType: "full_numbers",
@@ -286,7 +288,7 @@ $(document).ready(function() {
 });
         }
     });
-       
+   
 
     // Event listener for delete button
     $('#orders-table tbody').on('click', '.delete-order-btn', function(e) {
@@ -320,4 +322,5 @@ $(document).ready(function() {
 
 });
 </script>
+
 

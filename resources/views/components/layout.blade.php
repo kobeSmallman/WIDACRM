@@ -198,11 +198,12 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('orderByStatus.index') }}" class="nav-link">
+    <a href="{{ route('ordersByStatus.index') }}" class="nav-link">
         <i class="nav-icon fa-solid fa-chart-line"></i>
         <p>Orders by Status</p>
     </a>
 </li>
+
 <li class="nav-item">
     <a href="{{ route('salesByEmployeeReport.index') }}" class="nav-link">
         <i class="nav-icon fa-solid fa-chart-bar"></i>
