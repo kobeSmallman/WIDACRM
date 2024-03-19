@@ -185,18 +185,33 @@
               </a>
             </li> -->
             <li class="nav-item">
-              <a href="{{ route('clientSalesSummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Client Sales Summary</p>
-              </a>
-            </li>
-            {{-- Add the new navigation menu item for Order Volume Over Time Report --}}
-            <li class="nav-item">
-              <a href="{{ route('orderVolumeReport.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-chart-line"></i>
-                <p>Order Volume By Date</p>
-              </a>
-            </li>
+    <a href="{{ route('clientSalesSummary.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-table-list"></i>
+        <p>Client Sales Summary</p>
+    </a>
+</li>
+{{-- Add the new navigation menu item for Order Volume Over Time Report --}}
+<li class="nav-item">
+    <a href="{{ route('orderVolumeReport.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-chart-line"></i>
+        <p>Order Volume By Date</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('ordersByStatus.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-chart-line"></i>
+        <p>Orders by Status</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('salesByEmployeeReport.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-chart-bar"></i>
+        <p>Sales by Employee</p>
+    </a>
+</li>
+
+
             <!-- <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
@@ -444,24 +459,13 @@
           .then(response => {return response.json()})
           .then(data => {
 
-            
-
-            return fetch(`/notes/${data.noteId}/images`, {
-              method: 'POST',
-              headers: {
+            fetch(`/notes/${data.noteId}/images`, { 
+            method: 'POST',
+            headers: {
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
             },
-              body: imageFormData
-            })
-            .then(response => response.json())
-        .then(imageData => {
-          // Handle image upload response here
-          if(imageData.success) {
-            console.log('Images uploaded successfully');
-          } else {
-            console.error('Error uploading images', imageData.message);
-          }
-        })
+            body: imageFormData
+          })
 
             // Handle success
             if (data.success) {

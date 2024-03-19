@@ -19,7 +19,10 @@ class OrderController extends Controller
         $clients = Client::all();
         return view('Order.order', compact('orders', 'clients'));
     }
+   
 
+    
+    
     public function create()
     {
         $clients = Client::all(); // Retrieve all clients

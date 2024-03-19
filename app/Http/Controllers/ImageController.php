@@ -55,18 +55,12 @@ class ImageController extends Controller
         if ($images = $request->file('images')) {
 
             foreach ($images as $image) {
-                $extension = $image-> getClientOriginalExtent();
+                $extension = $image-> getClientOriginalExtension();
                 $fileName = time(). '.' .$extension;
-
-                //$path = "notes/{noteId}/images/";
-
-                //$image->move($path, $fileName); Image_ID Note_ID IMG_MIME IMG_Data
-
-
 
                 $imageData[] = [
                     'note_ID' => $note->id,
-                    'IMG_MIME'=> $extension,
+                    'IMG_MIME' => $extension,
                     'IMG_Data' => $image,
                 ];
             }
