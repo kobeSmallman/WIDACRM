@@ -197,6 +197,21 @@
         <p>Order Volume By Date</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('ordersByStatus.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-chart-line"></i>
+        <p>Orders by Status</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('salesByEmployeeReport.index') }}" class="nav-link">
+        <i class="nav-icon fa-solid fa-chart-bar"></i>
+        <p>Sales by Employee</p>
+    </a>
+</li>
+
+
             <!-- <li class="nav-item">
               <a href="{{ route('vendorsummary.index') }}" class="nav-link">
                 <i class="nav-icon fa-solid fa-table-list"></i>
@@ -421,6 +436,7 @@
 
         // Create FormData object to send data as form/multipart
         const formData = new FormData();
+        const imageFormData = new FormData();
         formData.append('Client_ID', clientSelect);
         formData.append('Interaction_Type', interactionType);
         formData.append('Created_By', createdBy);
@@ -428,7 +444,7 @@
 
         if (imageFile.length > 0) {
           for (let i = 0; i < imageFile.length; i++) {
-            formData.append('images[]', imageFile[i]);
+            imageFormData.append('images[]', imageFile[i]);
           }
         }
 
@@ -442,6 +458,15 @@
           })
           .then(response => response.json())
           .then(data => {
+
+            fetch(`/notes/${data.noteId}/images`, { 
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+            },
+            body: imageFormData
+          })
+
             // Handle success
             if (data.success) {
               Swal.fire('Success', 'The note has been saved successfully.', 'success');
