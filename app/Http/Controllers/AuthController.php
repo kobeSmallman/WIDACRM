@@ -16,7 +16,7 @@
     {
         public function logout(Request $request)
         {
-<<<<<<< HEAD
+
             Log::info('Employee creation method called with data:', $request->all());
            
             // For debugging, bypassing the validation
@@ -29,9 +29,8 @@
                 'Employee_Status',
                 'Role_ID',
                 'Password',
-                'Employee_Email',
+                'Employee_Email',]);
                 // Any other fields you expect from the request
-=======
             Auth::logout();
             Session::flush(); // Clear session data
             return redirect('/login');
@@ -48,7 +47,6 @@
             $request->validate([
                 'Employee_ID' => 'required|integer',
                 'password' => 'required|string', 
->>>>>>> 62fdc05a01738863bd5f9a8fcc163980f1a8d886
             ]);
         
             // Attempt to log the user in
