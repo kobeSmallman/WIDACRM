@@ -16,8 +16,8 @@ use App\Http\Controllers\ClientSalesReportController;
 use App\Http\Controllers\OrderVolumeReportController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\FAQController;
-
-
+use App\Http\Controllers\OrderStatusReportController;
+use App\Http\Controllers\SalesByEmployeeReportController;
 
 
 
@@ -248,4 +248,5 @@ Route::post('/agreement', [AgreementController::class, 'store'])->name('agreemen
 //reports
 Route::get('/client-sales-summary', [ClientSalesReportController::class, 'index'])->name('clientSalesSummary.index');
 Route::get('/reports/order-volume', [OrderVolumeReportController::class, 'index'])->name('orderVolumeReport.index');
-
+Route::get('/reports/orders-by-status', [OrderStatusReportController::class, 'index'])->name('orderByStatus.index');
+Route::get('/reports/sales-by-employee', [SalesByEmployeeReportController::class, 'index'])->name('salesByEmployeeReport.index');
