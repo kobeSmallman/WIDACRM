@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +28,19 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
 
+  <!-- Page IDs -->
+  @php 
+    $clientPageId = 1;
+    $vendorPageId = 2;
+    $notesPageId = 3;
+    $ordersPageId = 4;
+    $paymentsPageId = 5;
+    $systemUsersPageId = 6;
+    $permissionsPageId = 7;
+
+    $administrationPages = [$systemUsersPageId, $permissionsPageId];  
+    $transactionPages = [$clientPageId, $vendorPageId, $notesPageId, $ordersPageId, $paymentsPageId];  
+  @endphp
 
 
   @vite('resources/js/app.js')
@@ -121,83 +135,81 @@
               </a>
             </li>
 
-            <li class="nav-header">TRANSACTION</li>
+            <!-- Administration Category -->
+            @if(collect($administrationPages)->intersect($employee->permissions->pluck('Page_ID'))->count() > 0)
+                <li class="nav-header">ADMINISTRATION</li>
 
-            <li class="nav-item">
-              <a href="{{ route('clients') }}" class="nav-link">
-                <i class="nav-icon fas fa-users"></i>
-                <p>Clients</p>
-              </a>
-            </li>
+                @if($employee->permissions->contains('Page_ID', $systemUsersPageId))
+                  <li class="nav-item">
+                        <a href="{{ route('systemusers') }}" class="nav-link">
+                            <i class="nav-icon fa-solid fa-address-card"></i>
+                            <p>System Users</p>
+                        </a>
+                  </li> 
+                @endif
 
-            <li class="nav-item">
-              <a href="{{ route('vendors.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-box"></i>
-                <p>Vendors</p>
-              </a>
-            </li>
+                @if($employee->permissions->contains('Page_ID', $permissionsPageId))
+                  <li class="nav-item">
+                      <a href="{{ route('permissions') }}" class="nav-link">
+                          <i class="nav-icon fa-solid fa-user-lock"></i>
+                          <p>Permissions</p>
+                      </a>
+                  </li>
+                @endif
+            @endif
 
-            <li class="nav-item">
-              <a href="{{ route('notes.create') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-note-sticky"></i>
-                <p>Notes</p>
-              </a>
-            </li>
+
+
+
+            @if(collect($transactionPages)->intersect($employee->permissions->pluck('Page_ID'))->count() > 0)
+              <li class="nav-header">TRANSACTIONS</li>
  
-            <li class="nav-item"> 
-              <a href="{{ route('orders.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-ticket"></i>
-                <p>Orders</p>
-              </a> 
-            </li>
+              @if($employee->permissions->contains('Page_ID', $clientPageId))
+                  <li class="nav-item">
+                      <a href="{{ route('clients') }}" class="nav-link">
+                          <i class="nav-icon fas fa-users"></i>
+                          <p>Clients</p>
+                      </a>
+                  </li>
+              @endif
 
-            <li class="nav-item">
-              <a href="{{ route('payment.index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-regular fa-credit-card"></i>
-                  <p>Payments</p>
-              </a>
-            </li>
+              @if($employee->permissions->contains('Page_ID', $vendorPageId))
+                <li class="nav-item">
+                  <a href="{{ route('vendors.index') }}" class="nav-link">
+                    <i class="nav-icon fa-solid fa-box"></i>
+                    <p>Vendors</p>
+                  </a>
+                </li>
+              @endif
 
-            <li class="nav-header">ADMINISTRATION</li>
+              @if($employee->permissions->contains('Page_ID', $notesPageId))
+                <li class="nav-item">
+                  <a href="{{ route('notes.create') }}" class="nav-link">
+                    <i class="nav-icon fa-solid fa-note-sticky"></i>
+                    <p>Notes</p>
+                  </a>
+                </li>
+              @endif
+  
+              @if($employee->permissions->contains('Page_ID', $ordersPageId))
+                <li class="nav-item"> 
+                  <a href="{{ route('orders.index') }}" class="nav-link">
+                    <i class="nav-icon fa-solid fa-ticket"></i>
+                    <p>Orders</p>
+                  </a> 
+                </li>
+              @endif
 
-            <li class="nav-item">
-              <a href="{{ route('systemusers') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-address-card"></i>
-                <p>
-                  System Users
-                  <span class="badge badge-info right"></span>
-                </p>
-              </a>
-            </li> 
-
-            <li class="nav-item">
-              <a href="{{ route('permissions') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-user-lock"></i>
-                <p>Permissions</p>
-              </a>
-            </li>
+              @if($employee->permissions->contains('Page_ID', $paymentsPageId))
+                <li class="nav-item">
+                  <a href="{{ route('payment.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                      <p>Payments</p>
+                  </a>
+                </li>
+              @endif
+            @endif
  
-            <li class="nav-header">REPORTS</li>
-            <!-- <li class="nav-item">
-              <a href="{{ route('clientsummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Client Summary</p>
-              </a>
-            </li> -->
-            <li class="nav-item">
-              <a href="{{ route('ordersummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Order Summary</p>
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a href="{{ route('vendorsummary.index') }}" class="nav-link">
-                <i class="nav-icon fa-solid fa-table-list"></i>
-                <p>Vendor Summary</p>
-              </a>
-            </li> -->
-
-
             <li class="nav-header">OTHERS</li>
 
             <li class="nav-item">
