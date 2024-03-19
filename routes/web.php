@@ -48,6 +48,9 @@ Route::get('/access-denied', function () {
 
  
     // Dashboard routes
+
+
+
     Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 
     Route::get('/tab-content/showcaseOne', function () {

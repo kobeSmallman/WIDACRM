@@ -86,9 +86,11 @@
             <a href="#" class="dropdown-item">
               <i class="fas fa-tasks mr-2"></i> Tasks
             </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-comments mr-2"></i> Chats
-            </a>
+            <a href="mailto:{{ Auth::user()->Employee_Email }}" class="dropdown-item">
+  <i class="fas fa-envelope mr-2"></i> Email
+</a>
+
+
             <a href="{{ route('site.settings') }}" class="dropdown-item">
               <i class="fas fa-cog mr-2"></i> Settings
             </a>

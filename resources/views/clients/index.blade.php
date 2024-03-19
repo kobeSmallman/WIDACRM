@@ -66,7 +66,11 @@
                             <td>{{ $client->Main_Contact }}</td>
                             <td>{{ $client->Shipping_Address }}</td>
                             <td>{{ $client->Billing_Address }}</td>
-                            <td>{{ $client->Email }}</td>
+                            <td>
+    <a href="mailto:{{ $client->Email }}?from={{ Auth::user()->Employee_Email }}">
+        {{ $client->Email }}
+    </a>
+</td>
                             <td>{{ $client->Phone_Number }}</td>
                             <td>{{ $client->Lead_Status }}</td>
                             <td>{{ $client->Buyer_Status }}</td>
