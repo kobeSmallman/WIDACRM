@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable; 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Authenticatable
 {
@@ -39,10 +40,10 @@ class Employee extends Authenticatable
     // Laravel expects the password field to be named 'password'.
     // If your field is named 'PASSWORD', you need to override the getAuthPassword method
     public function getAuthPassword()
-{
-    return $this->attributes['Password']; // Match your database column case
-}
-    
+    {
+        return $this->attributes['Password']; // Match your database column case
+    }
+        
 
     // If you have a different name for the remember token, specify it here
     protected $rememberTokenName = 'remember_token';
@@ -58,11 +59,15 @@ class Employee extends Authenticatable
     {
         return $this->Role_ID === 2; // 2 means Employee 
     }
+    public function get_EmpID()
+    {
+        return $this->Employee_ID;  
+    }
     
-    public function permissions()
-{
-    return $this->hasMany(Permission::class, 'Employee_ID', 'Employee_ID');
-}
+ 
 
-    // Add any other model properties or methods you might need
+    public function permissions(): HasMany
+    {
+        return $this->hasMany(Permission::class, 'Employee_ID', 'Employee_ID');
+    } 
 }

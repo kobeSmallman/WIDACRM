@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Add this line to use the Auth facade
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends BaseController
 {
     
     public function index()
     {
-        $clients = Client::all();
-        $clients = Client::with(['Orders.Products'])->get();
+        $clients = Client::all(); 
         return view('clients.index', compact('clients'));
     }
     public function addClient()
@@ -25,10 +24,6 @@ class ClientController extends BaseController
 
         $selectedClient = Client::findOrFail($clientID); 
         $orderHistory = $selectedClient->orders()->latest('Request_Date')->get(); 
-
-
-        //$orderHistory = Client::with(['orders.products'])->findOrFail($clientID);
-    
         return view('clients.client-info', compact('selectedClient', 'orderHistory')); 
     }
 
@@ -53,11 +48,10 @@ class ClientController extends BaseController
             'Billing_Address' => 'required|string|max:255',
             'Phone_Number' => 'required|string|max:20',
             'Email' => 'required|string|email|max:255',
-            // ...other validation rules
         ]);
     
         // Set the 'Created_By' to the ID of the authenticated user
-        $validatedData['Created_By'] = Auth::id(); // or Auth::user()->Employee_ID if you have 'Employee_ID' column in your users table
+        $validatedData['Created_By'] = Auth::id(); 
     
         try {
             Client::create($validatedData);
@@ -73,10 +67,11 @@ class ClientController extends BaseController
         $client = Client::findOrFail($id); 
         $client->delete();
  
-        return redirect()->route('clients')->with('success', 'Client deleted successfully.');
-        // return redirect()->back()->with('success', 'Client deleted successfully.');
+        return redirect()->route('clients')->with('success', 'Client deleted successfully.'); 
     }
     
+
+    /// FUNCTIONS USED BY NOTES CONTROLLER
     public function show($id)
     {
         // Load the client along with the notes and the employees who created them
