@@ -68,6 +68,9 @@
                         <strong>Employee Status</strong>
                         <p class="text-muted">{{ $employee->Employee_Status }}</p>
                         <hr>
+<strong>Email</strong>
+            <p class="text-muted">{{ $employee->Employee_Email }}</p>
+            <hr>
                         <!-- Additional fields can be added here -->
                     </div>
                 </div>

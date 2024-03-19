@@ -31,6 +31,7 @@
                 'Employee_Status',
                 'Role_ID',
                 'Password',
+                'Employee_Email',
                 // Any other fields you expect from the request
             ]);
         

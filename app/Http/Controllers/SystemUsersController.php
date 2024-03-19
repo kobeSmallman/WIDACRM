@@ -25,6 +25,8 @@ class SystemUsersController extends BaseController
             'Last_Name' => ['required', new UniqueEmployeeName($request->input('Last_Name'), $request->input('First_Name'))],
             'First_Name' => ['required'],
             'Position' => ['required'],
+            'Employee_Email' => ['required', 'email', new UniqueEmployeeID],
+
             // Add other validation rules as needed
             // 'Department' => ['required'], // Example
         ]);
@@ -38,6 +40,7 @@ class SystemUsersController extends BaseController
             'Department',
             'Position',
             'Employee_Status',
+            'Employee_Email',
         ]);
     
         // Set default values for 'Password' and 'Employee_Status'

@@ -31,6 +31,7 @@ class Employee extends Authenticatable
         'Role_ID',
         'Password',
         'profile_image', 
+        'Employee_Email',
     ];
     
 
