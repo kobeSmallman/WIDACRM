@@ -88,7 +88,8 @@
                                 </select>
                             </div>
                         </div>   
-                        <div class="form-group row">
+                        {{-- This div will contain the dropdown for products and will initially be hidden --}}
+                        <div class="form-group row" id="product_dropdown">
                             <label for="Product_Name" class="col-sm-3 col-form-label text-right">Product:</label>
                             <div class="col-sm-6">
                                 <select id="Product_Name" name="Product_Name" class="form-control" disabled>
@@ -105,7 +106,7 @@
                         </div>  
                         
                         <div class="form-group row">
-                            <div class="offset-sm-3 col-sm-6">
+                            <div class="offset-sm-3 col-sm-auto">
                                 <button type="submit" id="btnSave" class="btn btn-primary btn-fixed" style="display: none;">Save</button>
                                 <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
                                 <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
@@ -122,7 +123,7 @@
 
     <script>
 
-    function enableFields() {
+   function enableFields() {
         document.getElementById('Order_ID').disabled = true;
         document.getElementById('Date').disabled = false;
         document.getElementById('PMT_Cat').disabled = false;
@@ -130,10 +131,30 @@
         document.getElementById('PMT_Type_ID').disabled = false;
         document.getElementById('Product_Name').disabled = false;
         document.getElementById('Remarks').disabled = false;
-        document.getElementById('btnSave').style.display = 'inline';
-        document.getElementById('btnCancel').style.display = 'inline';
+        document.getElementById('btnSave').style.display = 'inline-block';
+        document.getElementById('btnCancel').style.display = 'inline-block';
         document.getElementById('btnEdit').style.display = 'none';
+        toggleProductDropdown(); // called to set the correct visibility state when enabling fields
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Function to toggle the product dropdown visibility
+    function toggleProductDropdown() {
+        var category = document.getElementById('PMT_Cat').value;
+        var productDropdown = document.getElementById('product_dropdown'); 
+        if (category === 'Freight') {
+            productDropdown.style.display = 'block';
+        } else {
+            productDropdown.style.display = 'none';
+        }
+    }
+
+       // Add event listener to the payment category select box
+       document.getElementById('PMT_Cat').addEventListener('change', toggleProductDropdown);
+
+        // Initial check to set the correct state when the page loads
+        toggleProductDropdown();
+    })
 
     function cancelEdit() {
         document.getElementById('Order_ID').disabled = true;
@@ -147,6 +168,29 @@
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
     }
+
+    document.getElementById('PMT_Cat').addEventListener('change', function() {
+                    var category = this.value;
+                    var orderId = document.getElementById('Order_ID').value; 
+
+                    if (category === 'Freight') {
+                        fetch('/get-products-for-order/' + orderId)
+                            .then(response => response.json())
+                            .then(data => {
+                                var productSelect = document.getElementById('Product_Name');
+                                productSelect.innerHTML = ''; // Clear existing options
+
+                                data.forEach(function(product) {
+                                    var option = new Option(product.Product_Name, product.Item_ID);
+                                    productSelect.appendChild(option);
+                                });
+
+                                document.getElementById('product_dropdown').style.display = 'flex';
+                            });
+                    } else {
+                        document.getElementById('product_dropdown').style.display = 'none';
+                    }
+                })
 </script>
 
         <!-- Include SweetAlert2 library -->
