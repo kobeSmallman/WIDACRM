@@ -58,7 +58,7 @@ class NoteController extends Controller
 
         // Return a JSON response
         // NoteController.php
-        return response()->json(['success' => true, 'message' => 'Note saved successfully', 'noteId' => $note->Note_ID]);
+        return response()->json(['success' => true, 'message' => 'Note saved successfully, note controller', 'noteId' => $note->Note_ID]);
     }
 
 
