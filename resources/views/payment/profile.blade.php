@@ -110,6 +110,7 @@
                                 <button type="submit" id="btnSave" class="btn btn-primary btn-fixed" style="display: none;">Save</button>
                                 <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
                                 <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
+                                <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed" id="btnBack">Back</a>
                             </div>
                         </div>                      
                     <!--Hidden field to carry Order ID info-->
@@ -131,9 +132,10 @@
         document.getElementById('PMT_Type_ID').disabled = false;
         document.getElementById('Product_Name').disabled = false;
         document.getElementById('Remarks').disabled = false;
-        document.getElementById('btnSave').style.display = 'inline-block';
-        document.getElementById('btnCancel').style.display = 'inline-block';
+        document.getElementById('btnSave').style.display = 'inline';
+        document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
         toggleProductDropdown(); // called to set the correct visibility state when enabling fields
     }
 
@@ -167,6 +169,7 @@
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
+        document.getElementById('btnBack').style.display = 'inline';
     }
 
     document.getElementById('PMT_Cat').addEventListener('change', function() {
