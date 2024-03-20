@@ -110,7 +110,7 @@ class PaymentController extends Controller
     
         return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
     }
-
+/*
     public function updatePayment(Request $request, $id)
     { 
         $payment = Payment::findOrFail($id);
@@ -129,6 +129,16 @@ class PaymentController extends Controller
         return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.');
     }
     
+    */
+
+    public function updatePayment(Request $request, $id)
+    { 
+        $payment = Payment::findOrFail($id);
+         
+        $payment->update($request->all());
+ 
+        return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.'); 
+    }
     
     
 }

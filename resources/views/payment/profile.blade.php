@@ -149,6 +149,32 @@
     }
 </script>
 
+        <!-- Include SweetAlert2 library -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Check for the 'success' session variable and display a SweetAlert -->
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'INFORMATION MESSAGE',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        @endif
+
+        <!-- Check for errors -->
+        @if ($errors->any())
+         <div class="alert alert-danger">
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{!! $error !!}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
+
 </x-layout>
 
             

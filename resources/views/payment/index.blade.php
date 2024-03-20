@@ -113,7 +113,7 @@
 
                 Swal.fire({
                     title: 'CONFIRMATION MESSAGE',
-                    text: 'Do you want to delete this payment record?',
+                    text: 'Are you sure you want to delete this payment record?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
