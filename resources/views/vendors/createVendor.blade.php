@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add New Vendor</h1>
+                    <h1>Vendors</h1>
                 </div>
             </div>
         </div>
@@ -12,7 +12,7 @@
 
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-info">
+            <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Add New Vendor</h3>
                 </div>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-info">Submit</button>
+                        <button type="submit" id="btnSave" class="btn btn-primary btn-fixed ml-neg-5">Save</button> 
                         <a href="{{ route('vendors.index') }}" class="btn btn-default">Cancel</a>
                     </div>
                 </form>
