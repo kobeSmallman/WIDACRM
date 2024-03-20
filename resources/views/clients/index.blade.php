@@ -23,7 +23,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="card-title mb-0">List of Clients</h3> 
             <div class="ml-auto">
-                <a href="{{ route('clients.addClient') }}" class="btn btn-primary">New Client</a>
+                <a href="{{ route('clients.addClient') }}" class="btn btn-primary">Add New Client</a>
             </div>
         </div>
  
