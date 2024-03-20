@@ -60,7 +60,7 @@ class ImageController extends Controller
                 $image->storeAs('images', $fileName); // Make sure you have 'images' disk configured in filesystems.php
 
                 $imageData[] = [
-                    'Note_ID' => $note->id,
+                    'Note_ID' => $note->Note_ID,
                     'IMG_MIME' => $extension,
                     'IMG_Data' => file_get_contents($image), // Store the image content
                 ];
