@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,17 +28,17 @@
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
 
   <!-- Page IDs -->
-  @php 
-    $clientPageId = 1;
-    $vendorPageId = 2;
-    $notesPageId = 3;
-    $ordersPageId = 4;
-    $paymentsPageId = 5;
-    $systemUsersPageId = 6;
-    $permissionsPageId = 7;
+  @php
+  $clientPageId = 1;
+  $vendorPageId = 2;
+  $notesPageId = 3;
+  $ordersPageId = 4;
+  $paymentsPageId = 5;
+  $systemUsersPageId = 6;
+  $permissionsPageId = 7;
 
-    $administrationPages = [$systemUsersPageId, $permissionsPageId];  
-    $transactionPages = [$clientPageId, $vendorPageId, $notesPageId, $ordersPageId, $paymentsPageId];  
+  $administrationPages = [$systemUsersPageId, $permissionsPageId];
+  $transactionPages = [$clientPageId, $vendorPageId, $notesPageId, $ordersPageId, $paymentsPageId];
   @endphp
 
 
@@ -87,8 +86,8 @@
               <i class="fas fa-tasks mr-2"></i> Tasks
             </a>
             <a href="mailto:{{ Auth::user()->Employee_Email }}" class="dropdown-item">
-  <i class="fas fa-envelope mr-2"></i> Email
-</a>
+              <i class="fas fa-envelope mr-2"></i> Email
+            </a>
 
 
             <a href="{{ route('site.settings') }}" class="dropdown-item">
@@ -139,79 +138,79 @@
 
             <!-- Administration Category -->
             @if(collect($administrationPages)->intersect($employee->permissions->pluck('Page_ID'))->count() > 0)
-                <li class="nav-header">ADMINISTRATION</li>
+            <li class="nav-header">ADMINISTRATION</li>
 
-                @if($employee->permissions->contains('Page_ID', $systemUsersPageId))
-                  <li class="nav-item">
-                        <a href="{{ route('systemusers') }}" class="nav-link">
-                            <i class="nav-icon fa-solid fa-address-card"></i>
-                            <p>System Users</p>
-                        </a>
-                  </li> 
-                @endif
+            @if($employee->permissions->contains('Page_ID', $systemUsersPageId))
+            <li class="nav-item">
+              <a href="{{ route('systemusers') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-address-card"></i>
+                <p>System Users</p>
+              </a>
+            </li>
+            @endif
 
-                @if($employee->permissions->contains('Page_ID', $permissionsPageId))
-                  <li class="nav-item">
-                      <a href="{{ route('permissions') }}" class="nav-link">
-                          <i class="nav-icon fa-solid fa-user-lock"></i>
-                          <p>Permissions</p>
-                      </a>
-                  </li>
-                @endif
+            @if($employee->permissions->contains('Page_ID', $permissionsPageId))
+            <li class="nav-item">
+              <a href="{{ route('permissions') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-user-lock"></i>
+                <p>Permissions</p>
+              </a>
+            </li>
+            @endif
             @endif
 
 
 
 
             @if(collect($transactionPages)->intersect($employee->permissions->pluck('Page_ID'))->count() > 0)
-              <li class="nav-header">TRANSACTIONS</li>
- 
-              @if($employee->permissions->contains('Page_ID', $clientPageId))
-                  <li class="nav-item">
-                      <a href="{{ route('clients') }}" class="nav-link">
-                          <i class="nav-icon fas fa-users"></i>
-                          <p>Clients</p>
-                      </a>
-                  </li>
-              @endif
+            <li class="nav-header">TRANSACTIONS</li>
 
-              @if($employee->permissions->contains('Page_ID', $vendorPageId))
-                <li class="nav-item">
-                  <a href="{{ route('vendors.index') }}" class="nav-link">
-                    <i class="nav-icon fa-solid fa-box"></i>
-                    <p>Vendors</p>
-                  </a>
-                </li>
-              @endif
-
-              @if($employee->permissions->contains('Page_ID', $notesPageId))
-                <li class="nav-item">
-                  <a href="{{ route('notes.create') }}" class="nav-link">
-                    <i class="nav-icon fa-solid fa-note-sticky"></i>
-                    <p>Notes</p>
-                  </a>
-                </li>
-              @endif
-  
-              @if($employee->permissions->contains('Page_ID', $ordersPageId))
-                <li class="nav-item"> 
-                  <a href="{{ route('orders.index') }}" class="nav-link">
-                    <i class="nav-icon fa-solid fa-ticket"></i>
-                    <p>Orders</p>
-                  </a> 
-                </li>
-              @endif
-
-              @if($employee->permissions->contains('Page_ID', $paymentsPageId))
-                <li class="nav-item">
-                  <a href="{{ route('payment.index') }}" class="nav-link">
-                      <i class="nav-icon fas fa-regular fa-credit-card"></i>
-                      <p>Payments</p>
-                  </a>
-                </li>
-              @endif
+            @if($employee->permissions->contains('Page_ID', $clientPageId))
+            <li class="nav-item">
+              <a href="{{ route('clients') }}" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Clients</p>
+              </a>
+            </li>
             @endif
- 
+
+            @if($employee->permissions->contains('Page_ID', $vendorPageId))
+            <li class="nav-item">
+              <a href="{{ route('vendors.index') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-box"></i>
+                <p>Vendors</p>
+              </a>
+            </li>
+            @endif
+
+            @if($employee->permissions->contains('Page_ID', $notesPageId))
+            <li class="nav-item">
+              <a href="{{ route('notes.create') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-note-sticky"></i>
+                <p>Notes</p>
+              </a>
+            </li>
+            @endif
+
+            @if($employee->permissions->contains('Page_ID', $ordersPageId))
+            <li class="nav-item">
+              <a href="{{ route('orders.index') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-ticket"></i>
+                <p>Orders</p>
+              </a>
+            </li>
+            @endif
+
+            @if($employee->permissions->contains('Page_ID', $paymentsPageId))
+            <li class="nav-item">
+              <a href="{{ route('payment.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-regular fa-credit-card"></i>
+                <p>Payments</p>
+              </a>
+            </li>
+            @endif
+            @endif
+
             <li class="nav-header">OTHERS</li>
 
             <li class="nav-item">
@@ -434,12 +433,6 @@
         formData.append('Created_By', createdBy);
         formData.append('Description', noteText);
 
-        if (imageFile.length > 0) {
-          for (let i = 0; i < imageFile.length; i++) {
-            imageFormData.append('images[]', imageFile[i]);
-          }
-        }
-
         // Send a POST request with the form data
         fetch('/notes/store', { // Update the URL to the route that handles note saving
             method: 'POST',
@@ -448,29 +441,52 @@
             },
             body: formData
           })
-          .then(response => {return response.json()})
+
+          .then(response => response.json())
           .then(data => {
 
-            fetch(`/notes/${data.noteId}/images`, { 
-            method: 'POST',
-            headers: {
+            if (data.success) {
+              Swal.fire('Success', 'The note has been saved successfully from layout.', 'success');
+              // If images need to be uploaded, do so after the note is saved successfully
+              if (imageFile.length > 0 && data.noteId) {
+                const imageFormData = new FormData();
+                for (let i = 0; i < imageFile.length; i++) {
+                  imageFormData.append('images[]', imageFile[i]);
+                }
+                return fetch(`/notes/${data.noteId}/images`, { // Append the noteId to the route
+                  method: 'POST',
+                  headers: {
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
             },
-            body: imageFormData
-          })
-
-            // Handle success
-            if (data.success) {
-              Swal.fire('Success', 'The note has been saved successfully.', 'success');
-              // Additional actions like closing the modal or clearing the form can go here
+                  body: imageFormData // CSRF token will be included as a cookie
+                });
+              } else {
+                // Resolve the promise chain with a success status if no images are to be uploaded
+                return Promise.resolve({
+                  success: true,
+                  message: "No images to upload."
+                });
+              }
             } else {
-              Swal.fire('Error', data.message, 'error');
+              // If the note wasn't saved successfully, throw an error to be caught later
+              throw new Error(data.message);
+            }
+          })
+          .then(imageResponse => {
+            if (!imageResponse.ok) {
+              throw new Error('Problem with image upload');
+            }
+            return imageResponse.json();
+          })
+          .then(imageData => {
+            if (imageData && imageData.success) {
+              console.log('Images uploaded successfully');
             }
           })
           .catch(error => {
             // Handle errors
             console.error('Error:', error);
-            Swal.fire('Error', 'There was a problem saving the note.', 'error');
+            Swal.fire('Error', 'There was a problem saving the note or uploading images from layout.', 'error');
           });
 
         // Prevent form from submitting normally
