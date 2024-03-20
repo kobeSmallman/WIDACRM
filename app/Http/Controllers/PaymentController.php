@@ -110,7 +110,7 @@ class PaymentController extends Controller
     
         return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
     }
-/*
+/* THIS DOES NOT PUSH CHANGES TO THE DATABASE
     public function updatePayment(Request $request, $id)
     { 
         $payment = Payment::findOrFail($id);
@@ -131,6 +131,7 @@ class PaymentController extends Controller
     
     */
 
+    /* THIS WORKS
     public function updatePayment(Request $request, $id)
     { 
         $payment = Payment::findOrFail($id);
@@ -139,6 +140,26 @@ class PaymentController extends Controller
  
         return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.'); 
     }
+    */
+
+    public function updatePayment(Request $request, $id)
+{ 
+    $payment = Payment::findOrFail($id);
     
+    // Get all the request data.
+    $requestData = $request->all();
+    
+    // Check if the Amount is set and sanitize it.
+    if(isset($requestData['Amount'])) {
+        // Remove any commas and convert to float.
+        $requestData['Amount'] = floatval(str_replace(',', '', $requestData['Amount']));
+    }
+    
+    // Update the payment with sanitized data.
+    $payment->update($requestData);
+
+    return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.'); 
+}
+
     
 }
