@@ -148,8 +148,7 @@
                                 <th>Order ID</th>
                                 <th>Order Date</th>
                                 <th>Remarks</th>
-                                <th>Order Status</th>
-                                <!-- Add more table headers as needed -->
+                                <th>Order Status</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -158,8 +157,7 @@
                                 <td>{{ $order->Order_ID }}</td> 
                                 <td>{{ $order->Order_Date }}</td> 
                                 <td>{{ $order->Remarks }}</td> 
-                                <td>{{ $order->Order_Status }}</td> 
-                                <!-- Add more table cells to display other order details -->
+                                <td>{{ $order->Order_Status }}</td>  
                             </tr>
                             @endforeach
                         </tbody>
@@ -217,5 +215,32 @@ $(document).ready(function() {
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
+
+
+        document.getElementById('Main_Contact').value = "{{ $selectedClient->Main_Contact }}";
+        document.getElementById('Shipping_Address').value = "{{ $selectedClient->Shipping_Address }}";
+        document.getElementById('Billing_Address').value = "{{ $selectedClient->Billing_Address }}";
+        document.getElementById('Email').value = "{{ $selectedClient->Email }}";
+        document.getElementById('Phone_Number').value = "{{ $selectedClient->Phone_Number }}"; 
+
+
+        var leadStatus = "{{ $selectedClient->Lead_Status }}".toUpperCase();;
+        var buyerStatus = "{{ $selectedClient->Buyer_Status }}".toUpperCase();; 
+
+        var leadStatusSelect = document.getElementById('Lead_Status');
+        for (var i = 0; i < leadStatusSelect.options.length; i++) {
+            if (leadStatusSelect.options[i].value === leadStatus) {
+                leadStatusSelect.options[i].selected = true;
+                break;
+            }
+        }
+ 
+        var buyerStatusSelect = document.getElementById('Buyer_Status');
+        for (var j = 0; j < buyerStatusSelect.options.length; j++) {
+            if (buyerStatusSelect.options[j].value === buyerStatus) {
+                buyerStatusSelect.options[j].selected = true;
+                break;
+            }
+        }
     }
 </script>

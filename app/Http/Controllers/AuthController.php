@@ -12,13 +12,11 @@
     use Illuminate\Support\Facades\View;
     use Illuminate\Support\Facades\Session;
 
-
     class AuthController extends Controller
     {
-         
-    
-        public function storeEmployee(Request $request)
+        public function logout(Request $request)
         {
+
             Log::info('Employee creation method called with data:', $request->all());
            
             // For debugging, bypassing the validation
@@ -31,150 +29,73 @@
                 'Employee_Status',
                 'Role_ID',
                 'Password',
+                'Employee_Email',]);
                 // Any other fields you expect from the request
+            Auth::logout();
+            Session::flush(); // Clear session data
+            return redirect('/login');
+        }
+
+        public function showLoginForm()
+        {
+            return view('auth.login');
+        }
+
+        public function login(Request $request)
+        {
+            // Validate the form data
+            $request->validate([
+                'Employee_ID' => 'required|integer',
+                'password' => 'required|string', 
             ]);
         
-            // Manually hash the password
-            $employeeData['Password'] = Hash::make($employeeData['Password']);
-        
-            try {
-                \DB::beginTransaction();
-        
-                // Directly create the employee without validation
-                $employee = Employee::create($employeeData);
-        
-                \DB::commit();
-        
-                Log::info('Employee created successfully.', ['employee_id' => $employee->Employee_ID]);
-        
-                // Redirect to the system users page with a success message
-                return redirect()->route('system-users')->with('success', 'Employee created successfully.');
-            } catch (\Throwable $e) {
-                \DB::rollBack();
-                Log::error('Failed to create employee: ' . $e->getMessage());
-        
-                // Log the query that caused the exception
-                Log::error('Failed query:', \DB::getQueryLog());
-        
-                // Redirect back with an error message
-                return back()->withErrors('Failed to create employee: ' . $e->getMessage())->withInput();
+            // Attempt to log the user in
+            $credentials = $request->only('Employee_ID', 'password');
+            if (Auth::attempt($credentials)) {
+                // Set login cookie with 1-hour expiration
+                $cookie = cookie('logged_in', true, 60);
+
+                // If successful, redirect to their respective dashboard
+                $user = Auth::user();
+                if ($user->isAdmin()) {
+                    return redirect()->route('admin.dashboard')->withCookie($cookie);
+                } else {
+                    return redirect()->route('employee.dashboard')->withCookie($cookie);
+                }
             }
+        
+            // If unsuccessful, redirect back to the login with the form data
+            return back()->withErrors([
+                'Employee_ID' => 'The provided credentials do not match our records.',
+            ])->withInput($request->only('Employee_ID'));
         }
+
+        public function updateProfile(Request $request)
+        {
+            // Validate the form data
+            $request->validate([
+                'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
         
+            $employee = Auth::user(); // Get the authenticated employee
         
-        
-        
-        public function logout(Request $request)
-{
-    Auth::logout();
-    return redirect('/login');
-}
-
-
-
-public function showSystemUsers()
-{
-    $activeEmployees = Employee::with('permissions')->where('Employee_Status', 'Active')->get();
-    $inactiveEmployees = Employee::where('Employee_Status', 'Inactive')->get();
-
-    // The variable must match what you use in the view
-    return view('systemUsers.systemUsers', compact('activeEmployees', 'inactiveEmployees'));
-}
-
-
-        
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
-/*     public function login(Request $request)
-    {
-        // Validate the form data
-        $request->validate([
-            'Employee_ID' => 'required|integer',
-            'password' => 'required|string', // Ensure this matches the 'name' attribute in your form
-        ]);
-    
-        // Attempt to log the user in
-        $credentials = $request->only('Employee_ID', 'password');
-        if (Auth::attempt($credentials)) {
-            // If successful, redirect to their respective dashboard
-            $user = Auth::user();
-            if ($user->isAdmin()) {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('employee.dashboard');
+            // Handle profile image update
+            if ($request->hasFile('profile_image')) {
+                $file = $request->file('profile_image');
+                $imageData = file_get_contents($file->getRealPath()); // Get the binary data of the file
+                $employee->profile_image = base64_encode($imageData); // Store the base64 encoded binary data
+                $employee->save();
             }
-        }
-    
-        // If unsuccessful, redirect back to the login with the form data
-        return back()->withErrors([
-            'Employee_ID' => 'The provided credentials do not match our records.',
-        ])->withInput($request->only('Employee_ID'));
-    } */
-
-    public function login(Request $request)
-    {
-        // Validate the form data
-        $request->validate([
-            'Employee_ID' => 'required|integer',
-            'password' => 'required|string',
-        ]);
-    
-        // Attempt to log the user in
-        // Manually constructing credentials array to use 'Employee_ID' as the username
-        $credentials = ['Employee_ID' => $request->Employee_ID, 'password' => $request->password];
         
-        // Customizing the authentication attempt to use 'Employee_ID' as the username field
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            $user = Auth::user();
-            
-            // Redirect the user based on their role
-            if ($user->isAdmin()) { // Assuming isAdmin is a method to check user role
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('employee.dashboard');
-            }
+            return back()->with('success', 'Profile updated successfully.');
         }
-    
-        // If unsuccessful, then redirect back to the login with the form data and error message
-        return back()->withErrors(['login_error' => 'The provided credentials do not match our records.'])
-                     ->withInput($request->only('Employee_ID'));
-    }
-    
+         
+        public function showProfile()
+        {
+            // Assuming you are using the default Laravel authentication system
+            $employee = Auth::user(); // Get the currently authenticated employee
 
-    public function updateProfile(Request $request)
-    {
-        // Validate the form data
-        $request->validate([
-            'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-    
-        $employee = Auth::user(); // Get the authenticated employee
-    
-        // Handle profile image update
-        if ($request->hasFile('profile_image')) {
-            $file = $request->file('profile_image');
-            $imageData = file_get_contents($file->getRealPath()); // Get the binary data of the file
-            $employee->profile_image = base64_encode($imageData); // Store the base64 encoded binary data
-            $employee->save();
+            // Pass the employee object to the profile view
+            return view('profiles.employeeProfile', compact('employee'));
         }
-    
-        return back()->with('success', 'Profile updated successfully.');
-    }
-    
-
-    
-
-    
-public function showProfile()
-{
-    // Assuming you are using the default Laravel authentication system
-    $employee = Auth::user(); // Get the currently authenticated employee
-
-    // Pass the employee object to the profile view
-    return view('profiles.employeeProfile', compact('employee'));
-}
-}
+        }

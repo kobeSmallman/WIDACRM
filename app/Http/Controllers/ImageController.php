@@ -44,7 +44,7 @@ class ImageController extends Controller
     public function store(Request $request, Note $note) // maybe add int to $noteId
     {
         $request->validate([
-            'images.*' => 'required|image|mimes:png,jpg,jpeg,webp'
+            'images.*' => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
         // Find the note by ID

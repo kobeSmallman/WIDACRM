@@ -89,6 +89,10 @@
                                     <label for="Password">Password</label>
                                     <input type="password" class="form-control" name="Password" id="Password" placeholder="Password" required>
                                 </div>
+                                <div class="form-group">
+                    <label for="EmployeeEmail">Email</label>
+                    <input type="email" class="form-control" name="Employee_Email" id="EmployeeEmail" placeholder="Employee Email" required>
+                </div>
                                 <button type="submit" class="btn btn-primary btn-block mt-4">Create Employee</button>
                             </form>
                         </div>
