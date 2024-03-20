@@ -33,7 +33,7 @@ class Payment extends Model
     // Define relationships
     public function order()
     {
-        return $this->belongsTo(Order::class, 'Order_ID', 'Order_ID');
+        return $this->belongsTo(Order::class, 'Order_ID', 'Order_ID','Order_DATE','Order_Status','Remarks');
     }
 
     public function paymentType()
@@ -43,7 +43,7 @@ class Payment extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'Item_ID', 'Item_ID');
+        return $this->belongsTo(Product::class, 'Item_ID', 'Item_ID','Quantity','Product_Price');
     }
 
 }
