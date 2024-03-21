@@ -44,11 +44,11 @@ class ImageController extends Controller
     public function store(Request $request, Note $note) // maybe add int to $noteId
     {
         $request->validate([
-            'images.*' => 'required|image|mimes:png,jpg,jpeg'
+            'images.*' => 'image|mimes:png,jpg,jpeg'
         ]);
 
         // Find the note by ID
-        $note = Note::findOrFail($note->noteId);
+        $note = Note::findOrFail($note->Note_ID);
 
         // Retrieve uploaded files
         $imageData = [];
@@ -57,11 +57,12 @@ class ImageController extends Controller
             foreach ($images as $image) {
                 $extension = $image-> getClientOriginalExtension();
                 $fileName = time(). '.' .$extension;
+                $image->storeAs('images', $fileName); // Make sure you have 'images' disk configured in filesystems.php
 
                 $imageData[] = [
-                    'note_ID' => $note->id,
+                    'Note_ID' => $note->Note_ID,
                     'IMG_MIME' => $extension,
-                    'IMG_Data' => $image,
+                    'IMG_Data' => file_get_contents($image), // Store the image content
                 ];
             }
         }
@@ -69,7 +70,7 @@ class ImageController extends Controller
         Image::insert($imageData);
 
         // Return a response to the client
-        return response()->json(['success' => true, 'message' => 'Note saved successfully', 'noteId' => $note->Note_ID]);
+        return response()->json(['success' => true, 'message' => 'Note saved successfully note controller']);
     }
 
     // public function store(Request $request, $noteId) // maybe add int to $noteId

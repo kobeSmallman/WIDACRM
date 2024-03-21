@@ -63,6 +63,7 @@ class PaymentController extends Controller
         $payment->Date = $request->Date;
         $payment->PMT_Cat = $request->PMT_Cat;
         $payment->Amount = $request->Amount;
+        $payment->Remarks = $request->Remarks;
         // Assign the payment type ID from the request directly
         $payment->PMT_Type_ID = $request->PMT_Type_ID;
 

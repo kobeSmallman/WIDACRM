@@ -21,20 +21,15 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- Button to toggle the form -->
-            <div class="mb-3">
-                <a href="{{ route('vendors.create') }}" class="btn btn-primary">
-                     Add New Vendor
-                </a>
-            </div>
-
-        
-
                     <!-- Vendors Table -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">List of Vendors</h3>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">List of Clients</h3> 
+                        <div class="ml-auto">
+                                        <!-- Button to toggle the form -->
+                            <a href="{{ route('vendors.create') }}" class="btn btn-primary">Add New Vendor</a>
                         </div>
+                    </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="vendors-table" class="table table-bordered table-striped">

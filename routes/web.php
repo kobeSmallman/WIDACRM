@@ -194,7 +194,7 @@ Route::get('/access-denied', function () {
     // (NOTES) Display the page to take notes with a list of clients ||||| Notes page
     Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
     Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
-    Route::post('/notes/{noteId}/images', [ImageController::class, 'store'])->name('images.store');
+    Route::post('/notes/{note}/images', [ImageController::class, 'store'])->name('images.store');
     //notes page
     Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
     Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');

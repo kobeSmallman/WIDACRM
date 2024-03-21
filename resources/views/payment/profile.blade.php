@@ -96,6 +96,13 @@
                                 </select>
                             </div>
                         </div>  
+
+                        <div class="form-group row">
+                            <label for="Remarks" class="col-sm-3 col-form-label text-right">Remarks:</label>
+                            <div class="col-sm-6">
+                                <input type="text" id="Remarks" name="Remarks" class="form-control" placeholder="Example: Payment declined" value="{{ $payment->Remarks }}" disabled>
+                            </div>
+                        </div>  
                         
                         <div class="form-group row">
                             <div class="offset-sm-3 col-sm-6">
@@ -103,7 +110,7 @@
                                 <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
                                 <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
                             </div>
-                        </div>
+                        </div>                      
                     <!--Hidden field to carry Order ID info-->
                     <input type="hidden" name="Order_ID" value="{{ $payment->Order_ID }}">
                 </form>
@@ -122,6 +129,7 @@
         document.getElementById('Amount').disabled = false;
         document.getElementById('PMT_Type_ID').disabled = false;
         document.getElementById('Product_Name').disabled = false;
+        document.getElementById('Remarks').disabled = false;
         document.getElementById('btnSave').style.display = 'inline';
         document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
@@ -134,6 +142,7 @@
         document.getElementById('Amount').disabled = true;
         document.getElementById('PMT_Type_ID').disabled = true;
         document.getElementById('Product_Name').disabled = true;
+        document.getElementById('Remarks').disabled = true;
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
