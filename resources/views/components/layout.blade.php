@@ -211,7 +211,15 @@
                 </li>
               @endif
             @endif
- 
+            <li class="nav-header">REPORTS</li>
+            <li class="nav-item">
+  <a href="{{ route('reports.index') }}" class="nav-link">
+    <i class="nav-icon fas fa-solid fa-file-contract"></i>
+    <p>Reports</p>
+  </a>
+</li>
+
+
             <li class="nav-header">OTHERS</li>
 
             <li class="nav-item">

@@ -4,3 +4,5 @@
 [29-Feb-2024 00:23:33 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) in C:\Users\student\WIDACRM\vendor\spatie\ignition\src\Ignition.php on line 118
 [29-Feb-2024 00:26:50 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 32768 bytes) in C:\Users\student\WIDACRM\storage\framework\views\fea21e1ca31a526c27389ec16c858687.php on line 1
 [29-Feb-2024 00:26:50 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 65536 bytes) in C:\Users\student\WIDACRM\vendor\spatie\ignition\src\Ignition.php on line 342
+[20-Mar-2024 18:23:27 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\DashboardController::generateMonthlyOrdersChart() in C:\Users\student\WIDACRM\app\Http\Controllers\DashboardController.php on line 72
+[20-Mar-2024 23:50:42 UTC] PHP Fatal error:  Access level to koolreport\KoolReport@anonymous::setup() must be protected (as in class koolreport\KoolReport) or weaker in C:\Users\student\WIDACRM\app\Http\Controllers\DashboardController.php on line 52

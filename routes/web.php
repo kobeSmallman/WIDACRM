@@ -19,7 +19,9 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\OrderStatusReportController;
 use App\Http\Controllers\SalesByEmployeeReportController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ReportController;
 
+// ...
 
 
 /*
@@ -52,7 +54,7 @@ Route::get('/access-denied', function () {
 
 
     Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
-
+    
     Route::get('/tab-content/showcaseOne', function () {
         return view('dashboard.adminDashboardShowcaseOne');
     })->name('tabs.showcaseOne');
@@ -359,3 +361,5 @@ Route::get('/reports/orders-by-status', [OrderStatusReportController::class, 'in
 
 
 Route::get('/reports/sales-by-employee', [SalesByEmployeeReportController::class, 'index'])->name('salesByEmployeeReport.index');
+Route::get('/reports/sales-by-employee-personal', [PersonalReportController::class, 'index'])->name('salesByEmployeePersonal.index');
+Route::get('/reports', [ReportController::class, 'indexReports'])->name('reports.index');

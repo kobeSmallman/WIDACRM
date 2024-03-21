@@ -121,15 +121,11 @@ public function store(Request $request)
         DB::commit();
 
         // Redirect back with a success message
+       
         return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     } catch (\Exception $e) {
-        // Rollback the transaction in case of error
         DB::rollback();
-
-        // Log the error message
         Log::error($e->getMessage());
-
-        // Redirect back with an error message
         return back()->withErrors('Failed to create order.')->withInput();
     }
 }
