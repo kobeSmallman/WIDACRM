@@ -173,16 +173,7 @@
               </a>
             </li>
             @endif
-<<<<<<< HEAD
-            <li class="nav-header">REPORTS</li>
-            <li class="nav-item">
-  <a href="{{ route('reports.index') }}" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-file-contract"></i>
-    <p>Reports</p>
-  </a>
-</li>
-
-=======
+          
 
             @if($employee->permissions->contains('Page_ID', $vendorPageId))
             <li class="nav-item">
@@ -220,8 +211,15 @@
             </li>
             @endif
             @endif
->>>>>>> a2f95ed1a12146d12ef6856c742718d6540714bd
-
+            @if($employee->permissions->contains('Page_ID', $paymentsPageId))
+            <li class="nav-header">REPORTS</li>
+            <li class="nav-item">
+  <a href="{{ route('reports.index') }}" class="nav-link">
+    <i class="nav-icon fas fa-solid fa-file-contract"></i>
+    <p>Reports</p>
+  </a>
+</li>
+@endif
             <li class="nav-header">OTHERS</li>
 
             <li class="nav-item">
