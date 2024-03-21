@@ -54,7 +54,7 @@
             if (Auth::attempt($credentials)) {
                 // Set login cookie with 1-hour expiration
                 $cookie = cookie('logged_in', true, 60);
-
+        
                 // If successful, redirect to their respective dashboard
                 $user = Auth::user();
                 if ($user->isAdmin()) {
@@ -65,10 +65,12 @@
             }
         
             // If unsuccessful, redirect back to the login with the form data
+            // It's better to use a generic error message key here, like 'login_error'
             return back()->withErrors([
-                'Employee_ID' => 'The provided credentials do not match our records.',
-            ])->withInput($request->only('Employee_ID'));
+                'login_error' => 'The provided credentials do not match our records.',
+            ])->withInput($request->except('password')); // Exclude the password from the old input to avoid security risk
         }
+        
 
         public function updateProfile(Request $request)
         {
