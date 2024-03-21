@@ -45,6 +45,11 @@ public function client()
 {
     return $this->belongsTo(Client::class, 'Client_ID', 'Client_ID');
 }
+// In your Order model
+public function payments()
+{
+    return $this->hasMany(Payment::class, 'Order_ID', 'Order_ID');
+}
 
 public function creator() // Assuming 'creator' represents the 'Created_By' user
 {

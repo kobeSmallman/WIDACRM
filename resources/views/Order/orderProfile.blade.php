@@ -126,8 +126,21 @@
                     <button onclick="printOrder()" class="btn btn-sm btn-primary">Print</button>
                     <button onclick="downloadOrder()" class="btn btn-sm btn-secondary">Download</button>
                     <a href="{{ route('orders.edit', $order->Order_ID) }}" class="btn btn-sm btn-warning">
-        <i class="fas fa-pencil-alt"></i> Edit Order
+    <i class="fas fa-pencil-alt"></i> Edit Order
+</a>
+@if ($order->payments && $order->payments->count() > 0)
+    <a href="{{ route('orders.editPayment', ['order' => $order->Order_ID]) }}" class="btn btn-sm btn-info">
+        <i class="fas fa-money-bill"></i> Edit Order Payment
     </a>
+@else
+    <a href="{{ route('orders.addPayment', ['order' => $order->Order_ID]) }}" class="btn btn-sm btn-info">
+        <i class="fas fa-money-bill"></i> Add Order Payment
+    </a>
+@endif
+<a href="{{ route('clients.editClient', $order->client->Client_ID) }}" class="btn btn-sm btn-success">
+    <i class="fas fa-user"></i> Edit Client
+</a>
+
                 </div>
                 <a href="{{ route('orders.index') }}" class="btn back-button">Back to Orders</a>
             </div>
@@ -182,19 +195,20 @@
                     </div>
 
                     <div class="payment-details">
-                        <h4>Payment Information</h4>
-                        <!-- Assuming $order->payments contains the payment information -->
-                        @if ($order->payments)
-                @foreach ($order->payments as $payment)
-                            <p><strong>Payment ID:</strong> {{ $payment->PMT_ID }}</p>
-                            <p><strong>Payment Type:</strong> {{ $payment->payment_type->PMT_Type_Name }}</p>
-                            <p><strong>Amount:</strong> {{ $payment->Amount }}</p>
-                            <!-- Add more fields from the Payment table if necessary -->
-                            @endforeach
-            @else
-                <p>No payment information found.</p>
-            @endif
-                    </div>
+    <h4>Payment Information</h4>
+    @if ($order->payments && $order->payments->count() > 0)
+        @foreach ($order->payments as $payment)
+            <p><strong>Payment ID:</strong> {{ $payment->PMT_ID }}</p>
+            <p><strong>Payment Type:</strong> {{ $payment->paymentType->PMT_Type_Name ?? 'N/A' }}</p>
+            <p><strong>Amount:</strong> {{ $payment->Amount }}</p>
+            <p><strong>Date:</strong> {{ optional($payment->Date)->format('Y-m-d') }}</p>
+            <p><strong>Remarks:</strong> {{ $payment->Remarks }}</p>
+        @endforeach
+    @else
+        <p>No payment information available.</p>
+    @endif
+</div>
+
                 </div>
                 
             </div>

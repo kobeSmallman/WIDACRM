@@ -107,8 +107,6 @@ Route::get('/access-denied', function () {
     // Add a route to fetch all orders for all clients
 
     // Display a listing of the orders
-    // Display a listing of the orders
-    // Display a listing of the orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     // Show the form for creating a new order
@@ -137,6 +135,13 @@ Route::get('/access-denied', function () {
     Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
     Route::get('/orders/details/{orderId}', [OrderController::class, 'getOrderDetails'])->name('orders.details');
     Route::post('/save-order', 'OrderController@updateOrder');
+// Existing order routes
+Route::get('/orders/edit/{order}', [OrderController::class, 'edit'])->name('orders.edit');
+Route::get('/order/{order}/edit-payment', [OrderController::class, 'editPayment'])->name('orders.editPayment');
+Route::get('/order/{order}/add-payment', [OrderController::class, 'addPayment'])->name('orders.addPayment');
+
+// Existing client route
+Route::get('/clients/client-info/{client}', [ClientController::class, 'editClient'])->name('clients.editClient');
 
 
     // Make sure you have only one edit route and that the method is GET for showing the form

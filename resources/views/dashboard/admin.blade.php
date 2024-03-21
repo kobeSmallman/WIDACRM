@@ -60,7 +60,7 @@
 
     <!-- Button to view all reports -->
     <div class="mt-3 text-center">
-        <a href="{{ url('reports/indexReports') }}" class="btn btn-primary">View All Reports</a>
+        <a href="{{ route('reports.index') }}" class="btn btn-primary">View All Reports</a>
     </div>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

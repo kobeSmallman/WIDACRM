@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Client;
 use App\Models\Vendor;
 use App\Models\Employee;
+use App\Models\Payment;
+use App\Models\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -129,12 +131,44 @@ public function store(Request $request)
         return back()->withErrors('Failed to create order.')->withInput();
     }
 }
+public function editPayment($orderId)
+{
+    $order = Order::with(['payments', 'products'])->findOrFail($orderId);
+    $payment = $order->payments->first();
 
-    public function show($id)
-    {
-        $order = Order::with(['client', 'products'])->findOrFail($id);
-        return view('Order.orderProfile', compact('order'));
+    if (!$payment) {
+        return redirect()->route('orders.addPayment', ['order' => $orderId]);
     }
+
+    $selectedOrder = $order; // Assuming the 'payment.profile' view needs this variable
+    $orderDetails = $order->products;
+    $paymentTypes = PaymentType::where('Active_Status', 'Active')
+                                ->pluck('PMT_Type_Name', 'PMT_Type_ID');
+    $orders = Order::pluck('Order_ID', 'Order_ID');
+
+    return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
+}
+
+
+public function addPayment($orderId)
+{
+    $selectedOrder = Order::findOrFail($orderId);
+    $orders = Order::pluck('Order_ID', 'Order_ID');
+    $paymentTypes = PaymentType::where('Active_Status', 'Active')->pluck('PMT_Type_Name', 'PMT_Type_ID');
+
+    // Pass the selected order to the view
+    return view('payment.addPayment', compact('selectedOrder', 'orders', 'paymentTypes'));
+}
+
+
+
+public function show($id)
+{
+    // Eager load the 'payments' relationship with the order
+    $order = Order::with(['client', 'products', 'payments'])->findOrFail($id);
+    return view('Order.orderProfile', compact('order'));
+}
+
     public function edit($orderId)
     {
         $order = Order::with(['client', 'products'])->findOrFail($orderId);
@@ -324,7 +358,7 @@ public function store(Request $request)
             'recordsFiltered' => count($formattedOrders),
         ]);
     }
-
+    
     public static function list() {
         $orders = DB::select('select * from u126104410_Hexacrm.Order');
         return view('notes.orderDetails', ['orders' => $orders]);
