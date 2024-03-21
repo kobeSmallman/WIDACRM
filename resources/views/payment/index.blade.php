@@ -18,14 +18,14 @@
     <!-- Begin Page Content -->
     <div class="container-fluid"> 
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Payment Records</h3>
+                    <div class="ml-auto">
+                        <a href="{{ route('payment.create') }}" class="btn btn-primary">Add New Payment</a>
+                    </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-
-                <a href="{{ route('payment.create') }}" class="btn btn-primary mb-3">Add Payment</a>
-
                 <table id="paymentRecords" class="table table-bordered table-striped">
                     <thead>
                         <tr>
