@@ -199,7 +199,7 @@
     @if ($order->payments && $order->payments->count() > 0)
         @foreach ($order->payments as $payment)
             <p><strong>Payment ID:</strong> {{ $payment->PMT_ID }}</p>
-            <p><strong>Payment ID:</strong> {{ $payment->PMT_Cat }}</p>
+            <p><strong>Payment Category:</strong> {{ $payment->PMT_Cat }}</p>
             <p><strong>Payment Type:</strong> {{ $payment->paymentType->PMT_Type_Name ?? 'N/A' }}</p>
             <p><strong>Amount:</strong> {{ $payment->Amount }}</p>
             <p><strong>Date:</strong> {{ optional($payment->Date)->format('Y-m-d') }}</p>
