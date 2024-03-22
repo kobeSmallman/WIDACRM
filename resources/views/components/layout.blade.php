@@ -250,7 +250,14 @@
 
 
             <!-- Client Selection Dropdown -->
-            <input type="hidden" id="createdBy" name="createdBy" value="{{ auth()->user()->Employee_ID }}">
+            <label for="clientSelect">Select Client:</label>
+            <select id="clientSelect">
+              <option value="">--Select a Client--</option>
+              <!-- Options will be populated dynamically from the $clients array -->
+              @foreach ($clients as $client)
+              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
+              @endforeach
+            </select>
 
             <!-- Interaction Type Dropdown -->
             <label for="interactionType">Interaction Type:</label>
