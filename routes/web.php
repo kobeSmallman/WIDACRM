@@ -90,7 +90,20 @@ Route::get('/access-denied', function () {
 
     //Permissions routes
     Route::get('/permissions', [PermissionController::class, 'index'])
-        ->name('permissions');
+        ->name('permissions')
+        ->middleware('checkAccess:Permissions');
+    Route::get('/permissions/employee-permission/{employee}', [PermissionController::class, 'editPermission'])
+        ->name('permissions.edit')
+        ->middleware('checkAccess:Permissions');
+    Route::put('/permissions/employee-permission/update', [PermissionController::class, 'updatePermission'])
+        ->name('permissions.update')
+        ->middleware('checkAccess:Permissions'); 
+    Route::delete('/permissions/employee-permission/{id}', [PermissionController::class, 'deletePermission'])
+        ->name('permissions.delete')
+        ->middleware('checkAccess:Permissions');
+    Route::post('/permissions/employee-permission/save', [PermissionController::class, 'savePermission'])
+        ->name('permissions.save')
+        ->middleware('checkAccess:Permissions');
 
     // Notes
     Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');

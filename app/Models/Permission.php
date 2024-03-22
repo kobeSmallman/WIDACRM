@@ -12,9 +12,12 @@ class Permission extends Model
     protected $table = 'Permissions';
     protected $primaryKey = 'Permission_ID';
     protected $fillable = [
-        'Employee_ID', 'Page_ID', 'Full_Access', 'Read'
+        'Employee_ID', 'Page_ID', 'Full_Control'
     ]; 
-    
+
+    public $timestamps = false; // Disable timestamps
+
+ 
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'Employee_ID', 'Employee_ID');

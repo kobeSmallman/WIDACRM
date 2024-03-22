@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Blade;
 use App\Models\Client;
 use App\Models\Employee;
 
+use Illuminate\Support\Facades\Validator;
+use App\Models\Permission;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -48,6 +51,21 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $view->with('employees', Employee::all());
+        });
+
+        // PERMISSIONS
+        Validator::extend('unique_permission', function ($attribute, $value, $parameters, $validator) { 
+            $employeeId = $validator->getData()['Employee_ID'];
+     
+            $exists = Permission::where('Employee_ID', $employeeId)
+                ->where('Page_ID', $value)
+                ->exists();
+    
+            if ($exists) { 
+                $validator->errors()->add($attribute, 'Permission for selected page already exists for the employee.');
+            }
+        
+            return !$exists;
         });
          
      }

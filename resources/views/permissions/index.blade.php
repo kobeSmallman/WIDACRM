@@ -21,48 +21,38 @@
 <div class="container-fluid"> 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0">List of Permissions</h3> 
-            <div class="ml-auto">
-                <a href="" class="btn btn-primary">New Client</a>
-            </div>
-        </div>
- 
+            <h3 class="card-title mb-0">List of Users</h3>  
+        </div>  
+        
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="tblPermissions" class="table table-bordered table-striped">
+            <table id="tblEmployees" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 70px !important;">Edit</th>
-                        <th>Client Name</th>
-                        <th>Main Contact</th>
-                        <th>Shipping Address</th>
-                        <th>Billing Address</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Lead Status</th>
-                        <th>Buyer Status</th> 
+                        <th style="width: 50px !important;">Manage</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <!-- Add more headers if needed -->
                     </tr>
                 </thead>
-                <tbody>  
-                    <tr>
-                        <td>
-                            <form id="" action=" " method="POST" style="display: inline;">
-                           
-                                <button type="button" class="btn btn-default btn-sm delete-btn" data-client-id=" ">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </form>
-                        </td>
-                        <td><a href=" "> </td>
-                        <td> </td>  
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                            
-                    </tr> 
+                <tbody>
+                    @foreach ($activeEmployees as $employee)
+                        <tr>
+                            <td> 
+                                <a href="{{ route('permissions.edit', $employee->Employee_ID) }}" class="btn btn-default btn-sm">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td>{{ $employee->Employee_ID }}</td>
+                            <td><a href="{{ route('permissions.edit', $employee->Employee_ID) }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</a></td>
+                            <td>{{ $employee->Department }}</td>
+                            <td>{{ $employee->Position }}</td>
+                            <td>{{ $employee->Employee_Status }}</td>  
+                        </tr>
+                    @endforeach
                 </tbody> 
             </table>
         </div>
@@ -88,17 +78,14 @@
 <script>
 
     $(document).ready(function() {   
-        $("#tblPermissions").DataTable({
-            "aaSorting": [],
-            "columnDefs": [
-                { "orderable": false, "targets": [0,4] }
-            ],
+        $("#tblEmployees").DataTable({
+            "aaSorting": [], 
             "responsive": true, 
             "lengthChange": false, 
             "autoWidth": false, 
             "buttons": ["excel", "pdf", "print", "colvis"]
             
-        }).buttons().container().appendTo('#tblPermissions_wrapper .col-md-6:eq(0)');
+        }).buttons().container().appendTo('#tblEmployees_wrapper .col-md-6:eq(0)');
 
     });
 
