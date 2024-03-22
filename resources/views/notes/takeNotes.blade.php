@@ -345,16 +345,26 @@
 
         }
 
-        document.getElementById('clientInput').addEventListener('input', function(e) {
-            var inputVal = e.target.value;
-            var dataList = document.getElementById('clientsDatalist').options;
-            for (var i = 0; i < dataList.length; i++) {
-                if (dataList[i].value === inputVal) {
-                    displayClientDetails(dataList[i].getAttribute('data-client-id'));
-                    break;
-                }
-            }
-        });
+        document.getElementById('clientInput').addEventListener('focus', function(e) {
+    // When the input field is focused, clear its value
+    e.target.value = '';
+}, true);
+
+document.getElementById('clientInput').addEventListener('input', function(e) {
+    var inputVal = e.target.value;
+    var dataList = document.getElementById('clientsDatalist').options;
+    for (var i = 0; i < dataList.length; i++) {
+        if (dataList[i].value === inputVal) {
+            displayClientDetails(dataList[i].getAttribute('data-client-id'));
+            // Optionally, you might want to clear the input after a delay, giving time for your function to use the input's value
+            setTimeout(function() {
+                e.target.value = '';
+            }, 100);
+            break;
+        }
+    }
+});
+
 
 
 
