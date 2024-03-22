@@ -28,7 +28,7 @@ class ClientController extends BaseController
     }
 
     public function update(Request $request, $id)
-    { 
+    {  
         $client = Client::findOrFail($id);
          
         $client->update($request->all());

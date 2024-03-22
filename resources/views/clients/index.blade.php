@@ -47,9 +47,9 @@
                     @foreach ($clients as $client)
                         <tr>
                             <td>
-                            <a href="{{ route('clients.editClient', $client->Client_ID)  }}" class="btn btn-default btn-sm" style="color: gray;">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                <a href="{{ route('clients.editClient', $client->Client_ID)  }}" class="btn btn-default btn-sm" style="color: gray;">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                                 <form id="deleteForm{{ $client->Client_ID }}" action="{{ route('clients.deleteClient', $client->Client_ID) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
