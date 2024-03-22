@@ -123,6 +123,14 @@
         .note-link:hover {
             background-color: #e0e0e0;
         }
+
+        #clientInput {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
     </style>
 
 
@@ -130,54 +138,54 @@
     <!-- Layout structure -->
     <div class="container">
         <!-- Client list -->
-        <div class="client-list">
-            @foreach ($clients as $client)
-            <div onclick="displayClientDetails('{{ $client->Client_ID }}')">
-                {{ $client->Company_Name }}
+        <input list="clientsDatalist" id="clientInput" name="clientInput" placeholder="Search for a client...">
+            <datalist id="clientsDatalist">
+                @foreach ($clients as $client)
+                <option value="{{ $client->Company_Name }}" data-client-id="{{ $client->Client_ID }}">
+                    @endforeach
+            </datalist>
+
+
+            <!-- Client Details -->
+            <div class="client-details" id="clientDetails">
+                <!-- Client information will be loaded here via JavaScript -->
+                <p>Select a client to view Information details</p>
             </div>
-            @endforeach
-        </div>
 
-        <!-- Client Details -->
-        <div class="client-details" id="clientDetails">
-            <!-- Client information will be loaded here via JavaScript -->
-            <p>Select a client to view Information details</p>
-        </div>
-
-        <!-- Notes Links -->
-        <div class="notes-links" id="notesLinks">
-            <p>Select a client to view Older Notes</p>
-            <!-- Links to individual notes will be loaded here via JavaScript -->
-        </div>
-
-        <!-- Note Content -->
-        <div class="note-content" id="clientNote">
-            <p>Select a Note to view Note details</p>
-            <!-- Selected note content will be displayed here -->
-        </div>
-
-        <!-- Orders Details -->
-        <div class="orders-details" id="ordersDetails">
-            <!-- Orders will be loaded here via JavaScript -->
-            <div class="table-container">
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Created By</th>
-                            <th>Request Date</th>
-                            <th>Request Status</th>
-                            <th>Order Date</th>
-                            <th>Order Status</th>
-                            <th>Quotation Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Last 5 orders will be loaded here by JavaScript -->
-                    </tbody>
-                </table>
+            <!-- Notes Links -->
+            <div class="notes-links" id="notesLinks">
+                <p>Select a client to view Older Notes</p>
+                <!-- Links to individual notes will be loaded here via JavaScript -->
             </div>
-        </div>
+
+            <!-- Note Content -->
+            <div class="note-content" id="clientNote">
+                <p>Select a Note to view Note details</p>
+                <!-- Selected note content will be displayed here -->
+            </div>
+
+            <!-- Orders Details -->
+            <div class="orders-details" id="ordersDetails">
+                <!-- Orders will be loaded here via JavaScript -->
+                <div class="table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Created By</th>
+                                <th>Request Date</th>
+                                <th>Request Status</th>
+                                <th>Order Date</th>
+                                <th>Order Status</th>
+                                <th>Quotation Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Last 5 orders will be loaded here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
 
     <script>
@@ -239,6 +247,18 @@
                 .catch(error => console.error('Error:', error));
 
         }
+
+        document.getElementById('clientInput').addEventListener('input', function(e) {
+            var inputVal = e.target.value;
+            var dataList = document.getElementById('clientsDatalist').options;
+            for (var i = 0; i < dataList.length; i++) {
+                if (dataList[i].value === inputVal) {
+                    displayClientDetails(dataList[i].getAttribute('data-client-id'));
+                    break;
+                }
+            }
+        });
+
 
         function fetchNotesDetails(clientId) {
             fetch(`/clients/${clientId}/notesAJAX`)

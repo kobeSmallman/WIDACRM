@@ -113,7 +113,7 @@ Route::get('/access-denied', function () {
     // Notes
     Route::get('/clients/{id}/notes', [ClientController::class, 'notes'])->name('clients.notes');
     Route::get('/clients/{id}/notesCount', [ClientController::class, 'notesCount'])->name('clients.notesCount');
-    Route::get('/clients/{id}/last-orders', [ClientController::class, 'lastOrders'])->name('clients.lastOrders');
+    
 
 
 
@@ -220,6 +220,7 @@ Route::get('/clients/client-info/{client}', [ClientController::class, 'editClien
     // Route to show the form for editing a specific note
     Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
     // Route to update a specific note
+    Route::get('/clients/{id}/last-orders', [NoteController::class, 'lastOrders'])->name('clients.lastOrders');
     //Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
     //Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
     // Display the page to create a new request based on the selected client

@@ -73,34 +73,6 @@ class ImageController extends Controller
         return response()->json(['success' => true, 'message' => 'Note saved successfully note controller']);
     }
 
-    // public function store(Request $request, $noteId) // maybe add int to $noteId
-    // {
-    //     // Find the note by ID
-    //     $note = Note::findOrFail($noteId);
-
-    //     // Retrieve uploaded files
-    //     $imageData = [];
-    //     if ($images = $request->file('images')) {
-
-    //         foreach ($images as $image) {
-    //             // Save each image with the Note_ID
-    //             $newImage = new Image();
-    //             $newImage->Note_ID = $note->Note_ID; // Associate image with the note
-    //             $newImage->IMG_MIME = $image->getClientMimeType();
-    //             $newImage->IMG_Data = file_get_contents($image); // Store the image file's contents
-    //             $newImage->save();
-
-    //             $imageData[] = [
-    //                 'note_ID' => $noteId->id,
-    //             ];
-    //         }
-    //     }
-    //     // Return a response to the client
-    //     return response()->json(['success' => true, 'message' => 'Images uploaded successfully']);
-    // }
-
-
-
 
 
     /**
