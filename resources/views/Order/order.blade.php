@@ -19,9 +19,14 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="mb-3">
-                <a href="{{ route('orders.create') }}" class="btn btn-primary">Create New Order</a>
-            </div>
+            <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">List of Orders</h3> 
+                        <div class="ml-auto">
+                                        <!-- Button to toggle the form -->
+                            <a href="{{ route('orders.create') }}" class="btn btn-primary">Create New Order</a>
+                        </div>
+                    </div>
 
             <!-- Orders Table -->
             <div class="card">

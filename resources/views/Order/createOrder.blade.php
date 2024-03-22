@@ -85,7 +85,7 @@
 </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-</x-layout>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var vendors = @json($vendors); // Make sure $vendors is passed correctly to the view
@@ -181,5 +181,11 @@
         }
     };
 });
+
+
 </script>
 
+
+<!-- Check for the 'success' session variable and display a SweetAlert -->
+
+</x-layout>

@@ -19,7 +19,9 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\OrderStatusReportController;
 use App\Http\Controllers\SalesByEmployeeReportController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ReportController;
 
+// ...
 
 
 /*
@@ -48,8 +50,11 @@ Route::get('/access-denied', function () {
 
  
     // Dashboard routes
-    Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 
+
+
+    Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+    
     Route::get('/tab-content/showcaseOne', function () {
         return view('dashboard.adminDashboardShowcaseOne');
     })->name('tabs.showcaseOne');
@@ -115,8 +120,6 @@ Route::get('/access-denied', function () {
     // Add a route to fetch all orders for all clients
 
     // Display a listing of the orders
-    // Display a listing of the orders
-    // Display a listing of the orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     // Show the form for creating a new order
@@ -145,6 +148,13 @@ Route::get('/access-denied', function () {
     Route::get('/orders/all', [OrderController::class, 'getAllOrders'])->name('orders.all');
     Route::get('/orders/details/{orderId}', [OrderController::class, 'getOrderDetails'])->name('orders.details');
     Route::post('/save-order', 'OrderController@updateOrder');
+// Existing order routes
+Route::get('/orders/edit/{order}', [OrderController::class, 'edit'])->name('orders.edit');
+Route::get('/order/{order}/edit-payment', [OrderController::class, 'editPayment'])->name('orders.editPayment');
+Route::get('/order/{order}/add-payment', [OrderController::class, 'addPayment'])->name('orders.addPayment');
+
+// Existing client route
+Route::get('/clients/client-info/{client}', [ClientController::class, 'editClient'])->name('clients.editClient');
 
 
     // Make sure you have only one edit route and that the method is GET for showing the form
@@ -196,14 +206,13 @@ Route::get('/access-denied', function () {
     Route::get('/profile/{employee}', [AuthController::class, 'showProfile'])->name('profile');
 
     // Report routes
-    Route::get('/ordersummary', [OrderSummaryController::class, 'index'])->name('ordersummary.index');
     Route::get('/clientsummary', [ClientSummaryController::class, 'index'])->name('clientsummary.index');
     Route::get('/vendorsummary', [VendorSummaryController::class, 'index'])->name('vendorsummary.index');
 
     // (NOTES) Display the page to take notes with a list of clients ||||| Notes page
     Route::get('/takeNotes', [NoteController::class, 'create'])->name('notes.create');
     Route::get('/get-company-info/{id}', [NoteController::class, 'getCompanyInfo'])->name('getCompanyInfo');
-    Route::post('/notes/{noteId}/images', [ImageController::class, 'store'])->name('images.store');
+    Route::post('/notes/{note}/images', [ImageController::class, 'store'])->name('images.store');
     //notes page
     Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
     Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
@@ -370,3 +379,5 @@ Route::get('/reports/orders-by-status', [OrderStatusReportController::class, 'in
 
 
 Route::get('/reports/sales-by-employee', [SalesByEmployeeReportController::class, 'index'])->name('salesByEmployeeReport.index');
+Route::get('/reports/sales-by-employee-personal', [PersonalReportController::class, 'index'])->name('salesByEmployeePersonal.index');
+Route::get('/reports', [ReportController::class, 'indexReports'])->name('reports.index');

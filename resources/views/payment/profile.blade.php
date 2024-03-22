@@ -1,4 +1,18 @@
 <x-layout>
+<!--Additional CSS Styling for this page only-->
+<style>
+    .fixed-height-card {
+    height: 550px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    /* Style to apply only to the left side to make it scrollable */
+    .scrollable-card {
+    overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+</style>
+
     <!-- Content Header -->
     <div class="content-header">
         <div class="container-fluid">
@@ -25,15 +39,39 @@
                     <div class="card-header">
                         <h3 class="card-title">Order Information</h3>
                     </div>
+                    <div class="card-body fixed-height-card scrollable-card">
+                <!-- THIS WAS THE OLD STUB
                 <div class="card-body" style="height: 300px"> 
                     <strong>{{ $selectedOrder->Order_ID }}</strong>
                     <hr>
                     <p class="text-muted">Insert Order Information here</p>
-                    <!--TO DO: Add Order Information -->
-                    <!--<p class="text-muted">{{ $selectedOrder->Phone_Number }}</p>-->
+                </div>-->
+                <div class="card-body" style="flex">
+                    <h5>Basic Information</h5>
+                    <p><strong>Order ID:</strong> {{ $selectedOrder->Order_ID }}</p>
+                    <p><strong>Order Date:</strong> {{ $selectedOrder->Order_DATE }}</p>
+                    <p><strong>Order Status:</strong> {{ $selectedOrder->Order_Status }}</p>
+                    <p><strong>Remarks:</strong> {{ $selectedOrder->Remarks }}</p>
+                    <!-- Add more fields from the Order model if necessary -->
                 </div>
+
+                <div class="card-body" style="flex">
+                    <h5>Products</h5>
+                    @foreach ($selectedOrder->products as $product)
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{ $product->Product_Name }}</h5>
+                            <p><strong>Quantity:</strong> {{ $product->Quantity }}</p>
+                            <p><strong>Product Price:</strong> {{ $product->Product_Price }}</p>
+                            <!-- Add other product details if necessary -->
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
+
             </div>
+        </div>
+                </div>
 
             <!-- Right Column - Payment Details -->
             <div class="col-md-6">
@@ -41,6 +79,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Payment Details</h3>
                     </div>
+                    <div class="card-body fixed-height-card scrollable-card">
                     <div class="card-body">
                         <div class="post">
                         </div>
@@ -49,7 +88,7 @@
                         @csrf
                         <div class="form-group row">
                             <label for="Order_ID" class="col-sm-3 col-form-label text-right">Order ID:</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                             <select name="Order_ID" id="Order_ID" class="form-control" disabled>
                             @foreach($orders as $id => $orderID)
                                 <option value="{{ $id }}" @if($id == $payment->Order_ID) selected @endif>{{ $orderID }}</option>
@@ -59,13 +98,13 @@
                         </div>
                         <div class="form-group row">
                             <label for="Date" class="col-sm-3 col-form-label text-right">Date:</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <input type="text" id="Date" name="Date" class="form-control" placeholder="Date" value="{{ $payment->Date->format('Y-m-d') }}" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="PMT_Cat" class="col-sm-3 col-form-label text-right">Payment Category:</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <select name="PMT_Cat" id="PMT_Cat" class="form-control" disabled>
                                     <option value="Product">Product</option>
                                     <option value="Freight">Freight</option>
@@ -74,13 +113,13 @@
                         </div>
                         <div class="form-group row">
                             <label for="Amount" class="col-sm-3 col-form-label text-right">Amount:</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <input type="text" id="Amount" name="Amount" class="form-control" placeholder="Amount" value="{{ number_format($payment->Amount, 2) }}" disabled>
                             </div>
                         </div> 
                         <div class="form-group row">
                             <label for="PMT_Type" class="col-sm-3 col-form-label text-right">Payment Type:</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control" disabled>
                                     @foreach($paymentTypes as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
@@ -88,22 +127,31 @@
                                 </select>
                             </div>
                         </div>   
-                        <div class="form-group row">
+                        {{-- This div will contain the dropdown for products and will initially be hidden --}}
+                        <div class="form-group row" id="product_dropdown">
                             <label for="Product_Name" class="col-sm-3 col-form-label text-right">Product:</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <select id="Product_Name" name="Product_Name" class="form-control" disabled>
                                  {{-- Product options will be added here dynamically --}}
                                 </select>
                             </div>
                         </div>  
+
+                        <div class="form-group row">
+                            <label for="Remarks" class="col-sm-3 col-form-label text-right">Remarks:</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="Remarks" name="Remarks" class="form-control" placeholder="Example: Payment declined" value="{{ $payment->Remarks }}" disabled>
+                            </div>
+                        </div>  
                         
                         <div class="form-group row">
-                            <div class="offset-sm-3 col-sm-6">
+                            <div class="offset-sm-3 col-sm-auto">
                                 <button type="submit" id="btnSave" class="btn btn-primary btn-fixed" style="display: none;">Save</button>
                                 <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
                                 <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
+                                <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed" id="btnBack">Back</a>
                             </div>
-                        </div>
+                        </div>                      
                     <!--Hidden field to carry Order ID info-->
                     <input type="hidden" name="Order_ID" value="{{ $payment->Order_ID }}">
                 </form>
@@ -112,20 +160,43 @@
             </div>
         </div>
     </div>
+</div>
 
     <script>
 
-    function enableFields() {
+   function enableFields() {
         document.getElementById('Order_ID').disabled = true;
         document.getElementById('Date').disabled = false;
         document.getElementById('PMT_Cat').disabled = false;
         document.getElementById('Amount').disabled = false;
         document.getElementById('PMT_Type_ID').disabled = false;
         document.getElementById('Product_Name').disabled = false;
+        document.getElementById('Remarks').disabled = false;
         document.getElementById('btnSave').style.display = 'inline';
         document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
+        toggleProductDropdown(); // called to set the correct visibility state when enabling fields
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Function to toggle the product dropdown visibility
+    function toggleProductDropdown() {
+        var category = document.getElementById('PMT_Cat').value;
+        var productDropdown = document.getElementById('product_dropdown'); 
+        if (category === 'Freight') {
+            productDropdown.style.display = 'block';
+        } else {
+            productDropdown.style.display = 'none';
+        }
+    }
+
+       // Add event listener to the payment category select box
+       document.getElementById('PMT_Cat').addEventListener('change', toggleProductDropdown);
+
+        // Initial check to set the correct state when the page loads
+        toggleProductDropdown();
+    })
 
     function cancelEdit() {
         document.getElementById('Order_ID').disabled = true;
@@ -134,11 +205,62 @@
         document.getElementById('Amount').disabled = true;
         document.getElementById('PMT_Type_ID').disabled = true;
         document.getElementById('Product_Name').disabled = true;
+        document.getElementById('Remarks').disabled = true;
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
+        document.getElementById('btnBack').style.display = 'inline';
     }
+
+    document.getElementById('PMT_Cat').addEventListener('change', function() {
+                    var category = this.value;
+                    var orderId = document.getElementById('Order_ID').value; 
+
+                    if (category === 'Freight') {
+                        fetch('/get-products-for-order/' + orderId)
+                            .then(response => response.json())
+                            .then(data => {
+                                var productSelect = document.getElementById('Product_Name');
+                                productSelect.innerHTML = ''; // Clear existing options
+
+                                data.forEach(function(product) {
+                                    var option = new Option(product.Product_Name, product.Item_ID);
+                                    productSelect.appendChild(option);
+                                });
+
+                                document.getElementById('product_dropdown').style.display = 'flex';
+                            });
+                    } else {
+                        document.getElementById('product_dropdown').style.display = 'none';
+                    }
+                })
 </script>
+
+        <!-- Include SweetAlert2 library -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Check for the 'success' session variable and display a SweetAlert -->
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'INFORMATION MESSAGE',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        @endif
+
+        <!-- Check for errors -->
+        @if ($errors->any())
+         <div class="alert alert-danger">
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{!! $error !!}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
 
 </x-layout>
 

@@ -18,14 +18,14 @@
     <!-- Begin Page Content -->
     <div class="container-fluid"> 
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Payment Records</h3>
+                    <div class="ml-auto">
+                        <a href="{{ route('payment.create') }}" class="btn btn-primary">Add New Payment</a>
+                    </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-
-                <a href="{{ route('payment.create') }}" class="btn btn-primary mb-3">Add Payment</a>
-
                 <table id="paymentRecords" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -36,6 +36,7 @@
                             <th>Date</th>
                             <th>Amount</th>
                             <th>Payment Type</th>
+                            <th>Remarks</th>
                             <!-- Add more headers if needed -->
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@
                                 <td>{{ $payment->Date}}</td>
                                 <td>{{ $payment->Amount}}</td>
                                 <td>{{ $payment->paymentType ? $payment->paymentType->PMT_Type_Name : 'N/A' }}</td>
+                                <td>{{ $payment->Remarks}}</td>
                             </tr>
                         @endforeach
                     </tbody> 
@@ -111,7 +113,7 @@
 
                 Swal.fire({
                     title: 'CONFIRMATION MESSAGE',
-                    text: 'Do you want to delete this payment record?',
+                    text: 'Are you sure you want to delete this payment record?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Yes',

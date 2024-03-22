@@ -32,6 +32,7 @@
                             <th>Name</th>
                             <th>Department</th>
                             <th>Position</th>
+                            <th>Email</th>
                             <th>Status</th>
                             <!-- Add more headers if needed -->
                         </tr>
@@ -51,6 +52,7 @@
                                 <td><a href="{{ route('systemusers.profile', $employee->Employee_ID) }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</a></td>
                                 <td>{{ $employee->Department }}</td>
                                 <td>{{ $employee->Position }}</td>
+                                <td>{{ $employee->Employee_Email }}</td>
                                 <td>{{ $employee->Employee_Status }}</td>  
                             </tr>
                         @endforeach

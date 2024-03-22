@@ -1,17 +1,16 @@
 <x-layout> 
 
 <style>
-    .ml-neg-5 {
-        margin-left: -5rem; 
-    }
+        .ml-neg-5 {
+            margin-left: -5rem;
+        }
 
-    .swal-custom-html-container ul {
-        text-align: left;
-        margin-left: 0;
-        padding-left: 1.5em;
-    }
-
-</style>
+        .swal-custom-html-container ul {
+            text-align: left;
+            margin-left: 0;
+            padding-left: 1.5em;
+        }
+    </style>
 
     <div class="content-header">
         <div class="container-fluid">
@@ -57,6 +56,12 @@
                                 <label for="FirstName" class="col-sm-3 col-form-label text-right ml-neg-5">First Name</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="First_Name" id="FirstName" placeholder="First Name" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="EmployeeEmail" class="col-sm-3 col-form-label text-right ml-neg-5">Employee Email</label>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" name="Employee_Email" id="EmployeeEmail" placeholder="Employee Email" required>
                                 </div>
                             </div>
                             <div class="form-group row">

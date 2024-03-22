@@ -34,14 +34,23 @@ class PaymentController extends Controller
     // Store a new payment record
     public function store(Request $request)
     {
-        // Add validation for the request data
-        $request->validate([
-            'Order_ID' => 'required|exists:Order,Order_ID', // make sure the Order_ID exists in the Order table
+        // First, remove commas from the 'Amount' field to prevent validation error
+        $amountInput = str_replace(',', '', $request->input('Amount'));
+        // Manually validate the 'Amount' after removing commas
+        if (!is_numeric($amountInput)) {
+            return redirect()->back()->withErrors(['Amount' => 'The amount field must be a number.']);
+        }
+
+        // Validate the rest of the request data without 'Amount'
+        $validatedData = $request->validate([
+            'Order_ID' => 'required|exists:Order,Order_ID',
             'Date' => 'required|date',
             'PMT_Cat' => 'required|string|max:255',
-            'Amount' => 'required|numeric',
-            'PMT_Type_ID' => 'required|exists:Payment_Type,PMT_Type_ID', // ensure PMT_Type_ID exists in Payment_Type table
+            'PMT_Type_ID' => 'required|exists:Payment_Type,PMT_Type_ID',
         ]);
+
+        // Proceed with the sanitized amount
+        $sanitizedAmount = floatval($amountInput);
 
         // Check if there is an existing Product Payment
         if ($request->PMT_Cat !== 'Freight') {
@@ -57,12 +66,13 @@ class PaymentController extends Controller
         }
     }
 
-        // Assuming Payment is the your Eloquent model for the payment table
+        // Create and save the new payment
         $payment = new Payment();
         $payment->Order_ID = $request->Order_ID;
         $payment->Date = $request->Date;
         $payment->PMT_Cat = $request->PMT_Cat;
-        $payment->Amount = $request->Amount;
+        $payment->Amount = $sanitizedAmount; // this uses the sanitized amount
+        $payment->Remarks = $request->Remarks;
         // Assign the payment type ID from the request directly
         $payment->PMT_Type_ID = $request->PMT_Type_ID;
 
@@ -109,7 +119,7 @@ class PaymentController extends Controller
     
         return view('payment.profile', compact('selectedOrder', 'orderDetails', 'payment', 'orders', 'paymentTypes'));
     }
-
+/* THIS DOES NOT PUSH CHANGES TO THE DATABASE
     public function updatePayment(Request $request, $id)
     { 
         $payment = Payment::findOrFail($id);
@@ -128,6 +138,37 @@ class PaymentController extends Controller
         return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.');
     }
     
+    */
+
+    /* THIS WORKS
+    public function updatePayment(Request $request, $id)
+    { 
+        $payment = Payment::findOrFail($id);
+         
+        $payment->update($request->all());
+ 
+        return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.'); 
+    }
+    */
+
+    public function updatePayment(Request $request, $id)
+{ 
+    $payment = Payment::findOrFail($id);
     
+    // Get all the request data.
+    $requestData = $request->all();
+    
+    // Check if the Amount is set and sanitize it.
+    if(isset($requestData['Amount'])) {
+        // Remove any commas and convert to float.
+        $requestData['Amount'] = floatval(str_replace(',', '', $requestData['Amount']));
+    }
+    
+    // Update the payment with sanitized data.
+    $payment->update($requestData);
+
+    return redirect()->route('payment.editPayment', ['id' => $id])->with('success', 'Payment updated successfully.'); 
+}
+
     
 }

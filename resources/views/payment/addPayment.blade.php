@@ -29,10 +29,15 @@
                         <div class="form-group">
                             <label for="Order_ID">Order ID:</label>
                             <select name="Order_ID" id="Order_ID" class="form-control">
-                                @foreach($orders as $id => $orderID)
-                                    <option value="{{ $id }}">{{ $orderID }}</option>
-                                @endforeach
-                            </select>
+    @foreach($orders as $id => $orderID)
+        <option value="{{ $id }}" 
+            {{ (isset($selectedOrder) && $id == $selectedOrder->Order_ID) ? 'selected' : (old('Order_ID') == $id ? 'selected' : ($loop->first ? 'selected' : '')) }}>
+            {{ $orderID }}
+        </option>
+    @endforeach
+</select>
+
+
                         </div>
 
                         <div class="form-group">
@@ -93,7 +98,11 @@
                                     <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
                             </select>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="Remarks">Remarks:</label>
+                            <input type="text" name="Remarks" id="Remarks" class="form-control" placeholder="Example: Payment Succesful">
                         </div>
 
                         <div class="form-group row">
@@ -115,7 +124,7 @@
         @if(session('success'))
             <script>
                 Swal.fire({
-                    title: 'Good job!',
+                    title: 'INFORMATION MESSAGE',
                     text: '{{ session('success') }}',
                     icon: 'success',
                     confirmButtonText: 'OK'
