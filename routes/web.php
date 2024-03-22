@@ -20,6 +20,10 @@ use App\Http\Controllers\OrderStatusReportController;
 use App\Http\Controllers\SalesByEmployeeReportController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ReportController;
+// routes/web.php
+
+use App\Http\Controllers\SalesByEmployeePersonalController;
+;
 
 // ...
 
@@ -380,5 +384,7 @@ Route::get('/reports/orders-by-status', [OrderStatusReportController::class, 'in
 
 
 Route::get('/reports/sales-by-employee', [SalesByEmployeeReportController::class, 'index'])->name('salesByEmployeeReport.index');
-Route::get('/reports/sales-by-employee-personal', [PersonalReportController::class, 'index'])->name('salesByEmployeePersonal.index');
 Route::get('/reports', [ReportController::class, 'indexReports'])->name('reports.index');
+Route::get('/personal-sales-report', [SalesByEmployeePersonalController::class, 'index'])
+     ->name('personal-sales-report');
+   
