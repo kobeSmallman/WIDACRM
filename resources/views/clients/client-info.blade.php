@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('clients') }}">Clients</a></li>
                         <li class="breadcrumb-item active">Client Information</a></li>
                     </ol>
@@ -177,6 +177,21 @@
     
 </x-layout> 
 
+@if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'INFORMATION MESSAGE',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+@endif  
+
+
+
 <script>
 
 $(document).ready(function() {    
@@ -187,6 +202,34 @@ $(document).ready(function() {
         "lengthChange": false, 
         "autoWidth": false,  
     }).buttons().container().appendTo('#tblOrderHistory_wrapper .col-md-6:eq(0)');
+
+
+    // Check if validation errors exist and display them
+    const validationErrors = @json($errors->all());
+        if (validationErrors.length > 0) {
+            let errorMessage = '';
+            if (validationErrors.length > 1) {
+                errorMessage += '<ul>';
+                validationErrors.forEach(error => {
+                    errorMessage += `<li>${error}</li>`;
+                });
+                errorMessage += '</ul>';
+            } else {
+                errorMessage = validationErrors[0];
+            }
+
+            Swal.fire({
+                title: 'WARNING MESSAGE',
+                html: errorMessage,
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    htmlContainer: 'swal-custom-html-container'
+                }
+            });
+        }
+ 
    
 });
 

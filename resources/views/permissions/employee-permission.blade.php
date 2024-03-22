@@ -22,8 +22,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Permissions</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('permissions')}}">Permissions</a></li>
                         <li class="breadcrumb-item active">Employee Permissions</li>
                     </ol>
                 </div>
@@ -128,7 +128,7 @@
 
                                 <form class="p-3 rounded" id="permissionForm">
                                     @csrf 
-                                    <input type="hidden" name="Employee_ID" id="Employee_ID"  value="{{ $permission->Employee_ID }}"> 
+                                    <input type="hidden" name="Employee_ID" id="Employee_ID"  value="{{ $selectedEmployee->Employee_ID }}"> 
                                     <div class="form-group row">
                                         <label for="Page_ID" class="col-sm-3 col-form-label text-right">Page:</label>
                                         <div class="col-sm-6">
@@ -169,7 +169,7 @@
                                     @method('PUT')
                                       
                                     <input type="hidden" name="Permission_ID2" id="Permission_ID2"> 
-                                    <input type="hidden" name="Employee_ID2" id="Employee_ID2"  value="{{ $permission->Employee_ID }}"> 
+                                    <input type="hidden" name="Employee_ID2" id="Employee_ID2"  value="{{ $selectedEmployee->Employee_ID }}"> 
                                     <input type="hidden" name="Page_ID2" id="Page_ID2"> 
 
                                     <div class="form-group row">
@@ -268,51 +268,74 @@
         });
 
 
+        const form = document.getElementById('client-form');
+        const submitBtn = document.getElementById('btnSave');
+
+ 
+
         $('#btnSave').click(function(e) {
             e.preventDefault();  
-            var formData = $('#permissionForm').serialize();  
- 
-            $.ajax({
-                url: '{{ route("permissions.save") }}',
-                type: 'POST',  
-                data: formData,  
-                success: function(response) {
-                      
-                    Swal.fire({
-                        title: 'INFORMATION MESSAGE',
-                        text: response.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                },
-                error: function(xhr, status, error) { 
-                    console.error(xhr.responseText);
-                    var errors = JSON.parse(xhr.responseText);
-                    var errorMessage = '';
 
-                    if (errors && errors.errors) {
-                        // validation errors
-                        Object.values(errors.errors).forEach(function(error) {
-                            errorMessage += '<li>' + error[0] + '</li>';
-                        });
-                    } else { 
-                        errorMessage = 'An error occurred while processing your request. Please try again later.';
-                    }
+
+            Swal.fire({
+                title: 'CONFIRMATION MESSAGE',
+                text: 'Do you want to save this new permission?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) { 
+                   
+                    var formData = $('#permissionForm').serialize();   
+                    $.ajax({
+                        url: '{{ route("permissions.save") }}',
+                        type: 'POST',  
+                        data: formData,  
+                        success: function(response) { 
  
-                    Swal.fire({
-                        title: 'WARNING MESSAGE',
-                        html: errorMessage,
-                        icon: 'warning',
-                        confirmButtonText: 'OK',
-                        customClass: {
-                            popup: 'swal-custom-popup',
-                            htmlContainer: 'swal-custom-html-container'
+                            Swal.fire({
+                                title: 'INFORMATION MESSAGE',
+                                text: response.success,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+ 
+                            location.reload();
+                        },
+                        error: function(xhr, status, error) { 
+                            console.error(xhr.responseText);
+                            var errors = JSON.parse(xhr.responseText);
+                            var errorMessage = '';
+
+                            if (errors && errors.errors) {
+                                // validation errors
+                                Object.values(errors.errors).forEach(function(error) {
+                                    errorMessage += '<li>' + error[0] + '</li>';
+                                });
+                            } else { 
+                                errorMessage = 'An error occurred while processing your request. Please try again later.';
+                            }
+        
+                            Swal.fire({
+                                title: 'WARNING MESSAGE',
+                                html: errorMessage,
+                                icon: 'warning',
+                                confirmButtonText: 'OK',
+                                customClass: {
+                                    popup: 'swal-custom-popup',
+                                    htmlContainer: 'swal-custom-html-container'
+                                }
+                            });
+
+                            
                         }
                     });
-
-                    
+ 
                 }
             });
+
+            
         });
 
 

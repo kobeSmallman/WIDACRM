@@ -28,12 +28,30 @@ class ClientController extends BaseController
     }
 
     public function update(Request $request, $id)
-    {  
+    {   
         $client = Client::findOrFail($id);
+        $validatedData = $request->validate([ 
+            'Main_Contact' => 'required|string|max:255',
+            'Lead_Status' => 'required|string|max:10',
+            'Buyer_Status' => 'required|string|max:10',
+            'Shipping_Address' => 'required|string|max:255',
+            'Billing_Address' => 'required|string|max:255',
+            'Phone_Number' => 'required|string|max:20',
+            'Email' => 'required|string|email|max:255',
+        ]);
          
-        $client->update($request->all());
- 
-        return redirect()->route('clients.editClient', compact('client')); 
+        // $client->update($request->all());
+        // $client->update($validatedData); 
+        // return redirect()->route('clients.editClient', compact('client')); 
+
+        try {
+            $client->update($validatedData);  
+            return redirect()->route('clients.editClient', compact('client'))->with('success', 'Client updated successfully.');
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return back()->withErrors('Failed to update client: ' . $e->getMessage())->withInput();
+        }
     }
     
 

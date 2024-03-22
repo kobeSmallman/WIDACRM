@@ -21,7 +21,12 @@ class PermissionController extends Controller
     public function editPermission($employeeID)
     { 
         $selectedEmployee = Employee::findOrFail($employeeID); 
-        $employeePermissions = $selectedEmployee->permissions()->get(); 
+        // $employeePermissions = $selectedEmployee->permissions()->get();  
+        $employeePermissions = $selectedEmployee->permissions()
+            ->join('Page', 'Permissions.Page_ID', '=', 'Page.Page_ID')
+            ->orderBy('Page.Page_Name')
+            ->get();
+ 
         $pages = Page::get(); 
         return view('permissions.employee-permission', compact('selectedEmployee', 'employeePermissions', 'pages')); 
     }
@@ -52,10 +57,13 @@ class PermissionController extends Controller
             $employee = $validatedData['Employee_ID'];
             Permission::create($validatedData);
 
-            return redirect()->route('permissions.edit', compact('employee'))->with('success', 'Permission added successfully.');
+            // return redirect()->route('permissions.edit', compact('employee'))
+            //     ->with('success', 'Permission added successfully.');
+            
+            return response()->json(['success' => 'Permission added successfully.']);
+
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            // return back()->withErrors('Failed to add permission: ' . $e->getMessage())->withInput();
+            \Log::error($e->getMessage()); 
             return response()->json(['errors' => ['Failed to add permission: ' . $e->getMessage()]]);
         }
     }

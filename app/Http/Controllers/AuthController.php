@@ -57,11 +57,13 @@
         
                 // If successful, redirect to their respective dashboard
                 $user = Auth::user();
-                if ($user->isAdmin()) {
-                    return redirect()->route('admin.dashboard')->withCookie($cookie);
-                } else {
-                    return redirect()->route('employee.dashboard')->withCookie($cookie);
-                }
+                return redirect()->route('admin.dashboard')->withCookie($cookie);
+
+                // if ($user->isAdmin()) {
+                //     return redirect()->route('admin.dashboard')->withCookie($cookie);
+                // } else {
+                //     return redirect()->route('employee.dashboard')->withCookie($cookie);
+                // }
             }
         
             // If unsuccessful, redirect back to the login with the form data

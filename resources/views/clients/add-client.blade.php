@@ -77,18 +77,26 @@
                                     <input type="text" id="Phone_Number" name="Phone_Number" class="form-control"  placeholder="Phone Number">
                                 </div>
                             </div>
+                       
                             <div class="form-group row">
                                 <label for="Lead_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Lead Status:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="Lead_Status" name="Lead_Status" class="form-control" placeholder="Lead Status" required>
+                                    <select id="Lead_Status" name="Lead_Status" class="form-control">
+                                        <option value="ACTIVE">ACTIVE</option>
+                                        <option value="INACTIVE">INACTIVE</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Buyer_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Buyer Status:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="Buyer_Status" name="Buyer_Status" class="form-control" placeholder="Buyer Status" required>
+                                    <select id="Buyer_Status" name="Buyer_Status" class="form-control">
+                                        <option value="ACTIVE">ACTIVE</option>
+                                        <option value="INACTIVE">INACTIVE</option>
+                                    </select>
                                 </div>
                             </div>
+                            
                            
                             <div class="form-group row">
                                 <div class="offset-sm-3 col-sm-6">
