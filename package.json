@@ -23,6 +23,7 @@
         "jquery": "^3.7.1",
         "jquery-ui": "^1.13.2",
         "jspdf": "^2.5.1",
+        "lightgallery": "^2.7.2",
         "moment": "^2.30.1",
         "sweetalert2": "^11.6.13"
     }

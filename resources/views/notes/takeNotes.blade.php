@@ -126,10 +126,88 @@
 
         #clientInput {
             width: 100%;
+            height: 50px;
+            /* Fixed height as set before */
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 4px;
+            background-color: #fff;
+            /* Set the background color to white */
+        }
+
+        .picture-modal-header {
+            cursor: move;
+            z-index: 10;
+            background-color: #2c3e50;
+            color: #2c3e50;
+            padding: 5px 10px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            /* Align close button to the right */
+        }
+
+        /* The Modal (background) */
+        .picture-modal {
+            display: none;
+            position: fixed;
+            /* Updated to fixed for full-screen overlay */
+            z-index: 10000;
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: auto;
+            height: auto;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0);
+            /* Updated to a blueish tint with transparency */
+            padding: 20px;
+            /* Add some padding around the modal */
+        }
+
+        /* Modal Content (image) */
+        .picture-modal-content {
+            margin: auto;
+            display: inline-block;
+            /* Allows the modal to only be as wide as the content */
+            max-width: 90%;
+            /* You can adjust this to allow for some margin */
+            height: auto;
+            /* Ensure the height is auto to maintain aspect ratio */
+        }
+
+        /* Caption of Modal Image */
+        #pictureCaption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #007bff;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* The Close Button */
+        .picture-close {
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #2c3e50;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .picture-close:hover,
+        .picture-close:focus {
+            color: #d9534f;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 
@@ -139,53 +217,64 @@
     <div class="container">
         <!-- Client list -->
         <input list="clientsDatalist" id="clientInput" name="clientInput" placeholder="Search for a client...">
-            <datalist id="clientsDatalist">
-                @foreach ($clients as $client)
-                <option value="{{ $client->Company_Name }}" data-client-id="{{ $client->Client_ID }}">
-                    @endforeach
-            </datalist>
+        <datalist id="clientsDatalist">
+            @foreach ($clients as $client)
+            <option value="{{ $client->Company_Name }}" data-client-id="{{ $client->Client_ID }}">
+                @endforeach
+        </datalist>
 
 
-            <!-- Client Details -->
-            <div class="client-details" id="clientDetails">
-                <!-- Client information will be loaded here via JavaScript -->
-                <p>Select a client to view Information details</p>
+        <!-- Client Details -->
+        <div class="client-details" id="clientDetails">
+            <!-- Client information will be loaded here via JavaScript -->
+            <p>Select a client to view Information details</p>
+        </div>
+
+        <!-- Notes Links -->
+        <div class="notes-links" id="notesLinks">
+            <p>Select a client to view Older Notes</p>
+            <!-- Links to individual notes will be loaded here via JavaScript -->
+        </div>
+
+        <!-- Note Content -->
+        <div class="note-content" id="clientNote">
+            <p>Select a Note to view Note details</p>
+            <!-- Selected note content will be displayed here -->
+        </div>
+
+        <!-- Picture Modal -->
+        <div id="pictureModal" class="picture-modal">
+            <div class="picture-modal-header">
+                <span class="picture-close">&times;</span>
             </div>
+            <img class="picture-modal-content" id="pictureImg">
+            <div id="pictureCaption"></div>
+        </div>
 
-            <!-- Notes Links -->
-            <div class="notes-links" id="notesLinks">
-                <p>Select a client to view Older Notes</p>
-                <!-- Links to individual notes will be loaded here via JavaScript -->
-            </div>
 
-            <!-- Note Content -->
-            <div class="note-content" id="clientNote">
-                <p>Select a Note to view Note details</p>
-                <!-- Selected note content will be displayed here -->
-            </div>
 
-            <!-- Orders Details -->
-            <div class="orders-details" id="ordersDetails">
-                <!-- Orders will be loaded here via JavaScript -->
-                <div class="table-container">
-                    <table class="orders-table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Created By</th>
-                                <th>Request Date</th>
-                                <th>Request Status</th>
-                                <th>Order Date</th>
-                                <th>Order Status</th>
-                                <th>Quotation Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Last 5 orders will be loaded here by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
+        <!-- Orders Details -->
+        <div class="orders-details" id="ordersDetails">
+            <!-- Orders will be loaded here via JavaScript -->
+            <div class="table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Created By</th>
+                            <th>Request Date</th>
+                            <th>Request Status</th>
+                            <th>Order Date</th>
+                            <th>Order Status</th>
+                            <th>Quotation Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Last 5 orders will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
             </div>
+        </div>
     </div>
 
     <script>
@@ -211,15 +300,23 @@
                 .then(notes => {
                     const linksDiv = document.getElementById('notesLinks');
                     linksDiv.innerHTML = ''; // Clear previous links
-                    notes.forEach((note, index) => {
-                        const noteLink = document.createElement('div');
-                        noteLink.className = 'note-link';
-                        noteLink.textContent = `Note ${index + 1}`;
-                        noteLink.onclick = () => showNoteContent(note);
-                        linksDiv.appendChild(noteLink);
-                    });
+
+                    if (notes.length === 0) {
+                        // If there are no notes, display a message
+                        linksDiv.textContent = 'No notes available for the selected client';
+                    } else {
+                        // If there are notes, create links for them
+                        notes.forEach((note, index) => {
+                            const noteLink = document.createElement('div');
+                            noteLink.className = 'note-link';
+                            noteLink.textContent = `Note ${index + 1}`;
+                            noteLink.onclick = () => showNoteContent(note);
+                            linksDiv.appendChild(noteLink);
+                        });
+                    }
                 })
                 .catch(error => console.error('Error:', error));
+
 
             fetch(`/clients/${clientId}/last-orders`)
                 .then(response => response.json())
@@ -260,6 +357,8 @@
         });
 
 
+
+
         function fetchNotesDetails(clientId) {
             fetch(`/clients/${clientId}/notesAJAX`)
                 .then(response => response.json())
@@ -275,15 +374,90 @@
 
         function showNoteContent(note) {
             const contentDiv = document.getElementById('clientNote');
+            // Clear previous content
+            contentDiv.innerHTML = '';
+
             // Populate the div with the note content
-            contentDiv.innerHTML = `
-                <h3>Note Details</h3>
-                <p><strong>Type:</strong> ${note.Interaction_Type}</p>
-                <p><strong>Created By:</strong> ${note.Created_By}</p>
-                <p><strong>Date Created:</strong> ${note.Created_At}</p>
-                <p><strong>Date Updated:</strong> ${note.Updated_At}</p>
-                <p><strong>Details:</strong> ${note.Description}</p>
-            `;
+            contentDiv.innerHTML += `
+        <h3>Note Details</h3>
+        <p><strong>Title:</strong> ${note.Title}</p>
+        <p><strong>Type:</strong> ${note.Interaction_Type}</p>
+        <p><strong>Created By:</strong> ${note.Created_By}</p>
+        <p><strong>Date Created:</strong> ${new Date(note.Created_At).toLocaleString()}</p>
+        <p><strong>Date Updated:</strong> ${new Date(note.Updated_At).toLocaleString()}</p>
+        <p><strong>Details:</strong> ${note.Description}</p>
+        <div id="imagesContainer"></div>`;
+
+            // Fetch the images for this note
+            fetch(`/notes/${note.Note_ID}/images`)
+                .then(response => response.json())
+                .then(data => {
+                    const imagesContainer = document.getElementById('imagesContainer');
+                    if (data.success && data.images.length) {
+                        data.images.forEach(image => {
+                            const link = document.createElement('a');
+                            link.href = '#';
+                            link.textContent = 'IMG '; // The link text
+                            link.onclick = function() {
+                                // Open the picture modal instead of the generic modal
+                                const pictureModal = document.getElementById('pictureModal');
+                                const pictureImg = document.getElementById('pictureImg');
+                                const pictureCaption = document.getElementById('pictureCaption');
+                                pictureImg.onload = function() {
+                                    // This ensures the modal resizes after the image has loaded
+                                    pictureModal.style.display = "block";
+                                    makeModalDraggable();
+                                };
+                                pictureImg.src = `data:${image.MIME};base64,${image.data}`;
+                                pictureCaption.innerHTML = `Note:${note.Note_ID}`; // Your caption here
+
+                                var span = document.getElementsByClassName("picture-close")[0];
+                                span.onclick = function() {
+                                    pictureModal.style.display = "none";
+                                }
+                            }
+                            imagesContainer.appendChild(link);
+                        });
+                    } else {
+                        imagesContainer.innerHTML = '<p>No images available for this note.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    imagesContainer.innerHTML = '<p>Error retrieving images for this note.</p>';
+                });
+        }
+
+        // Draggable Modal Function
+        function makeModalDraggable() {
+            var modal = document.getElementById("pictureModal");
+            var mousePosition;
+            var offset = [0, 0];
+            var isDown = false;
+
+            modal.addEventListener('mousedown', function(e) {
+                isDown = true;
+                offset = [
+                    modal.offsetLeft - e.clientX,
+                    modal.offsetTop - e.clientY
+                ];
+            }, true);
+
+            document.addEventListener('mouseup', function() {
+                isDown = false;
+            }, true);
+
+            document.addEventListener('mousemove', function(event) {
+                event.preventDefault();
+                if (isDown) {
+                    mousePosition = {
+                        x: event.clientX,
+                        y: event.clientY
+                    };
+                    modal.style.left = (mousePosition.x + offset[0]) + 'px';
+                    modal.style.top = (mousePosition.y + offset[1]) + 'px';
+                }
+            }, true);
         }
     </script>
 </x-layout>

@@ -55,8 +55,8 @@ class ImageController extends Controller
         if ($images = $request->file('images')) {
 
             foreach ($images as $image) {
-                $extension = $image-> getClientOriginalExtension();
-                $fileName = time(). '.' .$extension;
+                $extension = $image->getClientOriginalExtension();
+                $fileName = time() . '.' . $extension;
                 $image->storeAs('images', $fileName); // Make sure you have 'images' disk configured in filesystems.php
 
                 $imageData[] = [
@@ -78,10 +78,23 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Image $image)
+    public function getImagesByNote(Note $note)
     {
-        //
+        $images = Image::where('Note_ID', $note->Note_ID)->get();
+
+        // Assuming you want to send back the image data as a base64 encoded string
+        $imageData = $images->map(function ($image) {
+            return [
+                'id' => $image->Image_ID,
+                'mime' => $image->IMG_MIME,
+                'data' => base64_encode($image->IMG_data)
+            ];
+        });
+
+        return response()->json(['success' => true, 'images' => $imageData]);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
