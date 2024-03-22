@@ -79,12 +79,6 @@
             <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
               <i class="fas fa-user-edit mr-2"></i> Edit Profile
             </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-inbox mr-2"></i> Inbox
-            </a>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-tasks mr-2"></i> Tasks
-            </a>
             <a href="mailto:{{ Auth::user()->Employee_Email }}" class="dropdown-item">
               <i class="fas fa-envelope mr-2"></i> Email
             </a>
