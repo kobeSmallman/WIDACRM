@@ -21,6 +21,7 @@ class Note extends Model
         'Interaction_Type',
         'Created_By',
         'Description',
+        'Title',
     ];
 
     // Relationship with Client

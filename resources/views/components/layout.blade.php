@@ -79,6 +79,12 @@
             <a href="{{ route('profile', ['employee' => Auth::user()->Employee_ID]) }}" class="dropdown-item">
               <i class="fas fa-user-edit mr-2"></i> Edit Profile
             </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-inbox mr-2"></i> Inbox
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-tasks mr-2"></i> Tasks
+            </a>
             <a href="mailto:{{ Auth::user()->Employee_Email }}" class="dropdown-item">
               <i class="fas fa-envelope mr-2"></i> Email
             </a>
@@ -167,7 +173,7 @@
               </a>
             </li>
             @endif
-          
+
 
             @if($employee->permissions->contains('Page_ID', $vendorPageId))
             <li class="nav-item">
@@ -208,12 +214,12 @@
             @if($employee->permissions->contains('Page_ID', $paymentsPageId))
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
-  <a href="{{ route('reports.index') }}" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-file-contract"></i>
-    <p>Reports</p>
-  </a>
-</li>
-@endif
+              <a href="{{ route('reports.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-solid fa-file-contract"></i>
+                <p>Reports</p>
+              </a>
+            </li>
+            @endif
             <li class="nav-header">OTHERS</li>
 
             <li class="nav-item">
@@ -238,15 +244,13 @@
             <div class="modal-header" id="dragHandle">Drag me</div>
             <span class="close">&times;</span>
 
+            <!-- Note Title Input -->
+            <label for="noteTitle">Note Title:</label>
+            <input type="text" id="noteTitle" name="noteTitle" placeholder="Enter note title" style="width:100%;" />
+
+
             <!-- Client Selection Dropdown -->
-            <label for="clientSelect">Select Client:</label>
-            <select id="clientSelect">
-              <option value="">--Select a Client--</option>
-              <!-- Options will be populated dynamically from the $clients array -->
-              @foreach ($clients as $client)
-              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
-              @endforeach
-            </select>
+            <input type="hidden" id="createdBy" name="createdBy" value="{{ auth()->user()->Employee_ID }}">
 
             <!-- Interaction Type Dropdown -->
             <label for="interactionType">Interaction Type:</label>
@@ -257,14 +261,7 @@
               <option value="in_person">In Person</option>
             </select>
 
-            <!-- Created By Dropdown (assuming you have a list of employees) -->
-            <label for="createdBy">Created By:</label>
-            <select id="createdBy">
-              <option value="">--Select Employee--</option>
-              @foreach ($employees as $employee) <!-- Make sure to pass $employees to the view -->
-              <option value="{{ $employee->Employee_ID }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</option>
-              @endforeach
-            </select>
+            <input type="hidden" id="createdBy" name="createdBy" value="{{ auth()->user()->Employee_ID }}">
 
             <!-- Image Upload -->
             <label for="imageUpload">Image:</label>
@@ -420,6 +417,7 @@
         const createdBy = document.getElementById('createdBy').value;
         const noteText = noteContent.value;
         const imageFile = document.getElementById('imageUpload').files; // This is a File object
+        const noteTitle = document.getElementById('noteTitle').value;
 
 
         // Validation
@@ -435,6 +433,7 @@
         formData.append('Interaction_Type', interactionType);
         formData.append('Created_By', createdBy);
         formData.append('Description', noteText);
+        formData.append('Title', noteTitle);
 
         // Send a POST request with the form data
         fetch('/notes/store', { // Update the URL to the route that handles note saving
@@ -459,8 +458,8 @@
                 return fetch(`/notes/${data.noteId}/images`, { // Append the noteId to the route
                   method: 'POST',
                   headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
-            },
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+                  },
                   body: imageFormData // CSRF token will be included as a cookie
                 });
               } else {
