@@ -42,7 +42,7 @@
                         @foreach ($activeEmployees as $employee)
                             <tr>
                                 <td> 
-                                    <a href="{{ route('systemusers.profile', $employee->Employee_ID) }}" class="btn btn-default btn-sm">
+                                    <a href="{{ route('systemusers.editEmployeeInfo', $employee->Employee_ID) }}" class="btn btn-default btn-sm">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
                                     <!-- <a href="#" class="btn btn-default btn-sm">
