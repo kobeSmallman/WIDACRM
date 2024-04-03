@@ -113,21 +113,29 @@ class SystemUsersController extends BaseController
 
     public function updateEmployeeInfo(Request $request, $employee)
     { 
-        $validatedData = $request->validate([ 
+        $employeeData = $request->validate([ 
             'Last_Name' => ['required', new UniqueEmployeeName($request->input('Last_Name'), $request->input('First_Name'))],
             'First_Name' => ['required'],
+            'Department',
             'Position' => ['required'],
-            'Employee_Email' => ['required', 'email', new UniqueEmployeeID],
+            'Employee_Email' => ['required'],
         ]);
-
+        
+        if ($request->input('Department') === 'other') { 
+            $employeeData['Department'] = $request->input('OtherDepartment');
+        } else { 
+            $employeeData['Department'] = $request->input('Department');
+        }
+ 
         $empProfile = Employee::findOrFail($employee);
         try {
-            $empProfile->update($validatedData);   
+            $empProfile->update($employeeData);   
             Return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return back()->withErrors('Failed to update employee: ' . $e->getMessage())->withInput();
         }
+
     }
   
     public function showProfile($employeeID)
