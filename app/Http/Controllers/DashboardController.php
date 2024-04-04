@@ -64,21 +64,39 @@ class DashboardController extends Controller
         AreaChart::create([
             "dataStore" => $report->dataStore('order_volume_over_time'),
             "width" => "100%",
-            "height" => "400px", // You might adjust the height as needed to not cover the footer
+            "height" => "100%", // Adjust the percentage as needed
             "columns" => ["OrderTime", "TotalOrders"],
             "options" => [
                 "title" => "Order Volume Over Time",
+                "titleTextStyle" => [
+                    "color" => "#ffffff", // Text color for the title
+                ],
                 "curveType" => "function",
-                "legend" => ["position" => "bottom"],
-                "areaOpacity" => 0.2, // This will fill the area beneath the line
+                "legend" => [
+                    "position" => "bottom",
+                    "textStyle" => [
+                        "color" => "#ffffff", // Text color for the legend
+                    ],
+                ],
+                "backgroundColor" => "none", // Transparent background for the chart
+                "colors" => ["#4169E1", "#000000"], // Royal blue and black colors for the chart
                 "hAxis" => [
                     "title" => "Time",
+                    "textStyle" => ["color" => "#ffffff"], // Text color for hAxis
                 ],
                 "vAxis" => [
                     "title" => "Total Orders",
+                    "textStyle" => ["color" => "#ffffff"], // Text color for vAxis
                 ],
-            ]
+                "chartArea" => [
+                    "backgroundColor" => "#121212", // Dark background for the chart area
+                ],
+                "responsive" => true, // Add this line for responsiveness
+                "maintainAspectRatio" => false,
+            ],
         ]);
+        
+        
         
         $chartHTML = ob_get_clean();
 
@@ -93,10 +111,10 @@ class DashboardController extends Controller
     private function getDateFormat($timeRange)
     {
         return match ($timeRange) {
-            'daily' => '%Y-%m-%d',
+            'weekly' => '%X-%V',
             'monthly' => '%Y-%m',
             // Add other cases as needed
-            default => '%Y-%m-%d'
+            default => '%X-%V'
         };
     }
 

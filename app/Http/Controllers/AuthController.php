@@ -54,7 +54,8 @@
             if (Auth::attempt($credentials)) {
                 // Set login cookie with 1-hour expiration
                 $cookie = cookie('logged_in', true, 60);
-        
+              
+                
                 // If successful, redirect to their respective dashboard
                 $user = Auth::user();
                 return redirect()->route('admin.dashboard')->withCookie($cookie);

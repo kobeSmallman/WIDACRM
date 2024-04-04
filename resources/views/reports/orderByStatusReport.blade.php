@@ -46,54 +46,44 @@
         </div>
     </section>
 
-    <!-- Add styles for printing -->
-    <style>
-        @media print {
-            #printChart, #downloadChart, .content-header, .content-header * {
-                display: none;
-            }
-            #chart-date-range {
-                display: block !important;
-            }
-            #chart-container {
-                width: 100% !important;
-                height: auto !important;
-            }
-        }
-    </style>
-
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('statusChart').getContext('2d');
-            var statusChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: @json($statuses),
-                    datasets: [{
-                        label: 'Order Status',
-                        data: @json($counts),
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            // More colors as needed
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            // More borders as needed
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    title: {
-                        display: true,
-                        text: 'Orders by Status'
-                    }
+   document.addEventListener('DOMContentLoaded', function() {
+    var ctx = document.getElementById('statusChart').getContext('2d');
+    var statusChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: @json($statuses),
+            datasets: [{
+                label: 'Order Status',
+                data: @json($counts),
+                backgroundColor: [
+                    '#4169E1', // Royal blue
+                    '#3498db', // Different shades of blue
+                    // Add more colors as needed
+                ],
+                borderColor: [
+                    '#ffffff', // White borders
+                    '#ffffff',
+                    // More borders as needed
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Orders by Status',
+                fontColor: '#ffffff' // White title
+            },
+            legend: {
+                labels: {
+                    fontColor: '#ffffff' // White legend labels
                 }
-            });
+            }
+        }
+    });
 
             document.getElementById('printChart').addEventListener('click', function() {
             window.print();
@@ -119,4 +109,46 @@
     });
 });
 </script>
+<style>
+        @media print {
+            #printChart, #downloadChart, .content-header, .content-header * {
+                display: none;
+            }
+            #chart-date-range {
+                display: block !important;
+            }
+            #chart-container {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+body, .content-wrapper {
+            font-family: 'Open Sans', sans-serif;
+            color: black;
+           
+        }
+
+        .card {
+            background-color: #1e1e1e; /* Dark card background */
+            border: none;
+        }
+
+
+        .btn-primary {
+            background-color: #4169E1; /* Royal blue */
+            border: none;
+        }
+
+        #chart-container {
+            background-color: #2c2c2c; /* Slightly lighter dark shade for chart background */
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        /* Style for the chart date range text */
+        #chart-date-range {
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+    </style>
 </x-layout>

@@ -15,15 +15,16 @@ class SalesByEmployeeReportController extends Controller
         $report = new class extends KoolReport {
             protected function settings()
             {
-                // Assume your Laravel database configuration is correct and being used
+                // Assuming your Laravel database configuration is correct and being used
+                $config = config('database.connections.mysql');
                 return [
                     "dataSources" => [
                         "mysql" => [
                             "class" => '\koolreport\datasources\PDODataSource',
-                            "connectionString" => "mysql:host=".env('DB_HOST').";dbname=".env('DB_DATABASE'),
-                            "username" => env('DB_USERNAME'),
-                            "password" => env('DB_PASSWORD'),
-                            "charset" => "utf8"
+                            "connectionString" => "mysql:host={$config['host']};dbname={$config['database']}",
+                            "username" => $config['username'],
+                            "password" => $config['password'],
+                            "charset" => $config['charset']
                         ]
                     ]
                 ];
@@ -40,6 +41,7 @@ class SalesByEmployeeReportController extends Controller
                         GROUP BY Employee_Name
                         ORDER BY Total_Sales DESC
                     ")
+                    ->pipe(new Limit(["number" => 10])) // Limit to top 10, if needed
                     ->pipe($this->dataStore('sales_by_employee'));
             }
         };
@@ -51,9 +53,25 @@ class SalesByEmployeeReportController extends Controller
             "dataStore" => $report->dataStore('sales_by_employee'),
             "width" => "100%",
             "height" => "500px",
-            "columns" => ["Employee_Name", "Total_Sales"],
             "options" => [
-                "title" => "Sales by Employee"
+                "title" => "Top 10 Sales by Employee",
+                "titleTextStyle" => [
+                    "color" => "#ffffff",
+                ],
+                "legend" => [
+                    "position" => "bottom",
+                    "textStyle" => [
+                        "color" => "#ffffff",
+                    ],
+                ],
+                "backgroundColor" => "#121212", // Set the background color to black
+                "hAxis" => [
+                    "textStyle" => ["color" => "#ffffff"],
+                ],
+                "vAxis" => [
+                    "textStyle" => ["color" => "#ffffff"],
+                ],
+                "colors" => ["#4169E1"], // Set royal blue color for the chart bars
             ]
         ]);
         $chartHTML = ob_get_clean();

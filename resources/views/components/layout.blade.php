@@ -46,6 +46,97 @@
   <!-- jQuery -->
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   @stack('scripts')
+ 
+    
+<style>
+
+.modal {
+  
+  display: none;
+  /* Initially hidden */
+  position: fixed;
+  /* Fixed positioning relative to the viewport */
+  z-index: 1;
+  /* Ensures modal is on top of other content */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Allows scrolling if modal content is too tall */
+}
+
+.modal-content {
+background-color: #fefefe; /* White background */
+margin: 5% auto; /* Centered vertically and horizontally */
+padding: 20px; /* Padding around the content */
+border: 1px solid #888; /* Gray border */
+width: 80%; /* Width of the content relative to viewport width */
+box-sizing: border-box; /* Include padding and border in the element's width and height */
+resize: both; /* Allow the element size to be changed */
+overflow: auto; /* Allow scrolling within the modal */
+max-height: 80vh; /* Maximum height of the modal content */
+}
+
+.modal-header {
+cursor: move; /* Indicates the header is draggable */
+padding: 10px; /* Padding inside the header */
+background-color: #5D6D7E; /* Color that blends with the sidebar */
+color: white; /* White text color for contrast */
+width: 100%; /* Full width of the modal-content */
+box-sizing: border-box; /* Include padding in the element's width */
+}
+
+.close {
+color: black; /* White 'x' button for contrast */
+float: right; /* Positioned to the right */
+font-size: 28px; /* Large 'x' icon */
+font-weight: bold; /* Make 'x' bold */
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  /* Darken 'x' on hover/focus */
+  text-decoration: none;
+  /* No underline */
+  cursor: pointer;
+  /* Pointer cursor on hover/focus */
+}
+
+/* Button styles */
+#myBtn {
+background-color: #34495E; /* A dark shade that blends well with your sidebar */
+color: white; /* White text for better readability */
+border: 2px solid #2C3E50; /* Border color that matches the sidebar color */
+padding: 10px 20px; /* Generous padding for a larger button */
+text-align: left; /* Center the text within the button */
+text-decoration: none; /* No underline on the text */
+display: block; /* The button should take the full width of the sidebar */
+font-size: 18px; /* Slightly larger font size for better visibility */
+margin: 10px auto; /* Center the button with some margin above and below */
+cursor: pointer; /* Cursor to pointer to indicate it's clickable */
+border-radius: 5px; /* Slightly rounded corners for a modern look */
+transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transitions for hover effects */
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow to lift the button off the sidebar */
+width: 80%; /* Set a specific width */
+}
+
+#myBtn:hover {
+background-color: #2C3E50; /* Slightly lighter color on hover */
+transform: translateY(-2px); /* Small lift effect on hover */
+box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "pop" effect */
+}
+
+/* Make sure to add transition effects to the existing sidebar hover styles for consistency */
+.sidebar-item:hover {
+background-color: #2C3E50; /* Sidebar item hover color */
+transition: background-color 0.3s ease-in-out; /* Smooth transition for the color */
+}
+
+</style>
 </head>
 
 
@@ -562,91 +653,3 @@
 </body>
 
 </html>
-
-<style>
-  .modal {
-    display: none;
-    /* Initially hidden */
-    position: fixed;
-    /* Fixed positioning relative to the viewport */
-    z-index: 1;
-    /* Ensures modal is on top of other content */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Allows scrolling if modal content is too tall */
-  }
-
-  .modal-content {
-  background-color: #fefefe; /* White background */
-  margin: 5% auto; /* Centered vertically and horizontally */
-  padding: 20px; /* Padding around the content */
-  border: 1px solid #888; /* Gray border */
-  width: 80%; /* Width of the content relative to viewport width */
-  box-sizing: border-box; /* Include padding and border in the element's width and height */
-  resize: both; /* Allow the element size to be changed */
-  overflow: auto; /* Allow scrolling within the modal */
-  max-height: 80vh; /* Maximum height of the modal content */
-}
-
-.modal-header {
-  cursor: move; /* Indicates the header is draggable */
-  padding: 10px; /* Padding inside the header */
-  background-color: #5D6D7E; /* Color that blends with the sidebar */
-  color: white; /* White text color for contrast */
-  width: 100%; /* Full width of the modal-content */
-  box-sizing: border-box; /* Include padding in the element's width */
-}
-
-.close {
-  color: black; /* White 'x' button for contrast */
-  float: right; /* Positioned to the right */
-  font-size: 28px; /* Large 'x' icon */
-  font-weight: bold; /* Make 'x' bold */
-}
-
-  .close:hover,
-  .close:focus {
-    color: red;
-    /* Darken 'x' on hover/focus */
-    text-decoration: none;
-    /* No underline */
-    cursor: pointer;
-    /* Pointer cursor on hover/focus */
-  }
-
-  /* Button styles */
-#myBtn {
-  background-color: #34495E; /* A dark shade that blends well with your sidebar */
-  color: white; /* White text for better readability */
-  border: 2px solid #2C3E50; /* Border color that matches the sidebar color */
-  padding: 10px 20px; /* Generous padding for a larger button */
-  text-align: left; /* Center the text within the button */
-  text-decoration: none; /* No underline on the text */
-  display: block; /* The button should take the full width of the sidebar */
-  font-size: 18px; /* Slightly larger font size for better visibility */
-  margin: 10px auto; /* Center the button with some margin above and below */
-  cursor: pointer; /* Cursor to pointer to indicate it's clickable */
-  border-radius: 5px; /* Slightly rounded corners for a modern look */
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transitions for hover effects */
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow to lift the button off the sidebar */
-  width: 80%; /* Set a specific width */
-}
-
-#myBtn:hover {
-  background-color: #2C3E50; /* Slightly lighter color on hover */
-  transform: translateY(-2px); /* Small lift effect on hover */
-  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "pop" effect */
-}
-
-/* Make sure to add transition effects to the existing sidebar hover styles for consistency */
-.sidebar-item:hover {
-  background-color: #2C3E50; /* Sidebar item hover color */
-  transition: background-color 0.3s ease-in-out; /* Smooth transition for the color */
-}
-
-</style>

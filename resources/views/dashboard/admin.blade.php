@@ -7,27 +7,53 @@
     <hr/>
 
     <div class="row text-center">
-        <!-- Custom CSS for cards -->
-        <style>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Custom Styles -->
+<style>
+        x-layout {
+            font-family: 'Open Sans', sans-serif;
+        }
+       
+   
+    .card {
+        background: linear-gradient(160deg, #000000 0%, #4169E1 100%);
+
+        border: none;
+        border-radius: 15px; /* Rounded corners */
+    }
+    .card h5 {
+        font-size: 1.5rem; /* Larger font size for card titles */
+    }
+    
+    .text-center h1, .text-center h4 {
+        font-weight: 600; /* Bolder font for headers */
+    }
+    .chart-container {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 15px;
+    width: 90vw; /* or you can use '80vw' for viewport width */
+    margin: auto;
+}
             .card .display-3 {
                 font-size: 2.5rem; /* Default font size */
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                font-size: 3rem; /* Larger font size for card text */
+                width: 80%; /* or you can use '80vw' for viewport width */
+    margin: auto;
+                 /* Accent color */
             }
+            .card.bg-warning .display-3 {
+    color: #fff; /* Or any color that you want */
+}
+.card.bg-warning .card-title {
+    color: #fff; /* Or any color that you want */
+}
 
-            /* Responsive font size */
-            @media (max-width: 991px) {
-                .card .display-3 {
-                    font-size: 2rem; /* Smaller font size for smaller screens */
-                }
-            }
-
-            @media (max-width: 767px) {
-                .card .display-3 {
-                    font-size: 1.5rem; /* Even smaller font size for very small screens */
-                }
-            }
+          
         </style>
 
         <div class="col-md-4 mb-4">
@@ -92,5 +118,16 @@
             // SweetAlert or other JS code can go here if needed
         });
     </script>
+    <script>
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        // Reloads the current page
+        window.location.reload();
+    }, 100);
+});
+</script>
+
 </x-layout>
 

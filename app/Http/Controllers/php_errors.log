@@ -1,0 +1,8 @@
+[01-Apr-2024 21:34:15 UTC] PHP Fatal error:  Uncaught Error: Class "App\Http\Controllers\Controller" not found in C:\Users\student\WIDACRM\app\Http\Controllers\DashboardController.php:11
+Stack trace:
+#0 {main}
+  thrown in C:\Users\student\WIDACRM\app\Http\Controllers\DashboardController.php on line 11
+[01-Apr-2024 21:34:15 UTC] PHP Fatal error:  Uncaught Error: Class "App\Http\Controllers\Controller" not found in C:\Users\student\WIDACRM\app\Http\Controllers\DashboardController.php:11
+Stack trace:
+#0 {main}
+  thrown in C:\Users\student\WIDACRM\app\Http\Controllers\DashboardController.php on line 11

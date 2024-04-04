@@ -20,13 +20,14 @@
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     }
     .card-header {
-        
+        background-color: #4169E1 !important;
         color: white;
         display: flex;
         justify-content: space-between;
         align-items: center;
         position: relative; /* Adjusted for absolute positioning */
         padding: 0.75rem; /* Adjusted padding */
+       
         height: 40px;
     }
 
@@ -69,6 +70,7 @@
         right: 1rem;
         top: 50%;
         transform: translateY(-50%);
+        background-color: #4169E1;
     }
 
     /* Back button style */
@@ -118,7 +120,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <div class="card card-info" id="element-to-download">
+        <div class="card card-info" id="element-to-download" style="background-color: #4169E1">
             <div class="card-header sidebar-dark-primary">
                
                 <div class="edit-btn-group">

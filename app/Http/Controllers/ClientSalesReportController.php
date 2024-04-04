@@ -68,8 +68,31 @@ class ClientSalesReportController extends Controller
             "dataStore" => $report->dataStore('sales_by_customer'),
             "width" => "100%",
             "height" => "500px",
-            // ... other chart options ...
+            "options" => [
+                "title" => "Top 10 Sales by Customer",
+                "titleTextStyle" => [
+                    "color" => "#ffffff",
+                ],
+                "legend" => [
+                    "position" => "bottom",
+                    "textStyle" => [
+                        "color" => "#ffffff",
+                    ],
+                ],
+                "backgroundColor" => "#121212", // Set the background color to black
+                "hAxis" => [
+                    "textStyle" => ["color" => "#ffffff"],
+                ],
+                "vAxis" => [
+                    "textStyle" => ["color" => "#ffffff"],
+                ],
+                "colors" => ["#4169E1"], // Set royal blue color for the chart bars
+                // Set royal blue color for the chart bars
+            ],
+            // ... other chart options as needed ...
         ]);
+        
+        
         $chartHTML = ob_get_clean(); // Get the contents of the buffer
 
         // Pass the chart HTML and report data to your view

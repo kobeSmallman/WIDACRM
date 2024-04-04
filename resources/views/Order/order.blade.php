@@ -113,7 +113,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     
-                    <table id="orders-table" class="table table-bordered table-striped">
+                <table id="orders-table" class="table table-bordered table-striped responsive">
                    
                         <thead>
                             <tr>
@@ -327,5 +327,17 @@
 
 });
 </script>
+<style>
+    .custom-card {
+        overflow: auto; /* Add scroll if content overflows */
+        padding: 15px; /* Or any suitable padding */
+    }
+
+    /* Add any specific styles for the table if needed */
+    .responsive {
+        width: 100%;
+        overflow-x: auto; /* Allows horizontal scrolling if table is too wide */
+    }
+</style>
 
 

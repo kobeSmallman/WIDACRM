@@ -14,7 +14,7 @@
             <h2 class="h1 mb-3">How can we help you?</h2>
             <p class="lead fs-4 text-secondary mb-5">We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.</p>
             <div class="accordion accordion-flush" id="accordionExample">
-
+            <input type="text" id="searchInput" class="form-control mb-3" onkeyup="searchFAQ()" placeholder="Search for questions...">
               {{-- Custom Questions --}}
               <div class="accordion-item">
                 <h2 class="accordion-header" id="headingNewUser">
@@ -102,4 +102,25 @@
   </div>
 </section>
 <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function searchFAQ() {
+    var input, filter, accordion, items, item, i, text;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    accordion = document.getElementById("accordionExample");
+    items = accordion.getElementsByClassName("accordion-item");
+
+    for (i = 0; i < items.length; i++) {
+        item = items[i];
+        text = item.textContent || item.innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+            items[i].style.display = "";
+        } else {
+            items[i].style.display = "none";
+        }
+    }
+}
+</script>
+
 </x-layout>

@@ -1,4 +1,3 @@
-{{-- resources/views/reports/orderVolumeByDateReport.blade.php --}}
 <x-layout>
     <!-- Content Header -->
     <div class="text-center">
@@ -21,4 +20,6 @@
     
     <!-- Chart Rendering -->
     {!! $chartHTML !!}
+
+    
 </x-layout>
