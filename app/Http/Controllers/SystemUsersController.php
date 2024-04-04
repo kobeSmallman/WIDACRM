@@ -100,34 +100,44 @@ class SystemUsersController extends BaseController
         sort($departments);
         return view('systemusers.add-employee', compact('departments')); 
     }
+ 
+    public function editEmployeeInfo($employee)
+    {  
+        $selectedEmployee = Employee::findOrFail($employee); 
 
-
-
-        
-    public function updateEmployee(Request $request, $employee)
-    {
-        // Validate the form data
-        $request->validate([
-            'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $empProfile = Employee::findOrFail($employee);
-
-        // Handle profile image update
-        if ($request->hasFile('profile_image')) {
-            $file = $request->file('profile_image');
-            $imageData = file_get_contents($file->getRealPath()); // Get the binary data of the file
-            $empProfile->profile_image = base64_encode($imageData); // Store the base64 encoded binary data
-            $empProfile->save();
-        }
-
-        return back()->with('success', 'Profile updated successfully.');
+        $departments = Employee::distinct()->pluck('Department')->toArray();
+        $departments = array_map('strtoupper', $departments); 
+        sort($departments);
+        return view('systemusers.edit-employee', compact('selectedEmployee', 'departments')); 
     }
 
+    public function updateEmployeeInfo(Request $request, $employee)
+    { 
+        $employeeData = $request->validate([ 
+            'Last_Name' => ['required', new UniqueEmployeeName($request->input('Last_Name'), $request->input('First_Name'))],
+            'First_Name' => ['required'],
+            'Department',
+            'Position' => ['required'],
+            'Employee_Email' => ['required'],
+        ]);
+        
+        if ($request->input('Department') === 'other') { 
+            $employeeData['Department'] = $request->input('OtherDepartment');
+        } else { 
+            $employeeData['Department'] = $request->input('Department');
+        }
+ 
+        $empProfile = Employee::findOrFail($employee);
+        try {
+            $empProfile->update($employeeData);   
+            Return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return back()->withErrors('Failed to update employee: ' . $e->getMessage())->withInput();
+        }
 
-
-
-
+    }
+  
     public function showProfile($employeeID)
     {
         $selectedEmployee = Employee::findOrFail($employeeID);

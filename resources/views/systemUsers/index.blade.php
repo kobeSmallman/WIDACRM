@@ -14,16 +14,17 @@
             </div>
         </div>
     </div>
-
-    <!-- Begin Page Content -->
+ 
     <div class="container-fluid"> 
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">List of System Users</h3>
+        <div class="card"> 
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title mb-0">List of System Users</h3> 
+                <div class="ml-auto">
+                    <a href="{{ route('systemusers.registration') }}" class="btn btn-primary">New Employee</a>
+                </div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-                <a href="{{ route('systemusers.registration') }}" class="btn btn-primary mb-3">New Employee</a>
+  
+            <div class="card-body"> 
                 <table id="tblSystemUsers" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -41,12 +42,12 @@
                         @foreach ($activeEmployees as $employee)
                             <tr>
                                 <td> 
-                                    <a href="{{ route('systemusers.profile', $employee->Employee_ID) }}" class="btn btn-default btn-sm">
+                                    <a href="{{ route('systemusers.editEmployeeInfo', $employee->Employee_ID) }}" class="btn btn-default btn-sm">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
-                                    <a href="#" class="btn btn-default btn-sm">
+                                    <!-- <a href="#" class="btn btn-default btn-sm">
                                     <i class="fa-regular fa-trash-can"></i>
-                                    </a>
+                                    </a> -->
                                 </td>
                                 <td>{{ $employee->Employee_ID }}</td>
                                 <td><a href="{{ route('systemusers.profile', $employee->Employee_ID) }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</a></td>
@@ -58,25 +59,25 @@
                         @endforeach
                     </tbody> 
                 </table>
-            </div>
-            <!-- /.card-body -->
+            </div> 
         </div>
     </div>      
 
-    @if(session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    title: 'INFORMATION MESSAGE',
-                    text: "{{ session('success') }}",
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            });
-        </script>
-    @endif  
 </x-layout>
 
+
+@if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'INFORMATION MESSAGE',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+@endif  
 
 <script> 
    $(document).ready(function() {   
@@ -94,24 +95,6 @@
 
     });
 
-    $('.delete-vendor-btn').click(function() {
-            var vendorId = $(this).data('id');
-            if (confirm('Are you sure?')) {
-                $.ajax({
-                    url: '/vendors/' + vendorId,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        _method: 'DELETE'
-                    },
-                    success: function(response) {
-                        // Reload the page or remove the row from the table
-                        table.row($(this).parents('tr')).remove().draw();
-                    }
-                });
-            }
-        });
-
- 
+     
 </script>
 

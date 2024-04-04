@@ -189,14 +189,25 @@ Route::get('/clients/client-info/{client}', [ClientController::class, 'editClien
     Route::get('/system-users', [AuthController::class, 'showSystemUsers'])->name('system-users');
     Route::post('/employees/store', [AuthController::class, 'store'])->name('employees.store');
 
-    Route::get('/systemusers', [SystemUsersController::class, 'showSystemUsers'])->name('systemusers')
+    Route::get('/systemusers', [SystemUsersController::class, 'showSystemUsers'])
+        ->name('systemusers')
         ->middleware('checkAccess:SystemUsers');
-    Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registration'])->name('systemusers.registration')
+    Route::get('/systemusers/add-employee', [SystemUsersController::class, 'registration'])
+        ->name('systemusers.registration')
         ->middleware('checkAccess:SystemUsers');
-    Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])->name('systemusers.profile')
+    Route::get('/systemusers/profile/{employee}', [SystemUsersController::class, 'showProfile'])
+        ->name('systemusers.profile')
         ->middleware('checkAccess:SystemUsers');
-    Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])->name('systemusers.updateEmployee')
+    Route::post('/systemusers/profile/{employee}/update', [SystemUsersController::class, 'updateEmployee'])
+        ->name('systemusers.updateEmployee')
         ->middleware('checkAccess:SystemUsers');
+
+    Route::get('/systemusers/edit-employee/{employee}', [SystemUsersController::class, 'editEmployeeInfo'])
+        ->name('systemusers.editEmployeeInfo')
+        ->middleware('checkAccess:SystemUsers');
+    Route::post('/systemusers/{employee}/update', [SystemUsersController::class, 'updateEmployeeInfo'])
+        ->name('systemusers.updateEmployeeInfo')
+        ->middleware('checkAccess:SystemUsers'); 
 
     Route::post('/system-users/save-employee', [SystemUsersController::class, 'saveEmployee'])->name('save.employee');
 
@@ -224,7 +235,7 @@ Route::get('/clients/client-info/{client}', [ClientController::class, 'editClien
     // notes page
     Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
     Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
-    Route::get('/clients/{id}/notesAJAX', [ClientController::class, 'notesAJAX'])->name('clients.notesAJAX');
+    Route::get('/clients/{id}/notesAJAX', [NoteController::class, 'notesAJAX'])->name('clients.notesAJAX');
 
     // Route to show the form for editing a specific note
     Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
