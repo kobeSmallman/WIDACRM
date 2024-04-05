@@ -53,49 +53,49 @@ class NoteController extends Controller
     }
 
      /// FUNCTIONS USED BY NOTES CONTROLLER
-     public function show($id)
-     {
-         // Load the client along with the notes and the employees who created them
-         $client = Client::with(['notes', 'notes.employee'])->findOrFail($id);
-     
-         // If it's an AJAX request, return JSON data
-         if (request()->ajax()) {
-             return response()->json($client);
-         }
-         
-         // Determine which view to return based on the current route
-         if (request()->routeIs('clients.show')) {
-             // If the current route is 'clients.show'
-             return view('clients.show', compact('client'));
-         } elseif (request()->routeIs('clients.notes')) {
-             // If the current route is 'clients.notes'
-             return view('notes.index', compact('client'));
-         }
-     
-         // Optional: handle the case where neither route matches
-         abort(404, 'Page not found.');
-     }
-     
-     public function notesAJAX($id)
-     {
-         $client = Client::with('notes')->findOrFail($id);
-         return response()->json($client->notes);
-     }
- 
- 
- 
-     public function notes($id)
-     {
-         $client = Client::with('notes.employee')->findOrFail($id);
-         return view('notes.index', compact('client'));
-     }
- 
-     public function notesCount($id)
-     {
-         $client = Client::findOrFail($id);
-         $notesCount = $client->notes->count();
-         return response()->json($notesCount);
-     }
+    public function show($id)
+    {
+        // Load the client along with the notes and the employees who created them
+        $client = Client::with(['notes', 'notes.employee'])->findOrFail($id);
+    
+        // If it's an AJAX request, return JSON data
+        if (request()->ajax()) {
+            return response()->json($client);
+        }
+        
+        // Determine which view to return based on the current route
+        if (request()->routeIs('clients.show')) {
+            // If the current route is 'clients.show'
+            return view('clients.show', compact('client'));
+        } elseif (request()->routeIs('clients.notes')) {
+            // If the current route is 'clients.notes'
+            return view('notes.index', compact('client'));
+        }
+    
+        // Optional: handle the case where neither route matches
+        abort(404, 'Page not found.');
+    }
+    
+    public function notesAJAX($id)
+    {
+        $client = Client::with('notes')->findOrFail($id);
+        return response()->json($client->notes);
+    }
+
+
+
+    public function notes($id)
+    {
+        $client = Client::with('notes.employee')->findOrFail($id);
+        return view('notes.index', compact('client'));
+    }
+
+    public function notesCount($id)
+    {
+        $client = Client::findOrFail($id);
+        $notesCount = $client->notes->count();
+        return response()->json($notesCount);
+    }
 
     public function edit(Note $note)
     {
