@@ -336,7 +336,7 @@ Route::get('/clients/{id}/orders', [NoteController::class, 'getClientOrders'])->
 //notes page
 Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
 Route::post('/notes/store', [NoteController::class, 'store'])->name('notes.store');
-Route::get('/clients/{id}/notesAJAX', [ClientController::class, 'notesAJAX'])->name('clients.notesAJAX');
+Route::get('/clients/{id}/notesAJAX', [NoteController::class, 'notesAJAX'])->name('clients.notesAJAX');
 // Route to show the form for editing a specific note
 Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.edit');
 // Route to update a specific note
