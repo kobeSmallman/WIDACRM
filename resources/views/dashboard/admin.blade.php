@@ -1,8 +1,7 @@
 <x-layout>
     <!-- Dashboard Header -->
     <div class="text-center">
-        <h1>WIDA</h1>
-        <h4>Overview of business performance</h4>
+        <h1>WIDA DASHBOARD</h1>
     </div>
     <hr/>
 
@@ -26,7 +25,7 @@
         font-size: 1.5rem; /* Larger font size for card titles */
     }
     
-    .text-center h1, .text-center h4 {
+    .text-center h1, .text-center h2 {
         font-weight: 600; /* Bolder font for headers */
     }
     .chart-container {
