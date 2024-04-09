@@ -1,7 +1,7 @@
 <x-layout>
     <!-- Dashboard Header -->
     <div class="text-center">
-        <h1 class="report-heading">Personal Reports | Today is: {{ now()->toFormattedDateString() }}</h1>
+        <h2 class="report-heading">Personal Reports | Today is: {{ now()->toFormattedDateString() }}</h2>
     </div>
     <hr/>
 
@@ -38,11 +38,11 @@
                     <button class="btn btn-primary dropdown-toggle report-dropdown" type="button" id="moreReportsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Select Report
                     </button>
-                    <div class="dropdown-menu" style="width: 100%;"><!-- Added inline style for dropdown width -->
-                        <a class="dropdown-item" href="{{ route('clientSalesSummary.index') }}">Client Sales Report</a>
-                        <a class="dropdown-item" href="{{ route('salesByEmployeeReport.index') }}">Sales by Employee</a>
-                        <a class="dropdown-item" href="{{ route('orderVolumeReport.index') }}">Order Volume by Date</a>
-                        <a class="dropdown-item" href="{{ route('ordersByStatus.index') }}">Orders by Status</a>
+                    <div class="dropdown-menu" style="width: 100%; background-color:#3498db; color: black;"><!-- Added inline style for dropdown width -->
+                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('clientSalesSummary.index') }}">Client Sales Report</a>
+                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('salesByEmployeeReport.index') }}">Sales by Employee</a>
+                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('orderVolumeReport.index') }}">Order Volume by Date</a>
+                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('ordersByStatus.index') }}">Orders by Status</a>
                     </div>
                 </div>
             </div>
@@ -169,20 +169,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .chart-container {
         height: 60vh; /* Set to 60% of the viewport height, or adjust as needed */
-        background-color: black; /* Ensure the container background is black */
+        background-color: white; /* Ensure the container background is black */
         margin-bottom: 2rem; /* Space below the chart */
+        
     }
 
     .chart-container canvas {
         height: 100% !important; /* Ensure the canvas fills the container */
     }
+    
+    .chart-card .card-body {
+        padding: 0;
+        position: relative; /* Set the position to relative so that the chart can size itself based on this container */
+        width: 100%; /* Set to 100% of the container */
+        max-height: 400px; /* Adjust max height as needed */
+    }
+
     .report-heading {
-        font-size: 36px;
-        font-weight: bold;
+        font-size: 26px;
+       align-items:left;
     }
 
     .card-title-heading {
-        font-size: 24px;
+         background-color: #3498db; 
+        font-size: 14px;
         font-weight: bold;
     }
 
@@ -202,21 +212,24 @@ document.addEventListener('DOMContentLoaded', function () {
     .report-dropdown {
         font-size: 20px; /* Larger font size for dropdown */
         width: 100%; /* Make dropdown full width */
+        color: black;
     }
 
     .chart-title {
-        font-size: 24px;
+        
+        font-size: 14px;
         font-weight: bold;
     }
     .average-deal-card, .dropdown-card, .chart-card {
-        background: linear-gradient(160deg, #000000 0%, #4169E1 100%);
+        background-color: white;
         border: none;
         border-radius: 15px; /* Rounded corners */
-        color: #fff;
+       
     }
 
     .card-title-heading, .chart-title {
         font-size: 24px;
+        
         font-weight: bold;
         margin-bottom: 0.5rem;
     }
@@ -226,44 +239,20 @@ document.addEventListener('DOMContentLoaded', function () {
         font-weight: bold;
     }
 
-    .report-heading {
-        font-size: 3rem; /* Larger font size for main heading */
-        font-weight: 600;
-    }
-
     .dropdown-card .card-header, .average-deal-card .card-header {
-        background-color: rgba(0, 0, 0, 0.2); /* Lighten header background */
+        background-color: #3498db; 
     }
 
     .dropdown-menu {
         background-color: #2c3e50; /* Matching dropdown style */
+        color:black;
     }
 
     .report-dropdown {
+        color:black;
         font-size: 1.5rem;
         width: 100%;
     }
 
-    /* Adjust the chart container */
-    .chart-container {
-        background-color: #1e1e1e;
-        padding: 10px;
-        border-radius: 15px;
-        margin: auto;
-    }
-    .chart-card .card-body {
-        padding: 0;
-        position: relative; /* Set the position to relative so that the chart can size itself based on this container */
-        width: 100%; /* Set to 100% of the container */
-        max-height: 400px; /* Adjust max height as needed */
-    }
-
-    .chart-container canvas {
-        position: absolute; /* Position absolutely within the card body */
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
 
 </style>

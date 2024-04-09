@@ -63,8 +63,8 @@
                     // Add more colors as needed
                 ],
                 borderColor: [
-                    '#ffffff', // White borders
-                    '#ffffff',
+                    'black', // White borders
+                    'black',
                     // More borders as needed
                 ],
                 borderWidth: 1
@@ -75,11 +75,11 @@
             title: {
                 display: true,
                 text: 'Orders by Status',
-                fontColor: '#ffffff' // White title
+                fontColor: 'black' // White title
             },
             legend: {
                 labels: {
-                    fontColor: '#ffffff' // White legend labels
+                    fontColor: 'black' // White legend labels
                 }
             }
         }
@@ -129,7 +129,7 @@ body, .content-wrapper {
         }
 
         .card {
-            background-color: #1e1e1e; /* Dark card background */
+            background-color: white; /* Dark card background */
             border: none;
         }
 
@@ -140,7 +140,7 @@ body, .content-wrapper {
         }
 
         #chart-container {
-            background-color: #2c2c2c; /* Slightly lighter dark shade for chart background */
+            background-color:white; /* Slightly lighter dark shade for chart background */
             padding: 20px;
             border-radius: 15px;
         }

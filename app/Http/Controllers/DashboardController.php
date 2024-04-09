@@ -69,30 +69,30 @@ class DashboardController extends Controller
             "options" => [
                 "title" => "Order Volume Over Time",
                 "titleTextStyle" => [
-                    "color" => "#ffffff", // Text color for the title
+                    "color" => "#000000", // Black text color for the title
                 ],
                 "curveType" => "function",
                 "legend" => [
                     "position" => "bottom",
                     "textStyle" => [
-                        "color" => "#ffffff", // Text color for the legend
+                        "color" => "#000000", // Black text color for the legend
                     ],
                 ],
                 "backgroundColor" => "none", // Transparent background for the chart
                 "colors" => ["#4169E1", "#000000"], // Royal blue and black colors for the chart
                 "hAxis" => [
                     "title" => "Time",
-                    "textStyle" => ["color" => "#ffffff"], // Text color for hAxis
+                    "textStyle" => ["color" => "#000000"], // Black text color for hAxis
                 ],
                 "vAxis" => [
                     "title" => "Total Orders",
-                    "textStyle" => ["color" => "#ffffff"], // Text color for vAxis
+                    "textStyle" => ["color" => "#000000"], // Black text color for vAxis
                 ],
                 "chartArea" => [
-                    "backgroundColor" => "#121212", // Dark background for the chart area
+                    "backgroundColor" => "#ffffff", // White background for the chart area
                 ],
-                "responsive" => true, // Add this line for responsiveness
-                "maintainAspectRatio" => false,
+                "responsive" => true, // Enable responsiveness
+                "maintainAspectRatio" => false, // Disable aspect ratio maintenance
             ],
         ]);
         
