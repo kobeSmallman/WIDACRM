@@ -38,11 +38,11 @@
                     <button class="btn btn-primary dropdown-toggle report-dropdown" type="button" id="moreReportsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Select Report
                     </button>
-                    <div class="dropdown-menu" style="width: 100%; background-color:#3498db; color: black;"><!-- Added inline style for dropdown width -->
-                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('clientSalesSummary.index') }}">Client Sales Report</a>
-                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('salesByEmployeeReport.index') }}">Sales by Employee</a>
-                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('orderVolumeReport.index') }}">Order Volume by Date</a>
-                        <a class="dropdown-item" style="color:black;  font-weight: bold; " href="{{ route('ordersByStatus.index') }}">Orders by Status</a>
+                    <div class="dropdown-menu" style="width: 100%; background-color:#3498db; color: white;"><!-- Added inline style for dropdown width -->
+                        <a class="dropdown-item" style="color:white;  font-weight: bold; " href="{{ route('clientSalesSummary.index') }}">Client Sales Report</a>
+                        <a class="dropdown-item" style="color:white;  font-weight: bold; " href="{{ route('salesByEmployeeReport.index') }}">Sales by Employee</a>
+                        <a class="dropdown-item" style="color:white;  font-weight: bold; " href="{{ route('orderVolumeReport.index') }}">Order Volume by Date</a>
+                        <a class="dropdown-item" style="color:white;  font-weight: bold; " href="{{ route('ordersByStatus.index') }}">Orders by Status</a>
                     </div>
                 </div>
             </div>
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .report-heading {
         font-size: 26px;
-       align-items:left;
+       align-items:center;
     }
 
     .card-title-heading {
@@ -198,20 +198,28 @@ document.addEventListener('DOMContentLoaded', function () {
     .average-deal-amount {
         font-size: 30px;
         font-weight: bold;
+        border-radius: 15px;
+        align-items:center;
+        text-align:center;
     }
 
     .average-deal-card {
         width: 20rem; /* Adjust width as needed */
+        border-radius: 15px;
+        text-align:center;
     }
 
     .dropdown-card {
         width: 20rem; /* Adjust width for dropdown card */
+        border-radius: 15px;
+        text-align:center;
+        color:white;
     }
 
     .report-dropdown {
         font-size: 20px; /* Larger font size for dropdown */
         width: 100%; /* Make dropdown full width */
-        color: black;
+        color: white;
     }
 
     .chart-title {
@@ -228,9 +236,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .card-title-heading, .chart-title {
         font-size: 24px;
-        
+        color:white;
         font-weight: bold;
         margin-bottom: 0.5rem;
+        text-align:center;
     }
 
     .average-deal-amount, .report-dropdown {
@@ -244,11 +253,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     .dropdown-menu {
         background-color: #2c3e50; /* Matching dropdown style */
-        color:black;
+        color:white;
     }
 
     .report-dropdown {
-        color:black;
+        color:white;
         font-size: 1.5rem;
         width: 100%;
     }

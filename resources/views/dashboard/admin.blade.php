@@ -56,20 +56,20 @@
 <div class="col-md-4 mb-4">
             <div class="card bg-info text-white">
               
-                    <h5 class="card-title"  style="color:black;  font-weight: bold; ">Total Orders</h5>
+                    <h5 class="card-title"  style="  font-weight: bold; ">Total Orders</h5>
              <hr>
                 <div class="card-body">
-                    <p class="card-text display-3"  style="color:black;  font-weight: bold; ">{{ $totalOrders }}</p>
+                    <p class="card-text display-3"  style="  font-weight: bold; ">{{ $totalOrders }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="card bg-success text-white">
                
-                    <h5 class="card-title"  style="color:black;  font-weight: bold; ">Total Sales</h5>
+                    <h5 class="card-title"  style="  font-weight: bold; ">Total Sales</h5>
                     <hr>
                 <div class="card-body">
-                    <p class="card-text display-3"  style="color:black;  font-weight: bold; ">${{ number_format($totalSales, 2) }}</p>
+                    <p class="card-text display-3"  style="  font-weight: bold; ">${{ number_format($totalSales, 2) }}</p>
                 </div>
             </div>
         </div>
@@ -77,10 +77,10 @@
         <div class="col-md-4 mb-4">
             <div class="card bg-warning text-white">
              
-                    <h5 class="card-title"  style="color:black;  font-weight: bold; ">Total Clients</h5>
+                    <h5 class="card-title"  style="  font-weight: bold; ">Total Clients</h5>
                     <hr>
                 <div class="card-body">
-                    <p class="card-text display-3"  style="color:black;  font-weight: bold; ">{{ $totalClients }}</p>
+                    <p class="card-text display-3"  style="  font-weight: bold; ">{{ $totalClients }}</p>
                 </div>
             </div>
         </div>
