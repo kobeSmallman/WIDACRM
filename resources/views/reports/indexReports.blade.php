@@ -9,7 +9,7 @@
  <!-- Cards for Average Deal Sizes -->
 <div class="d-flex justify-content-between mb-4">
     <!-- WIDA's Average Deal Size Card -->
-    <div class="card average-deal-card mx-1" style="width: calc(33.333% - 10px);">
+    <div   class="card bg-info text-white" class="card average-deal-card mx-1" style="width: calc(33.333% - 10px);">
         <div class="card-header">
             <h2 class="card-title-heading">WIDA's Average Deal Size</h2>
         </div>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Your Average Deal Size Card -->
-    <div class="card average-deal-card mx-1" style="width: calc(33.333% - 10px);">
+    <div  class="card bg-success text-white" class="card average-deal-card mx-1" style="width: calc(33.333% - 10px);">
         <div class="card-header">
             <h2 class="card-title-heading">Your Average Deal Size</h2>
         </div>
@@ -29,7 +29,7 @@
     </div>
 
     <!-- More Reports Dropdown Card, keeping the same width for consistency -->
-    <div class="card dropdown-card mx-1" style="width: calc(33.333% - 10px);">
+    <div  class="card bg-warning text-white"class="card dropdown-card mx-1" style="width: calc(33.333% - 10px);">
             <div class="card-header">
                 <h2 class="card-title-heading">More Reports</h2>
             </div>
@@ -191,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .card-title-heading {
-         background-color: #3498db; 
         font-size: 14px;
         font-weight: bold;
     }

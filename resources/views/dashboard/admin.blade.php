@@ -1,8 +1,6 @@
 <x-layout>
     <!-- Dashboard Header -->
-    <div class="text-center">
-       
-    </div>
+  <h2>Dashboard</h2>
     <hr/>
 
     <div class="row text-center">
@@ -14,18 +12,19 @@
         font-family: 'Open Sans', sans-serif;
     }
     .card {
-        background-color: white !important; /* Ensure card background is white */
+        
         border: none;
         border-radius: 15px; /* Rounded corners */
     }
 
     .card-header {
+        
         background-color: #3498db; /* Match the report page header color */
         color: white; /* White text for the header */
     }
 
     .card h5 {
-        font-size: 1.5rem; /* Larger font size for card titles */
+        font-size: 2rem; /* Larger font size for card titles */
     }
 
     .text-center h1, .text-center h2 {
@@ -42,7 +41,7 @@
     }
 
     .card .display-3 {
-        font-size: 3rem; /* Larger font size for card text */
+        font-size: 1.7rem; /* Larger font size for card text */
         width: 80%; /* or you can use '80vw' for viewport width */
         margin: auto;
     }
@@ -56,9 +55,9 @@
 
 <div class="col-md-4 mb-4">
             <div class="card bg-info text-white">
-                <div class="card-header">
+              
                     <h5 class="card-title"  style="color:black;  font-weight: bold; ">Total Orders</h5>
-                </div>
+             <hr>
                 <div class="card-body">
                     <p class="card-text display-3"  style="color:black;  font-weight: bold; ">{{ $totalOrders }}</p>
                 </div>
@@ -66,9 +65,9 @@
         </div>
         <div class="col-md-4 mb-4">
             <div class="card bg-success text-white">
-                <div class="card-header">
+               
                     <h5 class="card-title"  style="color:black;  font-weight: bold; ">Total Sales</h5>
-                </div>
+                    <hr>
                 <div class="card-body">
                     <p class="card-text display-3"  style="color:black;  font-weight: bold; ">${{ number_format($totalSales, 2) }}</p>
                 </div>
@@ -77,9 +76,9 @@
 
         <div class="col-md-4 mb-4">
             <div class="card bg-warning text-white">
-                <div class="card-header">
+             
                     <h5 class="card-title"  style="color:black;  font-weight: bold; ">Total Clients</h5>
-                </div>
+                    <hr>
                 <div class="card-body">
                     <p class="card-text display-3"  style="color:black;  font-weight: bold; ">{{ $totalClients }}</p>
                 </div>
