@@ -24,7 +24,7 @@
     }
 
     .card h5 {
-        font-size: 2rem; /* Larger font size for card titles */
+        font-size: 2.3rem; /* Larger font size for card titles */
     }
 
     .text-center h1, .text-center h2 {
@@ -41,7 +41,7 @@
     }
 
     .card .display-3 {
-        font-size: 1.7rem; /* Larger font size for card text */
+        font-size: 2rem; /* Larger font size for card text */
         width: 80%; /* or you can use '80vw' for viewport width */
         margin: auto;
     }
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-
+      
         <div class="col-md-4 mb-4">
             <div class="card bg-warning text-white">
              
