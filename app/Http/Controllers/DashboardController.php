@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
-
+use App\Models\Page;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Client;
@@ -69,42 +70,54 @@ class DashboardController extends Controller
             "options" => [
                 "title" => "Order Volume Over Time",
                 "titleTextStyle" => [
-                    "color" => "#ffffff", // Text color for the title
+                    "color" => "#000000", // Black text color for the title
                 ],
                 "curveType" => "function",
                 "legend" => [
                     "position" => "bottom",
                     "textStyle" => [
-                        "color" => "#ffffff", // Text color for the legend
+                        "color" => "#000000", // Black text color for the legend
                     ],
                 ],
                 "backgroundColor" => "none", // Transparent background for the chart
                 "colors" => ["#4169E1", "#000000"], // Royal blue and black colors for the chart
                 "hAxis" => [
                     "title" => "Time",
-                    "textStyle" => ["color" => "#ffffff"], // Text color for hAxis
+                    "textStyle" => ["color" => "#000000"], // Black text color for hAxis
                 ],
                 "vAxis" => [
                     "title" => "Total Orders",
-                    "textStyle" => ["color" => "#ffffff"], // Text color for vAxis
+                    "textStyle" => ["color" => "#000000"], // Black text color for vAxis
                 ],
                 "chartArea" => [
-                    "backgroundColor" => "#121212", // Dark background for the chart area
+                    "backgroundColor" => "#ffffff", // White background for the chart area
                 ],
-                "responsive" => true, // Add this line for responsiveness
-                "maintainAspectRatio" => false,
+                "responsive" => true, // Enable responsiveness
+                "maintainAspectRatio" => false, // Disable aspect ratio maintenance
             ],
         ]);
         
         
         
         $chartHTML = ob_get_clean();
+        $employee = auth()->user(); // Assuming you are using Laravel's authentication
+        $reportsPageId = Page::where('Page_Name', 'Reports')->value('Page_ID'); // Assuming 'Reports' is the name of the page
+        
+        $canViewReports = $employee->permissions->contains('Page_ID', $reportsPageId);
+
+        \Log::info('Can View Reports: ' . ($canViewReports ? 'Yes' : 'No'));
+        
+// Inside adminDashboard method in DashboardController
+\Log::info('Page ID for "Payments": ' . $reportsPageId);
+\Log::info('User Permissions: ' . json_encode($employee->permissions));
+\Log::info('Can View Reports: ' . ($canViewReports ? 'Yes' : 'No'));
 
         return view('dashboard.admin', [
             'totalOrders' => $totalOrders,
             'totalSales' => $totalSales,
             'totalClients' => $totalClients,
-            'chartHTML' => $chartHTML
+            'chartHTML' => $chartHTML,
+            'canViewReports' => $canViewReports,
         ]);
     }
 

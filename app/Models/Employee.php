@@ -33,6 +33,8 @@ class Employee extends Authenticatable
         'Password',
         'profile_image', 
         'Employee_Email',
+        'Lock_Count',
+        'Expiry_Date',
     ];
     
 
@@ -63,9 +65,16 @@ class Employee extends Authenticatable
     {
         return $this->Employee_ID;  
     }
-    
- 
 
+    public function get_ExpiryDate()
+    {
+        return $this->Expiry_Date;  
+    }
+    public function get_LockCount()
+    {
+        return $this->Lock_Count;  
+    }
+    
     public function permissions(): HasMany
     {
         return $this->hasMany(Permission::class, 'Employee_ID', 'Employee_ID');

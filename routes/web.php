@@ -136,7 +136,7 @@ Route::get('/access-denied', function () {
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
     // Show the form for editing the specified order
-    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    //Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 
     // Update the specified order in storage
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
@@ -207,7 +207,14 @@ Route::get('/clients/client-info/{client}', [ClientController::class, 'editClien
         ->middleware('checkAccess:SystemUsers');
     Route::post('/systemusers/{employee}/update', [SystemUsersController::class, 'updateEmployeeInfo'])
         ->name('systemusers.updateEmployeeInfo')
-        ->middleware('checkAccess:SystemUsers'); 
+        ->middleware('checkAccess:SystemUsers');
+    Route::post('/systemusers/{employee}/delete', [SystemUsersController::class, 'deleteEmployee'])
+        ->name('systemusers.deleteEmployee')
+        ->middleware('checkAccess:SystemUsers');
+
+    Route::post('/systemusers/{employee}/updatepic', [SystemUsersController::class, 'updateProfilePic'])
+        ->name('systemusers.updateProfilePic')
+        ->middleware('checkAccess:SystemUsers');   
 
     Route::post('/system-users/save-employee', [SystemUsersController::class, 'saveEmployee'])->name('save.employee');
 

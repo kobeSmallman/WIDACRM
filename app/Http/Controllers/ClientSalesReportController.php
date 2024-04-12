@@ -71,26 +71,26 @@ class ClientSalesReportController extends Controller
             "options" => [
                 "title" => "Top 10 Sales by Customer",
                 "titleTextStyle" => [
-                    "color" => "#ffffff",
+                    "color" => "#000000", // Black text color
                 ],
                 "legend" => [
                     "position" => "bottom",
                     "textStyle" => [
-                        "color" => "#ffffff",
+                        "color" => "#000000", // Black text color
                     ],
                 ],
-                "backgroundColor" => "#121212", // Set the background color to black
+                "backgroundColor" => "#ffffff", // Set the background color to white
                 "hAxis" => [
-                    "textStyle" => ["color" => "#ffffff"],
+                    "textStyle" => ["color" => "#000000"], // Black text color for horizontal axis
                 ],
                 "vAxis" => [
-                    "textStyle" => ["color" => "#ffffff"],
+                    "textStyle" => ["color" => "#000000"], // Black text color for vertical axis
                 ],
                 "colors" => ["#4169E1"], // Set royal blue color for the chart bars
-                // Set royal blue color for the chart bars
             ],
             // ... other chart options as needed ...
         ]);
+        
         
         
         $chartHTML = ob_get_clean(); // Get the contents of the buffer

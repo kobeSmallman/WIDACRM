@@ -83,7 +83,7 @@ class SystemUsersController extends BaseController
     public function showSystemUsers()
     {
         $activeEmployees = Employee::with('permissions')
-                            ->where('Employee_Status', 'Active')
+                            ->where('Employee_Status', 'ACTIVE')
                             ->orderBy('First_Name')  
                             ->get();
         $inactiveEmployees = Employee::where('Employee_Status', 'Inactive')->get();
@@ -137,13 +137,52 @@ class SystemUsersController extends BaseController
         }
 
     }
+
+    public function updateProfilePic(Request $request, $employee)
+    { 
+        $request->validate([
+            'profile_image' => 'sometimes|image|mimes:jpeg,png,jpg,bmp|max:2048',
+        ]);  
+        $empProfile = Employee::findOrFail($employee);
+        try {
+            if ($request->hasFile('profile_image')) {
+                $file = $request->file('profile_image');
+                $imageData = file_get_contents($file->getRealPath()); 
+                $empProfile->profile_image = base64_encode($imageData);  
+                $empProfile->save();
+            } else {
+                Return redirect()->route('systemusers')->with('error', 'Unable to update profile image. No file was selected.');
+            }
+
+            Return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return back()->withErrors('Failed to update employee: ' . $e->getMessage())->withInput();
+        } 
+    }
   
     public function showProfile($employeeID)
     {
         $selectedEmployee = Employee::findOrFail($employeeID);
 
+        $lockStatus = $selectedEmployee->get_LockCount() >= 3 ? 'LOCKED' : 'UNLOCKED';
+        $selectedEmployee->Lock_Status = $lockStatus;
         return view('systemusers.profile', compact('selectedEmployee'));
     }
 
+
+    public function deleteEmployee(Request $request, $employee)
+    { 
+        $employeeData['Employee_Status'] = "INACTIVE"; 
+        $empProfile = Employee::findOrFail($employee);
+        try {
+            $empProfile->update($employeeData);   
+            Return redirect()->route('systemusers')->with('success', 'The employee has been deleted.');
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return back()->withErrors('Unable to delete employee: ' . $e->getMessage())->withInput();
+        }
+
+    }
 
 }

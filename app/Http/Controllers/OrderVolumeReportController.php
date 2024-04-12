@@ -67,19 +67,20 @@ class OrderVolumeReportController extends Controller
                 "title" => "Order Volume Over Time",
                 "curveType" => "function",
                 "legend" => ["position" => "bottom"],
-                "backgroundColor" => "#121212", // Dark background
+                "backgroundColor" => "#ffffff", // Set the background color to white
                 "titleTextStyle" => [
-                    "color" => "#ffffff", // White title text
+                    "color" => "#000000", // Black title text
                 ],
                 "hAxis" => [
-                    "textStyle" => ["color" => "#ffffff"], // White horizontal axis text
+                    "textStyle" => ["color" => "#000000"], // Black horizontal axis text
                 ],
                 "vAxis" => [
-                    "textStyle" => ["color" => "#ffffff"], // White vertical axis text
+                    "textStyle" => ["color" => "#000000"], // Black vertical axis text
                 ],
-                "colors" => ["#4169E1"] // Royal blue line color
+                "colors" => ["#4169E1"] // Set royal blue line color
             ]
         ]);
+        
         $chartHTML = ob_get_clean(); // Get the contents of the buffer
 
         // Pass the chart HTML and report data to your view

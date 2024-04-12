@@ -1,4 +1,10 @@
 <x-layout>
+<style>
+        .ml-neg-5 { margin-left: -5rem; }
+        .swal-custom-html-container ul { text-align: left; margin-left: 0; padding-left: 1.5em; }
+        .card-title { font-size: 24px; font-weight: bold; }
+        label { font-weight: bold; }
+    </style>
     <!-- Content Header -->
     <section class="content-header">
         <div class="container-fluid">

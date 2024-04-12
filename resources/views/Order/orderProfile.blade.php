@@ -151,12 +151,12 @@
                  
                         <h4>Basic Information</h4>
                         <p><strong>Order ID:</strong> {{ $order->Order_ID }}</p>
-                        <p><strong>Request Date:</strong> {{ $order->Request_DATE }}</p>
+                        <p><strong>Request Date:</strong> {{ $order->Request_DATE->format('Y-m-d') }}</p>
                         <p><strong>Request Status:</strong> {{ $order->Request_Status }}</p>
                         <p><strong>Remarks:</strong> {{ $order->Remarks }}</p>
-                        <p><strong>Order Date:</strong> {{ $order->Order_DATE }}</p>
+                        <p><strong>Order Date:</strong> {{ $order->Order_DATE->format('Y-m-d') }}</p>
                         <p><strong>Order Status:</strong> {{ $order->Order_Status }}</p>
-                        <p><strong>Quotation Date:</strong> {{ $order->Quotation_DATE }}</p>
+                        <p><strong>Quotation Date:</strong> {{ $order->Quotation_DATE->format('Y-m-d') }}</p>
                         <!-- Add more fields from the Order table if necessary -->
                     </div>
 

@@ -67,10 +67,10 @@
                             <td>{{ $client->Shipping_Address }}</td>
                             <td>{{ $client->Billing_Address }}</td>
                             <td>
-    <a href="mailto:{{ $client->Email }}?from={{ Auth::user()->Employee_Email }}">
-        {{ $client->Email }}
-    </a>
-</td>
+                                <a href="mailto:{{ $client->Email }}?from={{ Auth::user()->Employee_Email }}">
+                                    {{ $client->Email }}
+                                </a>
+                            </td>
                             <td>{{ $client->Phone_Number }}</td>
                             <td>{{ $client->Lead_Status }}</td>
                             <td>{{ $client->Buyer_Status }}</td>
@@ -94,9 +94,31 @@
                 confirmButtonText: 'OK'
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'ERROR MESSAGE',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        });
     </script>
 @endif  
 
+
+@if(session('error'))
+    <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'ERROR MESSAGE',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+@endif  
 
 
 <script>
