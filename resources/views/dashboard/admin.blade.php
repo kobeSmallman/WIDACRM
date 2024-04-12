@@ -102,8 +102,11 @@
     <div class="mt-3 text-center">
     <button type="submit" class="btn btn-primary">Update Report</button>
    
+    @if($canViewReports)
         <a href="{{ route('reports.index') }}" class="btn btn-primary">View All Reports</a>
-    </div>
+    @endif
+</div>
+
 </form>
 
     </div>
