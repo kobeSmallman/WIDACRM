@@ -47,17 +47,20 @@
                         <p class="text-muted text-center">{{ $selectedEmployee->Position }}</p>
 
                         <!-- Update Profile Form -->
-                        <form action="{{ route('systemusers.updateEmployee', $selectedEmployee->Employee_ID) }}" method="POST" enctype="multipart/form-data">
-
-
+                        <form action="{{ route('systemusers.updateProfilePic', ['employee' => $selectedEmployee->Employee_ID]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <div class="form-group"> 
+                                <label for="profile_image">Change profile picture</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="profile_image" name="profile_image" onchange="toggleButton()">
+                                        <label class="custom-file-label" for="profile_image">Choose file</label>
+                                    </div> 
+                                </div> 
+                            </div> 
+
                             <div class="form-group">
-                                <label for="profile_image">Change profile image:</label>
-                                <input type="file" class="form-control-file" id="profile_image" name="profile_image">
-                            </div>
-                            
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                                <button type="submit" class="btn btn-primary" id="uploadButton" disabled>Upload</button>
                             </div>
                         </form>
                     </div>
@@ -73,15 +76,38 @@
                     </div>
                     <div class="card-body">
                         <strong>Department</strong>
-                        <p class="text-muted">{{ $selectedEmployee->Department }}</p>
-                        <hr>
+                        <p class="text-muted">{{ $selectedEmployee->Department }}</p> 
+                        <strong>Email</strong>
+                        <p class="text-muted">{{ $selectedEmployee->Employee_Email }}</p>
                         <strong>Employee Status</strong>
                         <p class="text-muted">{{ $selectedEmployee->Employee_Status }}</p> 
-                        <strong>Email</strong>
-            <p class="text-muted">{{ $selectedEmployee->Employee_Email }}</p>
+                        <strong>Password Expiry Date</strong>
+                        <p class="text-muted">{{ $selectedEmployee->Expiry_Date }}</p>
+                        <strong>Locked Status</strong>
+                        <p class="text-muted">{{ $selectedEmployee->Lock_Status }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>    
 </x-layout>
+ 
+
+<!-- bs-custom-file-input --> 
+<script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script>
+    $(function () {
+        bsCustomFileInput.init();
+    });
+
+    function toggleButton() {
+        var fileInput = document.getElementById('profile_image');
+        var uploadButton = document.getElementById('uploadButton');
+
+        if (fileInput.files.length > 0) {
+            uploadButton.disabled = false;
+        } else {
+            uploadButton.disabled = true;
+        }
+    }
+</script>

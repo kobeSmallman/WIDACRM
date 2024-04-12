@@ -44,10 +44,13 @@
                                 <td> 
                                     <a href="{{ route('systemusers.editEmployeeInfo', $employee->Employee_ID) }}" class="btn btn-default btn-sm">
                                     <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                    <!-- <a href="#" class="btn btn-default btn-sm">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                    </a> -->
+                                    </a> 
+                                    <form id="deleteForm{{ $employee->Employee_ID }}" action="{{ route('systemusers.deleteEmployee', $employee->Employee_ID) }}" method="POST" style="display: inline;">
+                                    @csrf 
+                                    <button type="button" class="btn btn-default btn-sm delete-btn" data-employee-id="{{ $employee->Employee_ID }}">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </form>
                                 </td>
                                 <td>{{ $employee->Employee_ID }}</td>
                                 <td><a href="{{ route('systemusers.profile', $employee->Employee_ID) }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</a></td>
@@ -93,6 +96,30 @@
             
         }).buttons().container().appendTo('#tblSystemUsers_wrapper .col-md-6:eq(0)');
 
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const employeeId = button.getAttribute('data-employee-id');
+                const deleteForm = document.querySelector(`#deleteForm${employeeId}`);
+
+                Swal.fire({
+                    title: 'CONFIRMATION MESSAGE',
+                    text: 'Do you want to delete this employee?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteForm.submit();
+                    }
+                });
+            });
+        });
     });
 
      

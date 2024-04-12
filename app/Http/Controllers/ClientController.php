@@ -83,8 +83,17 @@ class ClientController extends BaseController
     public function deleteClient($id)
     { 
         $client = Client::findOrFail($id); 
-        $client->delete();
- 
+        $hasOrders = $client->orders()->exists();
+        if ($hasOrders) {
+            return redirect()->route('clients')->with('error', 'Cannot delete client with existing orders.');
+        } 
+
+        $hasNotes = $client->Notes()->exists(); 
+        if ($hasNotes) {
+            return redirect()->route('clients')->with('error', 'Cannot delete client with existing notes.');
+        } 
+        
+        $client->delete(); 
         return redirect()->route('clients')->with('success', 'Client deleted successfully.'); 
     }
     

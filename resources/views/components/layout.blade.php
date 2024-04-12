@@ -73,7 +73,7 @@ background-color: #fefefe; /* White background */
 margin: 5% auto; /* Centered vertically and horizontally */
 padding: 20px; /* Padding around the content */
 border: 1px solid #888; /* Gray border */
-width: 80%; /* Width of the content relative to viewport width */
+width: 70%; /* Width of the content relative to viewport width */
 box-sizing: border-box; /* Include padding and border in the element's width and height */
 resize: both; /* Allow the element size to be changed */
 overflow: auto; /* Allow scrolling within the modal */
@@ -108,33 +108,18 @@ font-weight: bold; /* Make 'x' bold */
 
 /* Button styles */
 #myBtn {
-background-color: #34495E; /* A dark shade that blends well with your sidebar */
-color: white; /* White text for better readability */
-border: 2px solid #2C3E50; /* Border color that matches the sidebar color */
-padding: 10px 20px; /* Generous padding for a larger button */
-text-align: left; /* Center the text within the button */
-text-decoration: none; /* No underline on the text */
-display: block; /* The button should take the full width of the sidebar */
-font-size: 18px; /* Slightly larger font size for better visibility */
-margin: 10px auto; /* Center the button with some margin above and below */
-cursor: pointer; /* Cursor to pointer to indicate it's clickable */
-border-radius: 5px; /* Slightly rounded corners for a modern look */
-transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transitions for hover effects */
-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow to lift the button off the sidebar */
-width: 80%; /* Set a specific width */
+  display: block; /* The button should take the full width of the sidebar */ 
+  margin: 10px auto; /* Center the button with some margin above and below */
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transitions for hover effects */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow to lift the button off the sidebar */
+  width: 70%; /* Set a specific width */
 }
 
-#myBtn:hover {
-background-color: #2C3E50; /* Slightly lighter color on hover */
+#myBtn:hover { 
 transform: translateY(-2px); /* Small lift effect on hover */
 box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "pop" effect */
 }
-
-/* Make sure to add transition effects to the existing sidebar hover styles for consistency */
-.sidebar-item:hover {
-background-color: #2C3E50; /* Sidebar item hover color */
-transition: background-color 0.3s ease-in-out; /* Smooth transition for the color */
-}
+ 
 
 </style>
 </head>
@@ -327,44 +312,76 @@ transition: background-color 0.3s ease-in-out; /* Smooth transition for the colo
         <!-- Button to Open Modal -->
         <div id="noteModal" class="modal" style="display:none;">
           <div class="modal-content">
-            <div class="modal-header" id="dragHandle">Drag me</div>
+            <div class="modal-header" id="dragHandle">Click and hold to drag</div>
             <span class="close">&times;</span>
 
-            <!-- Note Title Input -->
-            <label for="noteTitle">Note Title:</label>
-            <input type="text" id="noteTitle" name="noteTitle" placeholder="Enter note title" style="width:100%;" />
+            <!-- Note Title Input --> 
+            <div class="row">
+              <label for="noteTitle" class="col-sm-2 col-form-label text-right">Title:</label>
+              <div class="col-sm-9">
+                <input type="text" id="noteTitle" name="noteTitle" class="form-control" placeholder="Enter note title" style="width:100%;" />
+              </div>
+            </div> 
 
+            <!-- Client Selection Dropdown --> 
+            <div class="row mt-2">
+              <label for="clientSelect" class="col-sm-2 col-form-label text-right">Client:</label> 
+              <div class="col-sm-9">
+                <select id="clientSelect" class="form-control">
+                  <option value="">Select a client</option> 
 
-            <!-- Client Selection Dropdown -->
-            <label for="clientSelect">Select Client:</label>
-            <select id="clientSelect">
-              <option value="">--Select a Client--</option>
-              <!-- Options will be populated dynamically from the $clients array -->
-              @foreach ($clients as $client)
-              <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
-              @endforeach
-            </select>
-
+                  @foreach ($clients as $client)
+                  <option value="{{ $client->Client_ID }}">{{ $client->Company_Name }}</option>
+                  @endforeach
+                </select> 
+              </div>
+            </div> 
+             
             <!-- Interaction Type Dropdown -->
-            <label for="interactionType">Interaction Type:</label>
-            <select id="interactionType">
-              <option value="">--Select Type--</option>
-              <option value="call">Call</option>
-              <option value="email">Email</option>
-              <option value="in_person">In Person</option>
-            </select>
-
+            <div class="row mt-2"> 
+              <label for="interactionType" class="col-sm-2 col-form-label text-right">Interaction:</label>
+              <div class="col-sm-9">
+                <select id="interactionType" class="form-control">
+                  <option value="">Select an interaction type</option>
+                  <option value="call">Call</option>
+                  <option value="email">Email</option>
+                  <option value="in_person">In Person</option>
+                </select>
+              </div>
+            </div> 
+ 
             <input type="hidden" id="createdBy" name="createdBy" value="{{ auth()->user()->Employee_ID }}">
 
-            <!-- Image Upload -->
-            <label for="imageUpload">Image:</label>
-            <input type="file" id="imageUpload" multiple="">
+            <!-- Image Upload --> 
+            <div class="row mt-2">
+              <label for="imageUpload" class="col-sm-2 col-form-label text-right">Image:</label>
+              <div class="col-sm-9">
+                <input type="file" id="imageUpload" class="form-control" multiple="">
+              </div>
+            </div>  
 
-            <textarea id="noteContent" style="width:100%; height:200px;"></textarea>
-            <button onclick="saveNote()">Save Note</button>
+            <!-- Note Content --> 
+            <div class="row mt-2">
+              <label for="noteContent" class="col-sm-2 col-form-label text-right">Note:</label>
+              <div class="col-sm-9">
+                 <textarea id="noteContent" class="form-control" rows="6"></textarea>
+              </div>
+            </div> 
+ 
+            <div class="row mt-2">
+              <label class="col-sm-2"></label>
+              <div class="col-sm-9">
+                <button class="btn btn-primary" onclick="saveNote()" style="width: 100%">Save Note</button>
+              </div>
+            </div>  
+
           </div>
         </div>
-        <button id="myBtn">Create New Note</button>
+
+
+        <button id="myBtn" class="btn btn-primary">
+          <i class="fa-solid fa-pen-to-square"></i> New Note
+        </button>
 
 
       </div>
@@ -434,25 +451,26 @@ transition: background-color 0.3s ease-in-out; /* Smooth transition for the colo
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+ <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+
 
 
   <!-- JavaScript to dynamically add active class to the navigation link -->
 
 
-  <script>
-    // Example with jQuery AJAX
-
-
+  <script> 
+    $(function () {
+        bsCustomFileInput.init();
+    });
+ 
     $(document).ready(function() {
       var currentRoute = "{{ Route::currentRouteName() }}";
-      console.log("Current Route: ", currentRoute);
 
       // Extract the part before the dot (.)
       var currentRouteWithoutIndex = currentRoute.split('.')[0];
 
       $('.nav-link').each(function() {
         var href = $(this).attr('href');
-        console.log("Href: ", href);
 
         // Check if the href contains the currentRoute without the '.index'
         if (currentRouteWithoutIndex && href && href.includes(currentRouteWithoutIndex)) {
