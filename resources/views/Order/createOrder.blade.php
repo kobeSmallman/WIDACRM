@@ -194,11 +194,7 @@
 
 <script>
 // Function to handle save button action
-function handleSave(event) {
-    event.preventDefault();  // Prevent default form submission
-    var newOrderForm = document.getElementById('newOrderForm');
-    newOrderForm.submit();  // Programmatically submit the form
-}
+
 function handleSave(event) {
     event.preventDefault(); // Prevent the form from submitting immediately
 
