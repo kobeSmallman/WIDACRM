@@ -1,6 +1,10 @@
 <x-layout>
     <!-- Content Header -->
     <section class="content-header">
+    <div class="text-left mt-4">
+    <a href="javascript:history.go(-1)" class="btn btn-primary">Back</a>
+</div>
+
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">

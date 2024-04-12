@@ -1,6 +1,10 @@
 {{-- resources/views/reports/salesByEmployeePersonal.blade.php --}}
 
 <x-layout>
+<div class="text-left mt-4">
+    <a href="javascript:history.go(-1)" class="btn btn-primary">Back</a>
+</div>
+
     <div class="container">
         <h1>Personal Sales Report</h1>
         <p>This is the personal sales report for the employee.</p>

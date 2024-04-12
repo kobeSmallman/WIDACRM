@@ -1,5 +1,9 @@
 <x-layout>
     <!-- Content Header -->
+    <div class="text-left mt-4">
+    <a href="javascript:history.go(-1)" class="btn btn-primary">Back</a>
+</div>
+
     <style>
         body, .content-wrapper {
             font-family: 'Open Sans', sans-serif;
@@ -76,6 +80,6 @@
             </tbody>
         </table>
     </div>
-
+ 
     <!-- Include any scripts needed for this page -->
 </x-layout>
