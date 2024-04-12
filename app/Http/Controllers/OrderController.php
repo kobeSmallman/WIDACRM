@@ -231,7 +231,8 @@ public function show($id)
             // Commit transaction
             DB::commit();
     
-            return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
+            return redirect()->route('orders.show', $order->Order_ID)->with('success', 'Order updated successfully.');
+        
         } catch (\Exception $e) {
             // Rollback transaction on error
             DB::rollback();
@@ -286,7 +287,8 @@ public function show($id)
         // Commit transaction
         DB::commit();
 
-        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
+
     } catch (\Exception $e) {
         // Rollback transaction on error
         DB::rollback();

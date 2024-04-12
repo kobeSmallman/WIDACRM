@@ -36,7 +36,7 @@
             <div class="card-header">
                 <h3 class="card-title"><i class="fa-solid fa-edit mr-2"></i>Order Details</h3>
             </div>
-            <form method="POST" action="{{ route('orders.update', $order->Order_ID) }}" class="p-3 rounded">
+            <form id="editOrderForm" method="POST" action="{{ route('orders.update', $order->Order_ID) }}" class="p-3 rounded">
                 @csrf
                 @method('PUT')
 
@@ -154,62 +154,100 @@
                     <button type="button" id="addProductButton" class="btn btn-primary" style="margin-left: 2rem;">Add Product</button>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Save Changes</button>
-                        <a href="{{ route('orders.index') }}" class="btn btn-secondary">Back to Orders</a>
-                    </div>
+    <button type="button" class="btn btn-success" onclick="handleSave(event)">Save Changes</button>
+    <a href="{{ route('orders.index') }}" class="btn btn-secondary">Back to Orders</a>
+</div>
+
                 </div>
             </form>
         </div>
     </div>
 </section>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var productContainer = document.getElementById('productContainer');
-        var addProductButton = document.getElementById('addProductButton');
-        var index = {{ count($order->products) }};
-
-        addProductButton.addEventListener('click', function() {
-            index++;
-            var productFormHTML = `
-                <div class="product-form" data-index="${index}">
-                    <h5>Product ${index}</h5>
-                    <div class="form-group row">
-                        <label for="Product_Name_${index}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Name:</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="Product_Name_${index}" name="products[${index}][Product_Name]" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Quantity_${index}" class="col-sm-3 col-form-label text-right ml-neg-5">Quantity:</label>
-                        <div class="col-sm-6">
-                            <input type="number" class="form-control" id="Quantity_${index}" name="products[${index}][Quantity]" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Product_Price_${index}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Price:</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="Product_Price_${index}" name="products[${index}][Product_Price]" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-9 offset-sm-3">
-                        <button type="button" class="btn btn-danger remove-product-btn" data-index="${index}">Remove Product</button>
-                    </div>
-                </div>`;
-            productContainer.insertAdjacentHTML('beforeend', productFormHTML);
-        });
-
-        productContainer.addEventListener('click', function(event) {
-            if (event.target.classList.contains('remove-product-btn')) {
-                var productForm = event.target.closest('.product-form');
-                productForm.remove();
-                if (productContainer.querySelectorAll('.product-form').length < 1) {
-                    addProductButton.click();  // Ensure at least one product remains
-                }
-            }
-        });
+function handleSave(event) {
+    event.preventDefault(); // Prevent form from submitting immediately
+    var successMessage = "Changes saved successfully.";
+    
+    Swal.fire({
+        title: 'Confirm',
+        text: successMessage,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.removeEventListener('beforeunload', handleBeforeUnload); // Remove the listener to prevent the leaving alert
+            // Redirect or submit the form here
+            // For instance: window.location.href = "{{ route('orders.show', $order->Order_ID) }}"; // or editOrderForm.submit();
+            window.location.href = "{{ route('orders.show', ['id' => $order->Order_ID]) }}"; // Update the placeholder with your actual route
+        }
     });
+}
+
+
+function handleBeforeUnload(event) {
+    event.preventDefault();
+    event.returnValue = ''; // Chrome requires returnValue to be set
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var saveButton = document.querySelector('button[type="submit"]');
+    if (saveButton) {
+        saveButton.addEventListener('click', handleSave);
+    }
+    
+    // Add the beforeunload event listener only when there are changes to warn about
+    // You can add conditions to check if changes were made, then add the listener
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    var productContainer = document.getElementById('productContainer');
+    var addProductButton = document.getElementById('addProductButton');
+    var index = productContainer.querySelectorAll('.product-form').length;
+
+    addProductButton.addEventListener('click', function() {
+        index++;
+        var productFormHTML = `
+            <div class="product-form" data-index="${index}">
+                <h5>Product ${index}</h5>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="products[${index}][Product_Name]" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right ml-neg-5">Quantity:</label>
+                    <div class="col-sm-6">
+                        <input type="number" class="form-control" name="products[${index}][Quantity]" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Price:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="products[${index}][Product_Price]" required>
+                    </div>
+                </div>
+                <div class="col-sm-9 offset-sm-3">
+                    <button type="button" class="btn btn-danger remove-product-btn" data-index="${index}">Remove Product</button>
+                </div>
+            </div>`;
+        productContainer.insertAdjacentHTML('beforeend', productFormHTML);
+    });
+
+    productContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-product-btn')) {
+            var productForm = event.target.closest('.product-form');
+            productForm.remove();
+            // Ensure there is always at least one product form
+            if (productContainer.querySelectorAll('.product-form').length === 0) {
+                addProductButton.click();
+            }
+        }
+    });
+});
 </script>
+
 </x-layout>
 
 

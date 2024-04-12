@@ -36,9 +36,10 @@
   $paymentsPageId = 5;
   $systemUsersPageId = 6;
   $permissionsPageId = 7;
+  $reportsPageId = 8;
 
   $administrationPages = [$systemUsersPageId, $permissionsPageId];
-  $transactionPages = [$clientPageId, $vendorPageId, $notesPageId, $ordersPageId, $paymentsPageId];
+  $transactionPages = [$clientPageId, $vendorPageId, $notesPageId, $ordersPageId, $paymentsPageId, $reportsPageId];
   @endphp
 
 
@@ -282,7 +283,7 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
             </li>
             @endif
             @endif
-            @if($employee->permissions->contains('Page_ID', $paymentsPageId))
+            @if($employee->permissions->contains('Page_ID', $reportsPageId))
             <li class="nav-header">REPORTS</li>
             <li class="nav-item">
               <a href="{{ route('reports.index') }}" class="nav-link">
