@@ -33280,15 +33280,16 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .small-box {
-  border-radius: 0.25rem;
+  border-radius: 0.30rem;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
   display: block;
   margin-bottom: 20px;
   position: relative;
+  height: 150px;
 }
 
 .small-box > .inner {
-  padding: 10px;
+  padding: 10px; 
 }
 
 .small-box > .small-box-footer {
@@ -33342,7 +33343,8 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .small-box p {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
 .small-box p > small {
@@ -33363,10 +33365,10 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .small-box .icon > i {
-  font-size: 90px;
+  font-size: 70px;
   position: absolute;
   right: 15px;
-  top: 15px;
+  top: 20px;
   transition: -webkit-transform 0.3s linear;
   transition: transform 0.3s linear;
   transition: transform 0.3s linear, -webkit-transform 0.3s linear;

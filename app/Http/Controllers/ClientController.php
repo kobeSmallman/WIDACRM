@@ -73,10 +73,11 @@ class ClientController extends BaseController
     
         try {
             Client::create($validatedData);
-            return redirect()->route('clients')->with('success', 'Client added successfully.');
+            return redirect()->route('clients')->with('success', 'Client added successfully.'); 
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
-            return back()->withErrors('Failed to add client: ' . $e->getMessage())->withInput();
+            //return back()->withErrors('Failed to add client: ' . $e->getMessage())->withInput();
+            return redirect()->route('clients')->with('error', $e->getMessage()); 
         }
     }
 

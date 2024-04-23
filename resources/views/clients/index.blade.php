@@ -95,14 +95,6 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: 'ERROR MESSAGE',
-                text: "{{ session('error') }}",
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        });
     </script>
 @endif  
 

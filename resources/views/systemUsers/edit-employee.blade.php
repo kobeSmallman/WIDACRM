@@ -114,11 +114,11 @@
     </div>    
 </x-layout>
 <script>
-    document.addEventListener('input', function(event) {
-        if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
-            event.target.value = event.target.value.toUpperCase();
-        }
-    });
+    // document.addEventListener('input', function(event) {
+    //     if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+    //         event.target.value = event.target.value.toUpperCase();
+    //     }
+    // });
 
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('employee-form');

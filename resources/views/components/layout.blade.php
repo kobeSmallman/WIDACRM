@@ -605,7 +605,7 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
         // Prevent form from submitting normally
         return false;
 
-        console.log('Note saved for client ID:', selectedClientId, 'Note:', noteText);
+       
 
         // Clear the saved note content as it's now been saved
         localStorage.removeItem('savedNote');
