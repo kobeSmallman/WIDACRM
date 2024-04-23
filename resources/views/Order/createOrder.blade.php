@@ -1,23 +1,12 @@
 <x-layout>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <style>
-    .ml-neg-5 {
-        margin-left: -5rem;
-    }
-
-    .swal-custom-html-container ul {
-        text-align: left;
-        margin-left: 0;
-        padding-left: 1.5em;
-    }
-
-    .card-title {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    label {
-        font-weight: bold;
-    }
+   .ml-neg-5 { margin-left: -5rem; }
+    .swal-custom-html-container ul { text-align: left; margin-left: 0; padding-left: 1.5em; }
+    .card-title { font-size: 24px; font-weight: bold; }
+    label { font-weight: bold; }
 </style>
 
 <!-- Content Header (Page header) -->
@@ -193,10 +182,10 @@
     </div>
 
     <div class="card-footer">
-        <button type="button" id="addProductButton" class="btn btn-primary" style="margin-left: 2rem;">Add Product</button>
-        <button type="submit" class="btn btn-success float-right">Save</button>
-        <a href="{{ route('orders.index') }}" class="btn btn-secondary float-right mr-2">Back to Orders</a>
-    </div>
+                    <button type="button" id="addProductButton" class="btn btn-primary" style="margin-left: 2rem;">Add Product</button>
+                    <button type="button" id="saveButton" class="btn btn-success float-right" onclick="handleSave()">Save</button>
+                    <a href="{{ route('orders.index') }}" class="btn btn-secondary float-right mr-2">Back to Orders</a>
+                </div>
 </form>
 </div>
 </div><!-- /.container-fluid -->
@@ -204,7 +193,46 @@
 <!-- /.content -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+// Function to handle save button action
+
+function handleSave(event) {
+    event.preventDefault(); // Prevent the form from submitting immediately
+
+    var successMessage = "Order created successfully."; // Example success message for testing
+    var newOrderForm = document.getElementById('newOrderForm');
+
+    if (successMessage) {
+        Swal.fire({
+            title: 'Success!',
+            text: successMessage,
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.removeEventListener('beforeunload', handleBeforeUnload); // Remove the listener since we're now saving
+                newOrderForm.submit();
+            }
+        });
+    } else {
+        window.removeEventListener('beforeunload', handleBeforeUnload); // Remove the listener since we're now saving
+        newOrderForm.submit();
+    }
+}
+
+function handleBeforeUnload(event) {
+    event.preventDefault();
+    event.returnValue = ''; // Standard for most browsers
+    return 'Are you sure you want to leave without saving?'; // Custom message may not be shown in some browsers
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var saveButton = document.getElementById("saveButton");
+    if (saveButton) {
+        saveButton.addEventListener('click', handleSave);
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload); 
+
         var vendors = @json($vendors);
         var productContainer = document.getElementById('productContainer');
         var addProductButton = document.getElementById('addProductButton');
@@ -312,14 +340,13 @@
         });
 
         productContainer.addEventListener('click', function(event) {
-            if (event.target.classList.contains('remove-product-btn')) {
-                var productForm = event.target.closest('.product-form');
-                productForm.remove();
-                index--;
-                // Consider adjusting the index or handling it as needed for form consistency
-            }
+                if (event.target.classList.contains('remove-product-btn')) {
+                    var productForm = event.target.closest('.product-form');
+                    productForm.remove();
+                    // Recalculate indexes or other necessary adjustments
+                }
+            });
         });
-    });
+  
 </script>
 </x-layout>
-

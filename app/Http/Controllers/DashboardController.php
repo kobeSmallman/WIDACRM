@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
-
+use App\Models\Page;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Client;
@@ -99,12 +100,24 @@ class DashboardController extends Controller
         
         
         $chartHTML = ob_get_clean();
+        $employee = auth()->user(); // Assuming you are using Laravel's authentication
+        $reportsPageId = Page::where('Page_Name', 'Reports')->value('Page_ID'); // Assuming 'Reports' is the name of the page
+        
+        $canViewReports = $employee->permissions->contains('Page_ID', $reportsPageId);
+
+        \Log::info('Can View Reports: ' . ($canViewReports ? 'Yes' : 'No'));
+        
+// Inside adminDashboard method in DashboardController
+\Log::info('Page ID for "Payments": ' . $reportsPageId);
+\Log::info('User Permissions: ' . json_encode($employee->permissions));
+\Log::info('Can View Reports: ' . ($canViewReports ? 'Yes' : 'No'));
 
         return view('dashboard.admin', [
             'totalOrders' => $totalOrders,
             'totalSales' => $totalSales,
             'totalClients' => $totalClients,
-            'chartHTML' => $chartHTML
+            'chartHTML' => $chartHTML,
+            'canViewReports' => $canViewReports,
         ]);
     }
 

@@ -356,6 +356,7 @@ Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])->name('notes.e
 // Define a route for the createRequest view
 
 
+Route::get('/employee-activity', [EmployeeActivityController::class, 'index'])->name('employee-activity');
 
 //PERMISSIONS
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');

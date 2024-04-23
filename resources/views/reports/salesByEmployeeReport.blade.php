@@ -1,4 +1,8 @@
 <x-layout>
+<div class="text-left mt-4">
+    <a href="javascript:history.go(-1)" class="btn btn-primary">Back</a>
+</div>
+
     <!-- Content Header -->
     <section class="content-header">
         <div class="container-fluid">

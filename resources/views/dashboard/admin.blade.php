@@ -1,7 +1,4 @@
 <x-layout>
-    <style>
-    </style>
-
     <!-- Dashboard Header -->
     <h2>Dashboard</h2>
     <hr/>
@@ -57,7 +54,7 @@
         <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-chart-pie mr-1"></i>
-            Orders Summary
+            Order Summary
         </h3>
         <div class="card-tools">
         
