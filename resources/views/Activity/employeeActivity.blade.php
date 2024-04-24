@@ -22,15 +22,25 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title mb-0">Activity Log</h3>
                 <div class="card-tools">
-                    <form action="{{ route('employee-activity') }}" method="GET" class="form-inline">
-                        <div class="input-group input-group-sm">
-                            <input type="date" name="start_date" class="form-control" required>
-                            <input type="date" name="end_date" class="form-control" required>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </div>
-                        </div>
-                    </form>
+                <form action="{{ route('employee-activity') }}" method="GET" class="form-inline">
+    <!-- Employee selection dropdown -->
+    <div class="input-group input-group-sm">
+        <select name="employee_id" class="form-control">
+            <option value="">All Employees</option>
+            @foreach($employees as $employee)
+                <option value="{{ $employee->Employee_ID }}">{{ $employee->First_Name }} {{ $employee->Last_Name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <!-- Date filters -->
+    <div class="input-group input-group-sm">
+        <input type="date" name="start_date" class="form-control" required>
+        <input type="date" name="end_date" class="form-control" required>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
                 </div>
             </div>
 
