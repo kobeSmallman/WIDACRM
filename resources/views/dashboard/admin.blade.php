@@ -1,140 +1,127 @@
 <x-layout>
     <!-- Dashboard Header -->
-  <h2>Dashboard</h2>
+    <h2>Dashboard</h2>
     <hr/>
+ 
+    <div class="row">
+        <div class="col-lg-4 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+            <h3>{{ $totalOrders }}</h3>
 
-    <div class="row text-center">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+            <p>Total Orders</p>
+            </div>
+            <div class="icon">
+            <i class="fa-solid fa-cart-shopping"></i>
+            </div> 
+        </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+            <h3>${{ number_format($totalSales, 2) }}</h3>
 
-<!-- Custom Styles -->
-<style>
-    x-layout {
-        font-family: 'Open Sans', sans-serif;
-    }
-    .card {
+            <p>Total Sales</p>
+            </div>
+            <div class="icon">
+            <i class="fa-solid fa-chart-simple"></i>
+            </div> 
+        </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+            <h3>{{ $totalClients }}</h3>
+
+            <p>Total Clients</p>
+            </div>
+            <div class="icon"> 
+            <i class="fa-solid fa-users"></i>
+            </div> 
+        </div>
+        </div>
+        <!-- ./col -->
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-chart-pie mr-1"></i>
+            Order Summary
+        </h3>
+        <div class="card-tools">
         
-        border: none;
-        border-radius: 15px; /* Rounded corners */
-    }
-
-    .card-header {
-        
-        background-color: #3498db; /* Match the report page header color */
-        color: white; /* White text for the header */
-    }
-
-    .card h5 {
-        font-size: 2.3rem; /* Larger font size for card titles */
-    }
-
-    .text-center h1, .text-center h2 {
-        font-weight: 600; /* Bolder font for headers */
-    }
-
-    .chart-container {
-        background-color: white; /* Change the background to white */
-        color: black; /* Adjust text color if needed */
-        padding: 10px;
-        border-radius: 15px;
-        width: 90vw; /* or you can use '80vw' for viewport width */
-        margin: auto;
-    }
-
-    .card .display-3 {
-        font-size: 2rem; /* Larger font size for card text */
-        width: 80%; /* or you can use '80vw' for viewport width */
-        margin: auto;
-    }
-
-    .card.bg-warning .display-3,
-    .card.bg-warning .card-title {
-        color: #fff; /* Or any color that you want */
-    }
-</style>
-
-
-<div class="col-md-4 mb-4">
-            <div class="card bg-info text-white">
-              
-                    <h5 class="card-title"  style="  font-weight: bold; ">Total Orders</h5>
-             <hr>
-                <div class="card-body">
-                    <p class="card-text display-3"  style="  font-weight: bold; ">{{ $totalOrders }}</p>
-                </div>
-            </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card bg-success text-white">
-               
-                    <h5 class="card-title"  style="  font-weight: bold; ">Total Sales</h5>
-                    <hr>
-                <div class="card-body">
-                    <p class="card-text display-3"  style="  font-weight: bold; ">${{ number_format($totalSales, 2) }}</p>
-                </div>
+        </div><!-- /.card-header -->
+        <div class="card-body">
+            <div class="tab-content p-0">
+                <!-- Morris chart - Sales -->
+                <div class="chart tab-pane active" id="revenue-chart"
+                    style="position: relative; height: 430px;"> 
+                    
+    
+                    <!-- Monthly Orders Chart -->
+                    <div class="text-center"> 
+                        <!-- Time Range Selection Form -->
+                        <form action="{{ route('admin.dashboard') }}" method="GET" style="display: inline-block; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="timeRange" class="mr-2">Time Range: </label>
+                                <select name="timeRange" id="timeRange" class="form-control" style="width: auto; display: inline-block;">    
+                                    <option value="weekly" {{ request('timeRange') == 'weekly' ? 'selected' : '' }}>Weekly</option>
+                                    <option value="monthly" {{ request('timeRange') == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                </select>
+
+                                
+                            </div>
+                            <div class="mt-3 text-center">
+                                <button type="submit" class="btn btn-primary">Update Report</button> 
+                                <a href="{{ route('reports.index') }}" class="btn btn-primary">View All Reports</a>
+                            </div>
+                        </form> 
+                    </div>    
+                    
+                    <div class="chart-container" style="position: relative; max-height:500px; height:40vh; width:80vw; margin: auto;">
+                        {!! $chartHTML !!} <!-- Render the chart for monthly orders -->
+                    </div>
+    
+                    <!-- Ensure there is enough space above the footer -->
+                    <div style="margin-bottom: 200px;"></div> 
+
+                    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // SweetAlert or other JS code can go here if needed
+                        });
+                
+                        let resizeTimer;
+                        window.addEventListener('resize', () => {
+                            clearTimeout(resizeTimer);
+                            resizeTimer = setTimeout(() => {
+                                // Reloads the current page
+                                window.location.reload();
+                            }, 100);
+                        });
+                    </script>
+
+                    
+                </div>  
+
+                
+                
             </div>
-        </div>
-      
-        <div class="col-md-4 mb-4">
-            <div class="card bg-warning text-white">
-             
-                    <h5 class="card-title"  style="  font-weight: bold; ">Total Clients</h5>
-                    <hr>
-                <div class="card-body">
-                    <p class="card-text display-3"  style="  font-weight: bold; ">{{ $totalClients }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Monthly Orders Chart -->
-    <div class="text-center">
-       
-
-        <!-- Time Range Selection Form -->
-        <form action="{{ route('admin.dashboard') }}" method="GET" style="display: inline-block; margin-bottom: 20px;">
-    <div class="form-group">
-        <label for="timeRange">Select Time Range:</label>
-        <select name="timeRange" id="timeRange" class="form-control" style="width: auto; display: inline-block;">    
-                       <option value="weekly" {{ request('timeRange') == 'weekly' ? 'selected' : '' }}>Weekly</option>
-            <option value="monthly" {{ request('timeRange') == 'monthly' ? 'selected' : '' }}>Monthly</option>
-        </select>
-    </div>
-    <div class="mt-3 text-center">
-    <button type="submit" class="btn btn-primary">Update Report</button>
-   
-    @if($canViewReports)
-        <a href="{{ route('reports.index') }}" class="btn btn-primary">View All Reports</a>
-    @endif
-</div>
-
-</form>
-
-    </div>
-
-    <div class="chart-container" style="position: relative; max-height:500px; height:40vh; width:80vw; margin: auto;">
-        {!! $chartHTML !!} <!-- Render the chart for monthly orders -->
+        </div><!-- /.card-body -->
     </div>
 
 
-    <!-- Ensure there is enough space above the footer -->
-    <div style="margin-bottom: 100px;"></div> 
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // SweetAlert or other JS code can go here if needed
-        });
-    </script>
-    <script>
-let resizeTimer;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-        // Reloads the current page
-        window.location.reload();
-    }, 100);
-});
-</script>
+
 
 </x-layout>
 
