@@ -121,7 +121,18 @@ font-weight: bold; /* Make 'x' bold */
 transform: translateY(-2px); /* Small lift effect on hover */
 box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "pop" effect */
 }
- 
+ /* Assuming the sidebar width threshold is 50px */
+/* Hide text if the viewport width indicates the sidebar is likely collapsed */
+@media (max-width: 1vw) {
+    #myBtn .btn-text {
+        display: none; /* Assume sidebar is too narrow if viewport width is small */
+    }
+}
+
+/* Show text if the viewport width is larger, assuming sidebar has more space */
+
+
+
 
 </style>
 </head>
@@ -390,11 +401,10 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
 
           </div>
         </div>
-
-
         <button id="myBtn" class="btn btn-primary">
-          <i class="fa-solid fa-pen-to-square"></i> New Note
-        </button>
+  <i class="fa-solid fa-pen-to-square"></i> <span class="btn-text">New Note</span>
+</button>
+
 
 
       </div>
