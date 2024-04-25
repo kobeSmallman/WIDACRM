@@ -60,14 +60,16 @@
                                     </button>
                                                 </form>
                                             </td>
-                                            <td>  <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}">
-                                            {{ $vendor->Vendor_ID }}
-                                        </a></td>
-                                            <td>{{ $vendor->Vendor_Name }}</td>
-                                            <td>{{ $vendor->Active_Status == '1' ? 'Active' : 'Inactive' }}</td>
-                                            <td>{{ $vendor->Email }}</td>
-                                            <td>{{ $vendor->PhoneNumber }}</td>
-                                            <td>{{ $vendor->Remarks }}</td>
+                                            <td>
+    <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}">
+        {{ $vendor->Vendor_Name }} ({{ $vendor->Vendor_ID }})
+    </a>
+</td>
+<td>{{ $vendor->Active_Status == '1' ? 'Active' : 'Inactive' }}</td>
+<td>{{ $vendor->Email }}</td>
+<td>{{ $vendor->PhoneNumber }}</td>
+<td>{{ $vendor->Remarks }}</td>
+
 
                                         </tr>
                                     @endforeach
