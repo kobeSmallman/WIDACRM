@@ -48,14 +48,13 @@
             </div>
         </div>
     </div>
-
-    <!-- Charts with Titles -->
-    <div class="row">
+  <!-- Charts with Titles moved to the header -->
+  <div class="row">
         <!-- Your Total Orders Chart Card -->
         <div class="col-md-6">
             <div class="card chart-card">
                 <div class="card-header">
-                    <h2 class="chart-title">Your Total Orders</h2>
+                    <h2 class="chart-title"style="color:black">Your Total Orders</h2>
                 </div>
                 <div class="card-body chart-container">
                     <canvas id="totalOrdersChart"></canvas>
@@ -67,7 +66,7 @@
         <div class="col-md-6">
             <div class="card chart-card">
                 <div class="card-header">
-                    <h2 class="chart-title">Your Total Sales</h2>
+                    <h2 class="chart-title" style="color:black">Your Total Sales</h2>
                 </div>
                 <div class="card-body chart-container">
                     <canvas id="totalSalesChart"></canvas>
@@ -75,7 +74,6 @@
             </div>
         </div>
     </div>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
