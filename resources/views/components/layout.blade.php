@@ -610,11 +610,13 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
     // Prevent form from submitting normally
     return false;
 
-       
-
         // Clear the saved note content as it's now been saved
-        localStorage.removeItem('savedNote');
-        localStorage.setItem('modalState', 'closed'); // Update the modal state in localStorage
+        try {
+            localStorage.removeItem('savedNote');
+            localStorage.setItem('modalState', 'closed');  
+        } catch (error) { 
+             
+        } 
 
         // Close the modal
         closeModal();

@@ -85,12 +85,34 @@
                         <p class="text-muted">{{ $selectedEmployee->Expiry_Date }}</p>
                         <strong>Locked Status</strong>
                         <p class="text-muted">{{ $selectedEmployee->Lock_Status }}</p>
+ 
+                        <form id="frmReset" action="{{ route('systemusers.resetEmployee', $selectedEmployee->Employee_ID) }}" method="POST" enctype="multipart/form-data">
+                            @csrf 
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>    
 </x-layout>
+
+
+@if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'INFORMATION MESSAGE',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+@endif  
+
  
 
 <!-- bs-custom-file-input --> 
@@ -110,4 +132,26 @@
             uploadButton.disabled = true;
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const resetButton = document.getElementById('btnReset');
+        const resetForm = document.querySelector(`#frmReset`);
+
+        resetButton.addEventListener('click', function() {
+            event.preventDefault();
+            Swal.fire({
+                title: 'CONFIRMATION MESSAGE',
+                text: 'Do you want to reset this employee\'s account?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    resetForm.submit();
+                }
+            });
+        });
+    });
+
 </script>

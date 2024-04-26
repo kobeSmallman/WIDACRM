@@ -51,12 +51,10 @@
         <div class="input-group mb-3">
           <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
           <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-            <span class="fas fa-eye-slash" aria-hidden="true"></span>
-          </button>
-<!--             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div> -->
+            <div class="input-group-text" id="togglePassword">
+              <span class="fas fa-eye-slash"></span>
+            </div>
+            
           </div>
         </div>
         <div class="row">
@@ -67,12 +65,10 @@
                 Remember Me
               </label>
             </div>
-          </div>
-          <!-- /.col -->
+          </div> 
           <div class="col-12 text-center mb-3">
             <button type="submit" class="btn btn-primary btn-block" >Sign In</button>
-          </div>
-          <!-- /.col -->
+          </div> 
         </div>
       </form>
 
