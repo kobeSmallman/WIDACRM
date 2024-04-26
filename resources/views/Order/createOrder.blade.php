@@ -183,7 +183,7 @@
 
     <div class="card-footer">
                     <button type="button" id="addProductButton" class="btn btn-primary" style="margin-left: 2rem;">Add Product</button>
-                    <button type="button" id="saveButton" class="btn btn-success float-right" onclick="handleSave()">Save</button>
+                    <button type="button" id="saveButton" class="btn btn-primary float-right" onclick="handleSave()">Save</button>
                     <a href="{{ route('orders.index') }}" class="btn btn-secondary float-right mr-2">Back to Orders</a>
                 </div>
 </form>

@@ -1,4 +1,3 @@
-{{-- resources/views/vendors/createVendor.blade.php --}}
 <x-layout>
     <section class="content-header">
         <div class="container-fluid">
@@ -14,7 +13,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Add New Vendor</h3>
+                    <h3 class="card-title"><i class="fa-solid fa-file-circle-plus mr-2"></i>Add New Vendor</h3>
                 </div>
                 <form role="form" action="{{ route('vendors.store') }}" method="POST">
                     @csrf

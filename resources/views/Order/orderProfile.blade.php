@@ -132,7 +132,7 @@
 </a>
 @if ($order->payments && $order->payments->count() > 0)
     <a href="{{ route('orders.editPayment', ['order' => $order->Order_ID]) }}" class="btn btn-sm btn-info">
-        <i class="fas fa-money-bill"></i> Edit Order Payment
+        <i class="fas fa-money-bill"></i> Add Order Payment
     </a>
 @else
     <a href="{{ route('orders.addPayment', ['order' => $order->Order_ID]) }}" class="btn btn-sm btn-info">

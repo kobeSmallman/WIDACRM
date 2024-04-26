@@ -113,48 +113,109 @@
                     <div id="productContainer">
                         @foreach ($order->products as $index => $product)
                         <div class="product-form" data-index="{{ $index }}">
-                            <h5>Product {{ $index + 1 }}</h5>
-                            <div class="form-group row">
-                                <label for="Item_ID_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Item ID:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="Item_ID_{{ $index }}" name="products[{{ $index }}][Item_ID]" value="{{ $product->Item_ID }}" readonly>
-                                </div>
-                            </div>
+    <h5>Product {{ $index + 1 }}</h5>
+    <div class="form-group row">
+        <label for="Item_ID_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Item ID:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="Item_ID_{{ $index }}" name="products[{{ $index }}][Item_ID]" value="{{ $product->Item_ID }}" readonly>
+        </div>
+    </div>
 
-                            <div class="form-group row">
-                                <label for="Product_Name_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Name:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="Product_Name_{{ $index }}" name="products[{{ $index }}][Product_Name]" value="{{ $product->Product_Name }}" required>
-                                </div>
-                            </div>
+    <div class="form-group row">
+        <label for="Product_Name_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Name:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="Product_Name_{{ $index }}" name="products[{{ $index }}][Product_Name]" value="{{ $product->Product_Name }}" required>
+        </div>
+    </div>
 
-                            <div class="form-group row">
-                                <label for="Quantity_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Quantity:</label>
-                                <div class="col-sm-6">
-                                    <input type="number" class="form-control" id="Quantity_{{ $index }}" name="products[{{ $index }}][Quantity]" value="{{ $product->Quantity }}" required>
-                                </div>
-                            </div>
+    <div class="form-group row">
+        <label for="Quantity_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Quantity:</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" id="Quantity_{{ $index }}" name="products[{{ $index }}][Quantity]" value="{{ $product->Quantity }}" required>
+        </div>
+    </div>
 
-                            <div class="form-group row">
-                                <label for="Product_Price_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Price:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="Product_Price_{{ $index }}" name="products[{{ $index }}][Product_Price]" value="{{ $product->Product_Price }}" required>
-                                </div>
-                            </div>
+    <div class="form-group row">
+        <label for="Product_Price_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Price:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="Product_Price_{{ $index }}" name="products[{{ $index }}][Product_Price]" value="{{ $product->Product_Price }}" required>
+        </div>
+    </div>
 
-                            @if (count($order->products) > 1)
-                                <div class="col-sm-9 offset-sm-3">
-                                    <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $index }}">Remove Product</button>
-                                </div>
-                            @endif
-                        </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Vendor:</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="products[${index}][Vendor_ID]" required>
+                @foreach($vendors as $vendor)
+                    <option value="{{ $vendor->Vendor_ID }}">{{ $vendor->Vendor_Name }} ({{ $vendor->Vendor_ID }})</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Shipping_Status_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Shipping Status:</label>
+        <div class="col-sm-6">
+            <select class="form-control" id="Shipping_Status_{{ $index }}" name="products[{{ $index }}][Shipping_Status]" required>
+                <option value="Shipped" {{ $product->Shipping_Status == 'Shipped' ? 'selected' : '' }}>Shipped</option>
+                <option value="Not Shipped" {{ $product->Shipping_Status == 'Not Shipped' ? 'selected' : '' }}>Not Shipped</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Shipped_Qty_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Shipped Quantity:</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" id="Shipped_Qty_{{ $index }}" name="products[{{ $index }}][Shipped_Qty]" value="{{ $product->Shipped_Qty }}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Product_Status_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Product Status:</label>
+        <div class="col-sm-6">
+            <select class="form-control" id="Product_Status_{{ $index }}" name="products[{{ $index }}][Product_Status]" required>
+                <option value="Active" {{ $product->Product_Status == 'Active' ? 'selected' : '' }}>Active</option>
+                <option value="Inactive" {{ $product->Product_Status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="QA_Status_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">QA Status:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="QA_Status_{{ $index }}" name="products[{{ $index }}][QA_Status]" value="{{ $product->QA_Status }}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Storage_Status_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Storage Status:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="Storage_Status_{{ $index }}" name="products[{{ $index }}][Storage_Status]" value="{{ $product->Storage_Status }}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Prod_Status_{{ $index }}" class="col-sm-3 col-form-label text-right ml-neg-5">Prod Status:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="Prod_Status_{{ $index }}" name="products[{{ $index }}][Prod_Status]" value="{{ $product->Prod_Status }}">
+        </div>
+    </div>
+
+    @if (count($order->products) > 1)
+        <div class="col-sm-9 offset-sm-3">
+            <button type="button" class="btn btn-danger remove-product-btn" data-index="{{ $index }}">Remove Product</button>
+        </div>
+    @endif
+</div>
+
                         @endforeach
                     </div>
 
                     <button type="button" id="addProductButton" class="btn btn-primary" style="margin-left: 2rem;">Add Product</button>
 
                     <div class="card-footer">
-    <button type="button" class="btn btn-success" onclick="handleSave(event)">Save Changes</button>
+                    <button type="submit" class="btn btn-primary save-btn">Save</button>
+
     <a href="{{ route('orders.index') }}" class="btn btn-secondary">Back to Orders</a>
 </div>
 
@@ -208,30 +269,83 @@ document.addEventListener('DOMContentLoaded', function() {
     addProductButton.addEventListener('click', function() {
         index++;
         var productFormHTML = `
-            <div class="product-form" data-index="${index}">
-                <h5>Product ${index}</h5>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Name:</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="products[${index}][Product_Name]" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label text-right ml-neg-5">Quantity:</label>
-                    <div class="col-sm-6">
-                        <input type="number" class="form-control" name="products[${index}][Quantity]" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Price:</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="products[${index}][Product_Price]" required>
-                    </div>
-                </div>
-                <div class="col-sm-9 offset-sm-3">
-                    <button type="button" class="btn btn-danger remove-product-btn" data-index="${index}">Remove Product</button>
-                </div>
-            </div>`;
+        <div class="product-form" data-index="${index}">
+    <h5>Product ${index}</h5>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Name:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="products[${index}][Product_Name]" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Quantity:</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="products[${index}][Quantity]" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Price:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="products[${index}][Product_Price]" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Vendor:</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="products[${index}][Vendor_ID]" required>
+                @foreach($vendors as $vendor)
+                    <option value="{{ $vendor->Vendor_ID }}">{{ $vendor->Vendor_Name }} ({{ $vendor->Vendor_ID }})</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Shipping Status:</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="products[${index}][Shipping_Status]" required>
+                <option value="Shipped">Shipped</option>
+                <option value="Not Shipped">Not Shipped</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Shipped Quantity:</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="products[${index}][Shipped_Qty]">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Product Status:</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="products[${index}][Product_Status]" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">QA Status:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="products[${index}][QA_Status]">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Storage Status:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="products[${index}][Storage_Status]">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label text-right ml-neg-5">Prod Status:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="products[${index}][Prod_Status]">
+        </div>
+    </div>
+    <div class="col-sm-9 offset-sm-3">
+        <button type="button" class="btn btn-danger remove-product-btn" data-index="${index}">Remove Product</button>
+    </div>
+</div>
+`;
         productContainer.insertAdjacentHTML('beforeend', productFormHTML);
     });
 
@@ -243,6 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (productContainer.querySelectorAll('.product-form').length === 0) {
                 addProductButton.click();
             }
+            index--;
         }
     });
 });
