@@ -43,13 +43,16 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Login routes
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/access-denied', function () {
-    return view('Errors.403');
-})->name('access.denied');
+    // Login routes
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); 
+    Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('auth.changePwd');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('auth.loginNewPwd');
+
+    Route::get('/access-denied', function () {
+        return view('Errors.403');
+    })->name('access.denied');
 
 
  
@@ -210,6 +213,9 @@ Route::get('/clients/client-info/{client}', [ClientController::class, 'editClien
         ->middleware('checkAccess:SystemUsers');
     Route::post('/systemusers/{employee}/delete', [SystemUsersController::class, 'deleteEmployee'])
         ->name('systemusers.deleteEmployee')
+        ->middleware('checkAccess:SystemUsers');
+    Route::post('/systemusers/{employee}/reset', [SystemUsersController::class, 'resetEmployee'])
+        ->name('systemusers.resetEmployee')
         ->middleware('checkAccess:SystemUsers');
 
     Route::post('/systemusers/{employee}/updatepic', [SystemUsersController::class, 'updateProfilePic'])

@@ -124,23 +124,27 @@
         const form = document.getElementById('employee-form');
         const submitBtn = document.getElementById('btnSave');
 
-        // SUBMIT CONFIRMATION
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            Swal.fire({
-                title: 'CONFIRMATION MESSAGE',
-                text: 'Do you want to save the changes?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No'
-            }).then((result) => {
-                if (result.isConfirmed) { 
-                    form.submit(); 
-                }
-            });
-        }); 
+        if (form !== null) {  
+             // SUBMIT CONFIRMATION
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                Swal.fire({
+                    title: 'CONFIRMATION MESSAGE',
+                    text: 'Do you want to save the changes?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) { 
+                        form.submit(); 
+                    }
+                });
+            }); 
 
+        }
+
+       
         // Check if validation errors exist and display them
         const validationErrors = @json($errors->all());
         if (validationErrors.length > 0) {

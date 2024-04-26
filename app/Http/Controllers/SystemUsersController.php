@@ -43,9 +43,14 @@ class SystemUsersController extends BaseController
             'Employee_Email',
         ]);
     
-        // Set default values for 'Password' and 'Employee_Status'
+        // Set default values  
         $employeeData['Password'] = Hash::make('Password1');
         $employeeData['Employee_Status'] = 'ACTIVE';
+
+        // Add 3 months to the current date
+        $expiryDate = now()->addMonths(3);
+        $employeeData['Expiry_Date'] = $expiryDate->format('Y-m-d'); 
+        $employeeData['Lock_Count'] = '0';
 
         // Check if the department selected is "other"
         if ($request->input('Department') === 'other') { 
@@ -66,7 +71,7 @@ class SystemUsersController extends BaseController
             Log::info('Employee created successfully.', ['employee_id' => $employee->Employee_ID]);
     
             // Redirect to the system users page with a success message
-            Return redirect()->route('systemusers')->with('success', 'Employee created successfully.');
+            return redirect()->route('systemusers')->with('success', 'Employee created successfully.');
  
         } catch (\Throwable $e) {
             \DB::rollBack();
@@ -107,14 +112,14 @@ class SystemUsersController extends BaseController
 
         $departments = Employee::distinct()->pluck('Department')->toArray();
         $departments = array_map('strtoupper', $departments); 
-        sort($departments);
+        sort($departments); 
         return view('systemusers.edit-employee', compact('selectedEmployee', 'departments')); 
     }
 
     public function updateEmployeeInfo(Request $request, $employee)
     { 
         $employeeData = $request->validate([ 
-            'Last_Name' => ['required', new UniqueEmployeeName($request->input('Last_Name'), $request->input('First_Name'))],
+            'Last_Name' => ['required'],
             'First_Name' => ['required'],
             'Department',
             'Position' => ['required'],
@@ -127,17 +132,16 @@ class SystemUsersController extends BaseController
             $employeeData['Department'] = $request->input('Department');
         }
  
-        $empProfile = Employee::findOrFail($employee);
+        $empProfile = Employee::findOrFail($employee); 
         try {
             $empProfile->update($employeeData);   
-            Return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
+            return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return back()->withErrors('Failed to update employee: ' . $e->getMessage())->withInput();
         }
 
     }
-
     public function updateProfilePic(Request $request, $employee)
     { 
         $request->validate([
@@ -151,10 +155,10 @@ class SystemUsersController extends BaseController
                 $empProfile->profile_image = base64_encode($imageData);  
                 $empProfile->save();
             } else {
-                Return redirect()->route('systemusers')->with('error', 'Unable to update profile image. No file was selected.');
+                return redirect()->route('systemusers')->with('error', 'Unable to update profile image. No file was selected.');
             }
 
-            Return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
+            return redirect()->route('systemusers')->with('success', 'Employee updated successfully.');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return back()->withErrors('Failed to update employee: ' . $e->getMessage())->withInput();
@@ -177,10 +181,31 @@ class SystemUsersController extends BaseController
         $empProfile = Employee::findOrFail($employee);
         try {
             $empProfile->update($employeeData);   
-            Return redirect()->route('systemusers')->with('success', 'The employee has been deleted.');
+            return redirect()->route('systemusers')->with('success', 'The employee has been deleted.');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return back()->withErrors('Unable to delete employee: ' . $e->getMessage())->withInput();
+        }
+
+    }
+
+    public function resetEmployee(Request $request, $employee)
+    {  
+        try {   
+            $employee = Employee::findOrFail($employee);
+ 
+            $employee->Password = Hash::make('Password1'); 
+            $employee->Lock_Count = 0;  
+            $expiryDate = now()->addDays(-1);
+            $employee->Expiry_Date = $expiryDate->format('Y-m-d'); 
+ 
+            $employee->save();
+ 
+            return redirect()->route('systemusers.profile', ['employee' => $employee->Employee_ID])->with('success', 'The employee has been reset.');
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return back()->withErrors('Unable to reset employee: ' . $e->getMessage())->withInput();
         }
 
     }
