@@ -36,7 +36,6 @@
                                 <thead>
                                     <tr>
                                         <th>Manage</th>
-                                        <th>Vendor ID</th>
                                         <th>Vendor Name</th>
                                         <th>Active Status</th>
                                         <th>Email</th>
@@ -60,10 +59,7 @@
                                     </button>
                                                 </form>
                                             </td>
-                                            <td>  <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}">
-                                            {{ $vendor->Vendor_ID }}
-                                        </a></td>
-                                            <td>{{ $vendor->Vendor_Name }}</td>
+                                            <td> <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}">{{ $vendor->Vendor_Name }} ({{ $vendor->Vendor_ID }})</td>
                                             <td>{{ $vendor->Active_Status == '1' ? 'Active' : 'Inactive' }}</td>
                                             <td>{{ $vendor->Email }}</td>
                                             <td>{{ $vendor->PhoneNumber }}</td>
