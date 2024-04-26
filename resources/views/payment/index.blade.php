@@ -59,7 +59,8 @@
                                 <td><a href="{{ route('payment.editPayment', $payment->PMT_ID) }}">{{ $payment->PMT_ID }}</td>
                                 <td>{{ $payment->Order_ID }}</td>
                                 <td>{{ $payment->PMT_Cat}}</td>
-                                <td>{{ $payment->Date}}</td>
+                                <td>{{ \Carbon\Carbon::parse($payment->Date)->format('Y-m-d') }}</td>
+
                                 <td>{{ $payment->Amount}}</td>
                                 <td>{{ $payment->paymentType ? $payment->paymentType->PMT_Type_Name : 'N/A' }}</td>
                                 <td>{{ $payment->Remarks}}</td>

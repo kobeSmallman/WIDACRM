@@ -309,7 +309,7 @@
                         notes.forEach((note, index) => {
                             const noteLink = document.createElement('div');
                             noteLink.className = 'note-link';
-                            noteLink.textContent = `Note ${index + 1}`;
+                            noteLink.textContent = `Note ${index + 1}: ${note.Title}`;
                             noteLink.onclick = () => showNoteContent(note);
                             linksDiv.appendChild(noteLink);
                         });

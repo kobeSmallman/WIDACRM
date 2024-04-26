@@ -121,7 +121,11 @@ font-weight: bold; /* Make 'x' bold */
 transform: translateY(-2px); /* Small lift effect on hover */
 box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "pop" effect */
 }
- 
+ /* Assuming the sidebar width threshold is 50px */
+/* Hide text if the viewport width indicates the sidebar is likely collapsed */
+
+
+
 
 </style>
 </head>
@@ -390,11 +394,10 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
 
           </div>
         </div>
-
-
         <button id="myBtn" class="btn btn-primary">
-          <i class="fa-solid fa-pen-to-square"></i> New Note
-        </button>
+  <i class="fa-solid fa-pen-to-square"></i> <span class="btn-text">New Note</span>
+</button>
+
 
 
       </div>
@@ -536,87 +539,76 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
 
       // Save the note content to localStorage and close the modal
       window.saveNote = function() {
-        const clientSelect = document.getElementById('clientSelect').value;
-        const interactionType = document.getElementById('interactionType').value;
-        const createdBy = document.getElementById('createdBy').value;
-        const noteText = noteContent.value;
-        const imageFile = document.getElementById('imageUpload').files; // This is a File object
-        const noteTitle = document.getElementById('noteTitle').value;
+    const clientSelect = document.getElementById('clientSelect').value;
+    const interactionType = document.getElementById('interactionType').value;
+    const createdBy = document.getElementById('createdBy').value;
+    const noteText = document.getElementById('noteContent').value; // Ensure to reference this correctly
+    const imageFiles = document.getElementById('imageUpload').files;
+    const noteTitle = document.getElementById('noteTitle').value;
 
-
-        // Validation
-        if (!clientSelect || !interactionType || !createdBy || !noteText) {
-          alert('Please fill in all fields.');
-          return false;
-        }
-
-        // Create FormData object to send data as form/multipart
-        const formData = new FormData();
-        const imageFormData = new FormData();
-        formData.append('Client_ID', clientSelect);
-        formData.append('Interaction_Type', interactionType);
-        formData.append('Created_By', createdBy);
-        formData.append('Description', noteText);
-        formData.append('Title', noteTitle);
-
-        // Send a POST request with the form data
-        fetch('/notes/store', { // Update the URL to the route that handles note saving
-            method: 'POST',
-            headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
-            },
-            body: formData
-          })
-
-          .then(response => response.json())
-          .then(data => {
-
-            if (data.success) {
-              Swal.fire('Success', 'The note has been saved successfully from layout.', 'success');
-              // If images need to be uploaded, do so after the note is saved successfully
-              if (imageFile.length > 0 && data.noteId) {
-                const imageFormData = new FormData();
-                for (let i = 0; i < imageFile.length; i++) {
-                  imageFormData.append('images[]', imageFile[i]);
-                }
-                return fetch(`/notes/${data.noteId}/images`, { // Append the noteId to the route
-                  method: 'POST',
-                  headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
-                  },
-                  body: imageFormData // CSRF token will be included as a cookie
-                });
-              } else {
-                // Resolve the promise chain with a success status if no images are to be uploaded
-                return Promise.resolve({
-                  success: true,
-                  message: "No images to upload."
-                });
-              }
-            } else {
-              // If the note wasn't saved successfully, throw an error to be caught later
-              throw new Error(data.message);
-            }
-          })
-          .then(imageResponse => {
-            if (!imageResponse.ok) {
-              throw new Error('Problem with image upload');
-            }
-            return imageResponse.json();
-          })
-          .then(imageData => {
-            if (imageData && imageData.success) {
-              console.log('Images uploaded successfully');
-            }
-          })
-          .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-            Swal.fire('Error', 'There was a problem saving the note or uploading images from layout.', 'error');
-          });
-
-        // Prevent form from submitting normally
+    // Validation
+    if (!clientSelect || !interactionType || !createdBy || !noteText) {
+        alert('Please fill in all fields.');
         return false;
+    }
+
+    // Create FormData object to send data as form/multipart
+    const formData = new FormData();
+    formData.append('Client_ID', clientSelect);
+    formData.append('Interaction_Type', interactionType);
+    formData.append('Created_By', createdBy);
+    formData.append('Description', noteText);
+    formData.append('Title', noteTitle);
+
+    // Send a POST request with the form data
+    fetch('/notes/store', { // Ensure the URL is correct for your application's routing
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('Success', 'The note has been saved successfully.', 'success');
+            // Check if there are any image files to upload
+            if (imageFiles.length > 0 && data.noteId) {
+                const imageFormData = new FormData();
+                for (let i = 0; i < imageFiles.length; i++) {
+                    imageFormData.append('images[]', imageFiles[i]);
+                }
+                // Proceed to upload images
+                return fetch(`/notes/${data.noteId}/images`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token header
+                    },
+                    body: imageFormData
+                })
+                .then(imageResponse => imageResponse.json())
+                .then(imageData => {
+                    if (imageData.success) {
+                        console.log('Images uploaded successfully');
+                    } else {
+                        throw new Error('Image upload failed: ' + imageData.message);
+                    }
+                });
+            } else {
+                console.log('No images to upload.');
+                return Promise.resolve({ success: true, message: "No images to upload." }); // Successfully resolve if no images
+            }
+        } else {
+            throw new Error('Note saving failed: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire('Error', 'There was a problem saving the note or uploading images.', 'error');
+    });
+
+    // Prevent form from submitting normally
+    return false;
 
         // Clear the saved note content as it's now been saved
         try {

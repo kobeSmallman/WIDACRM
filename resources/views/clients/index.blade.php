@@ -1,7 +1,9 @@
 <x-layout>
-
-<!-- Content Header (Page header) -->
+ <!-- Content Header (Page header) -->
+    <!-- This section provides the header of the Clients page, displaying the title and breadcrumb navigation links. -->
 <div class="content-header">
+      <!-- Begin Page Content -->
+    <!-- This section starts the main content area, including a card that lists all clients with functionality to add, edit, and delete them. -->
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -26,8 +28,8 @@
                 <a href="{{ route('clients.addClient') }}" class="btn btn-primary">Add New Client</a>
             </div>
         </div>
- 
-        <!-- /.card-header -->
+   <!-- Card Body -->
+            <!-- This is where the clients are listed in a table format. Features include managing each client, such as editing or deleting their records. -->
         <div class="card-body">
             <table id="tblClients" class="table table-bordered table-striped">
                 <thead>
@@ -83,7 +85,8 @@
         <!-- /.card-body -->
     </div>
 </div>   
-
+   <!-- Success Message -->
+    <!-- JavaScript alert for displaying success messages using SweetAlert2, triggered by session status. -->
 @if(session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -98,7 +101,8 @@
     </script>
 @endif  
 
-
+ <!-- Error Message -->
+    <!-- JavaScript alert for displaying error messages using SweetAlert2, triggered by session status. -->
 @if(session('error'))
     <script> 
         document.addEventListener('DOMContentLoaded', function() {
@@ -111,7 +115,8 @@
         });
     </script>
 @endif  
-
+  <!-- DataTables Script -->
+    <!-- Initialization script for DataTables. This script makes the table sortable, searchable, and paginated with additional buttons like export and print. -->
 
 <script>
 

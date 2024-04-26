@@ -15,39 +15,41 @@ class EmployeeActivityController extends Controller
     {
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        $selectedEmployeeId = $request->input('employee_id');
 
         $employees = Employee::all();
 
-        $employeeActivities = $employees->map(function ($employee) use ($startDate, $endDate) {
-            // Querying notes created by this employee within the selected date range
+        $employeeActivities = $employees->map(function ($employee) use ($startDate, $endDate, $selectedEmployeeId) {
+            if ($selectedEmployeeId && $employee->Employee_ID != $selectedEmployeeId) {
+                return null;
+            }
+
             $notesActivities = Note::where('Created_By', $employee->Employee_ID)
-                ->whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
-                ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
-                ->groupBy(DB::raw('DATE(created_at)'))
-                ->get()
-                ->mapWithKeys(function ($item) {
-                    return [$item->date => ['notes' => $item->count]];
-                });
+                                    ->whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
+                                    ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+                                    ->groupBy(DB::raw('DATE(created_at)'))
+                                    ->get()
+                                    ->mapWithKeys(function ($item) {
+                                        return [$item->date => ['notes' => $item->count]];
+                                    });
 
-            // Querying orders created by this employee within the selected date range
             $ordersActivities = Order::where('Created_By', $employee->Employee_ID)
-                ->whereBetween(DB::raw('DATE(Order_DATE)'), [$startDate, $endDate])
-                ->select(DB::raw('DATE(Order_DATE) as date'), DB::raw('count(*) as count'))
-                ->groupBy(DB::raw('DATE(Order_DATE)'))
-                ->get()
-                ->mapWithKeys(function ($item) {
-                    return [$item->date => ['orders' => $item->count]];
-                });
+                                     ->whereBetween(DB::raw('DATE(Order_DATE)'), [$startDate, $endDate])
+                                     ->select(DB::raw('DATE(Order_DATE) as date'), DB::raw('count(*) as count'))
+                                     ->groupBy(DB::raw('DATE(Order_DATE)'))
+                                     ->get()
+                                     ->mapWithKeys(function ($item) {
+                                        return [$item->date => ['orders' => $item->count]];
+                                     });
 
-            // Combine counts from different types of activities by date
             $activitiesByDate = $notesActivities->mergeRecursive($ordersActivities);
 
             return [
                 'Employee Name' => $employee->First_Name . ' ' . $employee->Last_Name,
                 'Activities' => $activitiesByDate
             ];
-        });
+        })->filter();
 
-        return view('Activity.employeeActivity', ['employeeActivities' => $employeeActivities]);
+        return view('Activity.employeeActivity', ['employeeActivities' => $employeeActivities, 'employees' => $employees]);
     }
 }

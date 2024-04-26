@@ -155,7 +155,7 @@
                             @foreach($orderHistory as $order)
                             <tr>
                                 <td>{{ $order->Order_ID }}</td> 
-                                <td>{{ $order->Order_Date }}</td> 
+                                <td>{{ \Carbon\Carbon::parse($order->Order_DATE)->format('Y-m-d') }}</td>
                                 <td>{{ $order->Remarks }}</td> 
                                 <td>{{ $order->Order_Status }}</td>  
                             </tr>

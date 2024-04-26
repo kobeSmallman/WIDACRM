@@ -12,7 +12,7 @@
         <div class="row justify-content-xl-end">
           <div class="col-12 col-xl-11">
             <h2 class="h1 mb-3">How can we help you?</h2>
-            <p class="lead fs-4 text-secondary mb-5">We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email.</p>
+            <p class="lead fs-4 text-secondary mb-5">We hope you have found an answer to your question. If you need any help, please search your query on our Support Center or contact us via email. For a more detailed guide, visit our <a href="https://docs.google.com/document/d/104hun4gX8z9BswhaPqVQt67F2y3q2Uh4ZyJWBFiKMkI/edit?usp=sharing" target="_blank">Step-by-Step Documentation</a>.</p>
             <div class="accordion accordion-flush" id="accordionExample">
             <input type="text" id="searchInput" class="form-control mb-3" onkeyup="searchFAQ()" placeholder="Search for questions...">
               {{-- Custom Questions --}}
