@@ -1,15 +1,38 @@
 <x-layout>
 <!--Additional CSS Styling for this page only-->
 <style>
-    .fixed-height-card {
-    height: 550px; /* Adjust the height as needed */
-    overflow-y: auto; /* Enable vertical scrolling */
-    }
+  .fixed-height-card {
+            height: 550px; /* Adjust the height as needed */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
 
-    /* Style to apply only to the left side to make it scrollable */
-    .scrollable-card {
-    overflow-y: auto; /* Enable vertical scrolling */
-    }
+        /* Style to apply only to the left side to make it scrollable */
+        .scrollable-card {
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        /* Adjust product dropdown styling */
+        #product_dropdown {
+            display: none; /* Initially hide the product dropdown */
+            margin-top: 10px; /* Add some top margin for spacing */
+        }
+
+        /* Style to center align the form controls */
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Style to adjust label width for smaller screens */
+        @media (max-width: 768px) {
+            .col-sm-3 {
+                width: 30%;
+            }
+
+            .col-sm-7 {
+                width: 70%;
+            }
+        }
 
 </style>
 
@@ -103,14 +126,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="PMT_Cat" class="col-sm-3 col-form-label text-right">Payment Category:</label>
-                            <div class="col-sm-7">
-                                <select name="PMT_Cat" id="PMT_Cat" class="form-control" disabled>
-                                    <option value="Product">Product</option>
-                                    <option value="Freight">Freight</option>
-                                </select>
-                            </div>
-                        </div>
+                     
+    <label for="PMT_Cat" class="col-sm-3 col-form-label text-right">Payment Category:</label>
+    <div class="col-sm-7">
+        <select name="PMT_Cat" id="PMT_Cat" class="form-control" disabled>
+            <option value="Product" @if($payment->PMT_Cat == 'Product') selected @endif>Product</option>
+            <option value="Freight" @if($payment->PMT_Cat == 'Freight') selected @endif>Freight</option>
+        </select>
+    </div>
+</div>
+
                         <div class="form-group row">
                             <label for="Amount" class="col-sm-3 col-form-label text-right">Amount:</label>
                             <div class="col-sm-7">
@@ -127,15 +152,14 @@
                                 </select>
                             </div>
                         </div>   
-                        {{-- This div will contain the dropdown for products and will initially be hidden --}}
-                        <div class="form-group row" id="product_dropdown">
-                            <label for="Product_Name" class="col-sm-3 col-form-label text-right">Product:</label>
-                            <div class="col-sm-7">
-                                <select id="Product_Name" name="Product_Name" class="form-control" disabled>
-                                 {{-- Product options will be added here dynamically --}}
-                                </select>
-                            </div>
-                        </div>  
+                        <div class="form-group row" id="product_dropdown" style="display: none;">
+                                    <label for="Product_Name" class="col-sm-3 col-form-label text-right">Product:</label>
+                                    <div class="col-sm-7">
+                                        <select id="Product_Name" name="Product_Name" class="form-control" disabled>
+                                            {{-- Product options will be added here dynamically --}}
+                                        </select>
+                                    </div>
+                                </div>
 
                         <div class="form-group row">
                             <label for="Remarks" class="col-sm-3 col-form-label text-right">Remarks:</label>
@@ -191,12 +215,16 @@
         }
     }
 
-       // Add event listener to the payment category select box
-       document.getElementById('PMT_Cat').addEventListener('change', toggleProductDropdown);
+    // Trigger the change event when the page loads
+    document.getElementById('PMT_Cat').dispatchEvent(new Event('change'));
 
-        // Initial check to set the correct state when the page loads
-        toggleProductDropdown();
-    })
+    // Add event listener to the payment category select box
+    document.getElementById('PMT_Cat').addEventListener('change', toggleProductDropdown);
+
+    // Initial check to set the correct state when the page loads
+    toggleProductDropdown();
+})
+
 
     function cancelEdit() {
         document.getElementById('Order_ID').disabled = true;
