@@ -29,7 +29,7 @@ class VendorController extends Controller
             'Active_Status' => 'required|string|max:20',
             'Remarks' => 'nullable|string|max:255',
             'Email' => 'nullable|string|email|max:255',
-            'PhoneNumber' => 'nullable|string|max:255',
+            'PhoneNumber' => 'nullable|string|regex:/^\(\d{3}\) \d{3}-\d{4}$/',
         ]);
         //added this part -van 
        

@@ -1,4 +1,8 @@
 <x-layout> 
+    
+<!-- For masking of phone number -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <style>
         .ml-neg-5 {
@@ -207,6 +211,9 @@ $(document).ready(function() {
         "lengthChange": false, 
         "autoWidth": false,  
     }).buttons().container().appendTo('#tblOrderHistory_wrapper .col-md-6:eq(0)');
+    
+    // Initialize phone number mask
+    $('#Phone_Number').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 
 
     // Check if validation errors exist and display them

@@ -1,5 +1,9 @@
 <x-layout> 
 
+<!-- For masking of phone number -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
 <style>
     .ml-neg-5 {
         margin-left: -5rem; 
@@ -75,6 +79,7 @@
                                 <label for="Phone_Number" class="col-sm-3 col-form-label text-right ml-neg-5">Phone Number:</label>
                                 <div class="col-sm-6">
                                     <input type="text" id="Phone_Number" name="Phone_Number" class="form-control"  placeholder="Phone Number">
+                                    
                                 </div>
                             </div>
                        
@@ -125,10 +130,13 @@
     //         event.target.value = event.target.value.toUpperCase();
     //     }
     // });
+   
 
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('client-form');
         const submitBtn = document.getElementById('btnSave');
+             // Initialize phone number mask
+             $('#Phone_Number').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 
         // SUBMIT CONFIRMATION
         form.addEventListener('submit', function(event) {

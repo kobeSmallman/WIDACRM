@@ -51,9 +51,9 @@ class ClientController extends BaseController
             'Buyer_Status' => 'required|string|max:10',
             'Shipping_Address' => 'required|string|max:255',
             'Billing_Address' => 'required|string|max:255',
-            'Phone_Number' => 'required|string|max:20',
+            'Phone_Number' => 'required|string|regex:/^\(\d{3}\) \d{3}-\d{4}$/',
             'Email' => 'required|string|email|max:255',
-            'Remarks' => 'string|max:255',
+            'Remarks' => 'nullable|string|max:255',
         ]);
         try {
             $client->update($validatedData);  
@@ -81,7 +81,7 @@ class ClientController extends BaseController
             'Billing_Address' => 'required|string|max:255',
             'Phone_Number' => 'required|string|max:20',
             'Email' => 'required|string|email|max:255',
-            'Remarks' => 'string|max:255',
+            'Remarks' => 'nullable|string|max:255',
         ]);
     
         // Set the 'Created_By' to the ID of the authenticated user

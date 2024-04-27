@@ -1,4 +1,9 @@
 <x-layout>
+
+<!-- For masking of phone number -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -50,4 +55,12 @@
             </div>
         </div>
     </section>
+
+    <script>
+    $(document).ready(function() {
+        // Initialize phone number mask
+        $('#PhoneNumber').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+    });
+    </script>
+
 </x-layout>
