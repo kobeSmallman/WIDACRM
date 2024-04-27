@@ -136,6 +136,14 @@
     }
 
     function cancelEdit() {
+        //Reset to original values
+        document.getElementById('Vendor_Name').value = '{{ $vendor->Vendor_Name }}';
+        document.getElementById('Email').value = '{{ $vendor->Email }}';
+        document.getElementById('PhoneNumber').value = '{{ $vendor->PhoneNumber }}';
+        document.getElementById('Remarks').value = '{{ $vendor->Remarks }}';
+        document.getElementById('Active_Status').value = '{{ $vendor->Active_Status }}';
+
+        //Disable for editing
         document.getElementById('Vendor_Name').disabled = true;
         document.getElementById('Email').disabled = true;
         document.getElementById('PhoneNumber').disabled = true;

@@ -259,6 +259,17 @@
 
 
     function cancelEdit() {
+
+        //Reset to original values
+        document.getElementById('Invoice_Number').value = '{{ $payment->Invoice_Number}}';
+        document.getElementById('Date').value = '{{ $payment->Date}}';
+        document.getElementById('PMT_Cat').value = '{{ $payment->PMT_Cat}}';
+        document.getElementById('Amount').value = '{{ $payment->Amount}}';
+        document.getElementById('PMT_Type_ID').value = '{{ $payment->PMT_Type_ID}}';
+        document.getElementById('Product_Name').value = '{{ $payment->Product_Name}}';
+        document.getElementById('Remarks').value = '{{ $payment->Remarks}}';
+
+        //Disable for editing
         document.getElementById('Order_ID').disabled = true;
         document.getElementById('Invoice_Number').disabled = true;
         document.getElementById('Date').disabled = true;
