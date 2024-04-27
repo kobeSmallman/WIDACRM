@@ -85,9 +85,9 @@
 <script> 
    $(document).ready(function() {   
         $("#tblSystemUsers").DataTable({
-            "aaSorting": [],
+            "aaSorting": [1],
             "columnDefs": [
-                { "orderable": false, "targets": [0,4] }
+                { "orderable": false, "targets": [0] }
             ],
             "responsive": true, 
             "lengthChange": false, 
