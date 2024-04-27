@@ -65,7 +65,7 @@
             <div class="col-md-8">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Edit Vendor Details</h3>
+                        <h3 class="card-title">Vendor Details</h3>
                     </div>
                     <form action="{{ route('vendors.update', $vendor->Vendor_ID) }}" method="POST" id="vendor-form">
                         @csrf
@@ -74,42 +74,46 @@
                             <div class="form-group row">
                                 <label for="Vendor_Name" class="col-sm-3 col-form-label text-right">Vendor Name:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="Vendor_Name" name="Vendor_Name" value="{{ $vendor->Vendor_Name }}" required>
+                                    <input type="text" class="form-control" id="Vendor_Name" name="Vendor_Name" value="{{ $vendor->Vendor_Name }}" required disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Email" class="col-sm-3 col-form-label text-right">Email:</label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="Email" name="Email" value="{{ $vendor->Email }}" required>
+                                    <input type="email" class="form-control" id="Email" name="Email" value="{{ $vendor->Email }}" disabled>
                                 </div>
                             </div>
                            
                             <div class="form-group row">
                                 <label for="PhoneNumber" class="col-sm-3 col-form-label text-right">Phone Number:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="{{ $vendor->PhoneNumber }}" required>
+                                    <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="{{ $vendor->PhoneNumber }}" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Active_Status" class="col-sm-3 col-form-label text-right">Active Status:</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" id="Active_Status" name="Active_Status">
+                                    <select class="form-control" id="Active_Status" name="Active_Status" required disabled>
                                         <option value="1" {{ $vendor->Active_Status == "1" ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ $vendor->Active_Status == "0" ? 'selected' : '' }}>Inactive</option>
+                                        <option value="0" {{ $vendor->Active_Status == "0" ? 'selected' : '' }}>Inactive</option>                                       
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Remarks" class="col-sm-3 col-form-label text-right">Remarks:</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" id="Remarks" name="Remarks">{{ $vendor->Remarks }}</textarea>
+                                    <textarea class="form-control" id="Remarks" name="Remarks" disabled>{{ $vendor->Remarks }}</textarea> 
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                            <a href="{{ route('vendors.index') }}" class="btn btn-default">Cancel</a>
-                        </div>
+                        <div class="form-group row">
+                            <div class="offset-sm-3 col-sm-auto">
+                                <button type="submit" id="btnSave" class="btn btn-primary btn-fixed" style="display: none;">Save</button>
+                                <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
+                                <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
+                                <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed" id="btnBack">Back</a>
+                            </div>
+                        </div> 
                     </form>
                 </div>
             </div>
@@ -117,4 +121,56 @@
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
+    <script>
+
+   function enableFields() {
+        document.getElementById('Vendor_Name').disabled = false;
+        document.getElementById('Email').disabled = false;
+        document.getElementById('PhoneNumber').disabled = false;
+        document.getElementById('Active_Status').disabled = false;
+        document.getElementById('Remarks').disabled = false;
+        document.getElementById('btnSave').style.display = 'inline';
+        document.getElementById('btnCancel').style.display = 'inline';
+        document.getElementById('btnEdit').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
+    }
+
+    function cancelEdit() {
+        document.getElementById('Vendor_Name').disabled = true;
+        document.getElementById('Email').disabled = true;
+        document.getElementById('PhoneNumber').disabled = true;
+        document.getElementById('Active_Status').disabled = true;
+        document.getElementById('Remarks').disabled = true;
+        document.getElementById('btnSave').style.display = 'none';
+        document.getElementById('btnCancel').style.display = 'none';
+        document.getElementById('btnEdit').style.display = 'inline';
+        document.getElementById('btnBack').style.display = 'inline';
+    }
+</script>
+
+        <!-- Include SweetAlert2 library -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Check for the 'success' session variable and display a SweetAlert -->
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'INFORMATION MESSAGE',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        @endif
+
+        <!-- Check for errors -->
+        @if ($errors->any())
+         <div class="alert alert-danger">
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{!! $error !!}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
 </x-layout>
