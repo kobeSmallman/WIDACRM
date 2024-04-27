@@ -32,6 +32,7 @@
                             <th style="width: 70px !important;">Manage</th>
                             <th>Payment ID</th>
                             <th>Order ID</th>
+                            <th>Invoice Number</th>
                             <th>Payment Category</th>
                             <th>Date</th>
                             <th>Amount</th>
@@ -58,6 +59,7 @@
                                 </td>
                                 <td><a href="{{ route('payment.editPayment', $payment->PMT_ID) }}">{{ $payment->PMT_ID }}</td>
                                 <td>{{ $payment->Order_ID }}</td>
+                                <td>{{ $payment->Invoice_Number}}</td>
                                 <td>{{ $payment->PMT_Cat}}</td>
                                 <td>{{ \Carbon\Carbon::parse($payment->Date)->format('Y-m-d') }}</td>
 

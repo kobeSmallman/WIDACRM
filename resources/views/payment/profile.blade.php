@@ -142,6 +142,14 @@
                             </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="Invoice" class="col-sm-3 col-form-label text-right">QuickBooks Invoice Number:</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="Invoice" name="Invoice" class="form-control" placeholder="QuickBooks Invoice Number" value="{{ $payment->Invoice_Number}}" disabled>
+                            </div>
+                        </div>
+                        
                         <div class="form-group row">
                             <label for="Date" class="col-sm-3 col-form-label text-right">Date:</label>
                             <div class="col-sm-7">

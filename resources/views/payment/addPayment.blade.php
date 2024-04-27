@@ -46,6 +46,11 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="Invoice">Invoice Number:</label>
+                                        <input type="text" name="Invoice" id="Invoice" class="form-control" placeholder="Enter QuickBooks Invoice Number">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="Date">Date:</label>
                                         <input type="date" name="Date" id="Date" class="form-control" placeholder="Enter Date">
                                     </div>
