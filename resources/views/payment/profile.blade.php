@@ -1,6 +1,29 @@
 <x-layout>
 <!--Additional CSS Styling for this page only-->
 <style>
+        .card-header {
+            background-color: #007bff; /* Ensure this is the only place setting the background color for card headers */
+            color: #ffffff; /* White text */
+        }
+
+        .card-primary {
+            border-color: #007bff; /* Consistent border color */
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-default {
+            background-color: #6c757d; /* Default grey */
+            color: #ffffff; /* White text */
+        }
+
+        .ml-neg-5 {
+            margin-left: -5rem; 
+        }
+
   .fixed-height-card {
             height: 550px; /* Adjust the height as needed */
             overflow-y: auto; /* Enable vertical scrolling */
