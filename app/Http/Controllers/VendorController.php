@@ -28,7 +28,7 @@ class VendorController extends Controller
             'Vendor_Name' => 'required|string|max:255',
             'Active_Status' => 'required|string|max:20',
             'Remarks' => 'nullable|string|max:255',
-            'Email' => 'nullable|string|max:255',
+            'Email' => 'nullable|string|email|max:255',
             'PhoneNumber' => 'nullable|string|max:255',
         ]);
         //added this part -van 
