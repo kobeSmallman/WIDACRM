@@ -153,14 +153,14 @@
                         <div class="form-group row">
                             <label for="Date" class="col-sm-3 col-form-label text-right">Date:</label>
                             <div class="col-sm-7">
-                                <input type="text" id="Date" name="Date" class="form-control" placeholder="Date" value="{{ $payment->Date->format('Y-m-d') }}" disabled>
+                                <input type="text" id="Date" name="Date" class="form-control" placeholder="Date" value="{{ $payment->Date->format('Y-m-d') }}" required disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                      
     <label for="PMT_Cat" class="col-sm-3 col-form-label text-right">Payment Category:</label>
     <div class="col-sm-7">
-        <select name="PMT_Cat" id="PMT_Cat" class="form-control" disabled>
+        <select name="PMT_Cat" id="PMT_Cat" class="form-control" required disabled>
             <option value="Product" @if($payment->PMT_Cat == 'Product') selected @endif>Product</option>
             <option value="Freight" @if($payment->PMT_Cat == 'Freight') selected @endif>Freight</option>
         </select>
@@ -170,13 +170,13 @@
                         <div class="form-group row">
                             <label for="Amount" class="col-sm-3 col-form-label text-right">Amount:</label>
                             <div class="col-sm-7">
-                                <input type="text" id="Amount" name="Amount" class="form-control" placeholder="Amount" value="{{ number_format($payment->Amount, 2) }}" disabled>
+                                <input type="text" id="Amount" name="Amount" class="form-control" placeholder="Amount" value="{{ number_format($payment->Amount, 2) }}" required disabled>
                             </div>
                         </div> 
                         <div class="form-group row">
                             <label for="PMT_Type" class="col-sm-3 col-form-label text-right">Payment Type:</label>
                             <div class="col-sm-7">
-                                <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control" disabled>
+                                <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control" required disabled>
                                     @foreach($paymentTypes as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
                                     @endforeach

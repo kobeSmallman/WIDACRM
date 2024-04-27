@@ -52,12 +52,12 @@
 
                                     <div class="form-group">
                                         <label for="Date">Date:</label>
-                                        <input type="date" name="Date" id="Date" class="form-control" placeholder="Enter Date">
+                                        <input type="date" name="Date" id="Date" class="form-control" placeholder="Enter Date" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="PMT_Cat">Payment Category:</label>
-                                        <select name="PMT_Cat" id="PMT_Cat" class="form-control">
+                                        <select name="PMT_Cat" id="PMT_Cat" class="form-control" required>
                                             <option value="Product">Product</option>
                                             <option value="Freight">Freight</option>
                                         </select>
@@ -73,12 +73,12 @@
 
                                     <div class="form-group">
                                         <label for="Amount">Amount:</label>
-                                        <input type="text" name="Amount" id="Amount" class="form-control" placeholder="Enter Amount">
+                                        <input type="text" name="Amount" id="Amount" class="form-control" placeholder="Enter Amount" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="PMT_Type_Name">Payment Type:</label>
-                                        <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control">
+                                        <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control" required>
                                             @foreach($paymentTypes as $id => $name)
                                                 <option value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
