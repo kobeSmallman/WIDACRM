@@ -40,12 +40,12 @@
                     <div class="card-body">
                         <form action="{{ route('save.employee') }}" method="POST" class="p-3 rounded" id="employee-form">
                             @csrf
-                            <div class="form-group row ">
+<!--                             <div class="form-group row ">
                                 <label for="EmployeeID" class="col-sm-3 col-form-label text-right ml-neg-5">Employee ID</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="Employee_ID" id="EmployeeID" placeholder="Employee ID" required>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group row">
                                 <label for="LastName" class="col-sm-3 col-form-label text-right ml-neg-5">Last Name</label>
                                 <div class="col-sm-6">

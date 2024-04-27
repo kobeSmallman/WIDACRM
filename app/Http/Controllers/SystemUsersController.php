@@ -21,7 +21,7 @@ class SystemUsersController extends BaseController
         Log::info('Employee creation method called with data:', $request->all());
 
         $request->validate([
-            'Employee_ID' => ['required', new UniqueEmployeeID],
+            // 'Employee_ID' => ['required', new UniqueEmployeeID],
             'Last_Name' => ['required', new UniqueEmployeeName($request->input('Last_Name'), $request->input('First_Name'))],
             'First_Name' => ['required'],
             'Position' => ['required'],
