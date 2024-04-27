@@ -69,6 +69,7 @@ class PaymentController extends Controller
         // Create and save the new payment
         $payment = new Payment();
         $payment->Order_ID = $request->Order_ID;
+        $payment->Invoice_Number = $request->Invoice_Number;
         $payment->Date = $request->Date;
         $payment->PMT_Cat = $request->PMT_Cat;
         $payment->Amount = $sanitizedAmount; // this uses the sanitized amount

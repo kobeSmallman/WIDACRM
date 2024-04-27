@@ -146,7 +146,7 @@
                         <div class="form-group row">
                             <label for="Invoice" class="col-sm-3 col-form-label text-right">QuickBooks Invoice Number:</label>
                             <div class="col-sm-7">
-                                <input type="text" id="Invoice" name="Invoice" class="form-control" placeholder="QuickBooks Invoice Number" value="{{ $payment->Invoice_Number}}" disabled>
+                                <input type="text" id="Invoice_Number" name="Invoice_Number" class="form-control" placeholder="QuickBooks Invoice Number" value="{{ $payment->Invoice_Number}}" disabled>
                             </div>
                         </div>
                         
@@ -221,6 +221,7 @@
 
    function enableFields() {
         document.getElementById('Order_ID').disabled = true;
+        document.getElementById('Invoice_Number').disabled = false;
         document.getElementById('Date').disabled = false;
         document.getElementById('PMT_Cat').disabled = false;
         document.getElementById('Amount').disabled = false;
@@ -259,6 +260,7 @@
 
     function cancelEdit() {
         document.getElementById('Order_ID').disabled = true;
+        document.getElementById('Invoice_Number').disabled = true;
         document.getElementById('Date').disabled = true;
         document.getElementById('PMT_Cat').disabled = true;
         document.getElementById('Amount').disabled = true;
