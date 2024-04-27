@@ -126,7 +126,12 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="form-group row">
+                    <label for="Remarks" class="col-sm-3 col-form-label text-right">Remarks</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="Remarks" name="Remarks" class="form-control" placeholder="Remarks" value="{{ $selectedClient->Remarks }}" disabled>
+                    </div>
+                </div>
                 
                 <div class="form-group row">
                     <div class="offset-sm-3 col-sm-6">
@@ -242,12 +247,15 @@ $(document).ready(function() {
         document.getElementById('Phone_Number').disabled = false;
         document.getElementById('Lead_Status').disabled = false;
         document.getElementById('Buyer_Status').disabled = false;
+        document.getElementById('Remarks').disabled = false;
         document.getElementById('btnSave').style.display = 'inline';
         document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
     }
 
     function cancelEdit() {
+
+        //Disable editing
         document.getElementById('Main_Contact').disabled = true;
         document.getElementById('Shipping_Address').disabled = true;
         document.getElementById('Billing_Address').disabled = true;
@@ -255,16 +263,18 @@ $(document).ready(function() {
         document.getElementById('Phone_Number').disabled = true;
         document.getElementById('Lead_Status').disabled = true;
         document.getElementById('Buyer_Status').disabled = true;
+        document.getElementById('Remarks').disabled = true;
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
 
-
+        //Reset original values
         document.getElementById('Main_Contact').value = "{{ $selectedClient->Main_Contact }}";
         document.getElementById('Shipping_Address').value = "{{ $selectedClient->Shipping_Address }}";
         document.getElementById('Billing_Address').value = "{{ $selectedClient->Billing_Address }}";
         document.getElementById('Email').value = "{{ $selectedClient->Email }}";
         document.getElementById('Phone_Number').value = "{{ $selectedClient->Phone_Number }}"; 
+        document.getElementById('Remarks').value = "{{ $selectedClient->Remarks }}"; 
 
 
         var leadStatus = "{{ $selectedClient->Lead_Status }}".toUpperCase();;

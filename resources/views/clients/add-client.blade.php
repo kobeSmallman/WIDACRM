@@ -96,7 +96,13 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
+                            <div class="form-group row">
+                                <label for="Remarks" class="col-sm-3 col-form-label text-right ml-neg-5">Remarks:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="Remarks" name="Remarks" class="form-control"  placeholder="Remarks">
+                                </div>
+                            </div> 
                            
                             <div class="form-group row">
                                 <div class="offset-sm-3 col-sm-6">

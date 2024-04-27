@@ -43,6 +43,7 @@
                         <th>Phone Number</th>
                         <th>Lead Status</th>
                         <th>Buyer Status</th> 
+                        <th>Remarks</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -76,6 +77,7 @@
                             <td>{{ $client->Phone_Number }}</td>
                             <td>{{ $client->Lead_Status }}</td>
                             <td>{{ $client->Buyer_Status }}</td>
+                            <td>{{ $client->Remarks }}</td>
                                 
                         </tr>
                         @endforeach

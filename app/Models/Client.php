@@ -36,6 +36,7 @@ class Client extends Model
         'Email',
         'Main_Contact',
         'Created_By', // This line is added
+        'Remarks',
     ];
     
 
