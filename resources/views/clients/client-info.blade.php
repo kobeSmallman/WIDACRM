@@ -21,7 +21,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Clients</h1>
+                    <h1 class="m-0">Client Information</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -43,7 +43,7 @@
         <!-- About Me Box -->
         <div class="card card-primary">
             <div class="card-header">
-            <h3 class="card-title">Client Information</h3>
+            <h3 class="card-title">Client Overview</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body" style="height: 300px"> 

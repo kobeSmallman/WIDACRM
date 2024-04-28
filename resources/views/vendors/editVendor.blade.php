@@ -30,7 +30,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0"><i class="fa fa-user-edit"></i> Edit Vendor</h1>
+                    <h1 class="m-0">Vendor Information</h1>
+                    <!--Icon: <i class="fa fa-user-edit"></i>-->
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -111,8 +112,8 @@
                             <div class="offset-sm-3 col-sm-auto">
                                 <button type="submit" id="btnSave" class="btn btn-primary btn-fixed" style="display: none;">Save</button>
                                 <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
-                                <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
-                                <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed" id="btnBack">Back</a>
+                                <button type="button" id="btnEdit" class="btn btn-primary" onclick="enableFields()">Edit</button>
+                                <a href="{{ route('vendors.index') }}" class="btn btn-default" id="btnBack">Back</a>
                             </div>
                         </div> 
                     </form>
