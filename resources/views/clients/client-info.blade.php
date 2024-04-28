@@ -116,8 +116,8 @@
                     <label for="Lead_Status" class="col-sm-3 col-form-label text-right">Lead Status:</label>
                     <div class="col-sm-6">
                         <select id="Lead_Status" name="Lead_Status" class="form-control" disabled>
-                            <option value="ACTIVE" {{ $selectedClient->Lead_Status == 'ACTIVE' ? 'selected' : '' }}>ACTIVE</option>
-                            <option value="INACTIVE" {{ $selectedClient->Lead_Status == 'INACTIVE' ? 'selected' : '' }}>INACTIVE</option>
+                            <option value="ACTIVE" {{ $selectedClient->Lead_Status == 'Active' ? 'selected' : '' }}>Active</option>
+                            <option value="INACTIVE" {{ $selectedClient->Lead_Status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                         </select>
                     </div>
                 </div>
@@ -125,8 +125,8 @@
                     <label for="Buyer_Status" class="col-sm-3 col-form-label text-right">Buyer Status:</label>
                     <div class="col-sm-6">
                         <select id="Buyer_Status" name="Buyer_Status" class="form-control" disabled>
-                            <option value="ACTIVE" {{ $selectedClient->Buyer_Status == 'ACTIVE' ? 'selected' : '' }}>ACTIVE</option>
-                            <option value="INACTIVE" {{ $selectedClient->Buyer_Status == 'INACTIVE' ? 'selected' : '' }}>INACTIVE</option>
+                            <option value="ACTIVE" {{ $selectedClient->Buyer_Status == 'Active' ? 'selected' : '' }}>Active</option>
+                            <option value="INACTIVE" {{ $selectedClient->Buyer_Status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                         </select>
                     </div>
                 </div>

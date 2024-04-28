@@ -87,8 +87,8 @@
                                 <label for="Lead_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Lead Status:</label>
                                 <div class="col-sm-6">
                                     <select id="Lead_Status" name="Lead_Status" class="form-control">
-                                        <option value="ACTIVE">ACTIVE</option>
-                                        <option value="INACTIVE">INACTIVE</option>
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="INACTIVE">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -96,8 +96,8 @@
                                 <label for="Buyer_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Buyer Status:</label>
                                 <div class="col-sm-6">
                                     <select id="Buyer_Status" name="Buyer_Status" class="form-control">
-                                        <option value="ACTIVE">ACTIVE</option>
-                                        <option value="INACTIVE">INACTIVE</option>
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="INACTIVE">Inactive</option>
                                     </select>
                                 </div>
                             </div>
