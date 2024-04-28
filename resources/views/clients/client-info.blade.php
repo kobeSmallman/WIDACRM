@@ -1,5 +1,5 @@
 <x-layout> 
-    
+
 <!-- For masking of phone number -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
@@ -142,6 +142,7 @@
                         <button type="submit" id="btnSave" class="btn btn-primary btn-fixed" style="display: none;">Save</button>
                         <button type="button" id="btnCancel" class="btn btn-default btn-fixed" style="display: none;" onclick="cancelEdit()">Cancel</button>
                         <button type="button" id="btnEdit" class="btn btn-primary btn-fixed" onclick="enableFields()">Edit</button>
+                        <a href="{{ route('clients') }}" class="btn btn-default btn-fixed" id="btnBack">Back</a>
                     </div>
                 </div>
 
@@ -258,6 +259,7 @@ $(document).ready(function() {
         document.getElementById('btnSave').style.display = 'inline';
         document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
     }
 
     function cancelEdit() {
@@ -274,6 +276,7 @@ $(document).ready(function() {
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';
+        document.getElementById('btnBack').style.display = 'inline';
 
         //Reset original values
         document.getElementById('Main_Contact').value = "{{ $selectedClient->Main_Contact }}";
