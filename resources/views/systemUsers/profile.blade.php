@@ -20,6 +20,13 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">System Users</h1>
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('systemusers') }}">System Users</a></li>
+                        <li class="breadcrumb-item active">{{ $selectedEmployee->First_Name }} {{ $selectedEmployee->Last_Name }}</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>

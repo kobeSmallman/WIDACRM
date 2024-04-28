@@ -36,7 +36,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('vendors.index') }}">Vendors</a></li>
-                        <li class="breadcrumb-item active">Edit Vendor</li>
+                        <li class="breadcrumb-item active">{{ $vendor->Vendor_Name }}</li>
                     </ol>
                 </div>
             </div>

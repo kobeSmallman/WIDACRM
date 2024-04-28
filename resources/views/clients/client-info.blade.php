@@ -27,7 +27,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('clients') }}">Clients</a></li>
-                        <li class="breadcrumb-item active">Client Information</a></li>
+                        <li class="breadcrumb-item active">{{ $selectedClient->Company_Name }}</a></li>
                     </ol>
                 </div>
             </div>
