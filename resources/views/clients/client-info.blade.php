@@ -51,6 +51,10 @@
                 <hr>
                 <p class="text-muted">{{ $selectedClient->Shipping_Address }}</p>
                 <p class="text-muted">{{ $selectedClient->Phone_Number }}</p>
+                <p class="text-muted">
+                    <a href="mailto:{{ $selectedClient->Email }}?from={{ Auth::user()->Employee_Email }}">
+                                    {{ $selectedClient->Email }}</a>
+                </p>
             </div>
             <!-- /.card-body -->
         </div>
