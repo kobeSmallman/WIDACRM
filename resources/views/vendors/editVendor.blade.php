@@ -129,7 +129,7 @@
     <!-- Include SweetAlert2 library -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            <!-- Check for the 'success' session variable and display a SweetAlert -->
+    <!-- Check for the 'success' session variable and display a SweetAlert -->
         @if(session('success'))
             <script>
                 Swal.fire({
