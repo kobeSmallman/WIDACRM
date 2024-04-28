@@ -55,8 +55,8 @@
                     <div class="card-body" style="height: 300px">
                         <strong>{{ $vendor->Vendor_Name }}</strong>
                         <hr>
-                        <p class="text-muted">{{ $vendor->Email }}</p>
                         <p class="text-muted">{{ $vendor->PhoneNumber }}</p>
+                        <p class="text-muted"><a href="mailto:{{ $vendor->Email }}?from={{ Auth::user()->Employee_Email }}">{{ $vendor->Email}}</a></p>
                     </div>
                 </div>
             </div>

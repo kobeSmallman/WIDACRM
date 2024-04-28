@@ -61,7 +61,7 @@
                                             </td>
                                             <td> <a href="{{ route('vendors.edit', $vendor->Vendor_ID) }}">{{ $vendor->Vendor_Name }} ({{ $vendor->Vendor_ID }})</td>
                                             <td>{{ $vendor->Active_Status == '1' ? 'Active' : 'Inactive' }}</td>
-                                            <td>{{ $vendor->Email }}</td>
+                                            <td><a href="mailto:{{ $vendor->Email }}?from={{ Auth::user()->Employee_Email }}">{{ $vendor->Email }}</a></td>
                                             <td>{{ $vendor->PhoneNumber }}</td>
                                             <td>{{ $vendor->Remarks }}</td>
 
