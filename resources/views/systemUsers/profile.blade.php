@@ -97,6 +97,7 @@
                             @csrf 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
+                                <a href="{{ route('systemusers') }}" class="btn btn-default" id="btnBack">Back</a>
                             </div>
                         </form>
                     </div>
