@@ -37,8 +37,8 @@
                         <th style="width: 70px !important;">Manage</th>
                         <th>Client Name</th>
                         <th>Main Contact</th>
-                        <th>Shipping Address</th>
-                        <th>Billing Address</th>
+                        <!--<th>Shipping Address</th>
+                        <th>Billing Address</th> -->
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Lead Status</th>
@@ -67,8 +67,8 @@
                                 </a>
                             </td>
                             <td>{{ $client->Main_Contact }}</td>
-                            <td>{{ $client->Shipping_Address }}</td>
-                            <td>{{ $client->Billing_Address }}</td>
+                            <!--<td>{{ $client->Shipping_Address }}</td>
+                            <td>{{ $client->Billing_Address }}</td>-->
                             <td>
                                 <a href="mailto:{{ $client->Email }}?from={{ Auth::user()->Employee_Email }}">
                                     {{ $client->Email }}
