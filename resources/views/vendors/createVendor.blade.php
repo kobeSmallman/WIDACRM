@@ -1,8 +1,11 @@
 <x-layout>
 
+<!-- Include SweetAlert2 library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- For masking of phone number -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
 
     <section class="content-header">
         <div class="container-fluid">
@@ -56,6 +59,29 @@
         </div>
     </section>
 
+    <!-- Check for the 'success' session variable and display a SweetAlert -->
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                title: 'INFORMATION MESSAGE',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    <!-- Check for errors -->
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{!! $error !!}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    
     <script>
     $(document).ready(function() {
         // Initialize phone number mask

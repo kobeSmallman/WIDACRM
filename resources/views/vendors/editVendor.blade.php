@@ -1,9 +1,5 @@
 <x-layout>
 
-<!-- For masking of phone number -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
     <style>
         .card-header {
             background-color: #007bff; /* Ensure this is the only place setting the background color for card headers */
@@ -126,11 +122,42 @@
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
+
+    <!-- For masking of phone number -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <!-- Include SweetAlert2 library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <!-- Check for the 'success' session variable and display a SweetAlert -->
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'INFORMATION MESSAGE',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        @endif
+
+        <!-- Check for errors -->
+        @if ($errors->any())
+         <div class="alert alert-danger">
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{!! $error !!}</li>
+            @endforeach
+            </ul>
+        </div>
+        @endif
+    
     <script>
 
     $(document).ready(function() {
         // Initialize phone number mask
         $('#PhoneNumber').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+        Swal.fire('Test Alert', 'This is a test to confirm SweetAlert is working.', 'success');
     });
 
    function enableFields() {
@@ -166,29 +193,4 @@
     }
 </script>
 
-        <!-- Include SweetAlert2 library -->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <!-- Check for the 'success' session variable and display a SweetAlert -->
-        @if(session('success'))
-            <script>
-                Swal.fire({
-                    title: 'INFORMATION MESSAGE',
-                    text: '{{ session('success') }}',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            </script>
-        @endif
-
-        <!-- Check for errors -->
-        @if ($errors->any())
-         <div class="alert alert-danger">
-            <ul>
-            @foreach ($errors->all() as $error)
-                <li>{!! $error !!}</li>
-            @endforeach
-            </ul>
-        </div>
-        @endif
 </x-layout>
