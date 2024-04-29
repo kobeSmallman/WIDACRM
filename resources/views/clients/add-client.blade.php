@@ -41,9 +41,10 @@
                     <div class="card-header"> 
                         <h3 class="card-title"><i class="fa-solid fa-user-plus mr-2"></i>Client Registration</h3>
                     </div>
-                    <div class="card-body">
+                    
                         <form action="{{ route('clients.saveClient') }}" method="POST" class="p-3 rounded" id="client-form">
                             @csrf
+                            <div class="card-body">
                             <!-- Form fields -->
                             <div class="form-group row">
                                 <label for="Company_Name" class="col-sm-3 col-form-label text-right ml-neg-5">Company Name:</label>

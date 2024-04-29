@@ -2,7 +2,7 @@
     <style>
         .ml-neg-5 { margin-left: -5rem; }
         .swal-custom-html-container ul { text-align: left; margin-left: 0; padding-left: 1.5em; }
-        .card-title { font-size: 24px; font-weight: bold; }
+        /* .card-title { font-size: 24px; font-weight: bold; } */
         label { font-weight: bold; }
     </style>
     <!-- Content Header -->
@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fa-solid fa-money-check-dollar mr-2"></i>Add Payment</h1>
+                    <h1>Payments</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,17 +24,20 @@
     </section>
 
     <!-- Form Section -->
-    <section class="content">
+  
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-body">
-                            <form method="post" action="{{ route('payment.store') }}">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fa-solid fa-file-circle-plus mr-2"></i>Add New Payment</h3>
+                            </div>
+                            <form action="{{ route('payment.store') }}" method="POST" class="p-3 rounded" id="payment-form">
                                 @csrf
-                                <div class="container">
-                                    <div class="form-group">
-                                        <label for="Order_ID">Order ID:</label>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="Order_ID" class="col-sm-3 col-form-label text-right ml-neg-5">Order ID:</label>
+                                        <div class="col-sm-6">
                                         <select name="Order_ID" id="Order_ID" class="form-control">
                                             @foreach($orders as $id => $orderID)
                                                 <option value="{{ $id }}" 
@@ -43,24 +46,31 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="Invoice_Number">Invoice Number:</label>
+                                    <div class="form-group row">
+                                        <label for="Invoice_Number" class="col-sm-3 col-form-label text-right ml-neg-5">Invoice Number:</label>
+                                        <div class="col-sm-6">
                                         <input type="text" name="Invoice_Number" id="Invoice_Number" class="form-control" placeholder="Enter QuickBooks Invoice Number">
+                                        </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="Date">Date:</label>
+                                    <div class="form-group row" >
+                                        <label for="Date" class="col-sm-3 col-form-label text-right ml-neg-5">Date:</label>
+                                        <div class="col-sm-6">
                                         <input type="date" name="Date" id="Date" class="form-control" placeholder="Enter Date" required>
+                                        </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="PMT_Cat">Payment Category:</label>
+                                    <div class="form-group row">
+                                        <label for="PMT_Cat" class="col-sm-3 col-form-label text-right ml-neg-5">Payment Category:</label>
+                                        <div class="col-sm-6">
                                         <select name="PMT_Cat" id="PMT_Cat" class="form-control" required>
                                             <option value="Product">Product</option>
                                             <option value="Freight">Freight</option>
                                         </select>
+                                        </div>
                                     </div>
 
                                     {{-- This div will contain the dropdown for products and will initially be hidden --}}
@@ -71,23 +81,29 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="Amount">Amount:</label>
+                                    <div class="form-group row">
+                                        <label for="Amount" class="col-sm-3 col-form-label text-right ml-neg-5">Amount:</label>
+                                        <div class="col-sm-6">
                                         <input type="text" name="Amount" id="Amount" class="form-control" placeholder="Enter Amount" required>
+                                        </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="PMT_Type_Name">Payment Type:</label>
+                                    <div class="form-group row">
+                                        <label for="PMT_Type_Name" class="col-sm-3 col-form-label text-right ml-neg-5">Payment Type:</label>
+                                        <div class="col-sm-6">
                                         <select name="PMT_Type_ID" id="PMT_Type_ID" class="form-control" required>
                                             @foreach($paymentTypes as $id => $name)
                                                 <option value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
                                         </select>
+                                        </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="Remarks">Remarks:</label>
+                                    <div class="form-group row">
+                                        <label for="Remarks" class="col-sm-3 col-form-label text-right ml-neg-5">Remarks:</label>
+                                        <div class="col-sm-6">
                                         <input type="text" name="Remarks" id="Remarks" class="form-control" placeholder="Example: Payment Successful">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -96,13 +112,13 @@
                                         <a href="{{ route('payment.index') }}" class="btn btn-default btn-fixed">Cancel</a>
                                     </div>
                                 </div>
+                            
                             </form>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
 
     <!-- Include SweetAlert2 library -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
