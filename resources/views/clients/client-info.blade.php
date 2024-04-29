@@ -93,6 +93,18 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="Email" class="col-sm-3 col-form-label text-right">Email Address:</label>
+                    <div class="col-sm-6">
+                        <input type="email" id="Email" name="Email" class="form-control" placeholder="Email" value="{{ $selectedClient->Email }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Phone_Number" class="col-sm-3 col-form-label text-right">Phone Number:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="Phone_Number" name="Phone_Number" class="form-control" placeholder="Phone Number" value="{{ $selectedClient->Phone_Number }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="Shipping_Address" class="col-sm-3 col-form-label text-right">Shipping Address:</label>
                     <div class="col-sm-6">
                         <input type="text" id="Shipping_Address" name="Shipping_Address" class="form-control" placeholder="Shipping Address" value="{{ $selectedClient->Shipping_Address }}" disabled>
@@ -105,15 +117,21 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="Email" class="col-sm-3 col-form-label text-right">Email:</label>
+                    <label for="Secondary_Contact" class="col-sm-3 col-form-label text-right">Alternate Contact:</label>
                     <div class="col-sm-6">
-                        <input type="email" id="Email" name="Email" class="form-control" placeholder="Email" value="{{ $selectedClient->Email }}" disabled>
+                        <input type="text" id="Secondary_Contact" name="Secondary_Contact" class="form-control" placeholder="Alternate Contact" value="{{ $selectedClient->Secondary_Contact }}" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="Phone_Number" class="col-sm-3 col-form-label text-right">Phone Number:</label>
+                    <label for="Secondary_Email" class="col-sm-3 col-form-label text-right">Alternate Contact's Email:</label>
                     <div class="col-sm-6">
-                        <input type="text" id="Phone_Number" name="Phone_Number" class="form-control" placeholder="Phone Number" value="{{ $selectedClient->Phone_Number }}" disabled>
+                        <input type="email" id="Secondary_Email" name="Secondary_Email" class="form-control" placeholder="Alternate Contact's Email Address" value="{{ $selectedClient->Secondary_Email }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Secondary_Phone" class="col-sm-3 col-form-label text-right">Alternate Contact's Phone Number:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="Secondary_Phone" name="Secondary_Phone" class="form-control" placeholder="Alternate Contact's Phone Number" value="{{ $selectedClient->Secondary_Phone }}" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -219,6 +237,7 @@ $(document).ready(function() {
     
     // Initialize phone number mask
     $('#Phone_Number').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+    $('#Secondary_Phone').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 
 
     // Check if validation errors exist and display them
@@ -253,13 +272,16 @@ $(document).ready(function() {
 
     function enableFields() {
         document.getElementById('Main_Contact').disabled = false;
-        document.getElementById('Shipping_Address').disabled = false;
-        document.getElementById('Billing_Address').disabled = false;
         document.getElementById('Email').disabled = false;
         document.getElementById('Phone_Number').disabled = false;
+        document.getElementById('Shipping_Address').disabled = false;
+        document.getElementById('Billing_Address').disabled = false;
         document.getElementById('Lead_Status').disabled = false;
         document.getElementById('Buyer_Status').disabled = false;
         document.getElementById('Remarks').disabled = false;
+        document.getElementById('Secondary_Contact').disabled = false;
+        document.getElementById('Secondary_Email').disabled = false;
+        document.getElementById('Secondary_Phone').disabled = false;
         document.getElementById('btnSave').style.display = 'inline';
         document.getElementById('btnCancel').style.display = 'inline';
         document.getElementById('btnEdit').style.display = 'none';
@@ -277,6 +299,9 @@ $(document).ready(function() {
         document.getElementById('Lead_Status').disabled = true;
         document.getElementById('Buyer_Status').disabled = true;
         document.getElementById('Remarks').disabled = true;
+        document.getElementById('Secondary_Contact').disabled = true;
+        document.getElementById('Secondary_Email').disabled = true;
+        document.getElementById('Secondary_Phone').disabled = true;
         document.getElementById('btnSave').style.display = 'none';
         document.getElementById('btnCancel').style.display = 'none';
         document.getElementById('btnEdit').style.display = 'inline';

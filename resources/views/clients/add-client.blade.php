@@ -57,6 +57,22 @@
                                     <input type="text" id="Main_Contact" name="Main_Contact" class="form-control" placeholder="Main Contact">
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="Email" class="col-sm-3 col-form-label text-right ml-neg-5">Email:</label>
+                                <div class="col-sm-6">
+                                    <input type="email" id="Email" name="Email" class="form-control"  placeholder="Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="Phone_Number" class="col-sm-3 col-form-label text-right ml-neg-5">Phone Number:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="Phone_Number" name="Phone_Number" class="form-control"  placeholder="Phone Number">
+                                    
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="Shipping_Address" class="col-sm-3 col-form-label text-right ml-neg-5">Shipping Address:</label>
                                 <div class="col-sm-6">
@@ -69,19 +85,29 @@
                                     <input type="text" id="Billing_Address" name="Billing_Address" class="form-control" placeholder="Billing Address">
                                 </div>
                             </div> 
+
                             <div class="form-group row">
-                                <label for="Email" class="col-sm-3 col-form-label text-right ml-neg-5">Email:</label>
+                                <label for="Secondary_Contact" class="col-sm-3 col-form-label text-right ml-neg-5">Alternate Contact:</label>
                                 <div class="col-sm-6">
-                                    <input type="email" id="Email" name="Email" class="form-control"  placeholder="Email">
+                                    <input type="text" id="Secondary_Contact" name="Secondary_Contact" class="form-control" placeholder="Alternate Contact">
                                 </div>
                             </div>
+
                             <div class="form-group row">
-                                <label for="Phone_Number" class="col-sm-3 col-form-label text-right ml-neg-5">Phone Number:</label>
+                                <label for="Secondary_Email" class="col-sm-3 col-form-label text-right ml-neg-5">Alternate Contact's Email:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="Phone_Number" name="Phone_Number" class="form-control"  placeholder="Phone Number">
+                                    <input type="email" id="Secondary_Email" name="Secondary_Email" class="form-control"  placeholder="Alternate Contact's Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="Secondary_Phone" class="col-sm-3 col-form-label text-right ml-neg-5">Alternate Contact's Phone Number:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="Secondary_Phone" name="Secondary_Phone" class="form-control"  placeholder="Alternate Contact's Phone">
                                     
                                 </div>
                             </div>
+
                        
                             <div class="form-group row">
                                 <label for="Lead_Status" class="col-sm-3 col-form-label text-right ml-neg-5">Lead Status:</label>
@@ -137,6 +163,7 @@
         const submitBtn = document.getElementById('btnSave');
              // Initialize phone number mask
              $('#Phone_Number').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+             $('#Secondary_Phone').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 
         // SUBMIT CONFIRMATION
         form.addEventListener('submit', function(event) {
