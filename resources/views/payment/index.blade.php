@@ -19,7 +19,7 @@
     <div class="container-fluid"> 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title">Payment Records</h3>
+                <h3 class="card-title">List of Payments</h3>
                     <div class="ml-auto">
                         <a href="{{ route('payment.create') }}" class="btn btn-primary">Add New Payment</a>
                     </div>
