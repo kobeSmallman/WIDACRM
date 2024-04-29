@@ -124,8 +124,15 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
  /* Assuming the sidebar width threshold is 50px */
 /* Hide text if the viewport width indicates the sidebar is likely collapsed */
 
+/* Show the button text when the sidebar is expanded or hovered. This is specifically for the New Note label */
+#myBtn:hover .btn-text {
+    display: inline;
+}
 
-
+/* This assumes the sidebar-collapse class is added to the body when the sidebar is collapsed. This is specifically for the New Note label*/
+body.sidebar-collapse .btn-text {
+    display: none; /* Hide the text */
+}
 
 </style>
 </head>
@@ -394,9 +401,9 @@ box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "
 
           </div>
         </div>
-        <button id="myBtn" class="btn btn-primary">
-  <i class="fa-solid fa-pen-to-square"></i> <span class="btn-text">New Note</span>
-</button>
+    <button id="myBtn" class="btn btn-primary">
+    <i class="fa-solid fa-pen-to-square"></i> <span class="btn-text">New Note</span>
+  </button> 
 
 
 
